@@ -1,31 +1,38 @@
-# Quattro Terzi Studio
+# Ducati Case
 
-Site e portfolio basato su [Sanity.io](https://sanity.io) e [Next.js](https://nextjs.org).
+Sito per annunci immobiliari basato su [Sanity.io](https://sanity.io) e [Next.js](https://nextjs.org). Il modello contenuti distingue più tipologie di listing (residenziale, terreni, uffici, ecc.); il frontend è in evoluzione sulla home.
 
 ## Tech stack
 
 - **Next.js 16** (App Router)
-- **Sanity v5** (Studio, Vision, Presentation)
-- **Tailwind CSS**
+- **React 19**
+- **Sanity v5** (Studio su `/studio`, Vision, interfaccia in italiano)
+- **Tailwind CSS 4**
 - **TypeScript** con Sanity TypeGen
+- **GSAP**, **Lenis**, **Zustand** (animazioni, scroll, stato UI)
 
 ## Prerequisiti
 
-- **Node.js v24.13.1** — in root del progetto è presente `.nvmrc`; eseguire `nvm use` prima di `npm install` e `npm run dev`.
+- **Node.js v24.13.1** — in root c’è `.nvmrc`; eseguire `nvm use` prima di `npm install` e `npm run dev`.
 - Account [Sanity](https://sanity.io)
 
 ## Pagine
 
 - **Home** — `/`
-- **Projects** — `/projects`
-- **Dettaglio progetto** — `/projects/[project-slug]`
-- **About** — `/about`
+- **Sanity Studio** — `/studio`
 
 ## Content model
 
-- **Project** — Progetti (title, slug, media). Il campo `media` è un elenco di immagini e video.
+- **`siteContent`** — documento singleton per contenuti generali del sito (es. titolo).
+- **Listing** — tipologie documento dedicate, ciascuna con campi propri (posizione, superfici, servizi, media, ecc.):
+  - Residenziale (`listingResidential`)
+  - Dimore oltre la città (`listingCountryHouses`)
+  - Uffici e negozi (`listingOfficesAndRetail`)
+  - Industriale (`listingIndustrial`)
+  - Hospitality (`listingHospitality`)
+  - Terreni (`listingLand`)
 
-Gli schema sono in `src/sanity/schemaTypes/`. Dopo modifiche allo schema: `npm run typegen`.
+Gli schema sono in `src/sanity/schemaTypes/`. Dopo modifiche allo schema: `npm run typegen` (richiede `.env.local` con Project ID e dataset).
 
 ## Setup Sanity
 
@@ -57,7 +64,7 @@ npx sanity schema deploy
 
 ### 4. Contenuto
 
-Crea i progetti da **Sanity Studio**
+Inserisci annunci e contenuti da **Sanity Studio** (`/studio` in locale).
 
 **Promuovere tutto da development a production** (sostituisce il contenuto di production):
 
@@ -66,8 +73,6 @@ npm run promote:dev-to-prod
 ```
 
 Attenzione: sovrascrive production con development. Usare solo quando sei sicuro.
-
-Crea i progetti da **Sanity Studio** (http://localhost:3000/studio con `npm run dev`): tipo **Project**, campi title, slug e media (immagini e video).
 
 ## Setup app
 
@@ -80,14 +85,14 @@ Crea i progetti da **Sanity Studio** (http://localhost:3000/studio con `npm run 
 
 2. **Variabili d’ambiente**
 
-   Crea `.env.local` con:
+   Copia `.env.example` in `.env.local` e compila almeno:
 
    ```env
    NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
    NEXT_PUBLIC_SANITY_DATASET=production
    ```
 
-   Opzionale: `NEXT_PUBLIC_SANITY_API_VERSION` (default: `2026-02-23`).
+   Opzionale: `NEXT_PUBLIC_SANITY_API_VERSION` (default: `2026-02-23`), `NEXT_PUBLIC_ALLOW_INDEXING`, `SANITY_API_TOKEN` (se serve per script o integrazioni).
 
 3. **Avvio in sviluppo**
 
@@ -96,27 +101,28 @@ Crea i progetti da **Sanity Studio** (http://localhost:3000/studio con `npm run 
    npm run dev
    ```
 
-   - **Site:** [http://localhost:3000](http://localhost:3000)
+   - **Sito:** [http://localhost:3000](http://localhost:3000)
    - **Studio:** [http://localhost:3000/studio](http://localhost:3000/studio)
 
 ## Scripts
 
-| Comando            | Descrizione                    |
-| ------------------ | ------------------------------ |
-| `npm run dev`      | Avvia il server di sviluppo    |
-| `npm run build`    | Build di produzione            |
-| `npm run start`    | Avvia il server di produzione  |
-| `npm run typegen`         | Rigenera i tipi Sanity              |
-| `npm run promote:dev-to-prod` | Copia dataset development → production (sovrascrive prod) |
-| `npm run lint`     | Esegue ESLint                  |
-| `npm run format`   | Formatta con Prettier          |
+| Comando                       | Descrizione                                                                 |
+| ----------------------------- | --------------------------------------------------------------------------- |
+| `npm run dev`                 | Avvia il server di sviluppo                                                 |
+| `npm run build`               | Build di produzione                                                         |
+| `npm run start`               | Avvia il server di produzione                                               |
+| `npm run typegen`             | Estrae lo schema e rigenera i tipi Sanity                                   |
+| `npm run promote:dev-to-prod` | Copia dataset development → production (sovrascrive prod)                   |
+| `npm run lint`                | Esegue ESLint                                                               |
+| `npm run format`              | Formatta con Prettier                                                       |
+| `npm run format:check`        | Verifica formattazione Prettier                                             |
 
 ## Struttura progetto
 
-- **`src/app/`** — Next.js App Router (frontend, `/studio`)
-- **`src/sanity/`** — Config Sanity, schema, query, resolve per Presentation
-- **`src/components/`** — Componenti React (header, project, project-card, title)
+- **`src/app/`** — Next.js App Router (`(frontend)` per il sito, `studio` per il Studio)
+- **`src/sanity/`** — Config Sanity, schema, query GROQ, client
+- **`src/components/`** — Componenti condivisi (es. provider, immagini)
 
 ## Revalidation
 
-Il sito usa ISR con `revalidate: 60` (secondi). Non sono configurati webhook né revalidate on-demand.
+La home usa fetch verso Sanity con `revalidate: 60` (secondi). Non sono configurati webhook né revalidate on-demand.
