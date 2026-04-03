@@ -1,0 +1,57 @@
+import type { Metadata } from "next"
+import localFont from "next/font/local"
+import { Geist_Mono } from "next/font/google"
+import "./globals.css"
+import { cn } from "@/utils/classNames"
+
+const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true"
+const shouldIndex = process.env.NODE_ENV === "production" && allowIndexing
+
+const helvetica = localFont({
+  src: [
+    {
+      path: "../../public/fonts/HelveticaNeue-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+  ],
+  variable: "--font-helvetica",
+})
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+})
+
+export const metadata: Metadata = {
+  title: "Ducati Case",
+  description: "Ducati Case — agenzia immobiliare",
+  robots: {
+    index: shouldIndex,
+    follow: shouldIndex,
+    nocache: !shouldIndex,
+    googleBot: {
+      index: shouldIndex,
+      follow: shouldIndex,
+      nocache: !shouldIndex,
+    },
+  },
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <html
+      lang="en"
+      className={cn(helvetica.variable, geistMono.variable)}
+      suppressHydrationWarning
+    >
+      <body className="relative bg-white font-sans font-normal">
+        {children}
+      </body>
+    </html>
+  )
+}

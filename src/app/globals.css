@@ -1,0 +1,4 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@import "../styles/theme.css";
+@import "../styles/lenis.css";

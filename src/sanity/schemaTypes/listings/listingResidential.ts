@@ -1,0 +1,88 @@
+import { ALL_FIELDS_GROUP, defineType } from "sanity"
+
+import { listingPreview } from "./shared"
+
+import {
+  addressField,
+  buildingYearField,
+  carBoxField,
+  cityField,
+  countryField,
+  climateControlField,
+  commercialAreaSqmField,
+  conciergeServiceField,
+  condoFeesField,
+  descriptionField,
+  energyClassField,
+  excerptField,
+  floorField,
+  floorPlansField,
+  furnishingField,
+  gardenField,
+  hasAccessibleAccessField,
+  hasAlarmSystemField,
+  hasAtticRoomField,
+  hasBalconyField,
+  hasCellarField,
+  hasTavernField,
+  hasTennisCourtField,
+  hasTerraceField,
+  heatingField,
+  mainImageField,
+  parkingSpacesField,
+  poolField,
+  postalCodeField,
+  provinceField,
+} from "../fields"
+
+export const listingResidential = defineType({
+  name: "listingResidential",
+  title: "Residenziale",
+  type: "document",
+  groups: [
+    { name: "propertySheet", title: "Scheda immobile", default: true },
+    { name: "location", title: "Località" },
+    { name: "content", title: "Contenuto" },
+    { name: "floorPlans", title: "Planimetrie" },
+    { name: "optionals", title: "Opzionali" },
+    { ...ALL_FIELDS_GROUP, hidden: true },
+  ],
+  fields: [
+    /* Basic info fields */
+    commercialAreaSqmField({ required: true, group: "propertySheet" }),
+    condoFeesField({ required: true, group: "propertySheet" }),
+    floorField({ required: true, group: "propertySheet" }),
+    conciergeServiceField({ required: true, group: "propertySheet" }),
+    buildingYearField({ required: true, group: "propertySheet" }),
+    heatingField({ required: true, group: "propertySheet" }),
+    energyClassField({ required: true, group: "propertySheet" }),
+    /* Location */
+    countryField({ required: true, group: "location" }),
+    provinceField({ required: true, group: "location" }),
+    cityField({ required: true, group: "location" }),
+    addressField({ required: true, group: "location" }),
+    postalCodeField({ required: true, group: "location" }),
+    /* Content */
+    mainImageField({ required: true, group: "content" }),
+    descriptionField({ required: true, group: "content" }),
+    excerptField({ group: "content" }),
+    /* Floor plans */
+    floorPlansField({ group: "floorPlans" }),
+    /* Optionals */
+    furnishingField({ group: "optionals" }),
+    gardenField({ group: "optionals" }),
+    carBoxField({ group: "optionals" }),
+    parkingSpacesField({ group: "optionals" }),
+    hasBalconyField({ group: "optionals" }),
+    hasTerraceField({ group: "optionals" }),
+    hasCellarField({ group: "optionals" }),
+    hasAtticRoomField({ group: "optionals" }),
+    hasTavernField({ group: "optionals" }),
+    hasAlarmSystemField({ group: "optionals" }),
+    poolField({ group: "optionals" }),
+    hasTennisCourtField({ group: "optionals" }),
+    hasAccessibleAccessField({ group: "optionals" }),
+    climateControlField({ group: "optionals" }),
+  ],
+  preview: listingPreview(),
+})
