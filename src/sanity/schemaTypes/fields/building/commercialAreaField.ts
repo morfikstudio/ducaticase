@@ -1,6 +1,9 @@
 import { defineField } from "sanity"
 
-import { FIELD_REQUIRED_IT, INVALID_VALUE_MESSAGE_IT } from "../../../lib/validationMessages"
+import {
+  FIELD_REQUIRED_IT,
+  INVALID_VALUE_MESSAGE_IT,
+} from "../../../lib/validationMessages"
 
 export type CommercialAreaFieldOptions = {
   required?: boolean
@@ -21,11 +24,11 @@ export function commercialAreaSqmField(options?: CommercialAreaFieldOptions) {
           return required ? FIELD_REQUIRED_IT : true
         }
 
-        return (
-          typeof value !== "number" ||
+        return typeof value !== "number" ||
           !Number.isFinite(value) ||
           value <= 0
-        ) ? INVALID_VALUE_MESSAGE_IT : true
+          ? INVALID_VALUE_MESSAGE_IT
+          : true
       }),
   })
 }

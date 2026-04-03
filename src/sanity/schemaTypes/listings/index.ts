@@ -17,7 +17,11 @@ import { listingLand } from "./listingLand"
 
 export const LISTING_DOCUMENT_SPECS = [
   { name: "listingResidential", title: "Residenziale", icon: HomeIcon },
-  { name: "listingCountryHouses", title: "Dimore oltre la città", icon: SunIcon },
+  {
+    name: "listingCountryHouses",
+    title: "Dimore oltre la città",
+    icon: SunIcon,
+  },
   { name: "listingOfficesAndRetail", title: "Uffici e Negozi", icon: CaseIcon },
   { name: "listingIndustrial", title: "Industriale", icon: CubeIcon },
   { name: "listingHospitality", title: "Hospitality", icon: StarIcon },

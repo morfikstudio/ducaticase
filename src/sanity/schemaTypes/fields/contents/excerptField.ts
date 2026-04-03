@@ -36,7 +36,11 @@ export function excerptField(options?: ExcerptFieldOptions) {
           }
         }
 
-        if (maxLength !== undefined && typeof value === "string" && value.length > maxLength) {
+        if (
+          maxLength !== undefined &&
+          typeof value === "string" &&
+          value.length > maxLength
+        ) {
           return `Massimo ${maxLength} caratteri.`
         }
 

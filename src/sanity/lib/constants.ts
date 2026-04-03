@@ -8,7 +8,8 @@ export const MACRO_CATEGORY_OPTIONS = [
   { title: "Terreni", value: "land" },
 ] as const
 
-export type MacroCategoryValue = (typeof MACRO_CATEGORY_OPTIONS)[number]["value"]
+export type MacroCategoryValue =
+  (typeof MACRO_CATEGORY_OPTIONS)[number]["value"]
 
 export const FLOOR_OPTIONS = [
   { title: "1", value: "1" },

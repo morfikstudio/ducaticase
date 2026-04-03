@@ -43,7 +43,8 @@ export function mainImageField(options?: MainImageFieldOptions) {
     ],
     validation: (Rule) =>
       Rule.custom(async (value, context) => {
-        const ref = (value as { asset?: { _ref?: string } } | undefined)?.asset?._ref
+        const ref = (value as { asset?: { _ref?: string } } | undefined)?.asset
+          ?._ref
 
         if (required && !ref) {
           return FIELD_REQUIRED_IT
@@ -54,7 +55,10 @@ export function mainImageField(options?: MainImageFieldOptions) {
         }
 
         const client = context.getClient({ apiVersion })
-        const size = await client.fetch<number | null>(`*[_id == $id][0].size`, { id: ref })
+        const size = await client.fetch<number | null>(
+          `*[_id == $id][0].size`,
+          { id: ref },
+        )
         if (typeof size !== "number") {
           return true
         }

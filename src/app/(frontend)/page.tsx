@@ -1,6 +1,9 @@
 import { sanityFetch } from "@/sanity/lib/client"
 
-import { LISTINGS_PREVIEW_QUERY, SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
+import {
+  LISTINGS_PREVIEW_QUERY,
+  SITE_CONTENT_QUERY,
+} from "@/sanity/lib/queries"
 
 export default async function Page() {
   const [site, listings] = await Promise.all([

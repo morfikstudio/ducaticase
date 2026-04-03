@@ -8,7 +8,9 @@ export type DescriptionFieldOptions = {
 }
 
 function portableTextHasContent(
-  blocks: Array<{ _type?: string; children?: Array<{ text?: string }> }> | undefined,
+  blocks:
+    | Array<{ _type?: string; children?: Array<{ text?: string }> }>
+    | undefined,
 ): boolean {
   if (!blocks?.length) {
     return false
@@ -17,7 +19,9 @@ function portableTextHasContent(
   return blocks.some(
     (block) =>
       block._type === "block" &&
-      block.children?.some((child) => typeof child.text === "string" && child.text.trim() !== ""),
+      block.children?.some(
+        (child) => typeof child.text === "string" && child.text.trim() !== "",
+      ),
   )
 }
 
@@ -36,7 +40,9 @@ export function descriptionField(options?: DescriptionFieldOptions) {
           return true
         }
 
-        return portableTextHasContent(value as Parameters<typeof portableTextHasContent>[0])
+        return portableTextHasContent(
+          value as Parameters<typeof portableTextHasContent>[0],
+        )
           ? true
           : FIELD_REQUIRED_IT
       }),

@@ -50,7 +50,10 @@ export function floorPlansField(options?: FloorPlansFieldOptions) {
           if (!ref) {
             continue
           }
-          const size = await client.fetch<number | null>(`*[_id == $id][0].size`, { id: ref })
+          const size = await client.fetch<number | null>(
+            `*[_id == $id][0].size`,
+            { id: ref },
+          )
           if (typeof size === "number" && size > MAX_FLOOR_PLAN_PDF_BYTES) {
             return `Ogni PDF non può superare ${maxMb} MB. Riduci il file o dividi le planimetrie.`
           }

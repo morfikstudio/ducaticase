@@ -1,7 +1,10 @@
 import { defineField } from "sanity"
 
 import { CONDO_FEE_CURRENCY_OPTIONS } from "../../../lib/constants"
-import { FIELD_REQUIRED_IT, INVALID_VALUE_MESSAGE_IT } from "../../../lib/validationMessages"
+import {
+  FIELD_REQUIRED_IT,
+  INVALID_VALUE_MESSAGE_IT,
+} from "../../../lib/validationMessages"
 
 type CondoFeesValue =
   | {

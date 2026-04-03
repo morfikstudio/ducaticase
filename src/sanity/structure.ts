@@ -21,7 +21,9 @@ export const structure: StructureResolver = (S) =>
             .title("Annunci immobiliari")
             .items(
               LISTING_DOCUMENT_SPECS.map((spec) =>
-                S.documentTypeListItem(spec.name).title(spec.title).icon(spec.icon),
+                S.documentTypeListItem(spec.name)
+                  .title(spec.title)
+                  .icon(spec.icon),
               ),
             ),
         ),

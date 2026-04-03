@@ -106,16 +106,16 @@ Attenzione: sovrascrive production con development. Usare solo quando sei sicuro
 
 ## Scripts
 
-| Comando                       | Descrizione                                                                 |
-| ----------------------------- | --------------------------------------------------------------------------- |
-| `npm run dev`                 | Avvia il server di sviluppo                                                 |
-| `npm run build`               | Build di produzione                                                         |
-| `npm run start`               | Avvia il server di produzione                                               |
-| `npm run typegen`             | Estrae lo schema e rigenera i tipi Sanity                                   |
-| `npm run promote:dev-to-prod` | Copia dataset development → production (sovrascrive prod)                   |
-| `npm run lint`                | Esegue ESLint                                                               |
-| `npm run format`              | Formatta con Prettier                                                       |
-| `npm run format:check`        | Verifica formattazione Prettier                                             |
+| Comando                       | Descrizione                                               |
+| ----------------------------- | --------------------------------------------------------- |
+| `npm run dev`                 | Avvia il server di sviluppo                               |
+| `npm run build`               | Build di produzione                                       |
+| `npm run start`               | Avvia il server di produzione                             |
+| `npm run typegen`             | Estrae lo schema e rigenera i tipi Sanity                 |
+| `npm run promote:dev-to-prod` | Copia dataset development → production (sovrascrive prod) |
+| `npm run lint`                | Esegue ESLint                                             |
+| `npm run format`              | Formatta con Prettier                                     |
+| `npm run format:check`        | Verifica formattazione Prettier                           |
 
 ## Struttura progetto
 

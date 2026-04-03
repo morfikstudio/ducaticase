@@ -7,7 +7,9 @@ export type HasAccessibleAccessFieldOptions = {
   group?: string
 }
 
-export function hasAccessibleAccessField(options?: HasAccessibleAccessFieldOptions) {
+export function hasAccessibleAccessField(
+  options?: HasAccessibleAccessFieldOptions,
+) {
   const required = options?.required ?? false
 
   return defineField({

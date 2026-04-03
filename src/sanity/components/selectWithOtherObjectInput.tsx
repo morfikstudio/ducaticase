@@ -9,7 +9,10 @@ export type SelectWithOtherSchemaOptions = {
   otherValue: string
 }
 
-type FieldMember = Extract<ObjectInputProps["members"][number], { kind: "field" }>
+type FieldMember = Extract<
+  ObjectInputProps["members"][number],
+  { kind: "field" }
+>
 
 function getSelectWithOtherOptions(
   schemaType: ObjectInputProps["schemaType"],
@@ -49,7 +52,9 @@ export function SelectWithOtherObjectInput(props: ObjectInputProps) {
     return renderDefault(props)
   }
 
-  const fieldMembers = members.filter((m): m is FieldMember => m.kind === "field")
+  const fieldMembers = members.filter(
+    (m): m is FieldMember => m.kind === "field",
+  )
   const choiceMember = fieldMembers.find((m) => m.name === cfg.choiceField)
   const otherMember = fieldMembers.find((m) => m.name === cfg.otherField)
 
@@ -62,7 +67,9 @@ export function SelectWithOtherObjectInput(props: ObjectInputProps) {
   const showOther = choice === cfg.otherValue
 
   const gridStyle = {
-    gridTemplateColumns: showOther ? "minmax(0, 1fr) minmax(0, 1fr)" : "minmax(0, 1fr)",
+    gridTemplateColumns: showOther
+      ? "minmax(0, 1fr) minmax(0, 1fr)"
+      : "minmax(0, 1fr)",
     alignItems: "end" as const,
   }
 

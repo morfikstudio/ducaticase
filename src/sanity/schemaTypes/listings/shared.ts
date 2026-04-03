@@ -16,14 +16,18 @@ type LocationPreviewSelect = {
   country?: string | null
 }
 
-function formatListingLocationSubtitle(parts: LocationPreviewSelect): string | undefined {
+function formatListingLocationSubtitle(
+  parts: LocationPreviewSelect,
+): string | undefined {
   const street = [parts.streetName, parts.streetNumber]
     .filter((s): s is string => typeof s === "string" && s.trim() !== "")
     .map((s) => s.trim())
     .join(" ")
 
   const cityPart =
-    typeof parts.city === "string" && parts.city.trim() !== "" ? parts.city.trim() : ""
+    typeof parts.city === "string" && parts.city.trim() !== ""
+      ? parts.city.trim()
+      : ""
 
   let locality = cityPart
   if (typeof parts.province === "string" && parts.province.trim() !== "") {
