@@ -11,7 +11,8 @@ export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`
   *[_type in [
     "listingResidential",
     "listingCountryHouses",
-    "listingShopsAndOffices"
+    "listingShopsAndOffices",
+    "listingIndustrial"
   ]] | order(_updatedAt desc) [0...10]{
     ...,
     mainImage {

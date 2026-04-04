@@ -1,6 +1,7 @@
 import { type SchemaTypeDefinition } from "sanity"
 
 import { listingCountryHouses } from "./listingCountryHouses"
+import { listingIndustrial } from "./listingIndustrial"
 import { listingResidential } from "./listingResidential"
 import { listingShopsAndOffices } from "./listingShopsAndOffices"
 
@@ -13,4 +14,5 @@ export const listingTypes: SchemaTypeDefinition[] = [
   listingResidential,
   listingCountryHouses,
   listingShopsAndOffices,
+  listingIndustrial,
 ]

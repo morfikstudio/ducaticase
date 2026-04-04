@@ -78,6 +78,10 @@ export {
   type BuildingYearFieldOptions,
 } from "./building/buildingYearField"
 export {
+  heightMetersField,
+  type HeightMetersFieldOptions,
+} from "./building/heightMetersField"
+export {
   displayWindowsField,
   type DisplayWindowsFieldOptions,
 } from "./building/displayWindowsField"
@@ -149,3 +153,41 @@ export {
   shopsAndOfficesTypologyField,
   type ShopsAndOfficesTypologyFieldOptions,
 } from "./listing/shopsAndOfficesTypologyField"
+export {
+  industrialTypologyField,
+  type IndustrialTypologyFieldOptions,
+} from "./listing/industrialTypologyField"
+
+/* Industrial (listing-specific fields; wire in listing schemas as needed) */
+export {
+  hasDrivableAccessField,
+  type HasDrivableAccessFieldOptions,
+} from "./industrial/hasDrivableAccessField"
+export {
+  hasLoadingDocksField,
+  type HasLoadingDocksFieldOptions,
+} from "./industrial/hasLoadingDocksField"
+export {
+  hasOverheadCranesField,
+  type HasOverheadCranesFieldOptions,
+} from "./industrial/hasOverheadCranesField"
+export {
+  hasChangingRoomField,
+  type HasChangingRoomFieldOptions,
+} from "./industrial/hasChangingRoomField"
+export {
+  hasFencedPropertyField,
+  type HasFencedPropertyFieldOptions,
+} from "./industrial/hasFencedPropertyField"
+export {
+  shedAreaSqmField,
+  type ShedAreaSqmFieldOptions,
+} from "./industrial/shedAreaSqmField"
+export {
+  officeAreaSqmField,
+  type OfficeAreaSqmFieldOptions,
+} from "./industrial/officeAreaSqmField"
+export {
+  landAreaSqmField,
+  type LandAreaSqmFieldOptions,
+} from "./industrial/landAreaSqmField"

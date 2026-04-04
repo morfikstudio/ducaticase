@@ -1,29 +1,28 @@
 import { defineField } from "sanity"
 
-import { CONCIERGE_SERVICE_OPTIONS } from "../../../lib/constants"
+import { INDUSTRIAL_TYPOLOGY_OPTIONS } from "../../../lib/constants"
 import { FIELD_REQUIRED_IT } from "../../../lib/validationMessages"
 
-export type ConciergeServiceFieldOptions = {
-  /** Defaults to `conciergeService`. Use when the same listing needs two instances (e.g. different field groups). */
-  name?: string
+export type IndustrialTypologyFieldOptions = {
   required?: boolean
   group?: string
 }
 
-export function conciergeServiceField(options?: ConciergeServiceFieldOptions) {
+export function industrialTypologyField(
+  options?: IndustrialTypologyFieldOptions,
+) {
   const required = options?.required ?? false
-  const name = options?.name ?? "conciergeService"
 
   return defineField({
     ...(options?.group ? { group: options.group } : {}),
-    name,
-    title: "Servizio portineria / Reception",
+    name: "industrialTypology",
+    title: "Tipologia",
     type: "string",
     options: {
-      list: [...CONCIERGE_SERVICE_OPTIONS],
+      list: [...INDUSTRIAL_TYPOLOGY_OPTIONS],
     },
     validation: (Rule) =>
-      Rule.custom((value) => {
+      Rule.custom((value: string | undefined) => {
         if (!required) {
           return true
         }

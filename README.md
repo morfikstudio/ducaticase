@@ -1,6 +1,6 @@
 # Ducati Case
 
-Real estate listings site built with [Sanity.io](https://sanity.io) and [Next.js](https://nextjs.org). **Locales:** Italian (default) and English. The content model supports several listing types (residential, country homes, shops and offices as one document type with a typology field); the frontend home is still evolving.
+Real estate listings site built with [Sanity.io](https://sanity.io) and [Next.js](https://nextjs.org). **Locales:** Italian (default) and English. The content model supports several listing types (residential, country homes, shops/offices and industrial each with a typology field); the frontend home is still evolving.
 
 ## Tech stack
 
@@ -31,6 +31,7 @@ Real estate listings site built with [Sanity.io](https://sanity.io) and [Next.js
   - Residential (`listingResidential`)
   - Country homes (`listingCountryHouses`)
   - Shops and offices (`listingShopsAndOffices`) — a single `_type` with required **`shopsAndOfficesTypology`** (`shops` | `offices`). Studio shows one desk entry (“Negozi e uffici”). Shop-only fields (e.g. display windows) and office-only fields (e.g. office layout, optional) are shown based on that typology. Concierge is stored as **`conciergeService`** (offices, property sheet, required when typology is offices) or **`conciergeServiceShops`** (shops, optional fields); in GROQ use e.g. `coalesce(conciergeService, conciergeServiceShops)` if you need a single value.
+  - Industrial (`listingIndustrial`) — required **`industrialTypology`** (`warehouses` for Magazzini | `sheds` for Capannoni). One desk entry (“Industriale”). Required for both typologies: commercial area, **height** (`heightMeters`, metres), floor, energy class; **building year** is shown and required only for Magazzini (`warehouses`); it is hidden for Capannoni (`sheds`). Optional fields **only for Capannoni** (`sheds`): loading docks, overhead cranes, shed/office/land areas (`shedAreaSqm`, `officeAreaSqm`, `landAreaSqm`), changing room, fenced property, **`conciergeService`** — hidden for Magazzini. **`hasLoadingUnloading`** (“Carico e scarico”) is shown for Magazzini only; hidden for Capannoni. Optional for **both** typologies: **`hasDrivableAccess`** (“Accesso carrabile”; distinct from `hasDrivewayAccess` / “Passo carrabile”). Heating is optional.
 
 Schemas live in `src/sanity/schemaTypes/`. After schema changes, run `npm run typegen` (requires `.env.local` with Project ID and dataset).
 

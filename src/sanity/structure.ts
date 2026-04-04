@@ -21,9 +21,18 @@ export const structure: StructureResolver = (S) =>
             .title("Annunci immobiliari")
             .items(
               LISTING_DOCUMENT_SPECS.map((spec) =>
-                S.documentTypeListItem(spec.name)
+                S.listItem()
                   .title(spec.title)
-                  .icon(spec.icon),
+                  .icon(spec.icon)
+                  .id(spec.name)
+                  .schemaType(spec.name)
+                  .child(
+                    S.documentTypeList(spec.name)
+                      .title(spec.title)
+                      .defaultOrdering([
+                        { field: "_createdAt", direction: "desc" },
+                      ]),
+                  ),
               ),
             ),
         ),

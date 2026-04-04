@@ -1,4 +1,4 @@
-import { BasketIcon, HomeIcon, SunIcon } from "@sanity/icons"
+import { BasketIcon, CubeIcon, HomeIcon, SunIcon } from "@sanity/icons"
 
 /** Macro categoria: valore compatto, titolo IT, `_type` documento Sanity, icona desk. */
 export const MACRO_CATEGORY_OPTIONS = [
@@ -19,6 +19,12 @@ export const MACRO_CATEGORY_OPTIONS = [
     value: "commercial",
     documentType: "listingShopsAndOffices",
     icon: BasketIcon,
+  },
+  {
+    title: "Industriale",
+    value: "industrial",
+    documentType: "listingIndustrial",
+    icon: CubeIcon,
   },
 ] as const
 
@@ -51,6 +57,14 @@ export const SHOPS_AND_OFFICES_TYPOLOGY_OPTIONS = [
 
 export type ShopsAndOfficesTypologyValue =
   (typeof SHOPS_AND_OFFICES_TYPOLOGY_OPTIONS)[number]["value"]
+
+export const INDUSTRIAL_TYPOLOGY_OPTIONS = [
+  { title: "Magazzini", value: "warehouses" },
+  { title: "Capannoni", value: "sheds" },
+] as const
+
+export type IndustrialTypologyValue =
+  (typeof INDUSTRIAL_TYPOLOGY_OPTIONS)[number]["value"]
 
 export const FLOOR_OPTIONS = [
   { title: "1", value: "1" },
