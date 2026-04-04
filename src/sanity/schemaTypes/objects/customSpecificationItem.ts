@@ -46,8 +46,7 @@ export const customSpecificationItem = defineType({
       title: "Valore (testo)",
       type: "string",
       hidden: ({ parent }) =>
-        (parent as CustomSpecificationParent | undefined)?.valueKind !==
-        "text",
+        (parent as CustomSpecificationParent | undefined)?.valueKind !== "text",
     }),
     defineField({
       name: "numberValue",

@@ -16,12 +16,22 @@ export function provinceField(options?: ProvinceFieldOptions) {
     name: "province",
     title: "Provincia",
     type: "string",
+    hidden: ({ document }) =>
+      (document as { country?: string | null } | undefined)?.country !== "IT",
     options: {
       list: [...ITALIAN_PROVINCE_OPTIONS],
     },
     validation: (Rule) =>
-      Rule.custom((value) => {
+      Rule.custom((value, context) => {
         if (!required) {
+          return true
+        }
+
+        const country = (
+          context.document as { country?: string | null } | undefined
+        )?.country
+
+        if (country !== "IT") {
           return true
         }
 

@@ -7,7 +7,6 @@ import {
   SunIcon,
 } from "@sanity/icons"
 
-/** Macro categoria: valore compatto, titolo IT, `_type` documento Sanity, icona desk. */
 export const MACRO_CATEGORY_OPTIONS = [
   {
     title: "Residenziale",
@@ -53,7 +52,6 @@ export type MacroCategoryValue =
 export type ListingTypeName =
   (typeof MACRO_CATEGORY_OPTIONS)[number]["documentType"]
 
-/** Structure builder: stesso ordine e titoli di `MACRO_CATEGORY_OPTIONS`. */
 export const LISTING_DOCUMENT_SPECS = MACRO_CATEGORY_OPTIONS.map((o) => ({
   name: o.documentType,
   title: o.title,
@@ -138,14 +136,12 @@ export const GARDEN_OPTIONS = [
   { title: "Privato e Comune", value: "privateAndShared" },
 ] as const
 
-/** Accesso al terreno (listingLand). */
 export const LAND_ACCESS_OPTIONS = [
   { title: "Strada asfaltata", value: "asphalt" },
   { title: "Strada sterrata", value: "dirt" },
   { title: "Altro", value: "other" },
 ] as const
 
-/** Classe energetica: schema normativo + classi collegate. */
 export const ENERGY_CLASS_SCHEME_OPTIONS = [
   { title: "Non classificabile", value: "notClassifiable" },
   { title: "In fase di realizzazione", value: "inProgress" },
@@ -301,7 +297,6 @@ export const ITALIAN_PROVINCE_OPTIONS = [
 export const MAX_MAIN_IMAGE_BYTES = 2 * 1024 * 1024
 export const MAX_FLOOR_PLAN_PDF_BYTES = 10 * 1024 * 1024
 
-/** Layout spazi ufficio (listing commerciali). */
 export const OFFICE_LAYOUT_OPTIONS = [
   { title: "Open space", value: "openSpace" },
   { title: "Uffici singoli", value: "individualOffices" },
