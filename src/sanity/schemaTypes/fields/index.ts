@@ -90,6 +90,12 @@ export {
   type OfficeLayoutFieldOptions,
 } from "./building/officeLayoutField"
 
+/* Custom / freeform */
+export {
+  customSpecificationsField,
+  type CustomSpecificationsFieldOptions,
+} from "./customSpecificationsField"
+
 /* Contents */
 export {
   descriptionField,
@@ -143,6 +149,12 @@ export {
   outdoorAreaSqmField,
   type OutdoorAreaFieldOptions,
 } from "./outdoor/outdoorAreaField"
+
+/* Hospitality */
+export {
+  roomCountField,
+  type RoomCountFieldOptions,
+} from "./hospitality/roomCountField"
 
 /* Typologies (for listings) */
 export {

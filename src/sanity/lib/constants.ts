@@ -1,4 +1,4 @@
-import { BasketIcon, CubeIcon, HomeIcon, SunIcon } from "@sanity/icons"
+import { BasketIcon, CubeIcon, HeartIcon, HomeIcon, SunIcon } from "@sanity/icons"
 
 /** Macro categoria: valore compatto, titolo IT, `_type` documento Sanity, icona desk. */
 export const MACRO_CATEGORY_OPTIONS = [
@@ -25,6 +25,12 @@ export const MACRO_CATEGORY_OPTIONS = [
     value: "industrial",
     documentType: "listingIndustrial",
     icon: CubeIcon,
+  },
+  {
+    title: "Hospitality",
+    value: "hospitality",
+    documentType: "listingHospitality",
+    icon: HeartIcon,
   },
 ] as const
 
