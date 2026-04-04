@@ -93,11 +93,11 @@ export const listingShopsAndOffices = defineType({
     countryField({ required: true, group: "location" }),
     provinceField({ required: true, group: "location" }),
     cityField({ required: true, group: "location" }),
-    addressField({ required: true, group: "location" }),
-    postalCodeField({ required: true, group: "location" }),
+    addressField({ group: "location" }),
+    postalCodeField({ group: "location" }),
     /* Contenuto */
     mainImageField({ required: true, group: "content" }),
-    descriptionField({ required: true, group: "content" }),
+    descriptionField({ group: "content" }),
     excerptField({ group: "content" }),
     /* Planimetrie */
     floorPlansField({ group: "floorPlans" }),
