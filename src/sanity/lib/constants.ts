@@ -1,15 +1,73 @@
-/** Opzioni macro categoria (allineate ai titoli in `listingTypes` / desk). */
+import {
+  BlockElementIcon,
+  CaseIcon,
+  CubeIcon,
+  HomeIcon,
+  StarIcon,
+  SunIcon,
+} from "@sanity/icons"
+
+/** Macro categoria: valore compatto, titolo IT, `_type` documento Sanity, icona desk. */
 export const MACRO_CATEGORY_OPTIONS = [
-  { title: "Residenziale", value: "residential" },
-  { title: "Dimore oltre la città", value: "countryHouses" },
-  { title: "Uffici e Negozi", value: "officesAndRetail" },
-  { title: "Industriale", value: "industrial" },
-  { title: "Hospitality", value: "hospitality" },
-  { title: "Terreni", value: "land" },
+  {
+    title: "Residenziale",
+    value: "residential",
+    documentType: "listingResidential",
+    icon: HomeIcon,
+  },
+  {
+    title: "Dimore oltre la città",
+    value: "countryHouses",
+    documentType: "listingCountryHouses",
+    icon: SunIcon,
+  },
+  {
+    title: "Uffici e Negozi",
+    value: "officesAndRetail",
+    documentType: "listingOfficesAndRetail",
+    icon: CaseIcon,
+  },
+  {
+    title: "Industriale",
+    value: "industrial",
+    documentType: "listingIndustrial",
+    icon: CubeIcon,
+  },
+  {
+    title: "Hospitality",
+    value: "hospitality",
+    documentType: "listingHospitality",
+    icon: StarIcon,
+  },
+  {
+    title: "Terreni",
+    value: "land",
+    documentType: "listingLand",
+    icon: BlockElementIcon,
+  },
 ] as const
 
 export type MacroCategoryValue =
   (typeof MACRO_CATEGORY_OPTIONS)[number]["value"]
+
+export type ListingTypeName =
+  (typeof MACRO_CATEGORY_OPTIONS)[number]["documentType"]
+
+/** Structure builder: stesso ordine e titoli di `MACRO_CATEGORY_OPTIONS`. */
+export const LISTING_DOCUMENT_SPECS = MACRO_CATEGORY_OPTIONS.map((o) => ({
+  name: o.documentType,
+  title: o.title,
+  icon: o.icon,
+}))
+
+export const COUNTRY_HOUSE_TYPOLOGY_OPTIONS = [
+  { title: "Mare", value: "sea" },
+  { title: "Laghi e campagna", value: "lakesAndCountryside" },
+  { title: "Montagna", value: "mountain" },
+] as const
+
+export type CountryHouseTypologyValue =
+  (typeof COUNTRY_HOUSE_TYPOLOGY_OPTIONS)[number]["value"]
 
 export const FLOOR_OPTIONS = [
   { title: "1", value: "1" },

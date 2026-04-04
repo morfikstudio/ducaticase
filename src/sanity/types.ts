@@ -51,12 +51,27 @@ export type ListingOfficesAndRetail = {
   listingLabel?: string
 }
 
+export type SanityImageAssetReference = {
+  _ref: string
+  _type: "reference"
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+}
+
+export type SanityFileAssetReference = {
+  _ref: string
+  _type: "reference"
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset"
+}
+
 export type ListingCountryHouses = {
   _id: string
   _type: "listingCountryHouses"
   _createdAt: string
   _updatedAt: string
   _rev: string
+  countryHouseTypology?: "sea" | "lakesAndCountryside" | "mountain"
   commercialAreaSqm?: number
   floor?:
     | "1"
@@ -103,20 +118,199 @@ export type ListingCountryHouses = {
       | "F"
       | "G"
   }
+  country?: "IT" | "FR" | "CH" | "DE" | "AT" | "ES" | "GB" | "US"
+  province?:
+    | "AG"
+    | "AL"
+    | "AN"
+    | "AR"
+    | "AP"
+    | "AT"
+    | "AV"
+    | "BA"
+    | "BT"
+    | "BL"
+    | "BN"
+    | "BG"
+    | "BI"
+    | "BO"
+    | "BZ"
+    | "BS"
+    | "BR"
+    | "CA"
+    | "CL"
+    | "CB"
+    | "CE"
+    | "CT"
+    | "CZ"
+    | "CH"
+    | "CO"
+    | "CS"
+    | "CR"
+    | "KR"
+    | "CN"
+    | "EN"
+    | "FM"
+    | "FE"
+    | "FI"
+    | "FG"
+    | "FC"
+    | "FR"
+    | "GE"
+    | "GO"
+    | "GR"
+    | "IM"
+    | "IS"
+    | "AQ"
+    | "SP"
+    | "LT"
+    | "LE"
+    | "LC"
+    | "LI"
+    | "LO"
+    | "LU"
+    | "MC"
+    | "MN"
+    | "MS"
+    | "MT"
+    | "ME"
+    | "MI"
+    | "MO"
+    | "MB"
+    | "NA"
+    | "NO"
+    | "NU"
+    | "OR"
+    | "PD"
+    | "PA"
+    | "PR"
+    | "PV"
+    | "PG"
+    | "PU"
+    | "PE"
+    | "PC"
+    | "PI"
+    | "PT"
+    | "PN"
+    | "PZ"
+    | "PO"
+    | "RG"
+    | "RA"
+    | "RC"
+    | "RE"
+    | "RI"
+    | "RN"
+    | "RM"
+    | "RO"
+    | "SA"
+    | "SS"
+    | "SV"
+    | "SI"
+    | "SR"
+    | "SO"
+    | "SU"
+    | "TA"
+    | "TE"
+    | "TR"
+    | "TO"
+    | "TP"
+    | "TN"
+    | "TV"
+    | "TS"
+    | "UD"
+    | "AO"
+    | "VA"
+    | "VB"
+    | "VC"
+    | "VE"
+    | "VR"
+    | "VV"
+    | "VI"
+    | "VT"
+  city?: string
+  address?: {
+    streetName?: string
+    streetNumber?: string
+  }
+  postalCode?: string
+  mainImage?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: "image"
+  }
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: "span"
+      _key: string
+    }>
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote"
+    listItem?: "bullet" | "number"
+    markDefs?: Array<{
+      href?: string
+      _type: "link"
+      _key: string
+    }>
+    level?: number
+    _type: "block"
+    _key: string
+  }>
+  excerpt?: string
+  floorPlans?: Array<{
+    asset?: SanityFileAssetReference
+    media?: unknown
+    _type: "file"
+    _key: string
+  }>
+  outdoorAreaSqm?: number
+  furnishing?:
+    | "furnished"
+    | "unfurnished"
+    | "partiallyFurnished"
+    | "kitchenOnlyFurnished"
+  garden?: "private" | "shared" | "privateAndShared"
+  carBox?: {
+    choice?: "single" | "double" | "other"
+    otherSpecification?: string
+  }
+  parkingSpaces?: {
+    choice?: "covered" | "uncovered" | "other"
+    otherSpecification?: string
+  }
+  hasBalcony?: boolean
+  hasTerrace?: boolean
+  hasCellar?: boolean
+  hasAtticRoom?: boolean
+  hasTavern?: boolean
+  hasAlarmSystem?: boolean
+  pool?: "yes" | "condominium"
+  hasTennisCourt?: boolean
+  hasAccessibleAccess?: boolean
+  climateControl?: "autonomous" | "centralized" | "preInstallation"
+  condoFees?: {
+    condoFeesAmount?: number
+    condoFeesCurrency?: "EUR" | "CHF"
+  }
 }
 
-export type SanityImageAssetReference = {
-  _ref: string
-  _type: "reference"
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop"
+  top: number
+  bottom: number
+  left: number
+  right: number
 }
 
-export type SanityFileAssetReference = {
-  _ref: string
-  _type: "reference"
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: "sanity.fileAsset"
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot"
+  x: number
+  y: number
+  height: number
+  width: number
 }
 
 export type ListingResidential = {
@@ -350,22 +544,6 @@ export type ListingResidential = {
   climateControl?: "autonomous" | "centralized" | "preInstallation"
 }
 
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop"
-  top: number
-  bottom: number
-  left: number
-  right: number
-}
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot"
-  x: number
-  y: number
-  height: number
-  width: number
-}
-
 export type SiteContent = {
   _id: string
   _type: "siteContent"
@@ -483,12 +661,12 @@ export type AllSanitySchemaTypes =
   | ListingHospitality
   | ListingIndustrial
   | ListingOfficesAndRetail
-  | ListingCountryHouses
   | SanityImageAssetReference
   | SanityFileAssetReference
-  | ListingResidential
+  | ListingCountryHouses
   | SanityImageCrop
   | SanityImageHotspot
+  | ListingResidential
   | SiteContent
   | SanityImagePaletteSwatch
   | SanityImagePalette

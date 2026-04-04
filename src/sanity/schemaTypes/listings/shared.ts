@@ -1,6 +1,8 @@
 import type { PreviewValue } from "@sanity/types"
 import { defineField } from "sanity"
 
+import { MACRO_CATEGORY_OPTIONS } from "../../lib/constants"
+
 export const listingLabelField = defineField({
   name: "listingLabel",
   title: "Etichetta",
@@ -58,11 +60,46 @@ function isPreviewImageMedia(value: unknown): boolean {
   return typeof ref === "string" && ref.length > 0
 }
 
-export function listingPreview() {
+export type ListingPreviewOptions = {
+  /** Se presente, la tipologia ha priorità sul titolo macro categoria nel sottotitolo. */
+  typologyField?: string
+  typologyOptions?: ReadonlyArray<{ title: string; value: string }>
+}
+
+function listingTypologyTitle(
+  value: unknown,
+  typologyOptions: ReadonlyArray<{ title: string; value: string }>,
+): string | undefined {
+  if (typeof value !== "string" || value.trim() === "") {
+    return undefined
+  }
+
+  return typologyOptions.find((o) => o.value === value)?.title
+}
+
+function listingMacroCategoryTitle(_type: unknown): string | undefined {
+  if (typeof _type !== "string" || _type === "") {
+    return undefined
+  }
+
+  const row = MACRO_CATEGORY_OPTIONS.find((o) => o.documentType === _type)
+  return row?.title
+}
+
+/**
+ * Anteprima elenco annunci: etichetta, poi tipologia (se configurata e valorizzata) o titolo macro categoria,
+ * poi località.
+ */
+export function listingPreview(options?: ListingPreviewOptions) {
+  const typologyField = options?.typologyField
+  const typologyOptions = options?.typologyOptions ?? []
+
   return {
     select: {
       listingLabel: "listingLabel",
       media: "mainImage",
+      _type: "_type",
+      ...(typologyField ? { typologyValue: typologyField } : {}),
       streetName: "address.streetName",
       streetNumber: "address.streetNumber",
       city: "city",
@@ -72,6 +109,8 @@ export function listingPreview() {
     prepare({
       listingLabel,
       media,
+      _type,
+      typologyValue,
       streetName,
       streetNumber,
       city,
@@ -80,6 +119,8 @@ export function listingPreview() {
     }: {
       listingLabel?: string
       media?: unknown
+      _type?: string | null
+      typologyValue?: string | null
       streetName?: string | null
       streetNumber?: string | null
       city?: string | null
@@ -94,23 +135,39 @@ export function listingPreview() {
         country,
       })
 
+      const typologyTitle = typologyField
+        ? listingTypologyTitle(typologyValue, typologyOptions)
+        : undefined
+      const macroTitle = listingMacroCategoryTitle(_type)
+      const contextTitle = typologyTitle ?? macroTitle
+
       const label =
         typeof listingLabel === "string" && listingLabel.trim()
           ? listingLabel.trim()
           : undefined
 
+      const mediaMaybe = isPreviewImageMedia(media) ? { media } : {}
+
       if (label) {
+        const subtitle = [contextTitle, locationText]
+          .filter((s): s is string => typeof s === "string" && s !== "")
+          .join(" · ")
+
         return {
           title: label,
-          subtitle: locationText,
-          ...(isPreviewImageMedia(media) ? { media } : {}),
+          ...(subtitle ? { subtitle } : {}),
+          ...mediaMaybe,
         } as PreviewValue
       }
 
+      const title = locationText ?? contextTitle ?? "—"
+      const subtitle =
+        locationText && contextTitle ? contextTitle : undefined
+
       return {
-        title: locationText ?? "—",
-        subtitle: undefined,
-        ...(isPreviewImageMedia(media) ? { media } : {}),
+        title,
+        ...(subtitle ? { subtitle } : {}),
+        ...mediaMaybe,
       } as PreviewValue
     },
   }

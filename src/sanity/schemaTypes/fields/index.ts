@@ -104,3 +104,15 @@ export {
   type EnergyClassFieldOptions,
 } from "./systems/energyClassField"
 export { heatingField, type HeatingFieldOptions } from "./systems/heatingField"
+
+/* Outdoor */
+export {
+  outdoorAreaSqmField,
+  type OutdoorAreaFieldOptions,
+} from "./outdoor/outdoorAreaField"
+
+/* Typologies (for listings) */
+export {
+  countryHouseTypologyField,
+  type CountryHouseTypologyFieldOptions,
+} from "./listing/countryHouseTypologyField"

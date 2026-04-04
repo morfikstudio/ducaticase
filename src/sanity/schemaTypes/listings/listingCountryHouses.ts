@@ -1,13 +1,40 @@
 import { ALL_FIELDS_GROUP, defineType } from "sanity"
 
+import { COUNTRY_HOUSE_TYPOLOGY_OPTIONS } from "../../lib/constants"
 import { listingPreview } from "./shared"
 
 import {
+  addressField,
   buildingYearField,
+  carBoxField,
+  cityField,
+  countryField,
+  climateControlField,
   commercialAreaSqmField,
+  condoFeesField,
+  countryHouseTypologyField,
+  descriptionField,
   energyClassField,
+  excerptField,
   floorField,
+  floorPlansField,
+  furnishingField,
+  gardenField,
+  hasAccessibleAccessField,
+  hasAlarmSystemField,
+  hasAtticRoomField,
+  hasBalconyField,
+  hasCellarField,
+  hasTavernField,
+  hasTennisCourtField,
+  hasTerraceField,
   heatingField,
+  mainImageField,
+  outdoorAreaSqmField,
+  parkingSpacesField,
+  poolField,
+  postalCodeField,
+  provinceField,
 } from "../fields"
 
 export const listingCountryHouses = defineType({
@@ -16,14 +43,52 @@ export const listingCountryHouses = defineType({
   type: "document",
   groups: [
     { name: "propertySheet", title: "Scheda immobile", default: true },
+    { name: "location", title: "Località" },
+    { name: "content", title: "Contenuto" },
+    { name: "floorPlans", title: "Planimetrie" },
+    { name: "optionals", title: "Campi aggiuntivi" },
     { ...ALL_FIELDS_GROUP, hidden: true },
   ],
   fields: [
+    /* Scheda immobile */
+    countryHouseTypologyField({ required: true, group: "propertySheet" }),
     commercialAreaSqmField({ required: true, group: "propertySheet" }),
     floorField({ required: true, group: "propertySheet" }),
     buildingYearField({ required: true, group: "propertySheet" }),
     heatingField({ required: true, group: "propertySheet" }),
     energyClassField({ required: true, group: "propertySheet" }),
+    /* Località */
+    countryField({ required: true, group: "location" }),
+    provinceField({ required: true, group: "location" }),
+    cityField({ required: true, group: "location" }),
+    addressField({ required: true, group: "location" }),
+    postalCodeField({ required: true, group: "location" }),
+    /* Contenuto */
+    mainImageField({ required: true, group: "content" }),
+    descriptionField({ required: true, group: "content" }),
+    excerptField({ group: "content" }),
+    /* Planimetrie */
+    floorPlansField({ group: "floorPlans" }),
+    /* Campi aggiuntivi */
+    outdoorAreaSqmField({ group: "optionals" }),
+    furnishingField({ group: "optionals" }),
+    gardenField({ group: "optionals" }),
+    carBoxField({ group: "optionals" }),
+    parkingSpacesField({ group: "optionals" }),
+    hasBalconyField({ group: "optionals" }),
+    hasTerraceField({ group: "optionals" }),
+    hasCellarField({ group: "optionals" }),
+    hasAtticRoomField({ group: "optionals" }),
+    hasTavernField({ group: "optionals" }),
+    hasAlarmSystemField({ group: "optionals" }),
+    poolField({ group: "optionals" }),
+    hasTennisCourtField({ group: "optionals" }),
+    hasAccessibleAccessField({ group: "optionals" }),
+    climateControlField({ group: "optionals" }),
+    condoFeesField({ group: "optionals" }),
   ],
-  preview: listingPreview(),
+  preview: listingPreview({
+    typologyField: "countryHouseTypology",
+    typologyOptions: COUNTRY_HOUSE_TYPOLOGY_OPTIONS,
+  }),
 })
