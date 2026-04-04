@@ -1,6 +1,6 @@
 # Ducati Case
 
-Sito per annunci immobiliari basato su [Sanity.io](https://sanity.io) e [Next.js](https://nextjs.org). Il modello contenuti distingue più tipologie di listing (residenziale, terreni, uffici, ecc.); il frontend è in evoluzione sulla home.
+Sito per annunci immobiliari basato su [Sanity.io](https://sanity.io) e [Next.js](https://nextjs.org). **Lingue:** italiano (predefinito) e inglese. Il modello contenuti distingue più tipologie di listing (residenziale, terreni, uffici, ecc.); il frontend è in evoluzione sulla home.
 
 ## Tech stack
 
@@ -8,6 +8,7 @@ Sito per annunci immobiliari basato su [Sanity.io](https://sanity.io) e [Next.js
 - **React 19**
 - **Sanity v5** (Studio su `/studio`, Vision, interfaccia in italiano)
 - **Tailwind CSS 4**
+- **next-intl** (routing `/it` e `/en`, messaggi UI in `messages/`)
 - **TypeScript** con Sanity TypeGen
 - **GSAP**, **Lenis**, **Zustand** (animazioni, scroll, stato UI)
 
@@ -18,13 +19,15 @@ Sito per annunci immobiliari basato su [Sanity.io](https://sanity.io) e [Next.js
 
 ## Pagine
 
-- **Home** — `/`
-- **Sanity Studio** — `/studio`
+- **Home (IT)** — `/it`
+- **Home (EN)** — `/en`
+- **`/`** — reindirizza al default (`/it`; rilevazione browser/cookie disattivata per coerenza con l’italiano come base)
+- **Sanity Studio** — `/studio` (senza prefisso lingua)
 
 ## Content model
 
-- **`siteContent`** — documento singleton per contenuti generali del sito (es. titolo).
-- **Listing** — tipologie documento dedicate, ciascuna con campi propri (posizione, superfici, servizi, media, ecc.):
+- **`siteContent`** — contenuti generali del sito; traduzioni gestite con **document internationalization** (un documento per lingua, IT/EN nello Studio).
+- **Listing** — tipologie documento dedicate; testi utente (etichetta, estratto, descrizione) sono **localizzati** (`it` / `en` nello stesso documento); numeri, indirizzi strutturati, enum e media restano condivisi:
   - Residenziale (`listingResidential`)
   - Dimore oltre la città (`listingCountryHouses`)
   - Uffici e negozi (`listingOfficesAndRetail`)
@@ -33,6 +36,15 @@ Sito per annunci immobiliari basato su [Sanity.io](https://sanity.io) e [Next.js
   - Terreni (`listingLand`)
 
 Gli schema sono in `src/sanity/schemaTypes/`. Dopo modifiche allo schema: `npm run typegen` (richiede `.env.local` con Project ID e dataset).
+
+**Frontend:** le query GROQ ricevono il `locale` dove serve; per i testi con `en` opzionale si usa il fallback su `it` (helper in `src/sanity/lib/locale.ts`).
+
+## Internazionalizzazione (Next.js)
+
+- Config: `src/i18n/` (`routing.ts`, `request.ts`, `navigation.ts` per `Link` / redirect tipizzati).
+- Middleware: `src/middleware.ts` (esclude `/studio` e asset statici).
+- Layout root: `src/app/layout.tsx` (`<html>` / `<body>` condivisi con lo Studio); layout localizzato: `src/app/[locale]/`.
+- Opzionale in produzione: `NEXT_PUBLIC_SITE_URL` per metadata/canonical.
 
 ## Setup Sanity
 
@@ -92,7 +104,7 @@ Attenzione: sovrascrive production con development. Usare solo quando sei sicuro
    NEXT_PUBLIC_SANITY_DATASET=production
    ```
 
-   Opzionale: `NEXT_PUBLIC_SANITY_API_VERSION` (default: `2026-02-23`), `NEXT_PUBLIC_ALLOW_INDEXING`, `SANITY_API_TOKEN` (se serve per script o integrazioni).
+   Opzionale: `NEXT_PUBLIC_SANITY_API_VERSION` (default: `2026-02-23`), `NEXT_PUBLIC_ALLOW_INDEXING`, `NEXT_PUBLIC_SITE_URL` (URL pubblico del sito, SEO), `SANITY_API_TOKEN` (se serve per script o integrazioni).
 
 3. **Avvio in sviluppo**
 
@@ -101,7 +113,7 @@ Attenzione: sovrascrive production con development. Usare solo quando sei sicuro
    npm run dev
    ```
 
-   - **Sito:** [http://localhost:3000](http://localhost:3000)
+   - **Sito:** [http://localhost:3000/it](http://localhost:3000/it) (o `/en`)
    - **Studio:** [http://localhost:3000/studio](http://localhost:3000/studio)
 
 ## Scripts
@@ -119,10 +131,12 @@ Attenzione: sovrascrive production con development. Usare solo quando sei sicuro
 
 ## Struttura progetto
 
-- **`src/app/`** — Next.js App Router (`(frontend)` per il sito, `studio` per il Studio)
+- **`src/app/`** — App Router: `[locale]/(frontend)` per il sito, `studio` per il Studio
+- **`src/i18n/`** — Routing e request `next-intl`
+- **`messages/`** — Stringhe UI per `it` / `en`
 - **`src/sanity/`** — Config Sanity, schema, query GROQ, client
-- **`src/components/`** — Componenti condivisi (es. provider, immagini)
+- **`src/components/`** — Componenti condivisi (es. `i18n/`, provider, immagini)
 
 ## Revalidation
 
-La home usa fetch verso Sanity con `revalidate: 60` (secondi). Non sono configurati webhook né revalidate on-demand.
+Le pagine che leggono Sanity usano `revalidate: 60` (secondi). Non sono configurati webhook né revalidate on-demand.

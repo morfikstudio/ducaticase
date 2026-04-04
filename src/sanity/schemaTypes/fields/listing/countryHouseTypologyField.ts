@@ -8,7 +8,9 @@ export type CountryHouseTypologyFieldOptions = {
   group?: string
 }
 
-export function countryHouseTypologyField(options?: CountryHouseTypologyFieldOptions) {
+export function countryHouseTypologyField(
+  options?: CountryHouseTypologyFieldOptions,
+) {
   const required = options?.required ?? false
 
   return defineField({

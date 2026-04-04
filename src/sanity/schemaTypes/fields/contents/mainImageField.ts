@@ -38,7 +38,7 @@ export function mainImageField(options?: MainImageFieldOptions) {
       defineField({
         name: "alt",
         title: "Testo alternativo",
-        type: "string",
+        type: "localizedString",
       }),
     ],
     validation: (Rule) =>

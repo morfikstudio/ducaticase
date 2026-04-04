@@ -4,6 +4,7 @@
  * This configuration is used to for the Sanity Studio that’s mounted on the `/app/studio/[[...tool]]/page.tsx` route
  */
 
+import { documentInternationalization } from "@sanity/document-internationalization"
 import { itITLocale } from "@sanity/locale-it-it"
 import { AddIcon } from "@sanity/icons"
 import { visionTool } from "@sanity/vision"
@@ -31,6 +32,13 @@ export default defineConfig({
   },
   plugins: [
     itITLocale(),
+    documentInternationalization({
+      supportedLanguages: [
+        { id: "it", title: "Italiano" },
+        { id: "en", title: "English" },
+      ],
+      schemaTypes: ["siteContent"],
+    }),
     structureTool({ structure }),
     // Vision is for querying with GROQ from inside the Studio
     // https://www.sanity.io/docs/the-vision-plugin

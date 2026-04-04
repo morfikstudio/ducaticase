@@ -2,6 +2,7 @@
 
 import { useMemo } from "react"
 import * as NextImage from "next/image"
+import { useLocale } from "next-intl"
 
 import {
   getImageDimensions,
@@ -9,8 +10,21 @@ import {
   isWidthOnlyResize,
 } from "@/utils/media"
 import type { ImageResizeId } from "@/utils/media"
+import type { AppLocale } from "@/i18n/routing"
+import { pickLocalizedString } from "@/sanity/lib/locale"
+import type { LocalizedString } from "@/sanity/types"
 
 import { useBreakpoint } from "@/stores/breakpointStore"
+
+function resolveImageAlt(alt: unknown, locale: AppLocale): string {
+  if (alt == null) {
+    return ""
+  }
+  if (typeof alt === "string") {
+    return alt
+  }
+  return pickLocalizedString(alt as LocalizedString, locale) ?? ""
+}
 
 interface ImageProps {
   image: any
@@ -35,6 +49,7 @@ export default function Image({
   priority = false,
   onLoad,
 }: ImageProps) {
+  const locale = useLocale() as AppLocale
   const { current: breakpoint } = useBreakpoint()
   const fluidHeight = !fill && isWidthOnlyResize(resizeId)
   const dimensions = !fill
@@ -58,7 +73,7 @@ export default function Image({
   return url ? (
     <NextImage.default
       src={url}
-      alt={image.alt ?? ""}
+      alt={resolveImageAlt(image.alt, locale)}
       fill={fill}
       {...(dimensions && {
         width: dimensions.width,

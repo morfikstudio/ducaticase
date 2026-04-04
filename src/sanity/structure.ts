@@ -1,4 +1,4 @@
-import { DocumentTextIcon, HomeIcon } from "@sanity/icons"
+import { DesktopIcon, HomeIcon } from "@sanity/icons"
 import type { StructureResolver } from "sanity/structure"
 
 import { LISTING_DOCUMENT_SPECS } from "./schemaTypes/listingTypes"
@@ -10,7 +10,7 @@ export const structure: StructureResolver = (S) =>
     .items([
       S.documentTypeListItem("siteContent")
         .title("Contenuti Sito")
-        .icon(DocumentTextIcon)
+        .icon(DesktopIcon)
         .id("siteContent"),
       S.divider(),
       S.listItem()

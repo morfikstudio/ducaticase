@@ -1,11 +1,8 @@
-import type { Metadata } from "next"
-import localFont from "next/font/local"
 import { Geist_Mono } from "next/font/google"
+import localFont from "next/font/local"
+
 import "./globals.css"
 import { cn } from "@/utils/classNames"
-
-const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true"
-const shouldIndex = process.env.NODE_ENV === "production" && allowIndexing
 
 const helvetica = localFont({
   src: [
@@ -23,21 +20,10 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 })
 
-export const metadata: Metadata = {
-  title: "Ducati Case",
-  description: "Ducati Case — agenzia immobiliare",
-  robots: {
-    index: shouldIndex,
-    follow: shouldIndex,
-    nocache: !shouldIndex,
-    googleBot: {
-      index: shouldIndex,
-      follow: shouldIndex,
-      nocache: !shouldIndex,
-    },
-  },
-}
-
+/**
+ * Root layout with `<html>` / `<body>` required by Next.js and `/studio` (Sanity).
+ * Routes `/it` and `/en` update `lang` via {@link HtmlLangAttr} (`components/i18n/HtmlLangAttr.tsx`) in the `[locale]` layout.
+ */
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -45,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="it"
       className={cn(helvetica.variable, geistMono.variable)}
       suppressHydrationWarning
     >

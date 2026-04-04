@@ -6,7 +6,7 @@ import { MACRO_CATEGORY_OPTIONS } from "../../lib/constants"
 export const listingLabelField = defineField({
   name: "listingLabel",
   title: "Etichetta",
-  type: "string",
+  type: "localizedString",
   description: "Opzionale. Se compilata, è il titolo principale in elenco.",
 })
 
@@ -96,7 +96,8 @@ export function listingPreview(options?: ListingPreviewOptions) {
 
   return {
     select: {
-      listingLabel: "listingLabel",
+      listingLabelIt: "listingLabel.it",
+      listingLabelEn: "listingLabel.en",
       media: "mainImage",
       _type: "_type",
       ...(typologyField ? { typologyValue: typologyField } : {}),
@@ -107,7 +108,8 @@ export function listingPreview(options?: ListingPreviewOptions) {
       country: "country",
     },
     prepare({
-      listingLabel,
+      listingLabelIt,
+      listingLabelEn,
       media,
       _type,
       typologyValue,
@@ -117,7 +119,8 @@ export function listingPreview(options?: ListingPreviewOptions) {
       province,
       country,
     }: {
-      listingLabel?: string
+      listingLabelIt?: string | null
+      listingLabelEn?: string | null
       media?: unknown
       _type?: string | null
       typologyValue?: string | null
@@ -141,10 +144,11 @@ export function listingPreview(options?: ListingPreviewOptions) {
       const macroTitle = listingMacroCategoryTitle(_type)
       const contextTitle = typologyTitle ?? macroTitle
 
-      const label =
-        typeof listingLabel === "string" && listingLabel.trim()
-          ? listingLabel.trim()
-          : undefined
+      const labelIt =
+        typeof listingLabelIt === "string" ? listingLabelIt.trim() : ""
+      const labelEn =
+        typeof listingLabelEn === "string" ? listingLabelEn.trim() : ""
+      const label = labelIt || labelEn || undefined
 
       const mediaMaybe = isPreviewImageMedia(media) ? { media } : {}
 
@@ -161,8 +165,7 @@ export function listingPreview(options?: ListingPreviewOptions) {
       }
 
       const title = locationText ?? contextTitle ?? "—"
-      const subtitle =
-        locationText && contextTitle ? contextTitle : undefined
+      const subtitle = locationText && contextTitle ? contextTitle : undefined
 
       return {
         title,

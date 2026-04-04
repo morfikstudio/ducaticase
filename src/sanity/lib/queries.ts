@@ -1,16 +1,29 @@
-import { defineQuery } from "next-sanity"
+import { defineQuery, groq } from "next-sanity"
 
-export const SITE_CONTENT_QUERY = defineQuery(
-  `*[_type == "siteContent"] | order(_updatedAt desc) [0]{ _id, title }`,
-)
+export const SITE_CONTENT_QUERY = defineQuery(groq`
+  coalesce(
+    *[_type == "siteContent" && language == $locale][0]{ _id, title, language },
+    *[_type == "siteContent" && language == "it"][0]{ _id, title, language } // fallback to IT if missing
+  )
+`)
 
-export const LISTINGS_PREVIEW_QUERY = defineQuery(
-  `*[_type in [
+export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`
+  *[_type in [
     "listingResidential",
     "listingCountryHouses",
     "listingOfficesAndRetail",
     "listingIndustrial",
     "listingHospitality",
     "listingLand"
-  ]] | order(_updatedAt desc) [0...10]{ _id, _type, listingLabel, commercialAreaSqm, floor }`,
-)
+  ]] | order(_updatedAt desc) [0...10]{
+    ...,
+    mainImage {
+      ...,
+      asset->
+    },
+    floorPlans[]{
+      ...,
+      asset->
+    }
+  }
+`)

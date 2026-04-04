@@ -10,6 +10,13 @@ export const siteContent = defineType({
   icon: DocumentTextIcon,
   fields: [
     defineField({
+      name: "language",
+      title: "Lingua",
+      type: "string",
+      readOnly: true,
+      hidden: true,
+    }),
+    defineField({
       name: "title",
       title: "Titolo",
       type: "string",
@@ -17,9 +24,11 @@ export const siteContent = defineType({
     }),
   ],
   preview: {
-    select: { title: "title" },
-    prepare({ title }) {
-      return { title: title || "Senza titolo" }
+    select: { title: "title", language: "language" },
+    prepare({ title, language }) {
+      const suffix =
+        language === "en" ? " (EN)" : language === "it" ? " (IT)" : ""
+      return { title: `${title || "Senza titolo"}${suffix}` }
     },
   },
 })

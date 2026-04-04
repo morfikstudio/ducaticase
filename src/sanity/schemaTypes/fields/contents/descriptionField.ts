@@ -1,4 +1,4 @@
-import { defineArrayMember, defineField } from "sanity"
+import { defineField } from "sanity"
 
 import { FIELD_REQUIRED_IT } from "../../../lib/validationMessages"
 
@@ -25,6 +25,8 @@ function portableTextHasContent(
   )
 }
 
+type LocalizedPT = { it?: unknown; en?: unknown } | undefined
+
 export function descriptionField(options?: DescriptionFieldOptions) {
   const required = options?.required ?? false
 
@@ -32,16 +34,15 @@ export function descriptionField(options?: DescriptionFieldOptions) {
     ...(options?.group ? { group: options.group } : {}),
     name: "description",
     title: "Descrizione",
-    type: "array",
-    of: [{ type: "block" }],
+    type: "localizedPortableText",
     validation: (Rule) =>
-      Rule.custom((value) => {
+      Rule.custom((value: LocalizedPT) => {
         if (!required) {
           return true
         }
 
         return portableTextHasContent(
-          value as Parameters<typeof portableTextHasContent>[0],
+          value?.it as Parameters<typeof portableTextHasContent>[0],
         )
           ? true
           : FIELD_REQUIRED_IT

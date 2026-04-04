@@ -21,7 +21,7 @@ export type ListingLand = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  listingLabel?: string
+  listingLabel?: LocalizedString
 }
 
 export type ListingHospitality = {
@@ -30,7 +30,7 @@ export type ListingHospitality = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  listingLabel?: string
+  listingLabel?: LocalizedString
 }
 
 export type ListingIndustrial = {
@@ -39,7 +39,7 @@ export type ListingIndustrial = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  listingLabel?: string
+  listingLabel?: LocalizedString
 }
 
 export type ListingOfficesAndRetail = {
@@ -48,7 +48,13 @@ export type ListingOfficesAndRetail = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  listingLabel?: string
+  listingLabel?: LocalizedString
+}
+
+export type LocalizedString = {
+  _type: "localizedString"
+  it?: string
+  en?: string
 }
 
 export type SanityImageAssetReference = {
@@ -238,28 +244,11 @@ export type ListingCountryHouses = {
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
+    alt?: LocalizedString
     _type: "image"
   }
-  description?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: "span"
-      _key: string
-    }>
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote"
-    listItem?: "bullet" | "number"
-    markDefs?: Array<{
-      href?: string
-      _type: "link"
-      _key: string
-    }>
-    level?: number
-    _type: "block"
-    _key: string
-  }>
-  excerpt?: string
+  description?: LocalizedPortableText
+  excerpt?: LocalizedText
   floorPlans?: Array<{
     asset?: SanityFileAssetReference
     media?: unknown
@@ -295,6 +284,52 @@ export type ListingCountryHouses = {
     condoFeesAmount?: number
     condoFeesCurrency?: "EUR" | "CHF"
   }
+}
+
+export type LocalizedText = {
+  _type: "localizedText"
+  it?: string
+  en?: string
+}
+
+export type LocalizedPortableText = {
+  _type: "localizedPortableText"
+  it?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: "span"
+      _key: string
+    }>
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote"
+    listItem?: "bullet" | "number"
+    markDefs?: Array<{
+      href?: string
+      _type: "link"
+      _key: string
+    }>
+    level?: number
+    _type: "block"
+    _key: string
+  }>
+  en?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: "span"
+      _key: string
+    }>
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote"
+    listItem?: "bullet" | "number"
+    markDefs?: Array<{
+      href?: string
+      _type: "link"
+      _key: string
+    }>
+    level?: number
+    _type: "block"
+    _key: string
+  }>
 }
 
 export type SanityImageCrop = {
@@ -490,28 +525,11 @@ export type ListingResidential = {
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
+    alt?: LocalizedString
     _type: "image"
   }
-  description?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: "span"
-      _key: string
-    }>
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote"
-    listItem?: "bullet" | "number"
-    markDefs?: Array<{
-      href?: string
-      _type: "link"
-      _key: string
-    }>
-    level?: number
-    _type: "block"
-    _key: string
-  }>
-  excerpt?: string
+  description?: LocalizedPortableText
+  excerpt?: LocalizedText
   floorPlans?: Array<{
     asset?: SanityFileAssetReference
     media?: unknown
@@ -544,12 +562,42 @@ export type ListingResidential = {
   climateControl?: "autonomous" | "centralized" | "preInstallation"
 }
 
+export type TranslationMetadata = {
+  _id: string
+  _type: "translation.metadata"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  translations?: InternationalizedArrayReference
+  schemaTypes?: Array<string>
+}
+
+export type InternationalizedArrayReference = Array<
+  {
+    _key: string
+  } & InternationalizedArrayReferenceValue
+>
+
+export type SiteContentReference = {
+  _ref: string
+  _type: "reference"
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: "siteContent"
+}
+
+export type InternationalizedArrayReferenceValue = {
+  _type: "internationalizedArrayReferenceValue"
+  value?: SiteContentReference
+  language: string
+}
+
 export type SiteContent = {
   _id: string
   _type: "siteContent"
   _createdAt: string
   _updatedAt: string
   _rev: string
+  language?: string
   title: string
 }
 
@@ -661,12 +709,19 @@ export type AllSanitySchemaTypes =
   | ListingHospitality
   | ListingIndustrial
   | ListingOfficesAndRetail
+  | LocalizedString
   | SanityImageAssetReference
   | SanityFileAssetReference
   | ListingCountryHouses
+  | LocalizedText
+  | LocalizedPortableText
   | SanityImageCrop
   | SanityImageHotspot
   | ListingResidential
+  | TranslationMetadata
+  | InternationalizedArrayReference
+  | SiteContentReference
+  | InternationalizedArrayReferenceValue
   | SiteContent
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -680,22 +735,33 @@ export type AllSanitySchemaTypes =
 
 // Source: src/sanity/lib/queries.ts
 // Variable: SITE_CONTENT_QUERY
-// Query: *[_type == "siteContent"] | order(_updatedAt desc) [0]{ _id, title }
-export type SITE_CONTENT_QUERY_RESULT = {
-  _id: string
-  title: string
-} | null
+// Query: coalesce(    *[_type == "siteContent" && language == $locale][0]{ _id, title, language },    *[_type == "siteContent" && language == "it"][0]{ _id, title, language } // fallback to IT if missing  )
+export type SITE_CONTENT_QUERY_RESULT =
+  | {
+      _id: string
+      title: string
+      language: "it"
+    }
+  | {
+      _id: string
+      title: string
+      language: string | null
+    }
+  | null
 
 // Source: src/sanity/lib/queries.ts
 // Variable: LISTINGS_PREVIEW_QUERY
-// Query: *[_type in [    "listingResidential",    "listingCountryHouses",    "listingOfficesAndRetail",    "listingIndustrial",    "listingHospitality",    "listingLand"  ]] | order(_updatedAt desc) [0...10]{ _id, _type, listingLabel, commercialAreaSqm, floor }
+// Query: *[_type in [    "listingResidential",    "listingCountryHouses",    "listingOfficesAndRetail",    "listingIndustrial",    "listingHospitality",    "listingLand"  ]] | order(_updatedAt desc) [0...10]{    ...,    mainImage {      ...,      asset->    },    floorPlans[]{      ...,      asset->    }  }
 export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
   | {
       _id: string
       _type: "listingCountryHouses"
-      listingLabel: null
-      commercialAreaSqm: number | null
-      floor:
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      countryHouseTypology?: "lakesAndCountryside" | "mountain" | "sea"
+      commercialAreaSqm?: number
+      floor?:
         | "1"
         | "10"
         | "2"
@@ -716,42 +782,284 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
         | "semiUnderground"
         | "topFloor"
         | "underground"
-        | null
+      buildingYear?: number
+      heating?: {
+        heatingType?: "autonomous" | "centralized" | "other"
+        heatingOther?: string
+      }
+      energyClass?: {
+        energyClassScheme?:
+          | "dl192_2005"
+          | "inProgress"
+          | "law90_2013"
+          | "notClassifiable"
+        energyClassRatingDl192?: "A" | "A+" | "B" | "C" | "D" | "E" | "F" | "G"
+        energyClassRatingLaw90?:
+          | "A1"
+          | "A2"
+          | "A3"
+          | "A4"
+          | "B"
+          | "C"
+          | "D"
+          | "E"
+          | "F"
+          | "G"
+      }
+      country?: "AT" | "CH" | "DE" | "ES" | "FR" | "GB" | "IT" | "US"
+      province?:
+        | "AG"
+        | "AL"
+        | "AN"
+        | "AO"
+        | "AP"
+        | "AQ"
+        | "AR"
+        | "AT"
+        | "AV"
+        | "BA"
+        | "BG"
+        | "BI"
+        | "BL"
+        | "BN"
+        | "BO"
+        | "BR"
+        | "BS"
+        | "BT"
+        | "BZ"
+        | "CA"
+        | "CB"
+        | "CE"
+        | "CH"
+        | "CL"
+        | "CN"
+        | "CO"
+        | "CR"
+        | "CS"
+        | "CT"
+        | "CZ"
+        | "EN"
+        | "FC"
+        | "FE"
+        | "FG"
+        | "FI"
+        | "FM"
+        | "FR"
+        | "GE"
+        | "GO"
+        | "GR"
+        | "IM"
+        | "IS"
+        | "KR"
+        | "LC"
+        | "LE"
+        | "LI"
+        | "LO"
+        | "LT"
+        | "LU"
+        | "MB"
+        | "MC"
+        | "ME"
+        | "MI"
+        | "MN"
+        | "MO"
+        | "MS"
+        | "MT"
+        | "NA"
+        | "NO"
+        | "NU"
+        | "OR"
+        | "PA"
+        | "PC"
+        | "PD"
+        | "PE"
+        | "PG"
+        | "PI"
+        | "PN"
+        | "PO"
+        | "PR"
+        | "PT"
+        | "PU"
+        | "PV"
+        | "PZ"
+        | "RA"
+        | "RC"
+        | "RE"
+        | "RG"
+        | "RI"
+        | "RM"
+        | "RN"
+        | "RO"
+        | "SA"
+        | "SI"
+        | "SO"
+        | "SP"
+        | "SR"
+        | "SS"
+        | "SU"
+        | "SV"
+        | "TA"
+        | "TE"
+        | "TN"
+        | "TO"
+        | "TP"
+        | "TR"
+        | "TS"
+        | "TV"
+        | "UD"
+        | "VA"
+        | "VB"
+        | "VC"
+        | "VE"
+        | "VI"
+        | "VR"
+        | "VT"
+        | "VV"
+      city?: string
+      address?: {
+        streetName?: string
+        streetNumber?: string
+      }
+      postalCode?: string
+      mainImage: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+      description?: LocalizedPortableText
+      excerpt?: LocalizedText
+      floorPlans: Array<{
+        asset: {
+          _id: string
+          _type: "sanity.fileAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        _type: "file"
+        _key: string
+      }> | null
+      outdoorAreaSqm?: number
+      furnishing?:
+        | "furnished"
+        | "kitchenOnlyFurnished"
+        | "partiallyFurnished"
+        | "unfurnished"
+      garden?: "private" | "privateAndShared" | "shared"
+      carBox?: {
+        choice?: "double" | "other" | "single"
+        otherSpecification?: string
+      }
+      parkingSpaces?: {
+        choice?: "covered" | "other" | "uncovered"
+        otherSpecification?: string
+      }
+      hasBalcony?: boolean
+      hasTerrace?: boolean
+      hasCellar?: boolean
+      hasAtticRoom?: boolean
+      hasTavern?: boolean
+      hasAlarmSystem?: boolean
+      pool?: "condominium" | "yes"
+      hasTennisCourt?: boolean
+      hasAccessibleAccess?: boolean
+      climateControl?: "autonomous" | "centralized" | "preInstallation"
+      condoFees?: {
+        condoFeesAmount?: number
+        condoFeesCurrency?: "CHF" | "EUR"
+      }
     }
   | {
       _id: string
       _type: "listingHospitality"
-      listingLabel: string | null
-      commercialAreaSqm: null
-      floor: null
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      listingLabel?: LocalizedString
+      mainImage: null
+      floorPlans: null
     }
   | {
       _id: string
       _type: "listingIndustrial"
-      listingLabel: string | null
-      commercialAreaSqm: null
-      floor: null
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      listingLabel?: LocalizedString
+      mainImage: null
+      floorPlans: null
     }
   | {
       _id: string
       _type: "listingLand"
-      listingLabel: string | null
-      commercialAreaSqm: null
-      floor: null
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      listingLabel?: LocalizedString
+      mainImage: null
+      floorPlans: null
     }
   | {
       _id: string
       _type: "listingOfficesAndRetail"
-      listingLabel: string | null
-      commercialAreaSqm: null
-      floor: null
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      listingLabel?: LocalizedString
+      mainImage: null
+      floorPlans: null
     }
   | {
       _id: string
       _type: "listingResidential"
-      listingLabel: null
-      commercialAreaSqm: number | null
-      floor:
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      commercialAreaSqm?: number
+      condoFees?: {
+        condoFeesAmount?: number
+        condoFeesCurrency?: "CHF" | "EUR"
+      }
+      floor?:
         | "1"
         | "10"
         | "2"
@@ -772,7 +1080,227 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
         | "semiUnderground"
         | "topFloor"
         | "underground"
-        | null
+      conciergeService?: "fullDay" | "halfDay" | "none"
+      buildingYear?: number
+      heating?: {
+        heatingType?: "autonomous" | "centralized" | "other"
+        heatingOther?: string
+      }
+      energyClass?: {
+        energyClassScheme?:
+          | "dl192_2005"
+          | "inProgress"
+          | "law90_2013"
+          | "notClassifiable"
+        energyClassRatingDl192?: "A" | "A+" | "B" | "C" | "D" | "E" | "F" | "G"
+        energyClassRatingLaw90?:
+          | "A1"
+          | "A2"
+          | "A3"
+          | "A4"
+          | "B"
+          | "C"
+          | "D"
+          | "E"
+          | "F"
+          | "G"
+      }
+      country?: "AT" | "CH" | "DE" | "ES" | "FR" | "GB" | "IT" | "US"
+      province?:
+        | "AG"
+        | "AL"
+        | "AN"
+        | "AO"
+        | "AP"
+        | "AQ"
+        | "AR"
+        | "AT"
+        | "AV"
+        | "BA"
+        | "BG"
+        | "BI"
+        | "BL"
+        | "BN"
+        | "BO"
+        | "BR"
+        | "BS"
+        | "BT"
+        | "BZ"
+        | "CA"
+        | "CB"
+        | "CE"
+        | "CH"
+        | "CL"
+        | "CN"
+        | "CO"
+        | "CR"
+        | "CS"
+        | "CT"
+        | "CZ"
+        | "EN"
+        | "FC"
+        | "FE"
+        | "FG"
+        | "FI"
+        | "FM"
+        | "FR"
+        | "GE"
+        | "GO"
+        | "GR"
+        | "IM"
+        | "IS"
+        | "KR"
+        | "LC"
+        | "LE"
+        | "LI"
+        | "LO"
+        | "LT"
+        | "LU"
+        | "MB"
+        | "MC"
+        | "ME"
+        | "MI"
+        | "MN"
+        | "MO"
+        | "MS"
+        | "MT"
+        | "NA"
+        | "NO"
+        | "NU"
+        | "OR"
+        | "PA"
+        | "PC"
+        | "PD"
+        | "PE"
+        | "PG"
+        | "PI"
+        | "PN"
+        | "PO"
+        | "PR"
+        | "PT"
+        | "PU"
+        | "PV"
+        | "PZ"
+        | "RA"
+        | "RC"
+        | "RE"
+        | "RG"
+        | "RI"
+        | "RM"
+        | "RN"
+        | "RO"
+        | "SA"
+        | "SI"
+        | "SO"
+        | "SP"
+        | "SR"
+        | "SS"
+        | "SU"
+        | "SV"
+        | "TA"
+        | "TE"
+        | "TN"
+        | "TO"
+        | "TP"
+        | "TR"
+        | "TS"
+        | "TV"
+        | "UD"
+        | "VA"
+        | "VB"
+        | "VC"
+        | "VE"
+        | "VI"
+        | "VR"
+        | "VT"
+        | "VV"
+      city?: string
+      address?: {
+        streetName?: string
+        streetNumber?: string
+      }
+      postalCode?: string
+      mainImage: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+      description?: LocalizedPortableText
+      excerpt?: LocalizedText
+      floorPlans: Array<{
+        asset: {
+          _id: string
+          _type: "sanity.fileAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        _type: "file"
+        _key: string
+      }> | null
+      furnishing?:
+        | "furnished"
+        | "kitchenOnlyFurnished"
+        | "partiallyFurnished"
+        | "unfurnished"
+      garden?: "private" | "privateAndShared" | "shared"
+      carBox?: {
+        choice?: "double" | "other" | "single"
+        otherSpecification?: string
+      }
+      parkingSpaces?: {
+        choice?: "covered" | "other" | "uncovered"
+        otherSpecification?: string
+      }
+      hasBalcony?: boolean
+      hasTerrace?: boolean
+      hasCellar?: boolean
+      hasAtticRoom?: boolean
+      hasTavern?: boolean
+      hasAlarmSystem?: boolean
+      pool?: "condominium" | "yes"
+      hasTennisCourt?: boolean
+      hasAccessibleAccess?: boolean
+      climateControl?: "autonomous" | "centralized" | "preInstallation"
     }
 >
 
@@ -780,7 +1308,7 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
 import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "siteContent"] | order(_updatedAt desc) [0]{ _id, title }': SITE_CONTENT_QUERY_RESULT
-    '*[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingOfficesAndRetail",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ]] | order(_updatedAt desc) [0...10]{ _id, _type, listingLabel, commercialAreaSqm, floor }': LISTINGS_PREVIEW_QUERY_RESULT
+    '\n  coalesce(\n    *[_type == "siteContent" && language == $locale][0]{ _id, title, language },\n    *[_type == "siteContent" && language == "it"][0]{ _id, title, language } // fallback to IT if missing\n  )\n': SITE_CONTENT_QUERY_RESULT
+    '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingOfficesAndRetail",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ]] | order(_updatedAt desc) [0...10]{\n    ...,\n    mainImage {\n      ...,\n      asset->\n    },\n    floorPlans[]{\n      ...,\n      asset->\n    }\n  }\n': LISTINGS_PREVIEW_QUERY_RESULT
   }
 }
