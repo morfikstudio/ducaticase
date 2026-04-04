@@ -1,4 +1,11 @@
-import { BasketIcon, CubeIcon, HeartIcon, HomeIcon, SunIcon } from "@sanity/icons"
+import {
+  BasketIcon,
+  CubeIcon,
+  EarthGlobeIcon,
+  HeartIcon,
+  HomeIcon,
+  SunIcon,
+} from "@sanity/icons"
 
 /** Macro categoria: valore compatto, titolo IT, `_type` documento Sanity, icona desk. */
 export const MACRO_CATEGORY_OPTIONS = [
@@ -31,6 +38,12 @@ export const MACRO_CATEGORY_OPTIONS = [
     value: "hospitality",
     documentType: "listingHospitality",
     icon: HeartIcon,
+  },
+  {
+    title: "Terreni",
+    value: "land",
+    documentType: "listingLand",
+    icon: EarthGlobeIcon,
   },
 ] as const
 
@@ -123,6 +136,13 @@ export const GARDEN_OPTIONS = [
   { title: "Privato", value: "private" },
   { title: "Comune", value: "shared" },
   { title: "Privato e Comune", value: "privateAndShared" },
+] as const
+
+/** Accesso al terreno (listingLand). */
+export const LAND_ACCESS_OPTIONS = [
+  { title: "Strada asfaltata", value: "asphalt" },
+  { title: "Strada sterrata", value: "dirt" },
+  { title: "Altro", value: "other" },
 ] as const
 
 /** Classe energetica: schema normativo + classi collegate. */

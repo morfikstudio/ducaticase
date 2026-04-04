@@ -13,7 +13,8 @@ export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`
     "listingCountryHouses",
     "listingShopsAndOffices",
     "listingIndustrial",
-    "listingHospitality"
+    "listingHospitality",
+    "listingLand"
   ]] | order(_updatedAt desc) [0...10]{
     ...,
     mainImage {
