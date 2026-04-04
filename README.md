@@ -1,142 +1,141 @@
 # Ducati Case
 
-Sito per annunci immobiliari basato su [Sanity.io](https://sanity.io) e [Next.js](https://nextjs.org). **Lingue:** italiano (predefinito) e inglese. Il modello contenuti distingue più tipologie di listing (residenziale, terreni, uffici, ecc.); il frontend è in evoluzione sulla home.
+Real estate listings site built with [Sanity.io](https://sanity.io) and [Next.js](https://nextjs.org). **Locales:** Italian (default) and English. The content model supports several listing types (residential, country homes, shops and offices as one document type with a typology field); the frontend home is still evolving.
 
 ## Tech stack
 
 - **Next.js 16** (App Router)
 - **React 19**
-- **Sanity v5** (Studio su `/studio`, Vision, interfaccia in italiano)
+- **Sanity v5** (Studio at `/studio`, Vision, Italian UI)
 - **Tailwind CSS 4**
-- **next-intl** (routing `/it` e `/en`, messaggi UI in `messages/`)
-- **TypeScript** con Sanity TypeGen
-- **GSAP**, **Lenis**, **Zustand** (animazioni, scroll, stato UI)
+- **next-intl** (routing `/it` and `/en`, UI strings in `messages/`)
+- **TypeScript** with Sanity TypeGen
+- **GSAP**, **Lenis**, **Zustand** (animation, scroll, UI state)
 
-## Prerequisiti
+## Prerequisites
 
-- **Node.js v24.13.1** — in root c’è `.nvmrc`; eseguire `nvm use` prima di `npm install` e `npm run dev`.
-- Account [Sanity](https://sanity.io)
+- **Node.js v24.13.1** — `.nvmrc` is in the repo root; run `nvm use` before `npm install` and `npm run dev`.
+- A [Sanity](https://sanity.io) account
 
-## Pagine
+## Pages
 
 - **Home (IT)** — `/it`
 - **Home (EN)** — `/en`
-- **`/`** — reindirizza al default (`/it`; rilevazione browser/cookie disattivata per coerenza con l’italiano come base)
-- **Sanity Studio** — `/studio` (senza prefisso lingua)
+- **`/`** — redirects to the default (`/it`; browser/cookie detection is disabled so Italian stays the baseline)
+- **Sanity Studio** — `/studio` (no locale prefix)
 
 ## Content model
 
-- **`siteContent`** — contenuti generali del sito; traduzioni gestite con **document internationalization** (un documento per lingua, IT/EN nello Studio).
-- **Listing** — tipologie documento dedicate; testi utente (etichetta, estratto, descrizione) sono **localizzati** (`it` / `en` nello stesso documento); numeri, indirizzi strutturati, enum e media restano condivisi:
-  - Residenziale (`listingResidential`)
-  - Dimore oltre la città (`listingCountryHouses`)
-  - Uffici e negozi (`listingOfficesAndRetail`)
-  - Industriale (`listingIndustrial`)
-  - Hospitality (`listingHospitality`)
-  - Terreni (`listingLand`)
+- **`siteContent`** — global site content; translations via **document internationalization** (one document per locale, IT/EN in Studio).
+- **Listing** — dedicated document types; user-facing copy (label, excerpt, description) is **localized** (`it` / `en` on the same document); numbers, structured addresses, enums, and media are shared:
+  - Residential (`listingResidential`)
+  - Country homes (`listingCountryHouses`)
+  - Shops and offices (`listingShopsAndOffices`) — a single `_type` with required **`shopsAndOfficesTypology`** (`shops` | `offices`). Studio shows one desk entry (“Negozi e uffici”). Shop-only fields (e.g. display windows) and office-only fields (e.g. office layout, optional) are shown based on that typology. Concierge is stored as **`conciergeService`** (offices, property sheet, required when typology is offices) or **`conciergeServiceShops`** (shops, optional fields); in GROQ use e.g. `coalesce(conciergeService, conciergeServiceShops)` if you need a single value.
 
-Gli schema sono in `src/sanity/schemaTypes/`. Dopo modifiche allo schema: `npm run typegen` (richiede `.env.local` con Project ID e dataset).
+Schemas live in `src/sanity/schemaTypes/`. After schema changes, run `npm run typegen` (requires `.env.local` with Project ID and dataset).
 
-**Frontend:** le query GROQ ricevono il `locale` dove serve; per i testi con `en` opzionale si usa il fallback su `it` (helper in `src/sanity/lib/locale.ts`).
+**Migrating existing content:** if your dataset still has documents with `_type` `listingShops` or `listingOffices`, convert them before relying on the new schema: set `_type` to `listingShopsAndOffices`, add `shopsAndOfficesTypology: "shops"` or `"offices"` to match the former type, then remove the old `_type` (use a one-off [Sanity migration](https://www.sanity.io/docs/migrations) or a small script with `@sanity/client`).
 
-## Internazionalizzazione (Next.js)
+**Frontend:** GROQ queries receive `locale` where needed; when `en` is optional, copy falls back to `it` (see `src/sanity/lib/locale.ts`).
 
-- Config: `src/i18n/` (`routing.ts`, `request.ts`, `navigation.ts` per `Link` / redirect tipizzati).
-- Middleware: `src/middleware.ts` (esclude `/studio` e asset statici).
-- Layout root: `src/app/layout.tsx` (`<html>` / `<body>` condivisi con lo Studio); layout localizzato: `src/app/[locale]/`.
-- Opzionale in produzione: `NEXT_PUBLIC_SITE_URL` per metadata/canonical.
+## Internationalization (Next.js)
 
-## Setup Sanity
+- Config: `src/i18n/` (`routing.ts`, `request.ts`, `navigation.ts` for typed `Link` / redirects).
+- Middleware: `src/middleware.ts` (excludes `/studio` and static assets).
+- Root layout: `src/app/layout.tsx` (shared `<html>` / `<body>` with Studio); localized layout: `src/app/[locale]/`.
+- Optional in production: `NEXT_PUBLIC_SITE_URL` for metadata/canonical URLs.
 
-### 1. Crea un progetto Sanity
+## Sanity setup
 
-- Vai su [sanity.io/manage](https://sanity.io/manage) → **Create project**, oppure
-- Dalla cartella del progetto: `npx sanity@latest init` e scegli **Create new project**.
+### 1. Create a Sanity project
 
-Annota il **Project ID**.
+- Go to [sanity.io/manage](https://sanity.io/manage) → **Create project**, or
+- From the project folder: `npx sanity@latest init` and choose **Create new project**.
 
-### 2. Crea i dataset
+Save the **Project ID**.
 
-In [sanity.io/manage](https://sanity.io/manage) → tuo progetto → **Datasets**: crea `production` e, se serve, `development`.
+### 2. Create datasets
 
-Da CLI (con `NEXT_PUBLIC_SANITY_PROJECT_ID` e `NEXT_PUBLIC_SANITY_DATASET` in `.env.local`):
+In [sanity.io/manage](https://sanity.io/manage) → your project → **Datasets**: create `production` and, if needed, `development`.
+
+From the CLI (with `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET` in `.env.local`):
 
 ```bash
 nvm use
 npx sanity dataset create production
-npx sanity dataset create development   # opzionale
+npx sanity dataset create development   # optional
 ```
 
-### 3. Deploy dello schema
+### 3. Deploy the schema
 
 ```bash
 nvm use
 npx sanity schema deploy
 ```
 
-### 4. Contenuto
+### 4. Content
 
-Inserisci annunci e contenuti da **Sanity Studio** (`/studio` in locale).
+Add listings and content from **Sanity Studio** (`/studio` locally).
 
-**Promuovere tutto da development a production** (sostituisce il contenuto di production):
+**Promote everything from development to production** (replaces production content):
 
 ```bash
 npm run promote:dev-to-prod
 ```
 
-Attenzione: sovrascrive production con development. Usare solo quando sei sicuro.
+Warning: this overwrites production with development. Use only when intentional.
 
-## Setup app
+## App setup
 
-1. **Installa le dipendenze**
+1. **Install dependencies**
 
    ```bash
    nvm use
    npm install
    ```
 
-2. **Variabili d’ambiente**
+2. **Environment variables**
 
-   Copia `.env.example` in `.env.local` e compila almeno:
+   Copy `.env.example` to `.env.local` and set at least:
 
    ```env
    NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
    NEXT_PUBLIC_SANITY_DATASET=production
    ```
 
-   Opzionale: `NEXT_PUBLIC_SANITY_API_VERSION` (default: `2026-02-23`), `NEXT_PUBLIC_ALLOW_INDEXING`, `NEXT_PUBLIC_SITE_URL` (URL pubblico del sito, SEO), `SANITY_API_TOKEN` (se serve per script o integrazioni).
+   Optional: `NEXT_PUBLIC_SANITY_API_VERSION` (default: `2026-02-23`), `NEXT_PUBLIC_ALLOW_INDEXING`, `NEXT_PUBLIC_SITE_URL` (public site URL, SEO), `SANITY_API_TOKEN` (if needed for scripts or integrations).
 
-3. **Avvio in sviluppo**
+3. **Development server**
 
    ```bash
    nvm use
    npm run dev
    ```
 
-   - **Sito:** [http://localhost:3000/it](http://localhost:3000/it) (o `/en`)
+   - **Site:** [http://localhost:3000/it](http://localhost:3000/it) (or `/en`)
    - **Studio:** [http://localhost:3000/studio](http://localhost:3000/studio)
 
 ## Scripts
 
-| Comando                       | Descrizione                                               |
-| ----------------------------- | --------------------------------------------------------- |
-| `npm run dev`                 | Avvia il server di sviluppo                               |
-| `npm run build`               | Build di produzione                                       |
-| `npm run start`               | Avvia il server di produzione                             |
-| `npm run typegen`             | Estrae lo schema e rigenera i tipi Sanity                 |
-| `npm run promote:dev-to-prod` | Copia dataset development → production (sovrascrive prod) |
-| `npm run lint`                | Esegue ESLint                                             |
-| `npm run format`              | Formatta con Prettier                                     |
-| `npm run format:check`        | Verifica formattazione Prettier                           |
+| Command                       | Description                                             |
+| ----------------------------- | ------------------------------------------------------- |
+| `npm run dev`                 | Start the development server                            |
+| `npm run build`               | Production build                                        |
+| `npm run start`               | Start the production server                             |
+| `npm run typegen`             | Extract schema and regenerate Sanity types              |
+| `npm run promote:dev-to-prod` | Copy development dataset → production (overwrites prod) |
+| `npm run lint`                | Run ESLint                                              |
+| `npm run format`              | Format with Prettier                                    |
+| `npm run format:check`        | Check Prettier formatting                               |
 
-## Struttura progetto
+## Project structure
 
-- **`src/app/`** — App Router: `[locale]/(frontend)` per il sito, `studio` per il Studio
-- **`src/i18n/`** — Routing e request `next-intl`
-- **`messages/`** — Stringhe UI per `it` / `en`
-- **`src/sanity/`** — Config Sanity, schema, query GROQ, client
-- **`src/components/`** — Componenti condivisi (es. `i18n/`, provider, immagini)
+- **`src/app/`** — App Router: `[locale]/(frontend)` for the site, `studio` for Studio
+- **`src/i18n/`** — `next-intl` routing and request config
+- **`messages/`** — UI strings for `it` / `en`
+- **`src/sanity/`** — Sanity config, schema, GROQ queries, client
+- **`src/components/`** — Shared components (e.g. `i18n/`, providers, images)
 
 ## Revalidation
 
-Le pagine che leggono Sanity usano `revalidate: 60` (secondi). Non sono configurati webhook né revalidate on-demand.
+Pages that read from Sanity use `revalidate: 60` (seconds). Webhooks and on-demand revalidation are not configured.

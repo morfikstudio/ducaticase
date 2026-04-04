@@ -1,11 +1,8 @@
 import { type SchemaTypeDefinition } from "sanity"
 
 import { listingCountryHouses } from "./listingCountryHouses"
-import { listingHospitality } from "./listingHospitality"
-import { listingIndustrial } from "./listingIndustrial"
-import { listingLand } from "./listingLand"
-import { listingOfficesAndRetail } from "./listingOfficesAndRetail"
 import { listingResidential } from "./listingResidential"
+import { listingShopsAndOffices } from "./listingShopsAndOffices"
 
 export {
   LISTING_DOCUMENT_SPECS,
@@ -15,8 +12,5 @@ export {
 export const listingTypes: SchemaTypeDefinition[] = [
   listingResidential,
   listingCountryHouses,
-  listingOfficesAndRetail,
-  listingIndustrial,
-  listingHospitality,
-  listingLand,
+  listingShopsAndOffices,
 ]

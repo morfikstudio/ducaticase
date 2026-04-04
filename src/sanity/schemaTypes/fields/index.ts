@@ -42,6 +42,27 @@ export {
   type HasTerraceFieldOptions,
 } from "./amenities/hasTerraceField"
 
+export {
+  hasAccessibleRestroomField,
+  type HasAccessibleRestroomFieldOptions,
+} from "./amenities/hasAccessibleRestroomField"
+export {
+  hasDrivewayAccessField,
+  type HasDrivewayAccessFieldOptions,
+} from "./amenities/hasDrivewayAccessField"
+export {
+  hasFireProtectionSystemField,
+  type HasFireProtectionSystemFieldOptions,
+} from "./amenities/hasFireProtectionSystemField"
+export {
+  hasFlueField,
+  type HasFlueFieldOptions,
+} from "./amenities/hasFlueField"
+export {
+  hasLoadingUnloadingField,
+  type HasLoadingUnloadingFieldOptions,
+} from "./amenities/hasLoadingUnloadingField"
+
 /* Building */
 export {
   commercialAreaSqmField,
@@ -56,6 +77,14 @@ export {
   buildingYearField,
   type BuildingYearFieldOptions,
 } from "./building/buildingYearField"
+export {
+  displayWindowsField,
+  type DisplayWindowsFieldOptions,
+} from "./building/displayWindowsField"
+export {
+  officeLayoutField,
+  type OfficeLayoutFieldOptions,
+} from "./building/officeLayoutField"
 
 /* Contents */
 export {
@@ -116,3 +145,7 @@ export {
   countryHouseTypologyField,
   type CountryHouseTypologyFieldOptions,
 } from "./listing/countryHouseTypologyField"
+export {
+  shopsAndOfficesTypologyField,
+  type ShopsAndOfficesTypologyFieldOptions,
+} from "./listing/shopsAndOfficesTypologyField"

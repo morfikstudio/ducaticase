@@ -1,11 +1,4 @@
-import {
-  BlockElementIcon,
-  CaseIcon,
-  CubeIcon,
-  HomeIcon,
-  StarIcon,
-  SunIcon,
-} from "@sanity/icons"
+import { BasketIcon, HomeIcon, SunIcon } from "@sanity/icons"
 
 /** Macro categoria: valore compatto, titolo IT, `_type` documento Sanity, icona desk. */
 export const MACRO_CATEGORY_OPTIONS = [
@@ -22,28 +15,10 @@ export const MACRO_CATEGORY_OPTIONS = [
     icon: SunIcon,
   },
   {
-    title: "Uffici e Negozi",
-    value: "officesAndRetail",
-    documentType: "listingOfficesAndRetail",
-    icon: CaseIcon,
-  },
-  {
-    title: "Industriale",
-    value: "industrial",
-    documentType: "listingIndustrial",
-    icon: CubeIcon,
-  },
-  {
-    title: "Hospitality",
-    value: "hospitality",
-    documentType: "listingHospitality",
-    icon: StarIcon,
-  },
-  {
-    title: "Terreni",
-    value: "land",
-    documentType: "listingLand",
-    icon: BlockElementIcon,
+    title: "Negozi e uffici",
+    value: "commercial",
+    documentType: "listingShopsAndOffices",
+    icon: BasketIcon,
   },
 ] as const
 
@@ -68,6 +43,14 @@ export const COUNTRY_HOUSE_TYPOLOGY_OPTIONS = [
 
 export type CountryHouseTypologyValue =
   (typeof COUNTRY_HOUSE_TYPOLOGY_OPTIONS)[number]["value"]
+
+export const SHOPS_AND_OFFICES_TYPOLOGY_OPTIONS = [
+  { title: "Negozi", value: "shops" },
+  { title: "Uffici", value: "offices" },
+] as const
+
+export type ShopsAndOfficesTypologyValue =
+  (typeof SHOPS_AND_OFFICES_TYPOLOGY_OPTIONS)[number]["value"]
 
 export const FLOOR_OPTIONS = [
   { title: "1", value: "1" },
@@ -277,6 +260,13 @@ export const ITALIAN_PROVINCE_OPTIONS = [
 
 export const MAX_MAIN_IMAGE_BYTES = 2 * 1024 * 1024
 export const MAX_FLOOR_PLAN_PDF_BYTES = 10 * 1024 * 1024
+
+/** Layout spazi ufficio (listing commerciali). */
+export const OFFICE_LAYOUT_OPTIONS = [
+  { title: "Open space", value: "openSpace" },
+  { title: "Uffici singoli", value: "individualOffices" },
+  { title: "Altro", value: "other" },
+] as const
 
 export const CAR_BOX_OPTIONS = [
   { title: "Singolo", value: "single" },
