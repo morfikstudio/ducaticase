@@ -1,6 +1,9 @@
 import { defineField } from "sanity"
 
-import { COUNTRY_HOUSE_TYPOLOGY_OPTIONS } from "../../../lib/constants"
+import {
+  COUNTRY_HOUSE_TYPOLOGY_OPTIONS,
+  typologyOptionsForStudio,
+} from "../../../lib/constants"
 import { FIELD_REQUIRED_IT } from "../../../lib/validationMessages"
 
 export type CountryHouseTypologyFieldOptions = {
@@ -19,7 +22,7 @@ export function countryHouseTypologyField(
     title: "Tipologia",
     type: "string",
     options: {
-      list: [...COUNTRY_HOUSE_TYPOLOGY_OPTIONS],
+      list: typologyOptionsForStudio(COUNTRY_HOUSE_TYPOLOGY_OPTIONS),
     },
     validation: (Rule) =>
       Rule.custom((value: string | undefined) => {

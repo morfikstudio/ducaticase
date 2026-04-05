@@ -1,6 +1,9 @@
 import { defineField } from "sanity"
 
-import { INDUSTRIAL_TYPOLOGY_OPTIONS } from "../../../lib/constants"
+import {
+  INDUSTRIAL_TYPOLOGY_OPTIONS,
+  typologyOptionsForStudio,
+} from "../../../lib/constants"
 import { FIELD_REQUIRED_IT } from "../../../lib/validationMessages"
 
 export type IndustrialTypologyFieldOptions = {
@@ -19,7 +22,7 @@ export function industrialTypologyField(
     title: "Tipologia",
     type: "string",
     options: {
-      list: [...INDUSTRIAL_TYPOLOGY_OPTIONS],
+      list: typologyOptionsForStudio(INDUSTRIAL_TYPOLOGY_OPTIONS),
     },
     validation: (Rule) =>
       Rule.custom((value: string | undefined) => {

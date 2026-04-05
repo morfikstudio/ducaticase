@@ -16,14 +16,192 @@ export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`
     "listingHospitality",
     "listingLand"
   ]] | order(_updatedAt desc) [0...10]{
-    ...,
-    mainImage {
-      ...,
-      asset->
+    _id
+  }
+`)
+
+export const LISTING_BY_ID_QUERY = defineQuery(groq`
+  *[_type in [
+    "listingResidential",
+    "listingCountryHouses",
+    "listingShopsAndOffices",
+    "listingIndustrial",
+    "listingHospitality",
+    "listingLand"
+  ] && _id == $id][0]{
+    "metadata": {
+      _id,
+      _type,
+      _createdAt,
+      _updatedAt,
+      _rev
     },
-    floorPlans[]{
-      ...,
-      asset->
-    }
+    "typology": select(
+      _type == "listingCountryHouses" => countryHouseTypology,
+      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,
+      _type == "listingIndustrial" => industrialTypology,
+      true => null
+    ),
+    "propertySheet": select(
+      _type == "listingResidential" => {
+        commercialAreaSqm,
+        condoFees,
+        floor,
+        conciergeService,
+        buildingYear,
+        heating,
+        energyClass
+      },
+      _type == "listingCountryHouses" => {
+        commercialAreaSqm,
+        floor,
+        buildingYear,
+        heating,
+        energyClass
+      },
+      _type == "listingShopsAndOffices" => {
+        commercialAreaSqm,
+        floor,
+        displayWindows,
+        conciergeService,
+        buildingYear,
+        heating,
+        energyClass
+      },
+      _type == "listingIndustrial" => {
+        commercialAreaSqm,
+        floor,
+        heightMeters,
+        buildingYear,
+        energyClass
+      },
+      _type == "listingHospitality" => {
+        commercialAreaSqm,
+        roomCount,
+        energyClass
+      },
+      _type == "listingLand" => {
+        commercialAreaSqm,
+        landAccess,
+        hasFencedProperty
+      }
+    ),
+    "location": {
+      country,
+      province,
+      city,
+      address,
+      postalCode
+    },
+    "content": {
+      listingLabel,
+      "mainImage": mainImage {
+        ...,
+        asset->
+      },
+      description,
+      excerpt
+    },
+    "floorPlans": select(
+      _type == "listingLand" => {
+        "items": null
+      },
+      {
+        "items": floorPlans[] {
+          ...,
+          asset->
+        }
+      }
+    ),
+    "additionalFields": select(
+      _type == "listingResidential" => {
+        furnishing,
+        garden,
+        carBox,
+        parkingSpaces,
+        hasBalcony,
+        hasTerrace,
+        hasCellar,
+        hasAtticRoom,
+        hasTavern,
+        hasAlarmSystem,
+        pool,
+        hasTennisCourt,
+        hasAccessibleAccess,
+        climateControl
+      },
+      _type == "listingCountryHouses" => {
+        outdoorAreaSqm,
+        furnishing,
+        garden,
+        carBox,
+        parkingSpaces,
+        hasBalcony,
+        hasTerrace,
+        hasCellar,
+        hasAtticRoom,
+        hasTavern,
+        hasAlarmSystem,
+        pool,
+        hasTennisCourt,
+        hasAccessibleAccess,
+        climateControl,
+        condoFees
+      },
+      _type == "listingShopsAndOffices" => {
+        furnishing,
+        hasAccessibleRestroom,
+        hasFlue,
+        hasFireProtectionSystem,
+        hasLoadingUnloading,
+        hasDrivewayAccess,
+        parkingSpaces,
+        hasAlarmSystem,
+        hasAccessibleAccess,
+        climateControl,
+        conciergeServiceShops,
+        officeLayout,
+        condoFees
+      },
+      _type == "listingIndustrial" => {
+        hasLoadingDocks,
+        hasOverheadCranes,
+        shedAreaSqm,
+        officeAreaSqm,
+        landAreaSqm,
+        hasChangingRoom,
+        hasFencedProperty,
+        conciergeService,
+        hasAccessibleRestroom,
+        hasLoadingUnloading,
+        hasDrivewayAccess,
+        hasDrivableAccess,
+        parkingSpaces,
+        hasAlarmSystem,
+        hasAccessibleAccess,
+        climateControl,
+        heating
+      },
+      _type == "listingHospitality" => {
+        hasAccessibleRestroom,
+        hasFlue,
+        hasFireProtectionSystem,
+        hasLoadingUnloading,
+        hasDrivewayAccess,
+        parkingSpaces,
+        hasAlarmSystem,
+        hasAccessibleAccess,
+        climateControl,
+        outdoorAreaSqm,
+        heating,
+        pool,
+        hasTennisCourt,
+        customSpecifications
+      },
+      _type == "listingLand" => {
+        buildable,
+        agricultural
+      }
+    )
   }
 `)

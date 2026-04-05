@@ -1,7 +1,10 @@
 import type { PreviewValue } from "@sanity/types"
 import { defineField } from "sanity"
 
-import { MACRO_CATEGORY_OPTIONS } from "../../lib/constants"
+import {
+  MACRO_CATEGORY_OPTIONS,
+  type LocalizedTypologyOption,
+} from "../../lib/constants"
 
 export const listingLabelField = defineField({
   name: "listingLabel",
@@ -63,18 +66,18 @@ function isPreviewImageMedia(value: unknown): boolean {
 export type ListingPreviewOptions = {
   /** Se presente, la tipologia ha priorità sul titolo macro categoria nel sottotitolo. */
   typologyField?: string
-  typologyOptions?: ReadonlyArray<{ title: string; value: string }>
+  typologyOptions?: ReadonlyArray<LocalizedTypologyOption>
 }
 
 function listingTypologyTitle(
   value: unknown,
-  typologyOptions: ReadonlyArray<{ title: string; value: string }>,
+  typologyOptions: ReadonlyArray<LocalizedTypologyOption>,
 ): string | undefined {
   if (typeof value !== "string" || value.trim() === "") {
     return undefined
   }
 
-  return typologyOptions.find((o) => o.value === value)?.title
+  return typologyOptions.find((o) => o.value === value)?.title.it
 }
 
 function listingMacroCategoryTitle(_type: unknown): string | undefined {

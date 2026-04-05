@@ -58,27 +58,59 @@ export const LISTING_DOCUMENT_SPECS = MACRO_CATEGORY_OPTIONS.map((o) => ({
   icon: o.icon,
 }))
 
+export type LocalizedTypologyOption = {
+  value: string
+  title: { it: string; en: string }
+}
+
+export function typologyOptionsForStudio(
+  options: ReadonlyArray<LocalizedTypologyOption>,
+): Array<{ title: string; value: string }> {
+  return options.map((o) => ({ value: o.value, title: o.title.it }))
+}
+
 export const COUNTRY_HOUSE_TYPOLOGY_OPTIONS = [
-  { title: "Mare", value: "sea" },
-  { title: "Laghi e campagna", value: "lakesAndCountryside" },
-  { title: "Montagna", value: "mountain" },
-] as const
+  {
+    value: "sea",
+    title: { it: "Mare", en: "Sea" },
+  },
+  {
+    value: "lakesAndCountryside",
+    title: { it: "Laghi e campagna", en: "Lakes and countryside" },
+  },
+  {
+    value: "mountain",
+    title: { it: "Montagna", en: "Mountain" },
+  },
+] as const satisfies readonly LocalizedTypologyOption[]
 
 export type CountryHouseTypologyValue =
   (typeof COUNTRY_HOUSE_TYPOLOGY_OPTIONS)[number]["value"]
 
 export const SHOPS_AND_OFFICES_TYPOLOGY_OPTIONS = [
-  { title: "Negozi", value: "shops" },
-  { title: "Uffici", value: "offices" },
-] as const
+  {
+    value: "shops",
+    title: { it: "Negozi", en: "Shops" },
+  },
+  {
+    value: "offices",
+    title: { it: "Uffici", en: "Offices" },
+  },
+] as const satisfies readonly LocalizedTypologyOption[]
 
 export type ShopsAndOfficesTypologyValue =
   (typeof SHOPS_AND_OFFICES_TYPOLOGY_OPTIONS)[number]["value"]
 
 export const INDUSTRIAL_TYPOLOGY_OPTIONS = [
-  { title: "Magazzini", value: "warehouses" },
-  { title: "Capannoni", value: "sheds" },
-] as const
+  {
+    value: "warehouses",
+    title: { it: "Magazzini", en: "Warehouses" },
+  },
+  {
+    value: "sheds",
+    title: { it: "Capannoni", en: "Sheds" },
+  },
+] as const satisfies readonly LocalizedTypologyOption[]
 
 export type IndustrialTypologyValue =
   (typeof INDUSTRIAL_TYPOLOGY_OPTIONS)[number]["value"]
@@ -175,13 +207,10 @@ export const ENERGY_CLASS_LAW90_OPTIONS = [
 
 export const LOCATION_COUNTRY_OPTIONS = [
   { title: "Italia", value: "IT" },
-  { title: "Francia", value: "FR" },
   { title: "Svizzera", value: "CH" },
-  { title: "Germania", value: "DE" },
   { title: "Austria", value: "AT" },
-  { title: "Spagna", value: "ES" },
-  { title: "Regno Unito", value: "GB" },
-  { title: "Stati Uniti", value: "US" },
+  { title: "Francia", value: "FR" },
+  { title: "Germania", value: "DE" },
 ] as const
 
 export const ITALIAN_PROVINCE_OPTIONS = [

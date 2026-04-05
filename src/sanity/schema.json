@@ -126,15 +126,7 @@
             },
             {
               "type": "string",
-              "value": "FR"
-            },
-            {
-              "type": "string",
               "value": "CH"
-            },
-            {
-              "type": "string",
-              "value": "DE"
             },
             {
               "type": "string",
@@ -142,15 +134,11 @@
             },
             {
               "type": "string",
-              "value": "ES"
+              "value": "FR"
             },
             {
               "type": "string",
-              "value": "GB"
-            },
-            {
-              "type": "string",
-              "value": "US"
+              "value": "DE"
             }
           ]
         },
@@ -1453,15 +1441,7 @@
             },
             {
               "type": "string",
-              "value": "FR"
-            },
-            {
-              "type": "string",
               "value": "CH"
-            },
-            {
-              "type": "string",
-              "value": "DE"
             },
             {
               "type": "string",
@@ -1469,15 +1449,11 @@
             },
             {
               "type": "string",
-              "value": "ES"
+              "value": "FR"
             },
             {
               "type": "string",
-              "value": "GB"
-            },
-            {
-              "type": "string",
-              "value": "US"
+              "value": "DE"
             }
           ]
         },
@@ -2569,15 +2545,7 @@
             },
             {
               "type": "string",
-              "value": "FR"
-            },
-            {
-              "type": "string",
               "value": "CH"
-            },
-            {
-              "type": "string",
-              "value": "DE"
             },
             {
               "type": "string",
@@ -2585,15 +2553,11 @@
             },
             {
               "type": "string",
-              "value": "ES"
+              "value": "FR"
             },
             {
               "type": "string",
-              "value": "GB"
-            },
-            {
-              "type": "string",
-              "value": "US"
+              "value": "DE"
             }
           ]
         },
@@ -3753,15 +3717,7 @@
             },
             {
               "type": "string",
-              "value": "FR"
-            },
-            {
-              "type": "string",
               "value": "CH"
-            },
-            {
-              "type": "string",
-              "value": "DE"
             },
             {
               "type": "string",
@@ -3769,15 +3725,11 @@
             },
             {
               "type": "string",
-              "value": "ES"
+              "value": "FR"
             },
             {
               "type": "string",
-              "value": "GB"
-            },
-            {
-              "type": "string",
-              "value": "US"
+              "value": "DE"
             }
           ]
         },
@@ -4929,15 +4881,7 @@
             },
             {
               "type": "string",
-              "value": "FR"
-            },
-            {
-              "type": "string",
               "value": "CH"
-            },
-            {
-              "type": "string",
-              "value": "DE"
             },
             {
               "type": "string",
@@ -4945,15 +4889,11 @@
             },
             {
               "type": "string",
-              "value": "ES"
+              "value": "FR"
             },
             {
               "type": "string",
-              "value": "GB"
-            },
-            {
-              "type": "string",
-              "value": "US"
+              "value": "DE"
             }
           ]
         },
@@ -6169,15 +6109,7 @@
             },
             {
               "type": "string",
-              "value": "FR"
-            },
-            {
-              "type": "string",
               "value": "CH"
-            },
-            {
-              "type": "string",
-              "value": "DE"
             },
             {
               "type": "string",
@@ -6185,15 +6117,11 @@
             },
             {
               "type": "string",
-              "value": "ES"
+              "value": "FR"
             },
             {
               "type": "string",
-              "value": "GB"
-            },
-            {
-              "type": "string",
-              "value": "US"
+              "value": "DE"
             }
           ]
         },
