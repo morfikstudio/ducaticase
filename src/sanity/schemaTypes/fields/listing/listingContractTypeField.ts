@@ -2,7 +2,6 @@ import { defineField } from "sanity"
 
 import {
   LISTING_CONTRACT_TYPE_OPTIONS,
-  type ListingContractTypeValue,
 } from "../../../lib/constants"
 import { FIELD_REQUIRED_IT } from "../../../lib/validationMessages"
 
@@ -30,7 +29,7 @@ export function listingContractTypeField(
       direction: "horizontal",
     },
     validation: (Rule) =>
-      Rule.custom((value: ListingContractTypeValue | undefined | null) => {
+      Rule.custom((value: string | undefined) => {
         if (
           !required &&
           (value === undefined || value === null || value === "")
