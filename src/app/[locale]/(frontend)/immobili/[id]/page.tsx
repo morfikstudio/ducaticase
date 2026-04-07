@@ -25,5 +25,9 @@ export default async function ListingDetailPage({ params }: Props) {
     notFound()
   }
 
-  return <ListingDetail listing={listing} locale={locale} />
+  return (
+    <main>
+      <ListingDetail listing={listing} locale={locale} />
+    </main>
+  )
 }

@@ -1,6 +1,6 @@
 import { defineField } from "sanity"
 
-import { PRICE_FALLBACK_OPTIONS } from "../../lib/constants"
+import { FIELD_LABELS, PRICE_FALLBACK_OPTIONS } from "../../lib/constants"
 import {
   FIELD_REQUIRED_IT,
   INVALID_VALUE_MESSAGE_IT,
@@ -25,7 +25,7 @@ export function priceField(options?: PriceFieldOptions) {
   return defineField({
     ...(options?.group ? { group: options.group } : {}),
     name: "price",
-    title: "Prezzo (€)",
+    title: FIELD_LABELS.priceEur.it,
     type: "object",
     validation: (Rule) =>
       Rule.custom((value: PriceValue) => {
@@ -73,7 +73,7 @@ export function priceField(options?: PriceFieldOptions) {
     fields: [
       defineField({
         name: "amount",
-        title: "Importo",
+        title: FIELD_LABELS.amount.it,
         type: "number",
         validation: (Rule) =>
           Rule.custom((value) => {
@@ -90,7 +90,7 @@ export function priceField(options?: PriceFieldOptions) {
       }),
       defineField({
         name: "noPriceReason",
-        title: "Seleziona opzione senza prezzo",
+        title: FIELD_LABELS.noPriceReason.it,
         type: "string",
         hidden: ({ parent }) =>
           typeof (parent as { amount?: number } | undefined)?.amount ===

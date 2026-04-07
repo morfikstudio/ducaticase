@@ -1,5 +1,6 @@
 import { defineField } from "sanity"
 
+import { FIELD_LABELS } from "../../../lib/constants"
 import { FIELD_REQUIRED_IT } from "../../../lib/validationMessages"
 
 export type HasChangingRoomFieldOptions = {
@@ -13,7 +14,7 @@ export function hasChangingRoomField(options?: HasChangingRoomFieldOptions) {
   return defineField({
     ...(options?.group ? { group: options.group } : {}),
     name: "hasChangingRoom",
-    title: "Spogliatoio",
+    title: FIELD_LABELS.hasChangingRoom.it,
     type: "boolean",
     validation: (Rule) =>
       Rule.custom((value: boolean | undefined) => {

@@ -1,1 +1,11 @@
-{}
+{
+  "listingDetail": {
+    "badge": "Annuncio immobiliare",
+    "macroCategory": "Macrocategoria",
+    "typology": "Tipologia",
+    "location": "Località",
+    "price": "Prezzo",
+    "surface": "Superficie",
+    "updatedAt": "Aggiornato"
+  }
+}

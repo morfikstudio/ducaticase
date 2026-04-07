@@ -1,1 +1,11 @@
-{}
+{
+  "listingDetail": {
+    "badge": "Real estate listing",
+    "macroCategory": "Macro category",
+    "typology": "Typology",
+    "location": "Location",
+    "price": "Price",
+    "surface": "Surface",
+    "updatedAt": "Updated"
+  }
+}

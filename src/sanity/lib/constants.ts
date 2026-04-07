@@ -63,6 +63,76 @@ export type LocalizedTypologyOption = {
   title: { it: string; en: string }
 }
 
+export type LocalizedLabel = {
+  it: string
+  en: string
+}
+
+export const FIELD_LABELS = {
+  priceEur: { it: "Prezzo (€)", en: "Price (€)" },
+  amount: { it: "Importo", en: "Amount" },
+  noPriceReason: {
+    it: "Seleziona opzione senza prezzo",
+    en: "Select no-price option",
+  },
+  hasChangingRoom: { it: "Spogliatoio", en: "Changing room" },
+  commercialAreaSqm: {
+    it: "Superficie commerciale (mq)",
+    en: "Commercial area (sqm)",
+  },
+} as const satisfies Record<string, LocalizedLabel>
+
+export const OPTIONAL_FIELD_LABELS: Record<string, LocalizedLabel> = {
+  furnishing: { it: "Arredamento", en: "Furnishing" },
+  garden: { it: "Giardino", en: "Garden" },
+  carBox: { it: "Box auto", en: "Garage" },
+  parkingSpaces: { it: "Posti auto", en: "Parking spaces" },
+  hasBalcony: { it: "Balcone", en: "Balcony" },
+  hasTerrace: { it: "Terrazzo", en: "Terrace" },
+  hasCellar: { it: "Cantina", en: "Cellar" },
+  hasAtticRoom: { it: "Solaio", en: "Attic room" },
+  hasTavern: { it: "Taverna", en: "Tavern" },
+  hasAlarmSystem: { it: "Impianto d'allarme", en: "Alarm system" },
+  pool: { it: "Piscina", en: "Pool" },
+  hasTennisCourt: { it: "Campo da tennis", en: "Tennis court" },
+  hasAccessibleAccess: { it: "Accesso per disabili", en: "Accessible access" },
+  climateControl: { it: "Impianto di climatizzazione", en: "Climate control" },
+  outdoorAreaSqm: { it: "Superficie terreno (mq)", en: "Outdoor area (sqm)" },
+  condoFees: { it: "Spese condominiali", en: "Condo fees" },
+  hasAccessibleRestroom: { it: "Bagno per disabili", en: "Accessible restroom" },
+  hasFlue: { it: "Canna fumaria", en: "Flue" },
+  hasFireProtectionSystem: {
+    it: "Impianto antincendio",
+    en: "Fire protection system",
+  },
+  hasLoadingUnloading: { it: "Carico e scarico", en: "Loading and unloading" },
+  hasDrivewayAccess: { it: "Passo carrabile", en: "Driveway access" },
+  conciergeServiceShops: {
+    it: "Servizio portineria / Reception",
+    en: "Concierge / Reception",
+  },
+  officeLayout: { it: "Disposizione interni", en: "Office layout" },
+  hasLoadingDocks: { it: "Banchine di carico/scarico", en: "Loading docks" },
+  hasOverheadCranes: { it: "Carroponti", en: "Overhead cranes" },
+  shedAreaSqm: { it: "Superficie Capannone (mq)", en: "Shed area (sqm)" },
+  officeAreaSqm: { it: "Superficie Uffici (mq)", en: "Office area (sqm)" },
+  landAreaSqm: { it: "Superficie Terreno (mq)", en: "Land area (sqm)" },
+  hasChangingRoom: { it: "Spogliatoio", en: "Changing room" },
+  hasFencedProperty: { it: "Proprietà recintata", en: "Fenced property" },
+  conciergeService: {
+    it: "Servizio portineria / Reception",
+    en: "Concierge / Reception",
+  },
+  hasDrivableAccess: { it: "Accesso carrabile", en: "Drivable access" },
+  heating: { it: "Riscaldamento", en: "Heating" },
+  customSpecifications: {
+    it: "Specifiche aggiuntive",
+    en: "Additional specifications",
+  },
+  buildable: { it: "Edificabile", en: "Buildable" },
+  agricultural: { it: "Agricolo", en: "Agricultural" },
+}
+
 export function typologyOptionsForStudio(
   options: ReadonlyArray<LocalizedTypologyOption>,
 ): Array<{ title: string; value: string }> {

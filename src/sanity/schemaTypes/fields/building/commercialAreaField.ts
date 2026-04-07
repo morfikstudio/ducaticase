@@ -1,5 +1,6 @@
 import { defineField } from "sanity"
 
+import { FIELD_LABELS } from "../../../lib/constants"
 import {
   FIELD_REQUIRED_IT,
   INVALID_VALUE_MESSAGE_IT,
@@ -16,7 +17,7 @@ export function commercialAreaSqmField(options?: CommercialAreaFieldOptions) {
   return defineField({
     ...(options?.group ? { group: options.group } : {}),
     name: "commercialAreaSqm",
-    title: "Superficie commerciale (mq)",
+    title: FIELD_LABELS.commercialAreaSqm.it,
     type: "number",
     validation: (Rule) =>
       Rule.custom((value) => {
