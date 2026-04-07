@@ -18,6 +18,7 @@ export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`
   ]] | order(_createdAt desc) [0...10]{
     _id,
     _type,
+    listingContractType,
     price,
     city,
     listingLabel,
@@ -46,6 +47,7 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
     "metadata": {
       _id,
       _type,
+      listingContractType,
       _createdAt,
       _updatedAt,
       _rev

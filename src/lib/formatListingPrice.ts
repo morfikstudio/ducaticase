@@ -9,9 +9,12 @@ type PriceValue =
   | null
   | undefined
 
+type ListingContractType = "sale" | "rent" | null | undefined
+
 export function formatListingPrice(
   price: PriceValue,
   locale: AppLocale,
+  contractType?: ListingContractType,
 ): string {
   if (!price) {
     return ""
@@ -30,7 +33,15 @@ export function formatListingPrice(
         ? PRICE_FALLBACK_OPTIONS.find((o) => o.value === reason)?.title[locale]
         : undefined
 
-    return reasonLabel ?? PRICE_FALLBACK_OPTIONS[1].title[locale]
+    if (reasonLabel) {
+      return reasonLabel
+    }
+
+    if (contractType === "rent") {
+      return locale === "en" ? "Rent on request" : "Canone su richiesta"
+    }
+
+    return PRICE_FALLBACK_OPTIONS[1].title[locale]
   }
 
   try {

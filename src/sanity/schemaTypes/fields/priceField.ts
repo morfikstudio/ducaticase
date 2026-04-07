@@ -1,4 +1,4 @@
-import { defineField } from "sanity"
+import { defineField, useFormValue, type ObjectFieldProps } from "sanity"
 
 import { FIELD_LABELS, PRICE_FALLBACK_OPTIONS } from "../../lib/constants"
 import {
@@ -19,6 +19,21 @@ export type PriceFieldOptions = {
   group?: string
 }
 
+function PriceFieldTitleByContract(props: ObjectFieldProps) {
+  const contractType = useFormValue(["listingContractType"])
+  const title =
+    contractType === "rent" ? "Canone" : "Prezzo di vendita"
+
+  return props.renderDefault({
+    ...props,
+    title,
+    schemaType: {
+      ...props.schemaType,
+      title,
+    },
+  })
+}
+
 export function priceField(options?: PriceFieldOptions) {
   const required = options?.required ?? false
 
@@ -27,6 +42,14 @@ export function priceField(options?: PriceFieldOptions) {
     name: "price",
     title: FIELD_LABELS.priceEur.it,
     type: "object",
+    hidden: ({ document }) => {
+      const contractType = (document as { listingContractType?: unknown } | null)
+        ?.listingContractType
+      return contractType !== "sale" && contractType !== "rent"
+    },
+    components: {
+      field: PriceFieldTitleByContract,
+    },
     validation: (Rule) =>
       Rule.custom((value: PriceValue) => {
         if (!required && (value === undefined || value === null)) {

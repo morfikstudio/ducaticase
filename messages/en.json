@@ -2,9 +2,12 @@
   "listingDetail": {
     "badge": "Real estate listing",
     "macroCategory": "Macro category",
+    "contractType": "Contract type",
     "typology": "Typology",
     "location": "Location",
     "price": "Price",
+    "salePrice": "Sale price",
+    "rentPrice": "Rent",
     "surface": "Surface",
     "updatedAt": "Updated"
   }

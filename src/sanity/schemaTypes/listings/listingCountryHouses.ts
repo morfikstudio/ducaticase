@@ -29,6 +29,7 @@ import {
   hasTennisCourtField,
   hasTerraceField,
   heatingField,
+  listingContractTypeField,
   mainImageField,
   outdoorAreaSqmField,
   parkingSpacesField,
@@ -52,13 +53,14 @@ export const listingCountryHouses = defineType({
   ],
   fields: [
     /* Scheda immobile */
+    listingContractTypeField({ required: true, group: "propertySheet" }),
+    priceField({ group: "propertySheet" }),
     countryHouseTypologyField({ required: true, group: "propertySheet" }),
     commercialAreaSqmField({ required: true, group: "propertySheet" }),
     floorField({ required: true, group: "propertySheet" }),
     buildingYearField({ required: true, group: "propertySheet" }),
     heatingField({ required: true, group: "propertySheet" }),
     energyClassField({ required: true, group: "propertySheet" }),
-    priceField({ group: "propertySheet" }),
     /* Località */
     countryField({ required: true, group: "location" }),
     provinceField({ required: true, group: "location" }),

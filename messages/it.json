@@ -2,9 +2,12 @@
   "listingDetail": {
     "badge": "Annuncio immobiliare",
     "macroCategory": "Macrocategoria",
+    "contractType": "Contratto",
     "typology": "Tipologia",
     "location": "Località",
     "price": "Prezzo",
+    "salePrice": "Prezzo vendita",
+    "rentPrice": "Canone",
     "surface": "Superficie",
     "updatedAt": "Aggiornato"
   }

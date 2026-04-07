@@ -13,6 +13,7 @@ import {
   excerptField,
   hasFencedPropertyField,
   landAccessField,
+  listingContractTypeField,
   mainImageField,
   priceField,
   postalCodeField,
@@ -32,10 +33,11 @@ export const listingLand = defineType({
   ],
   fields: [
     /* Scheda immobile */
+    listingContractTypeField({ required: true, group: "propertySheet" }),
+    priceField({ group: "propertySheet" }),
     commercialAreaSqmField({ required: true, group: "propertySheet" }),
     landAccessField({ required: true, group: "propertySheet" }),
     hasFencedPropertyField({ required: true, group: "propertySheet" }),
-    priceField({ group: "propertySheet" }),
     /* Località */
     countryField({ required: true, group: "location" }),
     provinceField({ required: true, group: "location" }),

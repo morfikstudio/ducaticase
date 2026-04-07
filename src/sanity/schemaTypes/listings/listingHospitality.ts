@@ -22,6 +22,7 @@ import {
   hasLoadingUnloadingField,
   hasTennisCourtField,
   heatingField,
+  listingContractTypeField,
   mainImageField,
   parkingSpacesField,
   priceField,
@@ -46,10 +47,11 @@ export const listingHospitality = defineType({
   ],
   fields: [
     /* Scheda immobile */
+    listingContractTypeField({ required: true, group: "propertySheet" }),
+    priceField({ group: "propertySheet" }),
     commercialAreaSqmField({ required: true, group: "propertySheet" }),
     roomCountField({ required: true, group: "propertySheet" }),
     energyClassField({ required: true, group: "propertySheet" }),
-    priceField({ group: "propertySheet" }),
     /* Località */
     countryField({ required: true, group: "location" }),
     provinceField({ required: true, group: "location" }),

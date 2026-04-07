@@ -29,6 +29,7 @@ import {
   hasTerraceField,
   heatingField,
   mainImageField,
+  listingContractTypeField,
   parkingSpacesField,
   priceField,
   poolField,
@@ -50,6 +51,8 @@ export const listingResidential = defineType({
   ],
   fields: [
     /* Scheda immobile */
+    listingContractTypeField({ required: true, group: "propertySheet" }),
+    priceField({ group: "propertySheet" }),
     commercialAreaSqmField({ required: true, group: "propertySheet" }),
     condoFeesField({ required: true, group: "propertySheet" }),
     floorField({ required: true, group: "propertySheet" }),
@@ -57,7 +60,6 @@ export const listingResidential = defineType({
     buildingYearField({ required: true, group: "propertySheet" }),
     heatingField({ required: true, group: "propertySheet" }),
     energyClassField({ required: true, group: "propertySheet" }),
-    priceField({ group: "propertySheet" }),
     /* Località */
     countryField({ required: true, group: "location" }),
     provinceField({ required: true, group: "location" }),

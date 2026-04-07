@@ -13,6 +13,7 @@ import {
   MACRO_CATEGORY_OPTIONS,
   OPTIONAL_FIELD_LABELS,
 } from "@/sanity/lib/constants"
+import { listingContractTypeLabel } from "@/sanity/lib/listingContractTypeLabel"
 import { listingTypologyLabel } from "@/sanity/lib/listingTypologyLabel"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 
@@ -43,7 +44,10 @@ const OPTIONAL_CHOICE_LABELS: Record<
   furnishing: {
     furnished: { it: "Arredato", en: "Furnished" },
     unfurnished: { it: "Non arredato", en: "Unfurnished" },
-    partiallyFurnished: { it: "Parzialmente arredato", en: "Partially furnished" },
+    partiallyFurnished: {
+      it: "Parzialmente arredato",
+      en: "Partially furnished",
+    },
     kitchenOnlyFurnished: {
       it: "Solo cucina arredata",
       en: "Kitchen only furnished",
@@ -137,7 +141,11 @@ function formatOptionalFieldValue(
 
     if (key === "condoFees") {
       const amount = obj.condoFeesAmount
-      if (typeof amount !== "number" || !Number.isFinite(amount) || amount <= 0) {
+      if (
+        typeof amount !== "number" ||
+        !Number.isFinite(amount) ||
+        amount <= 0
+      ) {
         return "-"
       }
 
@@ -204,7 +212,15 @@ export default function ListingDetail({ listing, locale }: ListingDetailProps) {
     listing.typology,
     locale,
   )
-  const priceLabel = formatListingPrice(listing.propertySheet.price, locale)
+  const listingContractType =
+    (listing.metadata as { listingContractType?: string | null })
+      .listingContractType ?? null
+  const contractTypeLabel = listingContractTypeLabel(listingContractType, locale)
+  const priceLabel = formatListingPrice(
+    listing.propertySheet.price,
+    locale,
+    listingContractType as "sale" | "rent" | null,
+  )
 
   const mainImageUrl = getSanityImageUrl(listing.content.mainImage, 1400)
   const mainImageAlt =
@@ -243,6 +259,10 @@ export default function ListingDetail({ listing, locale }: ListingDetailProps) {
             <p className="font-medium">{macroCategory}</p>
           </div>
           <div>
+            <p className="text-xs text-neutral-500">{t("contractType")}</p>
+            <p className="font-medium">{contractTypeLabel ?? "—"}</p>
+          </div>
+          <div>
             <p className="text-xs text-neutral-500">{t("typology")}</p>
             <p className="font-medium">{typology ?? "—"}</p>
           </div>
@@ -253,7 +273,9 @@ export default function ListingDetail({ listing, locale }: ListingDetailProps) {
         </div>
         <div className="mt-3 grid gap-3 text-sm text-neutral-700 dark:text-neutral-300 sm:grid-cols-3">
           <div>
-            <p className="text-xs text-neutral-500">{t("price")}</p>
+            <p className="text-xs text-neutral-500">
+              {listingContractType === "rent" ? t("rentPrice") : t("salePrice")}
+            </p>
             <p className="font-medium">{priceLabel || "—"}</p>
           </div>
           <div>

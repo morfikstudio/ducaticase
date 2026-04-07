@@ -202,6 +202,20 @@ export const PRICE_FALLBACK_OPTIONS = [
 export type PriceFallbackValue =
   (typeof PRICE_FALLBACK_OPTIONS)[number]["value"]
 
+export const LISTING_CONTRACT_TYPE_OPTIONS = [
+  {
+    value: "sale",
+    title: { it: "Vendita", en: "Sale" },
+  },
+  {
+    value: "rent",
+    title: { it: "Affitto", en: "Rent" },
+  },
+] as const satisfies readonly LocalizedTypologyOption[]
+
+export type ListingContractTypeValue =
+  (typeof LISTING_CONTRACT_TYPE_OPTIONS)[number]["value"]
+
 export const FLOOR_OPTIONS = [
   { title: "1", value: "1" },
   { title: "2", value: "2" },

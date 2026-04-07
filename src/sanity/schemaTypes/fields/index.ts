@@ -184,6 +184,10 @@ export {
   industrialTypologyField,
   type IndustrialTypologyFieldOptions,
 } from "./listing/industrialTypologyField"
+export {
+  listingContractTypeField,
+  type ListingContractTypeFieldOptions,
+} from "./listing/listingContractTypeField"
 
 /* Industrial (listing-specific fields; wire in listing schemas as needed) */
 export {

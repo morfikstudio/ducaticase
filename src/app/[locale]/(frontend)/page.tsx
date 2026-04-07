@@ -5,6 +5,7 @@ import { getSanityImageUrl } from "@/lib/sanity"
 import type { AppLocale } from "@/i18n/routing"
 import { sanityFetch } from "@/sanity/lib/client"
 import { MACRO_CATEGORY_OPTIONS } from "@/sanity/lib/constants"
+import { listingContractTypeLabel } from "@/sanity/lib/listingContractTypeLabel"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import { listingTypologyLabel } from "@/sanity/lib/listingTypologyLabel"
 import { LISTINGS_PREVIEW_QUERY } from "@/sanity/lib/queries"
@@ -45,7 +46,14 @@ export default async function Page({ params }: Props) {
               (row) => row.documentType === entry._type,
             )?.title ?? "Annuncio"
           const title = label ?? typology ?? macroSectionTitle
-          const price = formatListingPrice(entry.price, locale)
+          const contractType = (entry as { listingContractType?: string | null })
+            .listingContractType
+          const contractTypeLabel = listingContractTypeLabel(contractType, locale)
+          const price = formatListingPrice(
+            entry.price,
+            locale,
+            contractType as "sale" | "rent" | null,
+          )
 
           return (
             <li key={entry._id}>
@@ -71,7 +79,9 @@ export default async function Page({ params }: Props) {
                       {title}
                     </p>
                     <p className="truncate text-sm text-neutral-600 dark:text-neutral-300">
-                      {[price, entry.city].filter(Boolean).join(" · ")}
+                      {[contractTypeLabel, price, entry.city]
+                        .filter(Boolean)
+                        .join(" · ")}
                     </p>
                   </div>
                 </div>
