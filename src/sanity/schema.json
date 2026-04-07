@@ -64,6 +64,56 @@
           "type": "string"
         }
       },
+      "listingContractType": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "sale"
+            },
+            {
+              "type": "string",
+              "value": "rent"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "price": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "amount": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "noPriceReason": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "privateNegotiation"
+                  },
+                  {
+                    "type": "string",
+                    "value": "priceOnRequest"
+                  }
+                ]
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "commercialAreaSqm": {
         "type": "objectAttribute",
         "value": {
@@ -112,39 +162,6 @@
         "type": "objectAttribute",
         "value": {
           "type": "boolean"
-        },
-        "optional": true
-      },
-      "price": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "object",
-          "attributes": {
-            "amount": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "number"
-              },
-              "optional": true
-            },
-            "noPriceReason": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "union",
-                "of": [
-                  {
-                    "type": "string",
-                    "value": "privateNegotiation"
-                  },
-                  {
-                    "type": "string",
-                    "value": "priceOnRequest"
-                  }
-                ]
-              },
-              "optional": true
-            }
-          }
         },
         "optional": true
       },
@@ -1325,6 +1342,56 @@
           "type": "string"
         }
       },
+      "listingContractType": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "sale"
+            },
+            {
+              "type": "string",
+              "value": "rent"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "price": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "amount": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "noPriceReason": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "privateNegotiation"
+                  },
+                  {
+                    "type": "string",
+                    "value": "priceOnRequest"
+                  }
+                ]
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "commercialAreaSqm": {
         "type": "objectAttribute",
         "value": {
@@ -1454,39 +1521,6 @@
                   {
                     "type": "string",
                     "value": "G"
-                  }
-                ]
-              },
-              "optional": true
-            }
-          }
-        },
-        "optional": true
-      },
-      "price": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "object",
-          "attributes": {
-            "amount": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "number"
-              },
-              "optional": true
-            },
-            "noPriceReason": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "union",
-                "of": [
-                  {
-                    "type": "string",
-                    "value": "privateNegotiation"
-                  },
-                  {
-                    "type": "string",
-                    "value": "priceOnRequest"
                   }
                 ]
               },
@@ -2349,6 +2383,56 @@
           "type": "string"
         }
       },
+      "listingContractType": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "sale"
+            },
+            {
+              "type": "string",
+              "value": "rent"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "price": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "amount": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "noPriceReason": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "privateNegotiation"
+                  },
+                  {
+                    "type": "string",
+                    "value": "priceOnRequest"
+                  }
+                ]
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "industrialTypology": {
         "type": "objectAttribute",
         "value": {
@@ -2591,39 +2675,6 @@
                   {
                     "type": "string",
                     "value": "G"
-                  }
-                ]
-              },
-              "optional": true
-            }
-          }
-        },
-        "optional": true
-      },
-      "price": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "object",
-          "attributes": {
-            "amount": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "number"
-              },
-              "optional": true
-            },
-            "noPriceReason": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "union",
-                "of": [
-                  {
-                    "type": "string",
-                    "value": "privateNegotiation"
-                  },
-                  {
-                    "type": "string",
-                    "value": "priceOnRequest"
                   }
                 ]
               },
@@ -3496,6 +3547,56 @@
           "type": "string"
         }
       },
+      "listingContractType": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "sale"
+            },
+            {
+              "type": "string",
+              "value": "rent"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "price": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "amount": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "noPriceReason": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "privateNegotiation"
+                  },
+                  {
+                    "type": "string",
+                    "value": "priceOnRequest"
+                  }
+                ]
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "shopsAndOfficesTypology": {
         "type": "objectAttribute",
         "value": {
@@ -3796,39 +3897,6 @@
                   {
                     "type": "string",
                     "value": "G"
-                  }
-                ]
-              },
-              "optional": true
-            }
-          }
-        },
-        "optional": true
-      },
-      "price": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "object",
-          "attributes": {
-            "amount": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "number"
-              },
-              "optional": true
-            },
-            "noPriceReason": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "union",
-                "of": [
-                  {
-                    "type": "string",
-                    "value": "privateNegotiation"
-                  },
-                  {
-                    "type": "string",
-                    "value": "priceOnRequest"
                   }
                 ]
               },
@@ -4717,6 +4785,56 @@
           "type": "string"
         }
       },
+      "listingContractType": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "sale"
+            },
+            {
+              "type": "string",
+              "value": "rent"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "price": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "amount": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "noPriceReason": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "privateNegotiation"
+                  },
+                  {
+                    "type": "string",
+                    "value": "priceOnRequest"
+                  }
+                ]
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "countryHouseTypology": {
         "type": "objectAttribute",
         "value": {
@@ -4993,39 +5111,6 @@
                   {
                     "type": "string",
                     "value": "G"
-                  }
-                ]
-              },
-              "optional": true
-            }
-          }
-        },
-        "optional": true
-      },
-      "price": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "object",
-          "attributes": {
-            "amount": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "number"
-              },
-              "optional": true
-            },
-            "noPriceReason": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "union",
-                "of": [
-                  {
-                    "type": "string",
-                    "value": "privateNegotiation"
-                  },
-                  {
-                    "type": "string",
-                    "value": "priceOnRequest"
                   }
                 ]
               },
@@ -5945,6 +6030,56 @@
           "type": "string"
         }
       },
+      "listingContractType": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "sale"
+            },
+            {
+              "type": "string",
+              "value": "rent"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "price": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "amount": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "noPriceReason": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "privateNegotiation"
+                  },
+                  {
+                    "type": "string",
+                    "value": "priceOnRequest"
+                  }
+                ]
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "commercialAreaSqm": {
         "type": "objectAttribute",
         "value": {
@@ -6254,39 +6389,6 @@
                   {
                     "type": "string",
                     "value": "G"
-                  }
-                ]
-              },
-              "optional": true
-            }
-          }
-        },
-        "optional": true
-      },
-      "price": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "object",
-          "attributes": {
-            "amount": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "number"
-              },
-              "optional": true
-            },
-            "noPriceReason": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "union",
-                "of": [
-                  {
-                    "type": "string",
-                    "value": "privateNegotiation"
-                  },
-                  {
-                    "type": "string",
-                    "value": "priceOnRequest"
                   }
                 ]
               },

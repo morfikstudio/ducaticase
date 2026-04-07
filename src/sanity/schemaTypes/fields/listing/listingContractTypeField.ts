@@ -31,7 +31,10 @@ export function listingContractTypeField(
     },
     validation: (Rule) =>
       Rule.custom((value: ListingContractTypeValue | undefined | null) => {
-        if (!required && (value === undefined || value === null || value === "")) {
+        if (
+          !required &&
+          (value === undefined || value === null || value === "")
+        ) {
           return true
         }
 
@@ -39,7 +42,9 @@ export function listingContractTypeField(
           value === undefined ||
           value === null ||
           value === "" ||
-          !LISTING_CONTRACT_TYPE_OPTIONS.some((option) => option.value === value)
+          !LISTING_CONTRACT_TYPE_OPTIONS.some(
+            (option) => option.value === value,
+          )
         ) {
           return FIELD_REQUIRED_IT
         }

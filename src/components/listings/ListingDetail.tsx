@@ -215,7 +215,10 @@ export default function ListingDetail({ listing, locale }: ListingDetailProps) {
   const listingContractType =
     (listing.metadata as { listingContractType?: string | null })
       .listingContractType ?? null
-  const contractTypeLabel = listingContractTypeLabel(listingContractType, locale)
+  const contractTypeLabel = listingContractTypeLabel(
+    listingContractType,
+    locale,
+  )
   const priceLabel = formatListingPrice(
     listing.propertySheet.price,
     locale,

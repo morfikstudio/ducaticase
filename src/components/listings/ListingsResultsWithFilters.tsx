@@ -15,6 +15,7 @@ import { ListingsList } from "./ListingsList"
 type ListingsEntry = LISTINGS_PREVIEW_QUERY_RESULT[number]
 type ContractType = "sale" | "rent"
 type TypologyMacroValue = "countryHouses" | "commercial" | "industrial"
+type SortOption = "priceDesc" | "priceAsc" | "recentDesc" | "recentAsc"
 
 type ListingsResultsWithFiltersProps = {
   listings: ListingsEntry[]
@@ -33,6 +34,18 @@ function toCsv(values: string[]): string {
   return values.join(",")
 }
 
+function normalizeSort(value: string | null): SortOption {
+  if (
+    value === "priceDesc" ||
+    value === "priceAsc" ||
+    value === "recentAsc" ||
+    value === "recentDesc"
+  ) {
+    return value
+  }
+  return "recentDesc"
+}
+
 export function ListingsResultsWithFilters({
   listings,
   locale,
@@ -42,6 +55,7 @@ export function ListingsResultsWithFilters({
   const searchParams = useSearchParams()
 
   const selectedContract = searchParams.get("contract") as ContractType | null
+  const selectedSort = normalizeSort(searchParams.get("sort"))
   const selectedMacros = parseCsv(searchParams.get("macro"))
   const selectedCities = parseCsv(searchParams.get("city"))
   const selectedTypologies = parseCsv(searchParams.get("typology"))
@@ -101,7 +115,9 @@ export function ListingsResultsWithFilters({
 
   const effectiveSelectedTypologies = useMemo(() => {
     if (!shouldShowTypology) return []
-    const availableTypologies = new Set(typologyOptions.map((item) => item.value))
+    const availableTypologies = new Set(
+      typologyOptions.map((item) => item.value),
+    )
     return selectedTypologies.filter((value) => availableTypologies.has(value))
   }, [selectedTypologies, shouldShowTypology, typologyOptions])
 
@@ -173,6 +189,37 @@ export function ListingsResultsWithFilters({
     effectiveSelectedTypologies,
   ])
 
+  const listingOrderMap = useMemo(() => {
+    return new Map(listings.map((entry, index) => [entry._id, index]))
+  }, [listings])
+
+  const sortedListings = useMemo(() => {
+    const withOrder = [...filteredListings]
+    const byRecent = (a: ListingsEntry, b: ListingsEntry) =>
+      (listingOrderMap.get(a._id) ?? 0) - (listingOrderMap.get(b._id) ?? 0)
+
+    const byPrice = (a: ListingsEntry, b: ListingsEntry) => {
+      const amountA = a.price?.amount ?? null
+      const amountB = b.price?.amount ?? null
+      if (amountA == null && amountB == null) return 0
+      if (amountA == null) return 1
+      if (amountB == null) return -1
+      return amountA - amountB
+    }
+
+    switch (selectedSort) {
+      case "priceAsc":
+        return withOrder.sort((a, b) => byPrice(a, b) || byRecent(a, b))
+      case "priceDesc":
+        return withOrder.sort((a, b) => byPrice(b, a) || byRecent(a, b))
+      case "recentAsc":
+        return withOrder.sort((a, b) => byRecent(b, a))
+      case "recentDesc":
+      default:
+        return withOrder.sort((a, b) => byRecent(a, b))
+    }
+  }, [filteredListings, listingOrderMap, selectedSort])
+
   const updateSearchParams = (updater: (params: URLSearchParams) => void) => {
     const nextParams = new URLSearchParams(searchParams.toString())
     updater(nextParams)
@@ -222,7 +269,9 @@ export function ListingsResultsWithFilters({
 
     const changed =
       normalizedTypologies.length !== selectedTypologies.length ||
-      normalizedTypologies.some((typology, idx) => typology !== selectedTypologies[idx])
+      normalizedTypologies.some(
+        (typology, idx) => typology !== selectedTypologies[idx],
+      )
 
     if (!changed) return
 
@@ -238,10 +287,14 @@ export function ListingsResultsWithFilters({
   return (
     <div className="mt-4 grid gap-4 lg:grid-cols-[320px_minmax(0,1fr)] lg:items-start">
       <div className="rounded-xl border border-neutral-200 p-4 dark:border-neutral-800 lg:sticky lg:top-4">
-        <p className="text-sm font-semibold">Filtri</p>
+        <p className="text-sm font-semibold text-neutral-700 dark:text-white">
+          Filtri
+        </p>
 
         <div className="mt-4">
-          <p className="text-sm font-medium">Contratto</p>
+          <p className="text-sm font-medium text-neutral-700 dark:text-white">
+            Contratto
+          </p>
           <div className="mt-2 flex flex-wrap gap-2">
             {(["sale", "rent"] as const).map((value) => {
               const label = listingContractTypeLabel(value, locale) ?? value
@@ -262,7 +315,7 @@ export function ListingsResultsWithFilters({
                   className={`rounded-md border px-3 py-1.5 text-sm transition ${
                     selected
                       ? "border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-neutral-900"
-                      : "border-neutral-300 hover:border-neutral-500 dark:border-neutral-700 dark:hover:border-neutral-500"
+                      : "border-neutral-300 text-neutral-700 hover:border-neutral-500 dark:border-neutral-700 dark:text-white dark:hover:border-neutral-500"
                   }`}
                 >
                   {label}
@@ -273,7 +326,9 @@ export function ListingsResultsWithFilters({
         </div>
 
         <div className="mt-4">
-          <p className="text-sm font-medium">Macro categoria</p>
+          <p className="text-sm font-medium text-neutral-700 dark:text-white">
+            Macro categoria
+          </p>
           <div className="mt-2 flex flex-wrap gap-2">
             {MACRO_CATEGORY_OPTIONS.map((option) => {
               const selected = selectedMacros.includes(option.value)
@@ -292,7 +347,7 @@ export function ListingsResultsWithFilters({
                       ? "border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-neutral-900"
                       : disabled
                         ? "cursor-not-allowed border-neutral-200 text-neutral-400 dark:border-neutral-800 dark:text-neutral-600"
-                        : "border-neutral-300 hover:border-neutral-500 dark:border-neutral-700 dark:hover:border-neutral-500"
+                        : "border-neutral-300 text-neutral-700 hover:border-neutral-500 dark:border-neutral-700 dark:text-white dark:hover:border-neutral-500"
                   }`}
                 >
                   {option.title}
@@ -304,7 +359,9 @@ export function ListingsResultsWithFilters({
 
         {shouldShowTypology ? (
           <div className="mt-4">
-            <p className="text-sm font-medium">Tipologia</p>
+            <p className="text-sm font-medium text-neutral-700 dark:text-white">
+              Tipologia
+            </p>
             <div className="mt-2 grid gap-2 sm:grid-cols-2">
               {typologyOptions.length === 0 ? (
                 <p className="text-sm text-neutral-500">
@@ -312,16 +369,20 @@ export function ListingsResultsWithFilters({
                 </p>
               ) : (
                 typologyOptions.map((option) => {
-                  const checked = effectiveSelectedTypologies.includes(option.value)
+                  const checked = effectiveSelectedTypologies.includes(
+                    option.value,
+                  )
                   return (
                     <label
                       key={option.value}
-                      className="flex items-center gap-2 text-sm"
+                      className="flex items-center gap-2 text-sm text-neutral-700 dark:text-white"
                     >
                       <input
                         type="checkbox"
                         checked={checked}
-                        onChange={() => toggleMultiValue("typology", option.value)}
+                        onChange={() =>
+                          toggleMultiValue("typology", option.value)
+                        }
                       />
                       <span>{option.label}</span>
                     </label>
@@ -333,12 +394,17 @@ export function ListingsResultsWithFilters({
         ) : null}
 
         <div className="mt-4">
-          <p className="text-sm font-medium">Localita</p>
+          <p className="text-sm font-medium text-neutral-700 dark:text-white">
+            Localita
+          </p>
           <div className="mt-2 grid gap-2 sm:grid-cols-2">
             {cityOptions.map((city) => {
               const checked = selectedCities.includes(city)
               return (
-                <label key={city} className="flex items-center gap-2 text-sm">
+                <label
+                  key={city}
+                  className="flex items-center gap-2 text-sm text-neutral-700 dark:text-white"
+                >
                   <input
                     type="checkbox"
                     checked={checked}
@@ -363,12 +429,49 @@ export function ListingsResultsWithFilters({
       </div>
 
       <div className="min-w-0">
+        <div className="mb-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-800">
+          <p className="text-sm font-semibold">Ordinamento</p>
+          <ul className="mt-2 space-y-2">
+            {(
+              [
+                { value: "priceDesc", label: "Prezzo decrescente" },
+                { value: "priceAsc", label: "Prezzo crescente" },
+                { value: "recentDesc", label: "Piu recenti" },
+                { value: "recentAsc", label: "Meno recenti" },
+              ] as const
+            ).map((option) => (
+              <li key={option.value}>
+                <button
+                  type="button"
+                  onClick={() =>
+                    updateSearchParams((params) => {
+                      if (option.value === "recentDesc") {
+                        params.delete("sort")
+                        return
+                      }
+                      params.set("sort", option.value)
+                    })
+                  }
+                  className={`text-left text-base leading-snug transition ${
+                    selectedSort === option.value
+                      ? "font-medium text-neutral-900 dark:text-white"
+                      : "text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
+                  }`}
+                >
+                  {selectedSort === option.value ? "• " : ""}
+                  {option.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         {filteredListings.length === 0 ? (
           <p className="text-sm text-neutral-500">
             Nessun annuncio trovato con questi filtri.
           </p>
         ) : (
-          <ListingsList listings={filteredListings} locale={locale} />
+          <ListingsList listings={sortedListings} locale={locale} />
         )}
       </div>
     </div>

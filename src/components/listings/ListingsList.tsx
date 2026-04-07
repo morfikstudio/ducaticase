@@ -25,7 +25,11 @@ export function ListingsList({ listings, locale }: ListingsListProps) {
     <ul className="space-y-2 mt-4">
       {listings.map((entry) => {
         const thumbUrl = getSanityImageUrl(entry.mainImage, 160, 120)
-        const typology = listingTypologyLabel(entry._type, entry.typology, locale)
+        const typology = listingTypologyLabel(
+          entry._type,
+          entry.typology,
+          locale,
+        )
         const label = pickLocalizedString(
           entry.listingLabel as LocalizedString | null | undefined,
           locale,
@@ -63,11 +67,13 @@ export function ListingsList({ listings, locale }: ListingsListProps) {
                   ) : null}
                 </div>
                 <div className="min-w-0">
-                  <p className="truncate font-medium text-neutral-900 dark:text-white">
+                  <p className="truncate font-medium text-neutral-100 dark:text-neutral-100">
                     {title}
                   </p>
-                  <p className="truncate text-sm text-neutral-600 dark:text-neutral-300">
-                    {[contractTypeLabel, price, entry.city].filter(Boolean).join(" · ")}
+                  <p className="truncate text-sm text-neutral-500 dark:text-neutral-300">
+                    {[contractTypeLabel, price, entry.city]
+                      .filter(Boolean)
+                      .join(" · ")}
                   </p>
                 </div>
               </div>

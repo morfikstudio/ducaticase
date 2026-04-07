@@ -21,8 +21,7 @@ export type PriceFieldOptions = {
 
 function PriceFieldTitleByContract(props: ObjectFieldProps) {
   const contractType = useFormValue(["listingContractType"])
-  const title =
-    contractType === "rent" ? "Canone" : "Prezzo di vendita"
+  const title = contractType === "rent" ? "Canone" : "Prezzo di vendita"
 
   return props.renderDefault({
     ...props,
@@ -43,8 +42,9 @@ export function priceField(options?: PriceFieldOptions) {
     title: FIELD_LABELS.priceEur.it,
     type: "object",
     hidden: ({ document }) => {
-      const contractType = (document as { listingContractType?: unknown } | null)
-        ?.listingContractType
+      const contractType = (
+        document as { listingContractType?: unknown } | null
+      )?.listingContractType
       return contractType !== "sale" && contractType !== "rent"
     },
     components: {
