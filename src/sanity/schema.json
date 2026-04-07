@@ -115,6 +115,39 @@
         },
         "optional": true
       },
+      "price": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "amount": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "noPriceReason": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "privateNegotiation"
+                  },
+                  {
+                    "type": "string",
+                    "value": "priceOnRequest"
+                  }
+                ]
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "country": {
         "type": "objectAttribute",
         "value": {
@@ -1430,6 +1463,39 @@
         },
         "optional": true
       },
+      "price": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "amount": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "noPriceReason": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "privateNegotiation"
+                  },
+                  {
+                    "type": "string",
+                    "value": "priceOnRequest"
+                  }
+                ]
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "country": {
         "type": "objectAttribute",
         "value": {
@@ -2525,6 +2591,39 @@
                   {
                     "type": "string",
                     "value": "G"
+                  }
+                ]
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
+      "price": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "amount": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "noPriceReason": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "privateNegotiation"
+                  },
+                  {
+                    "type": "string",
+                    "value": "priceOnRequest"
                   }
                 ]
               },
@@ -3706,6 +3805,39 @@
         },
         "optional": true
       },
+      "price": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "amount": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "noPriceReason": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "privateNegotiation"
+                  },
+                  {
+                    "type": "string",
+                    "value": "priceOnRequest"
+                  }
+                ]
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "country": {
         "type": "objectAttribute",
         "value": {
@@ -4861,6 +4993,39 @@
                   {
                     "type": "string",
                     "value": "G"
+                  }
+                ]
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
+      "price": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "amount": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "noPriceReason": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "privateNegotiation"
+                  },
+                  {
+                    "type": "string",
+                    "value": "priceOnRequest"
                   }
                 ]
               },
@@ -6089,6 +6254,39 @@
                   {
                     "type": "string",
                     "value": "G"
+                  }
+                ]
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
+      "price": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "amount": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "noPriceReason": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "privateNegotiation"
+                  },
+                  {
+                    "type": "string",
+                    "value": "priceOnRequest"
                   }
                 ]
               },

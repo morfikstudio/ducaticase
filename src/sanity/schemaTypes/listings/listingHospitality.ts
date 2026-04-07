@@ -24,6 +24,7 @@ import {
   heatingField,
   mainImageField,
   parkingSpacesField,
+  priceField,
   poolField,
   postalCodeField,
   provinceField,
@@ -48,6 +49,7 @@ export const listingHospitality = defineType({
     commercialAreaSqmField({ required: true, group: "propertySheet" }),
     roomCountField({ required: true, group: "propertySheet" }),
     energyClassField({ required: true, group: "propertySheet" }),
+    priceField({ group: "propertySheet" }),
     /* Località */
     countryField({ required: true, group: "location" }),
     provinceField({ required: true, group: "location" }),

@@ -6,7 +6,7 @@ import { LISTING_DOCUMENT_SPECS } from "./schemaTypes/listingTypes"
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
   S.list()
-    .title("Contenuto")
+    .title("Ducati Case")
     .items([
       S.documentTypeListItem("siteContent")
         .title("Contenuti Sito")

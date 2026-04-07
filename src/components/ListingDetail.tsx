@@ -6,6 +6,7 @@ import type {
   LISTING_BY_ID_QUERY_RESULT,
   LocalizedString,
 } from "@/sanity/types"
+import { formatListingPrice } from "@/lib/formatListingPrice"
 import { getSanityImageUrl } from "@/lib/sanity"
 import { listingTypologyLabel } from "@/sanity/lib/listingTypologyLabel"
 import { pickLocalizedString } from "@/sanity/lib/locale"
@@ -37,7 +38,10 @@ export default function ListingDetail({ listing, locale }: ListingDetailProps) {
       {typology && <h2>{typology}</h2>}
 
       <section className="mt-4">
-        <h2>{listing.propertySheet.commercialAreaSqm} m²</h2>
+        {listing.propertySheet.price && (
+          <h2>{formatListingPrice(listing.propertySheet.price, locale)}</h2>
+        )}
+        <p>{listing.propertySheet.commercialAreaSqm} m²</p>
       </section>
 
       {mainImageUrl && (

@@ -30,6 +30,7 @@ import {
   heatingField,
   mainImageField,
   parkingSpacesField,
+  priceField,
   poolField,
   postalCodeField,
   provinceField,
@@ -56,6 +57,7 @@ export const listingResidential = defineType({
     buildingYearField({ required: true, group: "propertySheet" }),
     heatingField({ required: true, group: "propertySheet" }),
     energyClassField({ required: true, group: "propertySheet" }),
+    priceField({ group: "propertySheet" }),
     /* Località */
     countryField({ required: true, group: "location" }),
     provinceField({ required: true, group: "location" }),

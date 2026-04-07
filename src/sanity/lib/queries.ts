@@ -15,8 +15,22 @@ export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`
     "listingIndustrial",
     "listingHospitality",
     "listingLand"
-  ]] | order(_updatedAt desc) [0...10]{
-    _id
+  ]] | order(_createdAt desc) [0...10]{
+    _id,
+    _type,
+    price,
+    city,
+    listingLabel,
+    "typology": select(
+      _type == "listingCountryHouses" => countryHouseTypology,
+      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,
+      _type == "listingIndustrial" => industrialTypology,
+      true => null
+    ),
+    "mainImage": mainImage {
+      ...,
+      asset->
+    }
   }
 `)
 
@@ -44,6 +58,7 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
     ),
     "propertySheet": select(
       _type == "listingResidential" => {
+        price,
         commercialAreaSqm,
         condoFees,
         floor,
@@ -53,6 +68,7 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
         energyClass
       },
       _type == "listingCountryHouses" => {
+        price,
         commercialAreaSqm,
         floor,
         buildingYear,
@@ -60,6 +76,7 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
         energyClass
       },
       _type == "listingShopsAndOffices" => {
+        price,
         commercialAreaSqm,
         floor,
         displayWindows,
@@ -69,6 +86,7 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
         energyClass
       },
       _type == "listingIndustrial" => {
+        price,
         commercialAreaSqm,
         floor,
         heightMeters,
@@ -76,11 +94,13 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
         energyClass
       },
       _type == "listingHospitality" => {
+        price,
         commercialAreaSqm,
         roomCount,
         energyClass
       },
       _type == "listingLand" => {
+        price,
         commercialAreaSqm,
         landAccess,
         hasFencedProperty

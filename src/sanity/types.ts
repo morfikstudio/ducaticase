@@ -34,6 +34,10 @@ export type ListingLand = {
     otherSpecification?: string
   }
   hasFencedProperty?: boolean
+  price?: {
+    amount?: number
+    noPriceReason?: "privateNegotiation" | "priceOnRequest"
+  }
   country?: "IT" | "CH" | "AT" | "FR" | "DE"
   province?:
     | "AG"
@@ -265,6 +269,10 @@ export type ListingHospitality = {
       | "F"
       | "G"
   }
+  price?: {
+    amount?: number
+    noPriceReason?: "privateNegotiation" | "priceOnRequest"
+  }
   country?: "IT" | "CH" | "AT" | "FR" | "DE"
   province?:
     | "AG"
@@ -471,6 +479,10 @@ export type ListingIndustrial = {
       | "E"
       | "F"
       | "G"
+  }
+  price?: {
+    amount?: number
+    noPriceReason?: "privateNegotiation" | "priceOnRequest"
   }
   country?: "IT" | "CH" | "AT" | "FR" | "DE"
   province?:
@@ -683,6 +695,10 @@ export type ListingShopsAndOffices = {
       | "F"
       | "G"
   }
+  price?: {
+    amount?: number
+    noPriceReason?: "privateNegotiation" | "priceOnRequest"
+  }
   country?: "IT" | "CH" | "AT" | "FR" | "DE"
   province?:
     | "AG"
@@ -894,6 +910,10 @@ export type ListingCountryHouses = {
       | "E"
       | "F"
       | "G"
+  }
+  price?: {
+    amount?: number
+    noPriceReason?: "privateNegotiation" | "priceOnRequest"
   }
   country?: "IT" | "CH" | "AT" | "FR" | "DE"
   province?:
@@ -1113,6 +1133,10 @@ export type ListingResidential = {
       | "E"
       | "F"
       | "G"
+  }
+  price?: {
+    amount?: number
+    noPriceReason?: "privateNegotiation" | "priceOnRequest"
   }
   country?: "IT" | "CH" | "AT" | "FR" | "DE"
   province?:
@@ -1469,14 +1493,253 @@ export type SITE_CONTENT_QUERY_RESULT =
 
 // Source: src/sanity/lib/queries.ts
 // Variable: LISTINGS_PREVIEW_QUERY
-// Query: *[_type in [    "listingResidential",    "listingCountryHouses",    "listingShopsAndOffices",    "listingIndustrial",    "listingHospitality",    "listingLand"  ]] | order(_updatedAt desc) [0...10]{    _id  }
-export type LISTINGS_PREVIEW_QUERY_RESULT = Array<{
-  _id: string
-}>
+// Query: *[_type in [    "listingResidential",    "listingCountryHouses",    "listingShopsAndOffices",    "listingIndustrial",    "listingHospitality",    "listingLand"  ]] | order(_createdAt desc) [0...10]{    _id,    _type,    price,    city,    listingLabel,    "typology": select(      _type == "listingCountryHouses" => countryHouseTypology,      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,      _type == "listingIndustrial" => industrialTypology,      true => null    ),    "mainImage": mainImage {      ...,      asset->    }  }
+export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
+  | {
+      _id: string
+      _type: "listingCountryHouses"
+      price: {
+        amount?: number
+        noPriceReason?: "priceOnRequest" | "privateNegotiation"
+      } | null
+      city: string | null
+      listingLabel: null
+      typology: "lakesAndCountryside" | "mountain" | "sea" | null
+      mainImage: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+    }
+  | {
+      _id: string
+      _type: "listingHospitality"
+      price: {
+        amount?: number
+        noPriceReason?: "priceOnRequest" | "privateNegotiation"
+      } | null
+      city: string | null
+      listingLabel: null
+      typology: null
+      mainImage: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+    }
+  | {
+      _id: string
+      _type: "listingIndustrial"
+      price: {
+        amount?: number
+        noPriceReason?: "priceOnRequest" | "privateNegotiation"
+      } | null
+      city: string | null
+      listingLabel: null
+      typology: "sheds" | "warehouses" | null
+      mainImage: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+    }
+  | {
+      _id: string
+      _type: "listingLand"
+      price: {
+        amount?: number
+        noPriceReason?: "priceOnRequest" | "privateNegotiation"
+      } | null
+      city: string | null
+      listingLabel: null
+      typology: null
+      mainImage: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+    }
+  | {
+      _id: string
+      _type: "listingResidential"
+      price: {
+        amount?: number
+        noPriceReason?: "priceOnRequest" | "privateNegotiation"
+      } | null
+      city: string | null
+      listingLabel: null
+      typology: null
+      mainImage: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+    }
+  | {
+      _id: string
+      _type: "listingShopsAndOffices"
+      price: {
+        amount?: number
+        noPriceReason?: "priceOnRequest" | "privateNegotiation"
+      } | null
+      city: string | null
+      listingLabel: null
+      typology: "offices" | "shops" | null
+      mainImage: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+    }
+>
 
 // Source: src/sanity/lib/queries.ts
 // Variable: LISTING_BY_ID_QUERY
-// Query: *[_type in [    "listingResidential",    "listingCountryHouses",    "listingShopsAndOffices",    "listingIndustrial",    "listingHospitality",    "listingLand"  ] && _id == $id][0]{    "metadata": {      _id,      _type,      _createdAt,      _updatedAt,      _rev    },    "typology": select(      _type == "listingCountryHouses" => countryHouseTypology,      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,      _type == "listingIndustrial" => industrialTypology,      true => null    ),    "propertySheet": select(      _type == "listingResidential" => {        commercialAreaSqm,        condoFees,        floor,        conciergeService,        buildingYear,        heating,        energyClass      },      _type == "listingCountryHouses" => {        commercialAreaSqm,        floor,        buildingYear,        heating,        energyClass      },      _type == "listingShopsAndOffices" => {        commercialAreaSqm,        floor,        displayWindows,        conciergeService,        buildingYear,        heating,        energyClass      },      _type == "listingIndustrial" => {        commercialAreaSqm,        floor,        heightMeters,        buildingYear,        energyClass      },      _type == "listingHospitality" => {        commercialAreaSqm,        roomCount,        energyClass      },      _type == "listingLand" => {        commercialAreaSqm,        landAccess,        hasFencedProperty      }    ),    "location": {      country,      province,      city,      address,      postalCode    },    "content": {      listingLabel,      "mainImage": mainImage {        ...,        asset->      },      description,      excerpt    },    "floorPlans": select(      _type == "listingLand" => {        "items": null      },      {        "items": floorPlans[] {          ...,          asset->        }      }    ),    "additionalFields": select(      _type == "listingResidential" => {        furnishing,        garden,        carBox,        parkingSpaces,        hasBalcony,        hasTerrace,        hasCellar,        hasAtticRoom,        hasTavern,        hasAlarmSystem,        pool,        hasTennisCourt,        hasAccessibleAccess,        climateControl      },      _type == "listingCountryHouses" => {        outdoorAreaSqm,        furnishing,        garden,        carBox,        parkingSpaces,        hasBalcony,        hasTerrace,        hasCellar,        hasAtticRoom,        hasTavern,        hasAlarmSystem,        pool,        hasTennisCourt,        hasAccessibleAccess,        climateControl,        condoFees      },      _type == "listingShopsAndOffices" => {        furnishing,        hasAccessibleRestroom,        hasFlue,        hasFireProtectionSystem,        hasLoadingUnloading,        hasDrivewayAccess,        parkingSpaces,        hasAlarmSystem,        hasAccessibleAccess,        climateControl,        conciergeServiceShops,        officeLayout,        condoFees      },      _type == "listingIndustrial" => {        hasLoadingDocks,        hasOverheadCranes,        shedAreaSqm,        officeAreaSqm,        landAreaSqm,        hasChangingRoom,        hasFencedProperty,        conciergeService,        hasAccessibleRestroom,        hasLoadingUnloading,        hasDrivewayAccess,        hasDrivableAccess,        parkingSpaces,        hasAlarmSystem,        hasAccessibleAccess,        climateControl,        heating      },      _type == "listingHospitality" => {        hasAccessibleRestroom,        hasFlue,        hasFireProtectionSystem,        hasLoadingUnloading,        hasDrivewayAccess,        parkingSpaces,        hasAlarmSystem,        hasAccessibleAccess,        climateControl,        outdoorAreaSqm,        heating,        pool,        hasTennisCourt,        customSpecifications      },      _type == "listingLand" => {        buildable,        agricultural      }    )  }
+// Query: *[_type in [    "listingResidential",    "listingCountryHouses",    "listingShopsAndOffices",    "listingIndustrial",    "listingHospitality",    "listingLand"  ] && _id == $id][0]{    "metadata": {      _id,      _type,      _createdAt,      _updatedAt,      _rev    },    "typology": select(      _type == "listingCountryHouses" => countryHouseTypology,      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,      _type == "listingIndustrial" => industrialTypology,      true => null    ),    "propertySheet": select(      _type == "listingResidential" => {        price,        commercialAreaSqm,        condoFees,        floor,        conciergeService,        buildingYear,        heating,        energyClass      },      _type == "listingCountryHouses" => {        price,        commercialAreaSqm,        floor,        buildingYear,        heating,        energyClass      },      _type == "listingShopsAndOffices" => {        price,        commercialAreaSqm,        floor,        displayWindows,        conciergeService,        buildingYear,        heating,        energyClass      },      _type == "listingIndustrial" => {        price,        commercialAreaSqm,        floor,        heightMeters,        buildingYear,        energyClass      },      _type == "listingHospitality" => {        price,        commercialAreaSqm,        roomCount,        energyClass      },      _type == "listingLand" => {        price,        commercialAreaSqm,        landAccess,        hasFencedProperty      }    ),    "location": {      country,      province,      city,      address,      postalCode    },    "content": {      listingLabel,      "mainImage": mainImage {        ...,        asset->      },      description,      excerpt    },    "floorPlans": select(      _type == "listingLand" => {        "items": null      },      {        "items": floorPlans[] {          ...,          asset->        }      }    ),    "additionalFields": select(      _type == "listingResidential" => {        furnishing,        garden,        carBox,        parkingSpaces,        hasBalcony,        hasTerrace,        hasCellar,        hasAtticRoom,        hasTavern,        hasAlarmSystem,        pool,        hasTennisCourt,        hasAccessibleAccess,        climateControl      },      _type == "listingCountryHouses" => {        outdoorAreaSqm,        furnishing,        garden,        carBox,        parkingSpaces,        hasBalcony,        hasTerrace,        hasCellar,        hasAtticRoom,        hasTavern,        hasAlarmSystem,        pool,        hasTennisCourt,        hasAccessibleAccess,        climateControl,        condoFees      },      _type == "listingShopsAndOffices" => {        furnishing,        hasAccessibleRestroom,        hasFlue,        hasFireProtectionSystem,        hasLoadingUnloading,        hasDrivewayAccess,        parkingSpaces,        hasAlarmSystem,        hasAccessibleAccess,        climateControl,        conciergeServiceShops,        officeLayout,        condoFees      },      _type == "listingIndustrial" => {        hasLoadingDocks,        hasOverheadCranes,        shedAreaSqm,        officeAreaSqm,        landAreaSqm,        hasChangingRoom,        hasFencedProperty,        conciergeService,        hasAccessibleRestroom,        hasLoadingUnloading,        hasDrivewayAccess,        hasDrivableAccess,        parkingSpaces,        hasAlarmSystem,        hasAccessibleAccess,        climateControl,        heating      },      _type == "listingHospitality" => {        hasAccessibleRestroom,        hasFlue,        hasFireProtectionSystem,        hasLoadingUnloading,        hasDrivewayAccess,        parkingSpaces,        hasAlarmSystem,        hasAccessibleAccess,        climateControl,        outdoorAreaSqm,        heating,        pool,        hasTennisCourt,        customSpecifications      },      _type == "listingLand" => {        buildable,        agricultural      }    )  }
 export type LISTING_BY_ID_QUERY_RESULT =
   | {
       metadata: {
@@ -1488,6 +1751,10 @@ export type LISTING_BY_ID_QUERY_RESULT =
       }
       typology: null
       propertySheet: {
+        price: {
+          amount?: number
+          noPriceReason?: "priceOnRequest" | "privateNegotiation"
+        } | null
         commercialAreaSqm: number | null
         landAccess: {
           choice?: "asphalt" | "dirt" | "other"
@@ -1665,6 +1932,10 @@ export type LISTING_BY_ID_QUERY_RESULT =
       }
       typology: "lakesAndCountryside" | "mountain" | "sea" | null
       propertySheet: {
+        price: {
+          amount?: number
+          noPriceReason?: "priceOnRequest" | "privateNegotiation"
+        } | null
         commercialAreaSqm: number | null
         floor:
           | "1"
@@ -1944,6 +2215,10 @@ export type LISTING_BY_ID_QUERY_RESULT =
       }
       typology: null
       propertySheet: {
+        price: {
+          amount?: number
+          noPriceReason?: "priceOnRequest" | "privateNegotiation"
+        } | null
         commercialAreaSqm: number | null
         condoFees: {
           condoFeesAmount?: number
@@ -2223,6 +2498,10 @@ export type LISTING_BY_ID_QUERY_RESULT =
       }
       typology: "sheds" | "warehouses" | null
       propertySheet: {
+        price: {
+          amount?: number
+          noPriceReason?: "priceOnRequest" | "privateNegotiation"
+        } | null
         commercialAreaSqm: number | null
         floor:
           | "1"
@@ -2492,6 +2771,10 @@ export type LISTING_BY_ID_QUERY_RESULT =
       }
       typology: "offices" | "shops" | null
       propertySheet: {
+        price: {
+          amount?: number
+          noPriceReason?: "priceOnRequest" | "privateNegotiation"
+        } | null
         commercialAreaSqm: number | null
         floor:
           | "1"
@@ -2770,6 +3053,10 @@ export type LISTING_BY_ID_QUERY_RESULT =
       }
       typology: null
       propertySheet: {
+        price: {
+          amount?: number
+          noPriceReason?: "priceOnRequest" | "privateNegotiation"
+        } | null
         commercialAreaSqm: number | null
         roomCount: number | null
         energyClass: {
@@ -3014,7 +3301,7 @@ import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  coalesce(\n    *[_type == "siteContent" && language == $locale][0]{ _id, title, language },\n    *[_type == "siteContent" && language == "it"][0]{ _id, title, language } // fallback to IT if missing\n  )\n': SITE_CONTENT_QUERY_RESULT
-    '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ]] | order(_updatedAt desc) [0...10]{\n    _id\n  }\n': LISTINGS_PREVIEW_QUERY_RESULT
-    '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && _id == $id][0]{\n    "metadata": {\n      _id,\n      _type,\n      _createdAt,\n      _updatedAt,\n      _rev\n    },\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "propertySheet": select(\n      _type == "listingResidential" => {\n        commercialAreaSqm,\n        condoFees,\n        floor,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingCountryHouses" => {\n        commercialAreaSqm,\n        floor,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingShopsAndOffices" => {\n        commercialAreaSqm,\n        floor,\n        displayWindows,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingIndustrial" => {\n        commercialAreaSqm,\n        floor,\n        heightMeters,\n        buildingYear,\n        energyClass\n      },\n      _type == "listingHospitality" => {\n        commercialAreaSqm,\n        roomCount,\n        energyClass\n      },\n      _type == "listingLand" => {\n        commercialAreaSqm,\n        landAccess,\n        hasFencedProperty\n      }\n    ),\n    "location": {\n      country,\n      province,\n      city,\n      address,\n      postalCode\n    },\n    "content": {\n      listingLabel,\n      "mainImage": mainImage {\n        ...,\n        asset->\n      },\n      description,\n      excerpt\n    },\n    "floorPlans": select(\n      _type == "listingLand" => {\n        "items": null\n      },\n      {\n        "items": floorPlans[] {\n          ...,\n          asset->\n        }\n      }\n    ),\n    "additionalFields": select(\n      _type == "listingResidential" => {\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl\n      },\n      _type == "listingCountryHouses" => {\n        outdoorAreaSqm,\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl,\n        condoFees\n      },\n      _type == "listingShopsAndOffices" => {\n        furnishing,\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        conciergeServiceShops,\n        officeLayout,\n        condoFees\n      },\n      _type == "listingIndustrial" => {\n        hasLoadingDocks,\n        hasOverheadCranes,\n        shedAreaSqm,\n        officeAreaSqm,\n        landAreaSqm,\n        hasChangingRoom,\n        hasFencedProperty,\n        conciergeService,\n        hasAccessibleRestroom,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        hasDrivableAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        heating\n      },\n      _type == "listingHospitality" => {\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        outdoorAreaSqm,\n        heating,\n        pool,\n        hasTennisCourt,\n        customSpecifications\n      },\n      _type == "listingLand" => {\n        buildable,\n        agricultural\n      }\n    )\n  }\n': LISTING_BY_ID_QUERY_RESULT
+    '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ]] | order(_createdAt desc) [0...10]{\n    _id,\n    _type,\n    price,\n    city,\n    listingLabel,\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "mainImage": mainImage {\n      ...,\n      asset->\n    }\n  }\n': LISTINGS_PREVIEW_QUERY_RESULT
+    '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && _id == $id][0]{\n    "metadata": {\n      _id,\n      _type,\n      _createdAt,\n      _updatedAt,\n      _rev\n    },\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "propertySheet": select(\n      _type == "listingResidential" => {\n        price,\n        commercialAreaSqm,\n        condoFees,\n        floor,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingCountryHouses" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingShopsAndOffices" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        displayWindows,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingIndustrial" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        heightMeters,\n        buildingYear,\n        energyClass\n      },\n      _type == "listingHospitality" => {\n        price,\n        commercialAreaSqm,\n        roomCount,\n        energyClass\n      },\n      _type == "listingLand" => {\n        price,\n        commercialAreaSqm,\n        landAccess,\n        hasFencedProperty\n      }\n    ),\n    "location": {\n      country,\n      province,\n      city,\n      address,\n      postalCode\n    },\n    "content": {\n      listingLabel,\n      "mainImage": mainImage {\n        ...,\n        asset->\n      },\n      description,\n      excerpt\n    },\n    "floorPlans": select(\n      _type == "listingLand" => {\n        "items": null\n      },\n      {\n        "items": floorPlans[] {\n          ...,\n          asset->\n        }\n      }\n    ),\n    "additionalFields": select(\n      _type == "listingResidential" => {\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl\n      },\n      _type == "listingCountryHouses" => {\n        outdoorAreaSqm,\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl,\n        condoFees\n      },\n      _type == "listingShopsAndOffices" => {\n        furnishing,\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        conciergeServiceShops,\n        officeLayout,\n        condoFees\n      },\n      _type == "listingIndustrial" => {\n        hasLoadingDocks,\n        hasOverheadCranes,\n        shedAreaSqm,\n        officeAreaSqm,\n        landAreaSqm,\n        hasChangingRoom,\n        hasFencedProperty,\n        conciergeService,\n        hasAccessibleRestroom,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        hasDrivableAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        heating\n      },\n      _type == "listingHospitality" => {\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        outdoorAreaSqm,\n        heating,\n        pool,\n        hasTennisCourt,\n        customSpecifications\n      },\n      _type == "listingLand" => {\n        buildable,\n        agricultural\n      }\n    )\n  }\n': LISTING_BY_ID_QUERY_RESULT
   }
 }

@@ -37,6 +37,7 @@ import {
   officeAreaSqmField,
   mainImageField,
   parkingSpacesField,
+  priceField,
   postalCodeField,
   provinceField,
   shedAreaSqmField,
@@ -91,6 +92,7 @@ export const listingIndustrial = defineType({
         }),
     },
     energyClassField({ required: true, group: "propertySheet" }),
+    priceField({ group: "propertySheet" }),
     /* Località */
     countryField({ required: true, group: "location" }),
     provinceField({ required: true, group: "location" }),

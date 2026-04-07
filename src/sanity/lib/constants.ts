@@ -115,6 +115,20 @@ export const INDUSTRIAL_TYPOLOGY_OPTIONS = [
 export type IndustrialTypologyValue =
   (typeof INDUSTRIAL_TYPOLOGY_OPTIONS)[number]["value"]
 
+export const PRICE_FALLBACK_OPTIONS = [
+  {
+    value: "privateNegotiation",
+    title: { it: "Trattativa riservata", en: "Private negotiation" },
+  },
+  {
+    value: "priceOnRequest",
+    title: { it: "Prezzo su richiesta", en: "Price on request" },
+  },
+] as const satisfies readonly LocalizedTypologyOption[]
+
+export type PriceFallbackValue =
+  (typeof PRICE_FALLBACK_OPTIONS)[number]["value"]
+
 export const FLOOR_OPTIONS = [
   { title: "1", value: "1" },
   { title: "2", value: "2" },

@@ -1,0 +1,45 @@
+import type { AppLocale } from "@/i18n/routing"
+import { PRICE_FALLBACK_OPTIONS } from "@/sanity/lib/constants"
+
+type PriceValue =
+  | {
+      amount?: number | null
+      noPriceReason?: string | null
+    }
+  | null
+  | undefined
+
+export function formatListingPrice(
+  price: PriceValue,
+  locale: AppLocale,
+): string {
+  if (!price) {
+    return ""
+  }
+
+  if (!price.amount && !price.noPriceReason) {
+    return ""
+  }
+
+  const amount = price?.amount
+
+  if (typeof amount !== "number" || !Number.isFinite(amount) || amount <= 0) {
+    const reason = price?.noPriceReason
+    const reasonLabel =
+      typeof reason === "string"
+        ? PRICE_FALLBACK_OPTIONS.find((o) => o.value === reason)?.title[locale]
+        : undefined
+
+    return reasonLabel ?? PRICE_FALLBACK_OPTIONS[1].title[locale]
+  }
+
+  try {
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency: "EUR",
+      maximumFractionDigits: 0,
+    }).format(amount)
+  } catch {
+    return `${amount} EUR`
+  }
+}

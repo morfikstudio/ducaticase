@@ -14,6 +14,7 @@ import {
   hasFencedPropertyField,
   landAccessField,
   mainImageField,
+  priceField,
   postalCodeField,
   provinceField,
 } from "../fields"
@@ -34,6 +35,7 @@ export const listingLand = defineType({
     commercialAreaSqmField({ required: true, group: "propertySheet" }),
     landAccessField({ required: true, group: "propertySheet" }),
     hasFencedPropertyField({ required: true, group: "propertySheet" }),
+    priceField({ group: "propertySheet" }),
     /* Località */
     countryField({ required: true, group: "location" }),
     provinceField({ required: true, group: "location" }),

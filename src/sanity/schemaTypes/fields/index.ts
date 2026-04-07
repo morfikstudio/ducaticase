@@ -89,6 +89,7 @@ export {
   officeLayoutField,
   type OfficeLayoutFieldOptions,
 } from "./building/officeLayoutField"
+export { priceField, type PriceFieldOptions } from "./priceField"
 
 /* Land */
 export {

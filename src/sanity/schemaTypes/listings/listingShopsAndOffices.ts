@@ -31,6 +31,7 @@ import {
   mainImageField,
   officeLayoutField,
   parkingSpacesField,
+  priceField,
   postalCodeField,
   provinceField,
   shopsAndOfficesTypologyField,
@@ -89,6 +90,7 @@ export const listingShopsAndOffices = defineType({
     buildingYearField({ required: true, group: "propertySheet" }),
     heatingField({ required: true, group: "propertySheet" }),
     energyClassField({ required: true, group: "propertySheet" }),
+    priceField({ group: "propertySheet" }),
     /* Località */
     countryField({ required: true, group: "location" }),
     provinceField({ required: true, group: "location" }),
