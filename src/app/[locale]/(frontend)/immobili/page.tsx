@@ -4,6 +4,7 @@ import { ListingsResultsWithFilters } from "@/components/listings/ListingsResult
 import { sanityFetch } from "@/sanity/lib/client"
 import { LISTINGS_PREVIEW_QUERY } from "@/sanity/lib/queries"
 import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
+import { Suspense } from "react"
 
 type ListingsPageProps = {
   params: Promise<{ locale: string }>
@@ -21,7 +22,9 @@ export default async function ListingsPage({ params }: ListingsPageProps) {
   return (
     <main className="mx-auto max-w-2xl px-4 py-10">
       <Link href="/">HOME</Link>
-      <ListingsResultsWithFilters listings={listings} locale={locale} />
+      <Suspense fallback={<div className="mt-6">Caricamento filtri...</div>}>
+        <ListingsResultsWithFilters listings={listings} locale={locale} />
+      </Suspense>
     </main>
   )
 }
