@@ -36,7 +36,78 @@ function formatOptionalFieldLabel(key: string, locale: AppLocale): string {
     .trim()
 }
 
-function formatOptionalFieldValue(value: unknown, locale: AppLocale): string {
+const OPTIONAL_CHOICE_LABELS: Record<
+  string,
+  Record<string, { it: string; en: string }>
+> = {
+  furnishing: {
+    furnished: { it: "Arredato", en: "Furnished" },
+    unfurnished: { it: "Non arredato", en: "Unfurnished" },
+    partiallyFurnished: { it: "Parzialmente arredato", en: "Partially furnished" },
+    kitchenOnlyFurnished: {
+      it: "Solo cucina arredata",
+      en: "Kitchen only furnished",
+    },
+  },
+  garden: {
+    private: { it: "Privato", en: "Private" },
+    shared: { it: "Comune", en: "Shared" },
+    privateAndShared: { it: "Privato e comune", en: "Private and shared" },
+  },
+  pool: {
+    yes: { it: "Sì", en: "Yes" },
+    condominium: { it: "Condominiale", en: "Condominium" },
+  },
+  climateControl: {
+    autonomous: { it: "Autonomo", en: "Autonomous" },
+    centralized: { it: "Centralizzato", en: "Centralized" },
+    preInstallation: {
+      it: "Predisposizione impianto",
+      en: "Pre-installation",
+    },
+  },
+  conciergeService: {
+    fullDay: { it: "Intera giornata", en: "Full day" },
+    halfDay: { it: "Mezza giornata", en: "Half day" },
+    none: { it: "No", en: "No" },
+  },
+  conciergeServiceShops: {
+    fullDay: { it: "Intera giornata", en: "Full day" },
+    halfDay: { it: "Mezza giornata", en: "Half day" },
+    none: { it: "No", en: "No" },
+  },
+  heating: {
+    autonomous: { it: "Autonomo", en: "Autonomous" },
+    centralized: { it: "Centralizzato", en: "Centralized" },
+    other: { it: "Altro", en: "Other" },
+  },
+  carBox: {
+    single: { it: "Singolo", en: "Single" },
+    double: { it: "Doppio", en: "Double" },
+    other: { it: "Altro", en: "Other" },
+  },
+  parkingSpaces: {
+    covered: { it: "Coperto", en: "Covered" },
+    uncovered: { it: "Scoperto", en: "Uncovered" },
+    other: { it: "Altro", en: "Other" },
+  },
+  officeLayout: {
+    openSpace: { it: "Open space", en: "Open space" },
+    individualOffices: { it: "Uffici singoli", en: "Individual offices" },
+    other: { it: "Altro", en: "Other" },
+  },
+  landAccess: {
+    asphalt: { it: "Strada asfaltata", en: "Asphalt road" },
+    dirt: { it: "Strada sterrata", en: "Dirt road" },
+    other: { it: "Altro", en: "Other" },
+  },
+}
+
+function formatOptionalFieldValue(
+  key: string,
+  value: unknown,
+  locale: AppLocale,
+): string {
   if (typeof value === "boolean") {
     return value
       ? locale === "en"
@@ -50,6 +121,10 @@ function formatOptionalFieldValue(value: unknown, locale: AppLocale): string {
     return String(value)
   }
   if (typeof value === "string") {
+    const localizedChoice = OPTIONAL_CHOICE_LABELS[key]?.[value]
+    if (localizedChoice) {
+      return localizedChoice[locale]
+    }
     return value
   }
   if (Array.isArray(value)) {
@@ -58,6 +133,58 @@ function formatOptionalFieldValue(value: unknown, locale: AppLocale): string {
       : `${value.length} elementi`
   }
   if (value && typeof value === "object") {
+    const obj = value as Record<string, unknown>
+
+    if (key === "condoFees") {
+      const amount = obj.condoFeesAmount
+      if (typeof amount !== "number" || !Number.isFinite(amount) || amount <= 0) {
+        return "-"
+      }
+
+      return `${new Intl.NumberFormat(locale).format(amount)} €`
+    }
+
+    if (key === "heating") {
+      const heatingType = obj.heatingType
+      const heatingOther = obj.heatingOther
+
+      if (heatingType === "other") {
+        if (typeof heatingOther === "string" && heatingOther.trim() !== "") {
+          return heatingOther.trim()
+        }
+        return OPTIONAL_CHOICE_LABELS.heating.other[locale]
+      }
+
+      if (typeof heatingType === "string") {
+        const localizedHeating = OPTIONAL_CHOICE_LABELS.heating[heatingType]
+        if (localizedHeating) {
+          return localizedHeating[locale]
+        }
+      }
+
+      return "-"
+    }
+
+    const choice = obj.choice
+    const otherSpecification = obj.otherSpecification
+
+    if (typeof choice === "string") {
+      if (
+        choice === "other" &&
+        typeof otherSpecification === "string" &&
+        otherSpecification.trim() !== ""
+      ) {
+        return otherSpecification.trim()
+      }
+
+      const localizedChoice = OPTIONAL_CHOICE_LABELS[key]?.[choice]
+      if (localizedChoice) {
+        return localizedChoice[locale]
+      }
+
+      return choice
+    }
+
     const pairs = Object.entries(value as Record<string, unknown>)
       .filter(([, v]) => v !== null && v !== undefined && v !== "")
       .map(([k, v]) => `${formatOptionalFieldLabel(k, locale)}: ${String(v)}`)
@@ -177,7 +304,7 @@ export default function ListingDetail({ listing, locale }: ListingDetailProps) {
                   {formatOptionalFieldLabel(key, locale)}
                 </dt>
                 <dd className="text-neutral-800 dark:text-neutral-200">
-                  {formatOptionalFieldValue(value, locale)}
+                  {formatOptionalFieldValue(key, value, locale)}
                 </dd>
               </div>
             ))}
