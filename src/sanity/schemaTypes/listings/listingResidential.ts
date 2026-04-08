@@ -28,6 +28,7 @@ import {
   hasTennisCourtField,
   hasTerraceField,
   heatingField,
+  isArchivedField,
   mainImageField,
   listingContractTypeField,
   parkingSpacesField,
@@ -51,6 +52,7 @@ export const listingResidential = defineType({
   ],
   fields: [
     /* Scheda immobile */
+    isArchivedField({ group: "propertySheet" }),
     listingContractTypeField({ required: true, group: "propertySheet" }),
     priceField({ group: "propertySheet" }),
     commercialAreaSqmField({ required: true, group: "propertySheet" }),

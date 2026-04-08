@@ -15,7 +15,7 @@ export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`
     "listingIndustrial",
     "listingHospitality",
     "listingLand"
-  ]] | order(_createdAt desc) [0...10]{
+  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) [0...10]{
     _id,
     _type,
     listingContractType,
@@ -43,7 +43,7 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
     "listingIndustrial",
     "listingHospitality",
     "listingLand"
-  ] && _id == $id][0]{
+  ] && coalesce(isArchived, false) != true && _id == $id][0]{
     "metadata": {
       _id,
       _type,

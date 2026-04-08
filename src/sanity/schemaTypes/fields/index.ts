@@ -185,6 +185,10 @@ export {
   type IndustrialTypologyFieldOptions,
 } from "./listing/industrialTypologyField"
 export {
+  isArchivedField,
+  type IsArchivedFieldOptions,
+} from "./listing/isArchivedField"
+export {
   listingContractTypeField,
   type ListingContractTypeFieldOptions,
 } from "./listing/listingContractTypeField"

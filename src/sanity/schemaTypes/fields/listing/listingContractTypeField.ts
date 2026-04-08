@@ -1,8 +1,6 @@
 import { defineField } from "sanity"
 
-import {
-  LISTING_CONTRACT_TYPE_OPTIONS,
-} from "../../../lib/constants"
+import { LISTING_CONTRACT_TYPE_OPTIONS } from "../../../lib/constants"
 import { FIELD_REQUIRED_IT } from "../../../lib/validationMessages"
 
 export type ListingContractTypeFieldOptions = {

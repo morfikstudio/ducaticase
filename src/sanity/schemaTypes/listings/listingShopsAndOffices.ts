@@ -28,6 +28,7 @@ import {
   hasFlueField,
   hasLoadingUnloadingField,
   heatingField,
+  isArchivedField,
   listingContractTypeField,
   mainImageField,
   officeLayoutField,
@@ -60,6 +61,7 @@ export const listingShopsAndOffices = defineType({
   ],
   fields: [
     /* Scheda immobile */
+    isArchivedField({ group: "propertySheet" }),
     listingContractTypeField({ required: true, group: "propertySheet" }),
     priceField({ group: "propertySheet" }),
     shopsAndOfficesTypologyField({ required: true, group: "propertySheet" }),

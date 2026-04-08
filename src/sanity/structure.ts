@@ -1,9 +1,8 @@
-import { DesktopIcon, HomeIcon } from "@sanity/icons"
+import { ArchiveIcon, DesktopIcon, HomeIcon } from "@sanity/icons"
 import type { StructureResolver } from "sanity/structure"
 
 import { LISTING_DOCUMENT_SPECS } from "./schemaTypes/listingTypes"
 
-// https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
   S.list()
     .title("Ducati Case")
@@ -27,13 +26,32 @@ export const structure: StructureResolver = (S) =>
                   .id(spec.name)
                   .schemaType(spec.name)
                   .child(
-                    S.documentTypeList(spec.name)
+                    S.documentList()
                       .title(spec.title)
+                      .schemaType(spec.name)
+                      .filter(
+                        "_type == $schemaType && coalesce(isArchived, false) != true",
+                      )
+                      .params({ schemaType: spec.name })
                       .defaultOrdering([
                         { field: "_createdAt", direction: "desc" },
                       ]),
                   ),
               ),
             ),
+        ),
+      S.listItem()
+        .title("Archivio annunci")
+        .icon(ArchiveIcon)
+        .child(
+          S.documentList()
+            .title("Archivio annunci")
+            .filter(
+              "_type in $listingTypes && coalesce(isArchived, false) == true",
+            )
+            .params({
+              listingTypes: LISTING_DOCUMENT_SPECS.map((spec) => spec.name),
+            })
+            .defaultOrdering([{ field: "_updatedAt", direction: "desc" }]),
         ),
     ])

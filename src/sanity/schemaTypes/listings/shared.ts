@@ -103,6 +103,7 @@ export function listingPreview(options?: ListingPreviewOptions) {
       listingLabelEn: "listingLabel.en",
       media: "mainImage",
       _type: "_type",
+      isArchived: "isArchived",
       ...(typologyField ? { typologyValue: typologyField } : {}),
       streetName: "address.streetName",
       streetNumber: "address.streetNumber",
@@ -115,6 +116,7 @@ export function listingPreview(options?: ListingPreviewOptions) {
       listingLabelEn,
       media,
       _type,
+      isArchived,
       typologyValue,
       streetName,
       streetNumber,
@@ -126,6 +128,7 @@ export function listingPreview(options?: ListingPreviewOptions) {
       listingLabelEn?: string | null
       media?: unknown
       _type?: string | null
+      isArchived?: boolean | null
       typologyValue?: string | null
       streetName?: string | null
       streetNumber?: string | null
@@ -167,12 +170,15 @@ export function listingPreview(options?: ListingPreviewOptions) {
         } as PreviewValue
       }
 
-      const title = locationText ?? contextTitle ?? "—"
-      const subtitle = locationText && contextTitle ? contextTitle : undefined
+      const baseTitle = locationText ?? contextTitle ?? "—"
+      const title = baseTitle
+      const subtitle = [locationText && contextTitle ? contextTitle : undefined]
+        .filter((s): s is string => typeof s === "string" && s !== "")
+        .join(" · ")
 
       return {
         title,
-        ...(subtitle ? { subtitle } : {}),
+        ...(subtitle !== "" ? { subtitle } : {}),
         ...mediaMaybe,
       } as PreviewValue
     },

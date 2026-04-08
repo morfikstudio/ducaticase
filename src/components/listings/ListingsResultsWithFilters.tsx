@@ -99,6 +99,27 @@ export function ListingsResultsWithFilters({
       .sort((a, b) => a.label.localeCompare(b.label, locale))
   }, [listings, locale, selectedTypologyMacros])
 
+  const availableMacros = useMemo(() => {
+    const macros = new Set<string>()
+    for (const entry of listings) {
+      const macro = MACRO_CATEGORY_OPTIONS.find(
+        (item) => item.documentType === entry._type,
+      )
+      if (macro) {
+        macros.add(macro.value)
+      }
+    }
+    return macros
+  }, [listings])
+
+  const visibleMacroOptions = useMemo(
+    () =>
+      MACRO_CATEGORY_OPTIONS.filter((option) =>
+        availableMacros.has(option.value),
+      ),
+    [availableMacros],
+  )
+
   const typologiesByMacro = useMemo(() => {
     const map = new Map<string, Set<string>>()
     for (const entry of listings) {
@@ -260,6 +281,28 @@ export function ListingsResultsWithFilters({
   }
 
   useEffect(() => {
+    if (selectedMacros.length === 0) return
+
+    const normalizedMacros = selectedMacros.filter((macro) =>
+      availableMacros.has(macro),
+    )
+    const changed =
+      normalizedMacros.length !== selectedMacros.length ||
+      normalizedMacros.some((macro, idx) => macro !== selectedMacros[idx])
+
+    if (!changed) return
+
+    updateSearchParams((params) => {
+      if (normalizedMacros.length === 0) {
+        params.delete("macro")
+        params.delete("typology")
+        return
+      }
+      params.set("macro", toCsv(normalizedMacros))
+    })
+  }, [selectedMacros, availableMacros])
+
+  useEffect(() => {
     if (selectedTypologies.length === 0) return
 
     const validTypologies = new Set(typologyOptions.map((item) => item.value))
@@ -330,7 +373,7 @@ export function ListingsResultsWithFilters({
             Macro categoria
           </p>
           <div className="mt-2 flex flex-wrap gap-2">
-            {MACRO_CATEGORY_OPTIONS.map((option) => {
+            {visibleMacroOptions.map((option) => {
               const selected = selectedMacros.includes(option.value)
               const disabled = !selected && incompatibleMacros.has(option.value)
               return (

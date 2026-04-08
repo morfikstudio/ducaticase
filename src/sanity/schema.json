@@ -64,6 +64,13 @@
           "type": "string"
         }
       },
+      "isArchived": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
       "listingContractType": {
         "type": "objectAttribute",
         "value": {
@@ -1342,6 +1349,13 @@
           "type": "string"
         }
       },
+      "isArchived": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
       "listingContractType": {
         "type": "objectAttribute",
         "value": {
@@ -2382,6 +2396,13 @@
         "value": {
           "type": "string"
         }
+      },
+      "isArchived": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
       },
       "listingContractType": {
         "type": "objectAttribute",
@@ -3546,6 +3567,13 @@
         "value": {
           "type": "string"
         }
+      },
+      "isArchived": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
       },
       "listingContractType": {
         "type": "objectAttribute",
@@ -4784,6 +4812,13 @@
         "value": {
           "type": "string"
         }
+      },
+      "isArchived": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
       },
       "listingContractType": {
         "type": "objectAttribute",
@@ -6029,6 +6064,13 @@
         "value": {
           "type": "string"
         }
+      },
+      "isArchived": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
       },
       "listingContractType": {
         "type": "objectAttribute",

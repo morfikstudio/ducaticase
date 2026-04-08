@@ -12,6 +12,7 @@ import {
   descriptionField,
   excerptField,
   hasFencedPropertyField,
+  isArchivedField,
   landAccessField,
   listingContractTypeField,
   mainImageField,
@@ -33,6 +34,7 @@ export const listingLand = defineType({
   ],
   fields: [
     /* Scheda immobile */
+    isArchivedField({ group: "propertySheet" }),
     listingContractTypeField({ required: true, group: "propertySheet" }),
     priceField({ group: "propertySheet" }),
     commercialAreaSqmField({ required: true, group: "propertySheet" }),
