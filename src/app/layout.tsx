@@ -1,23 +1,28 @@
-import { Geist_Mono } from "next/font/google"
+import { Inter, Playfair_Display } from "next/font/google"
 import localFont from "next/font/local"
 
 import "./globals.css"
 import { cn } from "@/utils/classNames"
 
-const helvetica = localFont({
-  src: [
-    {
-      path: "../../public/fonts/HelveticaNeue-Medium.woff2",
-      weight: "500",
-      style: "normal",
-    },
-  ],
-  variable: "--font-helvetica",
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
 })
 
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
+const things = localFont({
+  src: [
+    {
+      path: "../../public/fonts/ThingsRegular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Things-Italic.woff2",
+      weight: "400",
+      style: "italic",
+    },
+  ],
+  variable: "--font-things",
 })
 
 /**
@@ -32,7 +37,7 @@ export default function RootLayout({
   return (
     <html
       lang="it"
-      className={cn(helvetica.variable, geistMono.variable)}
+      className={cn(inter.variable, things.variable)}
       suppressHydrationWarning
     >
       <body className="relative bg-white font-sans font-normal">

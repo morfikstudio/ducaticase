@@ -1,69 +1,59 @@
-/* ─── Colors ───────────────────────────────────────────────────────────────── */
-
 @theme {
-  --color-primary: #ffffff;
-  --color-secondary: #afafaf;
+  --color-black: #181818;
+  --color-dark: #353638;
+  --color-gray: #858d94;
+  --color-light-gray: #b6bdc3;
+  --color-white: #ffffff;
+
+  /* Color variables */
+  --color-bg: var(--color-black);
+  --color-primary: var(--color-white);
+
+  /* --color-secondary: #afafaf;
   --color-tertiary: #b7b7b7;
-  --color-bg: #000000;
   --color-accent: #000000;
-  --color-active-link: #878787;
+  --color-active-link: #878787; */
 
-  /* Fonts (CSS vars from layout.tsx) */
-  --font-sans: var(--font-helvetica), Helvetica, Arial, sans-serif;
-  --font-mono: var(--font-geist-mono), "Courier New", monospace;
+  /* Fonts */
+  --font-sans: var(--font-inter), Helvetica, Arial, sans-serif;
+  --font-serif: var(--font-things), serif;
 
-  /* Breakpoints */
-  --breakpoint-tablet: 768px;
-  --breakpoint-desktop: 1024px;
+  /* Default breakpoints
+   * sm: 40rem (640px)
+   * md: 48rem (768px)
+   * lg: 64rem (1024px)
+   * xl: 80rem (1280px)
+   * 2xl: 96rem (1536px)
+   */
+
+  /* Default max-* media query aliases
+   * max-sm: @media (width < 40rem) { ... }
+   * max-md: @media (width < 48rem) { ... }
+   * max-lg: @media (width < 64rem) { ... }
+   * max-xl: @media (width < 80rem) { ... }
+   * max-2xl: @media (width < 96rem) { ... }
+   */
 }
+
+/* ─── Typography ───────────────────────────────────────────────────────────── */
+
+@utility type-display-1 {
+  font-family: var(--font-serif);
+  font-size: 118px;
+  line-height: 84%;
+  letter-spacing: 0;
+  font-weight: 400;
+
+  @media (width < 48rem) {
+    font-size: 72px;
+  }
+}
+
+/* ─── Global styles ─────────────────────────────────────────────────────────── */
 
 html,
 body {
   background-color: var(--color-bg);
   color: var(--color-primary);
-}
-
-/* ─── Typography ───────────────────────────────────────────────────────────── */
-
-/* H1: 40 → 60 → 64px | 90% lh | 0/-2%/-2% ls | Regular → Light */
-@utility type-h1 {
-  font-size: 40px;
-  line-height: 0.9;
-  letter-spacing: 0;
-  font-weight: 400;
-
-  @media (width >= var(--breakpoint-tablet)) {
-    font-size: 60px;
-    letter-spacing: -0.02em;
-    font-weight: 300;
-  }
-
-  @media (width >= var(--breakpoint-desktop)) {
-    font-size: 64px;
-  }
-}
-
-/* Body M: 18 → 22 → 24px | 120% lh | 0 ls | Medium */
-@utility type-body {
-  font-size: 16px;
-  line-height: 1.2;
-  letter-spacing: 0;
-  font-weight: 500;
-
-  @media (width >= var(--breakpoint-tablet)) {
-    font-size: 20px;
-  }
-
-  @media (width >= var(--breakpoint-desktop)) {
-    font-size: 24px;
-  }
-}
-
-/* Button M: 12px | 120% lh | 12% ls | Medium | Geist Mono */
-@utility type-button-m {
-  font-size: 12px;
-  line-height: 1.2;
-  letter-spacing: 0.12em;
-  font-weight: 500;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
 }
