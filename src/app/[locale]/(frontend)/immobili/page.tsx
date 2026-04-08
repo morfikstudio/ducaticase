@@ -1,10 +1,11 @@
-import { Link } from "@/i18n/navigation"
+import { Suspense } from "react"
 import type { AppLocale } from "@/i18n/routing"
-import { ListingsResultsWithFilters } from "@/components/listings/ListingsResultsWithFilters"
+
 import { sanityFetch } from "@/sanity/lib/client"
 import { LISTINGS_PREVIEW_QUERY } from "@/sanity/lib/queries"
 import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
-import { Suspense } from "react"
+
+import { ListingsResults } from "@/components/listings/ListingsResults"
 
 type ListingsPageProps = {
   params: Promise<{ locale: string }>
@@ -21,11 +22,9 @@ export default async function ListingsPage({ params }: ListingsPageProps) {
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-10">
-      <h1 className="type-display-1 text-light-gray">Ducati Case Immobili</h1>
-      <Link href="/">HOME</Link>
-
+      <h1 className="type-display-1 text-light-gray">I nostri immobili</h1>
       <Suspense fallback={<div className="mt-6">Caricamento filtri...</div>}>
-        <ListingsResultsWithFilters listings={listings} locale={locale} />
+        <ListingsResults listings={listings} locale={locale} />
       </Suspense>
     </main>
   )

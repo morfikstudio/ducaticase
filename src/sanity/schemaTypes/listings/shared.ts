@@ -89,10 +89,6 @@ function listingMacroCategoryTitle(_type: unknown): string | undefined {
   return row?.title
 }
 
-/**
- * Anteprima elenco annunci: etichetta, poi tipologia (se configurata e valorizzata) o titolo macro categoria,
- * poi località.
- */
 export function listingPreview(options?: ListingPreviewOptions) {
   const typologyField = options?.typologyField
   const typologyOptions = options?.typologyOptions ?? []

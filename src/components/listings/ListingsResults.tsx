@@ -1,23 +1,24 @@
 "use client"
 
-import { useEffect, useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 
 import { usePathname, useRouter } from "@/i18n/navigation"
 import type { AppLocale } from "@/i18n/routing"
 import { MACRO_CATEGORY_OPTIONS } from "@/sanity/lib/constants"
-import { listingContractTypeLabel } from "@/sanity/lib/listingContractTypeLabel"
 import { listingTypologyLabel } from "@/sanity/lib/listingTypologyLabel"
 import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
 
+import { ListingsFiltersDrawer } from "./ListingsFiltersDrawer"
 import { ListingsList } from "./ListingsList"
+import { ListingsSortPanel } from "./ListingsSortPanel"
 
 type ListingsEntry = LISTINGS_PREVIEW_QUERY_RESULT[number]
 type ContractType = "sale" | "rent"
 type TypologyMacroValue = "countryHouses" | "commercial" | "industrial"
 type SortOption = "priceDesc" | "priceAsc" | "recentDesc" | "recentAsc"
 
-type ListingsResultsWithFiltersProps = {
+type ListingsResultsProps = {
   listings: ListingsEntry[]
   locale: AppLocale
 }
@@ -46,10 +47,11 @@ function normalizeSort(value: string | null): SortOption {
   return "recentDesc"
 }
 
-export function ListingsResultsWithFilters({
+export function ListingsResults({
   listings,
   locale,
-}: ListingsResultsWithFiltersProps) {
+}: ListingsResultsProps) {
+  const [isFiltersPanelOpen, setIsFiltersPanelOpen] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -324,180 +326,72 @@ export function ListingsResultsWithFilters({
     })
   }, [selectedTypologies, shouldShowTypology, typologyOptions])
 
+  useEffect(() => {
+    if (!isFiltersPanelOpen) return
+
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+
+    return () => {
+      document.body.style.overflow = originalOverflow
+    }
+  }, [isFiltersPanelOpen])
+
   return (
-    <div className="mt-4 grid gap-4 lg:grid-cols-[320px_minmax(0,1fr)] lg:items-start">
-      <div className="rounded-xl border border-neutral-200 p-4 dark:border-neutral-800 lg:sticky lg:top-4">
-        <p className="text-sm font-semibold text-neutral-700 dark:text-white">
+    <div className="mt-4">
+      <div className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-neutral-200 p-4 dark:border-neutral-800">
+        <button
+          type="button"
+          onClick={() => setIsFiltersPanelOpen(true)}
+          className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm font-medium text-neutral-800 transition hover:border-neutral-500 dark:border-neutral-700 dark:text-white dark:hover:border-neutral-500"
+        >
           Filtri
+        </button>
+        <p className="text-sm text-neutral-500 dark:text-neutral-400">
+          {sortedListings.length} risultati
         </p>
-
-        <div className="mt-4">
-          <p className="text-sm font-medium text-neutral-700 dark:text-white">
-            Contratto
-          </p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {(["sale", "rent"] as const).map((value) => {
-              const label = listingContractTypeLabel(value, locale) ?? value
-              const selected = selectedContract === value
-              return (
-                <button
-                  key={value}
-                  type="button"
-                  onClick={() =>
-                    updateSearchParams((params) => {
-                      if (selected) {
-                        params.delete("contract")
-                      } else {
-                        params.set("contract", value)
-                      }
-                    })
-                  }
-                  className={`rounded-md border px-3 py-1.5 text-sm transition ${
-                    selected
-                      ? "border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-neutral-900"
-                      : "border-neutral-300 text-neutral-700 hover:border-neutral-500 dark:border-neutral-700 dark:text-white dark:hover:border-neutral-500"
-                  }`}
-                >
-                  {label}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
-        <div className="mt-4">
-          <p className="text-sm font-medium text-neutral-700 dark:text-white">
-            Macro categoria
-          </p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {visibleMacroOptions.map((option) => {
-              const selected = selectedMacros.includes(option.value)
-              return (
-                <button
-                  key={option.value}
-                  type="button"
-                  onClick={() => toggleMultiValue("macro", option.value)}
-                  className={`rounded-md border px-3 py-1.5 text-sm transition ${
-                    selected
-                      ? "border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-neutral-900"
-                      : "border-neutral-300 text-neutral-700 hover:border-neutral-500 dark:border-neutral-700 dark:text-white dark:hover:border-neutral-500"
-                  }`}
-                >
-                  {option.title}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
-        {shouldShowTypology ? (
-          <div className="mt-4">
-            <p className="text-sm font-medium text-neutral-700 dark:text-white">
-              Tipologia
-            </p>
-            <div className="mt-2 grid gap-2 sm:grid-cols-2">
-              {typologyOptions.length === 0 ? (
-                <p className="text-sm text-neutral-500">
-                  Nessuna tipologia disponibile
-                </p>
-              ) : (
-                typologyOptions.map((option) => {
-                  const checked = effectiveSelectedTypologies.includes(
-                    option.value,
-                  )
-                  return (
-                    <label
-                      key={option.value}
-                      className="flex items-center gap-2 text-sm text-neutral-700 dark:text-white"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={checked}
-                        onChange={() =>
-                          toggleMultiValue("typology", option.value)
-                        }
-                      />
-                      <span>{option.label}</span>
-                    </label>
-                  )
-                })
-              )}
-            </div>
-          </div>
-        ) : null}
-
-        <div className="mt-4">
-          <p className="text-sm font-medium text-neutral-700 dark:text-white">
-            Localita
-          </p>
-          <div className="mt-2 grid gap-2 sm:grid-cols-2">
-            {cityOptions.map((city) => {
-              const checked = selectedCities.includes(city)
-              return (
-                <label
-                  key={city}
-                  className="flex items-center gap-2 text-sm text-neutral-700 dark:text-white"
-                >
-                  <input
-                    type="checkbox"
-                    checked={checked}
-                    onChange={() => toggleMultiValue("city", city)}
-                  />
-                  <span>{city}</span>
-                </label>
-              )
-            })}
-          </div>
-        </div>
-
-        <div className="mt-4">
-          <button
-            type="button"
-            onClick={clearFilters}
-            className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm hover:border-neutral-500 dark:border-neutral-700 dark:hover:border-neutral-500"
-          >
-            Azzera filtri
-          </button>
-        </div>
       </div>
 
+      <ListingsFiltersDrawer
+        isOpen={isFiltersPanelOpen}
+        locale={locale}
+        selectedContract={selectedContract}
+        selectedMacros={selectedMacros}
+        selectedCities={selectedCities}
+        shouldShowTypology={shouldShowTypology}
+        effectiveSelectedTypologies={effectiveSelectedTypologies}
+        visibleMacroOptions={visibleMacroOptions}
+        typologyOptions={typologyOptions}
+        cityOptions={cityOptions}
+        onClose={() => setIsFiltersPanelOpen(false)}
+        onClearFilters={clearFilters}
+        onToggleContract={(value, selected) =>
+          updateSearchParams((params) => {
+            if (selected) {
+              params.delete("contract")
+            } else {
+              params.set("contract", value)
+            }
+          })
+        }
+        onToggleMacro={(value) => toggleMultiValue("macro", value)}
+        onToggleTypology={(value) => toggleMultiValue("typology", value)}
+        onToggleCity={(value) => toggleMultiValue("city", value)}
+      />
+
       <div className="min-w-0">
-        <div className="mb-4 rounded-xl border border-neutral-200 p-4 dark:border-neutral-800">
-          <p className="text-sm font-semibold">Ordinamento</p>
-          <ul className="mt-2 space-y-2">
-            {(
-              [
-                { value: "priceDesc", label: "Prezzo decrescente" },
-                { value: "priceAsc", label: "Prezzo crescente" },
-                { value: "recentDesc", label: "Piu recenti" },
-                { value: "recentAsc", label: "Meno recenti" },
-              ] as const
-            ).map((option) => (
-              <li key={option.value}>
-                <button
-                  type="button"
-                  onClick={() =>
-                    updateSearchParams((params) => {
-                      if (option.value === "recentDesc") {
-                        params.delete("sort")
-                        return
-                      }
-                      params.set("sort", option.value)
-                    })
-                  }
-                  className={`text-left text-base leading-snug transition ${
-                    selectedSort === option.value
-                      ? "font-medium text-neutral-900 dark:text-white"
-                      : "text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
-                  }`}
-                >
-                  {selectedSort === option.value ? "• " : ""}
-                  {option.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ListingsSortPanel
+          selectedSort={selectedSort}
+          onChangeSort={(value) =>
+            updateSearchParams((params) => {
+              if (value === "recentDesc") {
+                params.delete("sort")
+                return
+              }
+              params.set("sort", value)
+            })
+          }
+        />
 
         {filteredListings.length === 0 ? (
           <p className="text-sm text-neutral-500">

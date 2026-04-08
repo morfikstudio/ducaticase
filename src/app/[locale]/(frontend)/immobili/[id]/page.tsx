@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
-
 import type { AppLocale } from "@/i18n/routing"
+
 import { sanityFetch } from "@/sanity/lib/client"
 import { LISTING_BY_ID_QUERY } from "@/sanity/lib/queries"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
