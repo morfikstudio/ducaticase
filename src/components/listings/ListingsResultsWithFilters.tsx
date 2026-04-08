@@ -69,8 +69,7 @@ export function ListingsResultsWithFilters({
     typologyMacroValues.has(macro as TypologyMacroValue),
   )
   const shouldShowTypology =
-    selectedMacros.length > 0 &&
-    selectedTypologyMacros.length === selectedMacros.length
+    selectedMacros.length > 0 && selectedTypologyMacros.length > 0
 
   const cityOptions = useMemo(() => {
     return Array.from(
@@ -120,19 +119,25 @@ export function ListingsResultsWithFilters({
     [availableMacros],
   )
 
+  const macroByDocumentType = useMemo(
+    () =>
+      new Map(
+        MACRO_CATEGORY_OPTIONS.map((option) => [option.documentType, option]),
+      ),
+    [],
+  )
+
   const typologiesByMacro = useMemo(() => {
     const map = new Map<string, Set<string>>()
     for (const entry of listings) {
-      const macro = MACRO_CATEGORY_OPTIONS.find(
-        (item) => item.documentType === entry._type,
-      )
+      const macro = macroByDocumentType.get(entry._type)
       if (!macro || !entry.typology) continue
       const current = map.get(macro.value) ?? new Set<string>()
       current.add(entry.typology)
       map.set(macro.value, current)
     }
     return map
-  }, [listings])
+  }, [listings, macroByDocumentType])
 
   const effectiveSelectedTypologies = useMemo(() => {
     if (!shouldShowTypology) return []
@@ -142,28 +147,20 @@ export function ListingsResultsWithFilters({
     return selectedTypologies.filter((value) => availableTypologies.has(value))
   }, [selectedTypologies, shouldShowTypology, typologyOptions])
 
-  const incompatibleMacros = useMemo(() => {
-    if (effectiveSelectedTypologies.length === 0) return new Set<string>()
+  const selectedTypologiesByMacro = useMemo(() => {
+    const map = new Map<string, Set<string>>()
+    if (effectiveSelectedTypologies.length === 0) return map
 
-    const selectedTypologiesSet = new Set(effectiveSelectedTypologies)
-    const incompatible = new Set<string>()
-
-    for (const option of MACRO_CATEGORY_OPTIONS) {
-      const macroTypologies = typologiesByMacro.get(option.value)
-      if (!macroTypologies) {
-        incompatible.add(option.value)
-        continue
-      }
-
-      const supportsAll = Array.from(selectedTypologiesSet).every((typology) =>
+    for (const [macroValue, macroTypologies] of typologiesByMacro.entries()) {
+      const selectedForMacro = effectiveSelectedTypologies.filter((typology) =>
         macroTypologies.has(typology),
       )
-      if (!supportsAll) {
-        incompatible.add(option.value)
+      if (selectedForMacro.length > 0) {
+        map.set(macroValue, new Set(selectedForMacro))
       }
     }
 
-    return incompatible
+    return map
   }, [effectiveSelectedTypologies, typologiesByMacro])
 
   const filteredListings = useMemo(() => {
@@ -176,9 +173,7 @@ export function ListingsResultsWithFilters({
       }
 
       if (selectedMacros.length > 0) {
-        const macro = MACRO_CATEGORY_OPTIONS.find(
-          (item) => item.documentType === entry._type,
-        )
+        const macro = macroByDocumentType.get(entry._type)
         if (!macro || !selectedMacros.includes(macro.value)) {
           return false
         }
@@ -191,12 +186,13 @@ export function ListingsResultsWithFilters({
         }
       }
 
-      if (effectiveSelectedTypologies.length > 0) {
-        if (
-          !entry.typology ||
-          !effectiveSelectedTypologies.includes(entry.typology)
-        ) {
-          return false
+      const entryMacro = macroByDocumentType.get(entry._type)?.value
+      if (entryMacro) {
+        const macroScopedTypologies = selectedTypologiesByMacro.get(entryMacro)
+        if (macroScopedTypologies) {
+          if (!entry.typology || !macroScopedTypologies.has(entry.typology)) {
+            return false
+          }
         }
       }
 
@@ -207,7 +203,8 @@ export function ListingsResultsWithFilters({
     selectedContract,
     selectedMacros,
     selectedCities,
-    effectiveSelectedTypologies,
+    selectedTypologiesByMacro,
+    macroByDocumentType,
   ])
 
   const listingOrderMap = useMemo(() => {
@@ -375,22 +372,15 @@ export function ListingsResultsWithFilters({
           <div className="mt-2 flex flex-wrap gap-2">
             {visibleMacroOptions.map((option) => {
               const selected = selectedMacros.includes(option.value)
-              const disabled = !selected && incompatibleMacros.has(option.value)
               return (
                 <button
                   key={option.value}
                   type="button"
-                  disabled={disabled}
-                  onClick={() => {
-                    if (disabled) return
-                    toggleMultiValue("macro", option.value)
-                  }}
+                  onClick={() => toggleMultiValue("macro", option.value)}
                   className={`rounded-md border px-3 py-1.5 text-sm transition ${
                     selected
                       ? "border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-neutral-900"
-                      : disabled
-                        ? "cursor-not-allowed border-neutral-200 text-neutral-400 dark:border-neutral-800 dark:text-neutral-600"
-                        : "border-neutral-300 text-neutral-700 hover:border-neutral-500 dark:border-neutral-700 dark:text-white dark:hover:border-neutral-500"
+                      : "border-neutral-300 text-neutral-700 hover:border-neutral-500 dark:border-neutral-700 dark:text-white dark:hover:border-neutral-500"
                   }`}
                 >
                   {option.title}
