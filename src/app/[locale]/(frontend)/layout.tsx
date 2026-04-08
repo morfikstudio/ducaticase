@@ -7,9 +7,9 @@ export default function FrontendLayout({
   children: React.ReactNode
 }>) {
   return (
-    <>
+    <LenisProvider>
       {children}
       <BreakpointProvider />
-    </>
+    </LenisProvider>
   )
 }
