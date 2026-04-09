@@ -9,10 +9,7 @@ import type {
 } from "@/sanity/types"
 import { formatListingPrice } from "@/lib/formatListingPrice"
 import { getSanityImageUrl } from "@/lib/sanity"
-import {
-  MACRO_CATEGORY_OPTIONS,
-  OPTIONAL_FIELD_LABELS,
-} from "@/sanity/lib/constants"
+import { CATEGORY_OPTIONS, OPTIONAL_FIELD_LABELS } from "@/sanity/lib/constants"
 import { listingContractTypeLabel } from "@/sanity/lib/listingContractTypeLabel"
 import { listingTypologyLabel } from "@/sanity/lib/listingTypologyLabel"
 import { pickLocalizedString } from "@/sanity/lib/locale"
@@ -201,10 +198,10 @@ function formatOptionalFieldValue(
   return "—"
 }
 
-export default function ListingDetail({ listing, locale }: ListingDetailProps) {
+export function ListingDetail({ listing, locale }: ListingDetailProps) {
   const t = useTranslations("listingDetail")
-  const macroCategory =
-    MACRO_CATEGORY_OPTIONS.find(
+  const category =
+    CATEGORY_OPTIONS.find(
       (row) => row.documentType === listing.metadata._type,
     )?.title ?? "—"
   const typology = listingTypologyLabel(
@@ -258,8 +255,8 @@ export default function ListingDetail({ listing, locale }: ListingDetailProps) {
         </h1>
         <div className="mt-3 grid gap-3 text-sm text-neutral-700 dark:text-neutral-300 sm:grid-cols-3">
           <div>
-            <p className="text-xs text-neutral-500">{t("macroCategory")}</p>
-            <p className="font-medium">{macroCategory}</p>
+            <p className="text-xs text-neutral-500">{t("category")}</p>
+            <p className="font-medium">{category}</p>
           </div>
           <div>
             <p className="text-xs text-neutral-500">{t("contractType")}</p>

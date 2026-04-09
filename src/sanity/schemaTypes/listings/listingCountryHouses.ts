@@ -1,4 +1,4 @@
-import { ALL_FIELDS_GROUP, defineType } from "sanity"
+import { ALL_FIELDS_GROUP, defineField, defineType } from "sanity"
 
 import { COUNTRY_HOUSE_TYPOLOGY_OPTIONS } from "../../lib/constants"
 import { listingPreview } from "./shared"
@@ -70,6 +70,13 @@ export const listingCountryHouses = defineType({
     addressField({ group: "location" }),
     postalCodeField({ group: "location" }),
     /* Contenuto */
+    defineField({
+      name: "title",
+      title: "Titolo",
+      type: "string",
+      group: "content",
+      validation: (Rule) => Rule.required(),
+    }),
     mainImageField({ required: true, group: "content" }),
     descriptionField({ group: "content" }),
     excerptField({ group: "content" }),

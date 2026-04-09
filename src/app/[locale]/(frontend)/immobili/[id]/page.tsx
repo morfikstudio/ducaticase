@@ -5,7 +5,7 @@ import { sanityFetch } from "@/sanity/lib/client"
 import { LISTING_BY_ID_QUERY } from "@/sanity/lib/queries"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
 
-import ListingDetail from "@/components/listing-detail"
+import { ListingDetail } from "@/components/listing-detail"
 
 type Props = {
   params: Promise<{ locale: string; id: string }>

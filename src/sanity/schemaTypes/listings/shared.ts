@@ -2,7 +2,7 @@ import type { PreviewValue } from "@sanity/types"
 import { defineField } from "sanity"
 
 import {
-  MACRO_CATEGORY_OPTIONS,
+  CATEGORY_OPTIONS,
   type LocalizedTypologyOption,
 } from "../../lib/constants"
 
@@ -80,12 +80,12 @@ function listingTypologyTitle(
   return typologyOptions.find((o) => o.value === value)?.title.it
 }
 
-function listingMacroCategoryTitle(_type: unknown): string | undefined {
+function listingCategoryTitle(_type: unknown): string | undefined {
   if (typeof _type !== "string" || _type === "") {
     return undefined
   }
 
-  const row = MACRO_CATEGORY_OPTIONS.find((o) => o.documentType === _type)
+  const row = CATEGORY_OPTIONS.find((o) => o.documentType === _type)
   return row?.title
 }
 
@@ -143,8 +143,8 @@ export function listingPreview(options?: ListingPreviewOptions) {
       const typologyTitle = typologyField
         ? listingTypologyTitle(typologyValue, typologyOptions)
         : undefined
-      const macroTitle = listingMacroCategoryTitle(_type)
-      const contextTitle = typologyTitle ?? macroTitle
+      const categoryTitle = listingCategoryTitle(_type)
+      const contextTitle = typologyTitle ?? categoryTitle
 
       const labelIt =
         typeof listingLabelIt === "string" ? listingLabelIt.trim() : ""

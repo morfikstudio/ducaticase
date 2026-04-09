@@ -45,12 +45,19 @@ export function formatListingPrice(
   }
 
   try {
-    return new Intl.NumberFormat(locale, {
+    const formatter = new Intl.NumberFormat(locale, {
       style: "currency",
       currency: "EUR",
       maximumFractionDigits: 0,
-    }).format(amount)
+    })
+    const parts = formatter.formatToParts(amount)
+    const numericPart = parts
+      .filter((part) => part.type !== "currency")
+      .map((part) => part.value)
+      .join("")
+      .trim()
+    return `€ ${numericPart}`
   } catch {
-    return `${amount} EUR`
+    return `€ ${amount}`
   }
 }

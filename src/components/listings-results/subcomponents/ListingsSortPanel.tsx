@@ -73,7 +73,7 @@ export function ListingsSortPanel({
             align="end"
             sideOffset={16}
             className={cn(
-              "z-20 w-[250px] rounded-md p-8",
+              "z-20 w-[250px] rounded-md px-4 py-6",
               "bg-primary text-accent",
             )}
           >

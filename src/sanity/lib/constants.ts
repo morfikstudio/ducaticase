@@ -7,7 +7,7 @@ import {
   SunIcon,
 } from "@sanity/icons"
 
-export const MACRO_CATEGORY_OPTIONS = [
+export const CATEGORY_OPTIONS = [
   {
     title: "Residenziale",
     value: "residential",
@@ -46,13 +46,12 @@ export const MACRO_CATEGORY_OPTIONS = [
   },
 ] as const
 
-export type MacroCategoryValue =
-  (typeof MACRO_CATEGORY_OPTIONS)[number]["value"]
+export type CategoryValue = (typeof CATEGORY_OPTIONS)[number]["value"]
 
 export type ListingTypeName =
-  (typeof MACRO_CATEGORY_OPTIONS)[number]["documentType"]
+  (typeof CATEGORY_OPTIONS)[number]["documentType"]
 
-export const LISTING_DOCUMENT_SPECS = MACRO_CATEGORY_OPTIONS.map((o) => ({
+export const LISTING_DOCUMENT_SPECS = CATEGORY_OPTIONS.map((o) => ({
   name: o.documentType,
   title: o.title,
   icon: o.icon,

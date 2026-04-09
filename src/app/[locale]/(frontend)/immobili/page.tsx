@@ -5,7 +5,9 @@ import { sanityFetch } from "@/sanity/lib/client"
 import { LISTINGS_PREVIEW_QUERY } from "@/sanity/lib/queries"
 import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
 
-import ListingsResults from "@/components/listings-results"
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner"
+import { ListingsResults } from "@/components/listings-results"
+import { ListingsStoreHydrator } from "@/components/listings-results/providers/ListingsStoreHydrator"
 
 type ListingsPageProps = {
   params: Promise<{ locale: string }>
@@ -22,8 +24,9 @@ export default async function ListingsPage({ params }: ListingsPageProps) {
 
   return (
     <main>
-      <Suspense fallback={<div className="mt-6">Caricamento filtri...</div>}>
-        <ListingsResults listings={listings} locale={locale} />
+      <ListingsStoreHydrator listings={listings} />
+      <Suspense fallback={<LoadingSpinner className="min-h-[40vh]" />}>
+        <ListingsResults locale={locale} />
       </Suspense>
     </main>
   )

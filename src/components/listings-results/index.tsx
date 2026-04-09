@@ -4,9 +4,7 @@ import { useEffect, useState } from "react"
 import { useTranslations } from "next-intl"
 
 import type { AppLocale } from "@/i18n/routing"
-import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
-
-import { cn } from "@/utils/classNames"
+import { useListingsStore } from "@/stores/listingsStore"
 
 import { Container } from "@/components/ui/Container"
 import { Button } from "@/components/ui/Button"
@@ -20,37 +18,45 @@ import { ListingsResultsCount } from "./subcomponents/ListingsResultsCount"
 import { useListingsFilters } from "./hooks/useListingsFilters"
 
 type ListingsResultsProps = {
-  listings: LISTINGS_PREVIEW_QUERY_RESULT[number][]
   locale: AppLocale
 }
 
-export default function ListingsResults({
-  listings,
-  locale,
-}: ListingsResultsProps) {
+export function ListingsResults({ locale }: ListingsResultsProps) {
   const [isFiltersPanelOpen, setIsFiltersPanelOpen] = useState(false)
+  const listings = useListingsStore((state) => state.countryFilteredListings)
+  const setSelectedCountry = useListingsStore(
+    (state) => state.setSelectedCountry,
+  )
 
   const t = useTranslations("listingsResults")
   const {
+    selectedCountry,
     selectedContract,
+    visibleContractOptions,
     selectedSort,
-    selectedMacros,
+    selectedCategories,
     selectedCities,
     shouldShowTypology,
     effectiveSelectedTypologies,
-    visibleMacroOptions,
+    visibleCategoryOptions,
     typologyOptions,
     cityOptions,
     filteredListings,
     sortedListings,
     clearFilters,
     toggleContract,
-    toggleMacro,
+    toggleCategory,
     toggleTypology,
     toggleCity,
     changeSort,
+    changeCountry,
   } = useListingsFilters({ listings, locale })
 
+  useEffect(() => {
+    setSelectedCountry(selectedCountry)
+  }, [selectedCountry, setSelectedCountry])
+
+  /* Prevent scrolling when the filters panel is open */
   useEffect(() => {
     if (!isFiltersPanelOpen) return
 
@@ -66,8 +72,9 @@ export default function ListingsResults({
     <div>
       <Container className="pt-48 pb-24">
         <ListingsHeader
+          activeCountry={selectedCountry}
           onCountrySwitch={(value) => {
-            console.log("country switch", value)
+            changeCountry(value)
           }}
         />
 
@@ -82,13 +89,15 @@ export default function ListingsResults({
           </Button>
         </div>
 
-        <div className="mt-12 flex items-center justify-between">
-          <ListingsResultsCount current={5} total={sortedListings.length} />
-          <ListingsSortPanel
-            selectedSort={selectedSort}
-            onChangeSort={changeSort}
-          />
-        </div>
+        {sortedListings.length > 0 && (
+          <div className="mt-12 flex items-center justify-between">
+            <ListingsResultsCount current={5} total={sortedListings.length} />
+            <ListingsSortPanel
+              selectedSort={selectedSort}
+              onChangeSort={changeSort}
+            />
+          </div>
+        )}
 
         <div className="mt-12 min-w-0">
           {filteredListings.length === 0 ? (
@@ -103,17 +112,18 @@ export default function ListingsResults({
         isOpen={isFiltersPanelOpen}
         locale={locale}
         selectedContract={selectedContract}
-        selectedMacros={selectedMacros}
+        visibleContractOptions={visibleContractOptions}
+        selectedCategories={selectedCategories}
         selectedCities={selectedCities}
         shouldShowTypology={shouldShowTypology}
         effectiveSelectedTypologies={effectiveSelectedTypologies}
-        visibleMacroOptions={visibleMacroOptions}
+        visibleCategoryOptions={visibleCategoryOptions}
         typologyOptions={typologyOptions}
         cityOptions={cityOptions}
         onClose={() => setIsFiltersPanelOpen(false)}
         onClearFilters={clearFilters}
         onToggleContract={toggleContract}
-        onToggleMacro={toggleMacro}
+        onToggleCategory={toggleCategory}
         onToggleTypology={toggleTypology}
         onToggleCity={toggleCity}
       />

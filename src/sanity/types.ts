@@ -155,6 +155,7 @@ export type ListingLand = {
     streetNumber?: string
   }
   postalCode?: string
+  title: string
   mainImage?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -392,6 +393,7 @@ export type ListingHospitality = {
     streetNumber?: string
   }
   postalCode?: string
+  title: string
   mainImage?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -605,6 +607,7 @@ export type ListingIndustrial = {
     streetNumber?: string
   }
   postalCode?: string
+  title: string
   mainImage?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -822,6 +825,7 @@ export type ListingShopsAndOffices = {
     streetNumber?: string
   }
   postalCode?: string
+  title: string
   mainImage?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -1040,6 +1044,7 @@ export type ListingCountryHouses = {
     streetNumber?: string
   }
   postalCode?: string
+  title: string
   mainImage?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -1265,6 +1270,7 @@ export type ListingResidential = {
     streetNumber?: string
   }
   postalCode?: string
+  title: string
   mainImage?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -1505,17 +1511,133 @@ export type SITE_CONTENT_QUERY_RESULT =
 
 // Source: src/sanity/lib/queries.ts
 // Variable: LISTINGS_PREVIEW_QUERY
-// Query: *[_type in [    "listingResidential",    "listingCountryHouses",    "listingShopsAndOffices",    "listingIndustrial",    "listingHospitality",    "listingLand"  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) [0...10]{    _id,    _type,    listingContractType,    price,    city,    listingLabel,    "typology": select(      _type == "listingCountryHouses" => countryHouseTypology,      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,      _type == "listingIndustrial" => industrialTypology,      true => null    ),    "mainImage": mainImage {      ...,      asset->    }  }
+// Query: *[_type in [    "listingResidential",    "listingCountryHouses",    "listingShopsAndOffices",    "listingIndustrial",    "listingHospitality",    "listingLand"  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) [0...10]{    _id,    _type,    title,    listingContractType,    price,    country,    city,    province,    address,    postalCode,    listingLabel,    "typology": select(      _type == "listingCountryHouses" => countryHouseTypology,      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,      _type == "listingIndustrial" => industrialTypology,      true => null    ),    "mainImage": mainImage {      ...,      asset->    }  }
 export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
   | {
       _id: string
       _type: "listingCountryHouses"
+      title: string
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
+      country: "AT" | "CH" | "DE" | "FR" | "IT" | null
       city: string | null
+      province:
+        | "AG"
+        | "AL"
+        | "AN"
+        | "AO"
+        | "AP"
+        | "AQ"
+        | "AR"
+        | "AT"
+        | "AV"
+        | "BA"
+        | "BG"
+        | "BI"
+        | "BL"
+        | "BN"
+        | "BO"
+        | "BR"
+        | "BS"
+        | "BT"
+        | "BZ"
+        | "CA"
+        | "CB"
+        | "CE"
+        | "CH"
+        | "CL"
+        | "CN"
+        | "CO"
+        | "CR"
+        | "CS"
+        | "CT"
+        | "CZ"
+        | "EN"
+        | "FC"
+        | "FE"
+        | "FG"
+        | "FI"
+        | "FM"
+        | "FR"
+        | "GE"
+        | "GO"
+        | "GR"
+        | "IM"
+        | "IS"
+        | "KR"
+        | "LC"
+        | "LE"
+        | "LI"
+        | "LO"
+        | "LT"
+        | "LU"
+        | "MB"
+        | "MC"
+        | "ME"
+        | "MI"
+        | "MN"
+        | "MO"
+        | "MS"
+        | "MT"
+        | "NA"
+        | "NO"
+        | "NU"
+        | "OR"
+        | "PA"
+        | "PC"
+        | "PD"
+        | "PE"
+        | "PG"
+        | "PI"
+        | "PN"
+        | "PO"
+        | "PR"
+        | "PT"
+        | "PU"
+        | "PV"
+        | "PZ"
+        | "RA"
+        | "RC"
+        | "RE"
+        | "RG"
+        | "RI"
+        | "RM"
+        | "RN"
+        | "RO"
+        | "SA"
+        | "SI"
+        | "SO"
+        | "SP"
+        | "SR"
+        | "SS"
+        | "SU"
+        | "SV"
+        | "TA"
+        | "TE"
+        | "TN"
+        | "TO"
+        | "TP"
+        | "TR"
+        | "TS"
+        | "TV"
+        | "UD"
+        | "VA"
+        | "VB"
+        | "VC"
+        | "VE"
+        | "VI"
+        | "VR"
+        | "VT"
+        | "VV"
+        | null
+      address: {
+        streetName?: string
+        streetNumber?: string
+      } | null
+      postalCode: string | null
       listingLabel: null
       typology: "lakesAndCountryside" | "mountain" | "sea" | null
       mainImage: {
@@ -1551,12 +1673,128 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
   | {
       _id: string
       _type: "listingHospitality"
+      title: string
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
+      country: "AT" | "CH" | "DE" | "FR" | "IT" | null
       city: string | null
+      province:
+        | "AG"
+        | "AL"
+        | "AN"
+        | "AO"
+        | "AP"
+        | "AQ"
+        | "AR"
+        | "AT"
+        | "AV"
+        | "BA"
+        | "BG"
+        | "BI"
+        | "BL"
+        | "BN"
+        | "BO"
+        | "BR"
+        | "BS"
+        | "BT"
+        | "BZ"
+        | "CA"
+        | "CB"
+        | "CE"
+        | "CH"
+        | "CL"
+        | "CN"
+        | "CO"
+        | "CR"
+        | "CS"
+        | "CT"
+        | "CZ"
+        | "EN"
+        | "FC"
+        | "FE"
+        | "FG"
+        | "FI"
+        | "FM"
+        | "FR"
+        | "GE"
+        | "GO"
+        | "GR"
+        | "IM"
+        | "IS"
+        | "KR"
+        | "LC"
+        | "LE"
+        | "LI"
+        | "LO"
+        | "LT"
+        | "LU"
+        | "MB"
+        | "MC"
+        | "ME"
+        | "MI"
+        | "MN"
+        | "MO"
+        | "MS"
+        | "MT"
+        | "NA"
+        | "NO"
+        | "NU"
+        | "OR"
+        | "PA"
+        | "PC"
+        | "PD"
+        | "PE"
+        | "PG"
+        | "PI"
+        | "PN"
+        | "PO"
+        | "PR"
+        | "PT"
+        | "PU"
+        | "PV"
+        | "PZ"
+        | "RA"
+        | "RC"
+        | "RE"
+        | "RG"
+        | "RI"
+        | "RM"
+        | "RN"
+        | "RO"
+        | "SA"
+        | "SI"
+        | "SO"
+        | "SP"
+        | "SR"
+        | "SS"
+        | "SU"
+        | "SV"
+        | "TA"
+        | "TE"
+        | "TN"
+        | "TO"
+        | "TP"
+        | "TR"
+        | "TS"
+        | "TV"
+        | "UD"
+        | "VA"
+        | "VB"
+        | "VC"
+        | "VE"
+        | "VI"
+        | "VR"
+        | "VT"
+        | "VV"
+        | null
+      address: {
+        streetName?: string
+        streetNumber?: string
+      } | null
+      postalCode: string | null
       listingLabel: null
       typology: null
       mainImage: {
@@ -1592,12 +1830,128 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
   | {
       _id: string
       _type: "listingIndustrial"
+      title: string
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
+      country: "AT" | "CH" | "DE" | "FR" | "IT" | null
       city: string | null
+      province:
+        | "AG"
+        | "AL"
+        | "AN"
+        | "AO"
+        | "AP"
+        | "AQ"
+        | "AR"
+        | "AT"
+        | "AV"
+        | "BA"
+        | "BG"
+        | "BI"
+        | "BL"
+        | "BN"
+        | "BO"
+        | "BR"
+        | "BS"
+        | "BT"
+        | "BZ"
+        | "CA"
+        | "CB"
+        | "CE"
+        | "CH"
+        | "CL"
+        | "CN"
+        | "CO"
+        | "CR"
+        | "CS"
+        | "CT"
+        | "CZ"
+        | "EN"
+        | "FC"
+        | "FE"
+        | "FG"
+        | "FI"
+        | "FM"
+        | "FR"
+        | "GE"
+        | "GO"
+        | "GR"
+        | "IM"
+        | "IS"
+        | "KR"
+        | "LC"
+        | "LE"
+        | "LI"
+        | "LO"
+        | "LT"
+        | "LU"
+        | "MB"
+        | "MC"
+        | "ME"
+        | "MI"
+        | "MN"
+        | "MO"
+        | "MS"
+        | "MT"
+        | "NA"
+        | "NO"
+        | "NU"
+        | "OR"
+        | "PA"
+        | "PC"
+        | "PD"
+        | "PE"
+        | "PG"
+        | "PI"
+        | "PN"
+        | "PO"
+        | "PR"
+        | "PT"
+        | "PU"
+        | "PV"
+        | "PZ"
+        | "RA"
+        | "RC"
+        | "RE"
+        | "RG"
+        | "RI"
+        | "RM"
+        | "RN"
+        | "RO"
+        | "SA"
+        | "SI"
+        | "SO"
+        | "SP"
+        | "SR"
+        | "SS"
+        | "SU"
+        | "SV"
+        | "TA"
+        | "TE"
+        | "TN"
+        | "TO"
+        | "TP"
+        | "TR"
+        | "TS"
+        | "TV"
+        | "UD"
+        | "VA"
+        | "VB"
+        | "VC"
+        | "VE"
+        | "VI"
+        | "VR"
+        | "VT"
+        | "VV"
+        | null
+      address: {
+        streetName?: string
+        streetNumber?: string
+      } | null
+      postalCode: string | null
       listingLabel: null
       typology: "sheds" | "warehouses" | null
       mainImage: {
@@ -1633,12 +1987,128 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
   | {
       _id: string
       _type: "listingLand"
+      title: string
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
+      country: "AT" | "CH" | "DE" | "FR" | "IT" | null
       city: string | null
+      province:
+        | "AG"
+        | "AL"
+        | "AN"
+        | "AO"
+        | "AP"
+        | "AQ"
+        | "AR"
+        | "AT"
+        | "AV"
+        | "BA"
+        | "BG"
+        | "BI"
+        | "BL"
+        | "BN"
+        | "BO"
+        | "BR"
+        | "BS"
+        | "BT"
+        | "BZ"
+        | "CA"
+        | "CB"
+        | "CE"
+        | "CH"
+        | "CL"
+        | "CN"
+        | "CO"
+        | "CR"
+        | "CS"
+        | "CT"
+        | "CZ"
+        | "EN"
+        | "FC"
+        | "FE"
+        | "FG"
+        | "FI"
+        | "FM"
+        | "FR"
+        | "GE"
+        | "GO"
+        | "GR"
+        | "IM"
+        | "IS"
+        | "KR"
+        | "LC"
+        | "LE"
+        | "LI"
+        | "LO"
+        | "LT"
+        | "LU"
+        | "MB"
+        | "MC"
+        | "ME"
+        | "MI"
+        | "MN"
+        | "MO"
+        | "MS"
+        | "MT"
+        | "NA"
+        | "NO"
+        | "NU"
+        | "OR"
+        | "PA"
+        | "PC"
+        | "PD"
+        | "PE"
+        | "PG"
+        | "PI"
+        | "PN"
+        | "PO"
+        | "PR"
+        | "PT"
+        | "PU"
+        | "PV"
+        | "PZ"
+        | "RA"
+        | "RC"
+        | "RE"
+        | "RG"
+        | "RI"
+        | "RM"
+        | "RN"
+        | "RO"
+        | "SA"
+        | "SI"
+        | "SO"
+        | "SP"
+        | "SR"
+        | "SS"
+        | "SU"
+        | "SV"
+        | "TA"
+        | "TE"
+        | "TN"
+        | "TO"
+        | "TP"
+        | "TR"
+        | "TS"
+        | "TV"
+        | "UD"
+        | "VA"
+        | "VB"
+        | "VC"
+        | "VE"
+        | "VI"
+        | "VR"
+        | "VT"
+        | "VV"
+        | null
+      address: {
+        streetName?: string
+        streetNumber?: string
+      } | null
+      postalCode: string | null
       listingLabel: null
       typology: null
       mainImage: {
@@ -1674,12 +2144,128 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
   | {
       _id: string
       _type: "listingResidential"
+      title: string
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
+      country: "AT" | "CH" | "DE" | "FR" | "IT" | null
       city: string | null
+      province:
+        | "AG"
+        | "AL"
+        | "AN"
+        | "AO"
+        | "AP"
+        | "AQ"
+        | "AR"
+        | "AT"
+        | "AV"
+        | "BA"
+        | "BG"
+        | "BI"
+        | "BL"
+        | "BN"
+        | "BO"
+        | "BR"
+        | "BS"
+        | "BT"
+        | "BZ"
+        | "CA"
+        | "CB"
+        | "CE"
+        | "CH"
+        | "CL"
+        | "CN"
+        | "CO"
+        | "CR"
+        | "CS"
+        | "CT"
+        | "CZ"
+        | "EN"
+        | "FC"
+        | "FE"
+        | "FG"
+        | "FI"
+        | "FM"
+        | "FR"
+        | "GE"
+        | "GO"
+        | "GR"
+        | "IM"
+        | "IS"
+        | "KR"
+        | "LC"
+        | "LE"
+        | "LI"
+        | "LO"
+        | "LT"
+        | "LU"
+        | "MB"
+        | "MC"
+        | "ME"
+        | "MI"
+        | "MN"
+        | "MO"
+        | "MS"
+        | "MT"
+        | "NA"
+        | "NO"
+        | "NU"
+        | "OR"
+        | "PA"
+        | "PC"
+        | "PD"
+        | "PE"
+        | "PG"
+        | "PI"
+        | "PN"
+        | "PO"
+        | "PR"
+        | "PT"
+        | "PU"
+        | "PV"
+        | "PZ"
+        | "RA"
+        | "RC"
+        | "RE"
+        | "RG"
+        | "RI"
+        | "RM"
+        | "RN"
+        | "RO"
+        | "SA"
+        | "SI"
+        | "SO"
+        | "SP"
+        | "SR"
+        | "SS"
+        | "SU"
+        | "SV"
+        | "TA"
+        | "TE"
+        | "TN"
+        | "TO"
+        | "TP"
+        | "TR"
+        | "TS"
+        | "TV"
+        | "UD"
+        | "VA"
+        | "VB"
+        | "VC"
+        | "VE"
+        | "VI"
+        | "VR"
+        | "VT"
+        | "VV"
+        | null
+      address: {
+        streetName?: string
+        streetNumber?: string
+      } | null
+      postalCode: string | null
       listingLabel: null
       typology: null
       mainImage: {
@@ -1715,12 +2301,128 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
   | {
       _id: string
       _type: "listingShopsAndOffices"
+      title: string
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
+      country: "AT" | "CH" | "DE" | "FR" | "IT" | null
       city: string | null
+      province:
+        | "AG"
+        | "AL"
+        | "AN"
+        | "AO"
+        | "AP"
+        | "AQ"
+        | "AR"
+        | "AT"
+        | "AV"
+        | "BA"
+        | "BG"
+        | "BI"
+        | "BL"
+        | "BN"
+        | "BO"
+        | "BR"
+        | "BS"
+        | "BT"
+        | "BZ"
+        | "CA"
+        | "CB"
+        | "CE"
+        | "CH"
+        | "CL"
+        | "CN"
+        | "CO"
+        | "CR"
+        | "CS"
+        | "CT"
+        | "CZ"
+        | "EN"
+        | "FC"
+        | "FE"
+        | "FG"
+        | "FI"
+        | "FM"
+        | "FR"
+        | "GE"
+        | "GO"
+        | "GR"
+        | "IM"
+        | "IS"
+        | "KR"
+        | "LC"
+        | "LE"
+        | "LI"
+        | "LO"
+        | "LT"
+        | "LU"
+        | "MB"
+        | "MC"
+        | "ME"
+        | "MI"
+        | "MN"
+        | "MO"
+        | "MS"
+        | "MT"
+        | "NA"
+        | "NO"
+        | "NU"
+        | "OR"
+        | "PA"
+        | "PC"
+        | "PD"
+        | "PE"
+        | "PG"
+        | "PI"
+        | "PN"
+        | "PO"
+        | "PR"
+        | "PT"
+        | "PU"
+        | "PV"
+        | "PZ"
+        | "RA"
+        | "RC"
+        | "RE"
+        | "RG"
+        | "RI"
+        | "RM"
+        | "RN"
+        | "RO"
+        | "SA"
+        | "SI"
+        | "SO"
+        | "SP"
+        | "SR"
+        | "SS"
+        | "SU"
+        | "SV"
+        | "TA"
+        | "TE"
+        | "TN"
+        | "TO"
+        | "TP"
+        | "TR"
+        | "TS"
+        | "TV"
+        | "UD"
+        | "VA"
+        | "VB"
+        | "VC"
+        | "VE"
+        | "VI"
+        | "VR"
+        | "VT"
+        | "VV"
+        | null
+      address: {
+        streetName?: string
+        streetNumber?: string
+      } | null
+      postalCode: string | null
       listingLabel: null
       typology: "offices" | "shops" | null
       mainImage: {
@@ -3325,7 +4027,7 @@ import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  coalesce(\n    *[_type == "siteContent" && language == $locale][0]{ _id, title, language },\n    *[_type == "siteContent" && language == "it"][0]{ _id, title, language } // fallback to IT if missing\n  )\n': SITE_CONTENT_QUERY_RESULT
-    '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) [0...10]{\n    _id,\n    _type,\n    listingContractType,\n    price,\n    city,\n    listingLabel,\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "mainImage": mainImage {\n      ...,\n      asset->\n    }\n  }\n': LISTINGS_PREVIEW_QUERY_RESULT
+    '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) [0...10]{\n    _id,\n    _type,\n    title,\n    listingContractType,\n    price,\n    country,\n    city,\n    province,\n    address,\n    postalCode,\n    listingLabel,\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "mainImage": mainImage {\n      ...,\n      asset->\n    }\n  }\n': LISTINGS_PREVIEW_QUERY_RESULT
     '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true && _id == $id][0]{\n    "metadata": {\n      _id,\n      _type,\n      listingContractType,\n      _createdAt,\n      _updatedAt,\n      _rev\n    },\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "propertySheet": select(\n      _type == "listingResidential" => {\n        price,\n        commercialAreaSqm,\n        condoFees,\n        floor,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingCountryHouses" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingShopsAndOffices" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        displayWindows,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingIndustrial" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        heightMeters,\n        buildingYear,\n        energyClass\n      },\n      _type == "listingHospitality" => {\n        price,\n        commercialAreaSqm,\n        roomCount,\n        energyClass\n      },\n      _type == "listingLand" => {\n        price,\n        commercialAreaSqm,\n        landAccess,\n        hasFencedProperty\n      }\n    ),\n    "location": {\n      country,\n      province,\n      city,\n      address,\n      postalCode\n    },\n    "content": {\n      listingLabel,\n      "mainImage": mainImage {\n        ...,\n        asset->\n      },\n      description,\n      excerpt\n    },\n    "floorPlans": select(\n      _type == "listingLand" => {\n        "items": null\n      },\n      {\n        "items": floorPlans[] {\n          ...,\n          asset->\n        }\n      }\n    ),\n    "additionalFields": select(\n      _type == "listingResidential" => {\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl\n      },\n      _type == "listingCountryHouses" => {\n        outdoorAreaSqm,\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl,\n        condoFees\n      },\n      _type == "listingShopsAndOffices" => {\n        furnishing,\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        conciergeServiceShops,\n        officeLayout,\n        condoFees\n      },\n      _type == "listingIndustrial" => {\n        hasLoadingDocks,\n        hasOverheadCranes,\n        shedAreaSqm,\n        officeAreaSqm,\n        landAreaSqm,\n        hasChangingRoom,\n        hasFencedProperty,\n        conciergeService,\n        hasAccessibleRestroom,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        hasDrivableAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        heating\n      },\n      _type == "listingHospitality" => {\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        outdoorAreaSqm,\n        heating,\n        pool,\n        hasTennisCourt,\n        customSpecifications\n      },\n      _type == "listingLand" => {\n        buildable,\n        agricultural\n      }\n    )\n  }\n': LISTING_BY_ID_QUERY_RESULT
   }
 }

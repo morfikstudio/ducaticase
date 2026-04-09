@@ -54,7 +54,7 @@ export function Button({
         disabled ? "opacity-50 cursor-not-allowed" : "",
         isActive
           ? "border-primary bg-primary text-accent"
-          : "border-light-gray text-primary hover:border-primary hover:bg-primary hover:text-accent",
+          : "border-gray text-primary hover:border-primary hover:bg-primary hover:text-accent",
         className,
       )}
       disabled={disabled}

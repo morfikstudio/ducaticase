@@ -1,7 +1,7 @@
 {
   "listingDetail": {
     "badge": "Real estate listing",
-    "macroCategory": "Macro category",
+    "category": "Macro category",
     "contractType": "Contract type",
     "typology": "Typology",
     "location": "Location",
@@ -32,6 +32,7 @@
     "sortRecentDesc": "Most recent",
     "sortRecentAsc": "Least recent",
     "noListingsFound": "No listings found",
-    "showingResults": "Showing {current} of {total}"
+    "showingResults": "Showing {current} of {total}",
+    "reservedLocation": "Location withheld"
   }
 }

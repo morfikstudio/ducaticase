@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { useTranslations } from "next-intl"
 
 import { cn } from "@/utils/classNames"
@@ -8,17 +7,15 @@ import { cn } from "@/utils/classNames"
 type CountryValue = "it" | "intl"
 
 type ListingsHeaderProps = {
+  activeCountry: CountryValue
   onCountrySwitch: (value: CountryValue) => void
 }
 
-export function ListingsHeader({ onCountrySwitch }: ListingsHeaderProps) {
-  const [activeCountry, setActiveCountry] = useState<CountryValue>("it")
+export function ListingsHeader({
+  activeCountry,
+  onCountrySwitch,
+}: ListingsHeaderProps) {
   const t = useTranslations("listingsResults")
-
-  const handleCountrySwitch = (value: CountryValue) => {
-    setActiveCountry(value)
-    onCountrySwitch(value)
-  }
 
   return (
     <div>
@@ -30,7 +27,7 @@ export function ListingsHeader({ onCountrySwitch }: ListingsHeaderProps) {
       >
         <button
           type="button"
-          onClick={() => handleCountrySwitch("it")}
+          onClick={() => onCountrySwitch("it")}
           className={cn(
             "transition-opacity duration-100",
             "opacity-100 hover:opacity-100",
@@ -46,7 +43,7 @@ export function ListingsHeader({ onCountrySwitch }: ListingsHeaderProps) {
 
         <button
           type="button"
-          onClick={() => handleCountrySwitch("intl")}
+          onClick={() => onCountrySwitch("intl")}
           className={cn(
             "transition-opacity duration-100",
             "opacity-100 hover:opacity-100",

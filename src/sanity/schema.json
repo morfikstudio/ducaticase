@@ -675,6 +675,13 @@
         },
         "optional": true
       },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "mainImage": {
         "type": "objectAttribute",
         "value": {
@@ -2047,6 +2054,13 @@
         },
         "optional": true
       },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "mainImage": {
         "type": "objectAttribute",
         "value": {
@@ -3207,6 +3221,13 @@
           "type": "string"
         },
         "optional": true
+      },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
       },
       "mainImage": {
         "type": "objectAttribute",
@@ -4437,6 +4458,13 @@
         },
         "optional": true
       },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "mainImage": {
         "type": "objectAttribute",
         "value": {
@@ -5657,6 +5685,13 @@
           "type": "string"
         },
         "optional": true
+      },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
       },
       "mainImage": {
         "type": "objectAttribute",
@@ -6942,6 +6977,13 @@
           "type": "string"
         },
         "optional": true
+      },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
       },
       "mainImage": {
         "type": "objectAttribute",

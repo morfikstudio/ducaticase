@@ -5,13 +5,14 @@ import { useSearchParams } from "next/navigation"
 
 import { usePathname, useRouter } from "@/i18n/navigation"
 import type { AppLocale } from "@/i18n/routing"
-import { MACRO_CATEGORY_OPTIONS } from "@/sanity/lib/constants"
+import { CATEGORY_OPTIONS } from "@/sanity/lib/constants"
 import { listingTypologyLabel } from "@/sanity/lib/listingTypologyLabel"
 import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
 
 type ListingsEntry = LISTINGS_PREVIEW_QUERY_RESULT[number]
 type ContractType = "sale" | "rent"
-type TypologyMacroValue = "countryHouses" | "commercial" | "industrial"
+type CountryValue = "it" | "intl"
+type TypologyCategoryValue = "countryHouses" | "commercial" | "industrial"
 type SortOption = "priceDesc" | "priceAsc" | "recentDesc" | "recentAsc"
 
 type UseListingsFiltersParams = {
@@ -43,6 +44,10 @@ function normalizeSort(value: string | null): SortOption {
   return "recentDesc"
 }
 
+function normalizeCountry(value: string | null): CountryValue {
+  return value === "intl" ? "intl" : "it"
+}
+
 export function useListingsFilters({
   listings,
   locale,
@@ -52,21 +57,37 @@ export function useListingsFilters({
   const searchParams = useSearchParams()
 
   const selectedContract = searchParams.get("contract") as ContractType | null
+  const selectedCountry = normalizeCountry(searchParams.get("country"))
   const selectedSort = normalizeSort(searchParams.get("sort"))
-  const selectedMacros = parseCsv(searchParams.get("macro"))
+  const selectedCategories = parseCsv(searchParams.get("category"))
   const selectedCities = parseCsv(searchParams.get("city"))
   const selectedTypologies = parseCsv(searchParams.get("typology"))
-  const typologyMacroValues = new Set<TypologyMacroValue>([
+  const typologyCategoryValues = new Set<TypologyCategoryValue>([
     "countryHouses",
     "commercial",
     "industrial",
   ])
 
-  const selectedTypologyMacros = selectedMacros.filter((macro) =>
-    typologyMacroValues.has(macro as TypologyMacroValue),
+  const selectedTypologyCategories = selectedCategories.filter((category) =>
+    typologyCategoryValues.has(category as TypologyCategoryValue),
   )
   const shouldShowTypology =
-    selectedMacros.length > 0 && selectedTypologyMacros.length > 0
+    selectedCategories.length > 0 && selectedTypologyCategories.length > 0
+
+  const visibleContractOptions = useMemo(() => {
+    const available = new Set<ContractType>()
+
+    for (const entry of listings) {
+      if (entry.listingContractType === "sale") {
+        available.add("sale")
+      }
+      if (entry.listingContractType === "rent") {
+        available.add("rent")
+      }
+    }
+
+    return (["sale", "rent"] as const).filter((value) => available.has(value))
+  }, [listings])
 
   const cityOptions = useMemo(() => {
     return Array.from(
@@ -82,10 +103,12 @@ export function useListingsFilters({
     const map = new Map<string, string>()
     for (const entry of listings) {
       if (!entry.typology) continue
-      const macro = MACRO_CATEGORY_OPTIONS.find(
+      const category = CATEGORY_OPTIONS.find(
         (item) => item.documentType === entry._type,
       )
-      if (!macro || !selectedTypologyMacros.includes(macro.value)) continue
+      if (!category || !selectedTypologyCategories.includes(category.value)) {
+        continue
+      }
       const label = listingTypologyLabel(entry._type, entry.typology, locale)
       if (!label) continue
       map.set(entry.typology, label)
@@ -93,48 +116,48 @@ export function useListingsFilters({
     return Array.from(map.entries())
       .map(([value, label]) => ({ value, label }))
       .sort((a, b) => a.label.localeCompare(b.label, locale))
-  }, [listings, locale, selectedTypologyMacros])
+  }, [listings, locale, selectedTypologyCategories])
 
-  const availableMacros = useMemo(() => {
-    const macros = new Set<string>()
+  const availableCategories = useMemo(() => {
+    const categories = new Set<string>()
     for (const entry of listings) {
-      const macro = MACRO_CATEGORY_OPTIONS.find(
+      const category = CATEGORY_OPTIONS.find(
         (item) => item.documentType === entry._type,
       )
-      if (macro) {
-        macros.add(macro.value)
+      if (category) {
+        categories.add(category.value)
       }
     }
-    return macros
+    return categories
   }, [listings])
 
-  const visibleMacroOptions = useMemo(
+  const visibleCategoryOptions = useMemo(
     () =>
-      MACRO_CATEGORY_OPTIONS.filter((option) =>
-        availableMacros.has(option.value),
+      CATEGORY_OPTIONS.filter((option) =>
+        availableCategories.has(option.value),
       ),
-    [availableMacros],
+    [availableCategories],
   )
 
-  const macroByDocumentType = useMemo(
+  const categoryByDocumentType = useMemo(
     () =>
       new Map(
-        MACRO_CATEGORY_OPTIONS.map((option) => [option.documentType, option]),
+        CATEGORY_OPTIONS.map((option) => [option.documentType, option]),
       ),
     [],
   )
 
-  const typologiesByMacro = useMemo(() => {
+  const typologiesByCategory = useMemo(() => {
     const map = new Map<string, Set<string>>()
     for (const entry of listings) {
-      const macro = macroByDocumentType.get(entry._type)
-      if (!macro || !entry.typology) continue
-      const current = map.get(macro.value) ?? new Set<string>()
+      const category = categoryByDocumentType.get(entry._type)
+      if (!category || !entry.typology) continue
+      const current = map.get(category.value) ?? new Set<string>()
       current.add(entry.typology)
-      map.set(macro.value, current)
+      map.set(category.value, current)
     }
     return map
-  }, [listings, macroByDocumentType])
+  }, [listings, categoryByDocumentType])
 
   const effectiveSelectedTypologies = useMemo(() => {
     if (!shouldShowTypology) return []
@@ -144,21 +167,21 @@ export function useListingsFilters({
     return selectedTypologies.filter((value) => availableTypologies.has(value))
   }, [selectedTypologies, shouldShowTypology, typologyOptions])
 
-  const selectedTypologiesByMacro = useMemo(() => {
+  const selectedTypologiesByCategory = useMemo(() => {
     const map = new Map<string, Set<string>>()
     if (effectiveSelectedTypologies.length === 0) return map
 
-    for (const [macroValue, macroTypologies] of typologiesByMacro.entries()) {
+    for (const [categoryValue, categoryTypologies] of typologiesByCategory.entries()) {
       const selectedForMacro = effectiveSelectedTypologies.filter((typology) =>
-        macroTypologies.has(typology),
+        categoryTypologies.has(typology),
       )
       if (selectedForMacro.length > 0) {
-        map.set(macroValue, new Set(selectedForMacro))
+        map.set(categoryValue, new Set(selectedForMacro))
       }
     }
 
     return map
-  }, [effectiveSelectedTypologies, typologiesByMacro])
+  }, [effectiveSelectedTypologies, typologiesByCategory])
 
   const filteredListings = useMemo(() => {
     return listings.filter((entry) => {
@@ -169,9 +192,9 @@ export function useListingsFilters({
         return false
       }
 
-      if (selectedMacros.length > 0) {
-        const macro = macroByDocumentType.get(entry._type)
-        if (!macro || !selectedMacros.includes(macro.value)) {
+      if (selectedCategories.length > 0) {
+        const category = categoryByDocumentType.get(entry._type)
+        if (!category || !selectedCategories.includes(category.value)) {
           return false
         }
       }
@@ -183,11 +206,12 @@ export function useListingsFilters({
         }
       }
 
-      const entryMacro = macroByDocumentType.get(entry._type)?.value
-      if (entryMacro) {
-        const macroScopedTypologies = selectedTypologiesByMacro.get(entryMacro)
-        if (macroScopedTypologies) {
-          if (!entry.typology || !macroScopedTypologies.has(entry.typology)) {
+      const entryCategory = categoryByDocumentType.get(entry._type)?.value
+      if (entryCategory) {
+        const categoryScopedTypologies =
+          selectedTypologiesByCategory.get(entryCategory)
+        if (categoryScopedTypologies) {
+          if (!entry.typology || !categoryScopedTypologies.has(entry.typology)) {
             return false
           }
         }
@@ -198,10 +222,10 @@ export function useListingsFilters({
   }, [
     listings,
     selectedContract,
-    selectedMacros,
+    selectedCategories,
     selectedCities,
-    selectedTypologiesByMacro,
-    macroByDocumentType,
+    selectedTypologiesByCategory,
+    categoryByDocumentType,
   ])
 
   const listingOrderMap = useMemo(() => {
@@ -252,18 +276,18 @@ export function useListingsFilters({
 
       if (nextValues.length === 0) {
         params.delete(key)
-        if (key === "macro") {
+      if (key === "category") {
           params.delete("typology")
         }
         return
       }
       params.set(key, toCsv(nextValues))
 
-      if (key === "macro") {
-        const hasTypologyMacro = nextValues.some((macro) =>
-          typologyMacroValues.has(macro as TypologyMacroValue),
+      if (key === "category") {
+        const hasTypologyCategory = nextValues.some((category) =>
+          typologyCategoryValues.has(category as TypologyCategoryValue),
         )
-        if (!hasTypologyMacro) {
+        if (!hasTypologyCategory) {
           params.delete("typology")
         }
       }
@@ -294,27 +318,39 @@ export function useListingsFilters({
     })
   }
 
-  useEffect(() => {
-    if (selectedMacros.length === 0) return
+  const changeCountry = (value: CountryValue) => {
+    updateSearchParams((params) => {
+      if (value === "it") {
+        params.delete("country")
+        return
+      }
+      params.set("country", value)
+    })
+  }
 
-    const normalizedMacros = selectedMacros.filter((macro) =>
-      availableMacros.has(macro),
+  useEffect(() => {
+    if (selectedCategories.length === 0) return
+
+    const normalizedCategories = selectedCategories.filter((category) =>
+      availableCategories.has(category),
     )
     const changed =
-      normalizedMacros.length !== selectedMacros.length ||
-      normalizedMacros.some((macro, idx) => macro !== selectedMacros[idx])
+      normalizedCategories.length !== selectedCategories.length ||
+      normalizedCategories.some(
+        (category, idx) => category !== selectedCategories[idx],
+      )
 
     if (!changed) return
 
     updateSearchParams((params) => {
-      if (normalizedMacros.length === 0) {
-        params.delete("macro")
+      if (normalizedCategories.length === 0) {
+        params.delete("category")
         params.delete("typology")
         return
       }
-      params.set("macro", toCsv(normalizedMacros))
+      params.set("category", toCsv(normalizedCategories))
     })
-  }, [selectedMacros, availableMacros])
+  }, [selectedCategories, availableCategories])
 
   useEffect(() => {
     if (selectedTypologies.length === 0) return
@@ -341,23 +377,35 @@ export function useListingsFilters({
     })
   }, [selectedTypologies, shouldShowTypology, typologyOptions])
 
+  useEffect(() => {
+    if (!selectedContract) return
+    if (visibleContractOptions.includes(selectedContract)) return
+
+    updateSearchParams((params) => {
+      params.delete("contract")
+    })
+  }, [selectedContract, visibleContractOptions])
+
   return {
+    selectedCountry,
     selectedContract,
+    visibleContractOptions,
     selectedSort,
-    selectedMacros,
+    selectedCategories,
     selectedCities,
     shouldShowTypology,
     effectiveSelectedTypologies,
-    visibleMacroOptions,
+    visibleCategoryOptions,
     typologyOptions,
     cityOptions,
     filteredListings,
     sortedListings,
     clearFilters,
     toggleContract,
-    toggleMacro: (value: string) => toggleMultiValue("macro", value),
+    toggleCategory: (value: string) => toggleMultiValue("category", value),
     toggleTypology: (value: string) => toggleMultiValue("typology", value),
     toggleCity: (value: string) => toggleMultiValue("city", value),
     changeSort,
+    changeCountry,
   }
 }

@@ -1,7 +1,7 @@
 {
   "listingDetail": {
     "badge": "Annuncio immobiliare",
-    "macroCategory": "Macrocategoria",
+    "category": "Macrocategoria",
     "contractType": "Contratto",
     "typology": "Tipologia",
     "location": "Località",
@@ -32,6 +32,7 @@
     "sortRecentDesc": "Piu recenti",
     "sortRecentAsc": "Meno recenti",
     "noListingsFound": "Nessun annuncio trovato",
-    "showingResults": "Mostrando {current} di {total}"
+    "showingResults": "Mostrando {current} di {total}",
+    "reservedLocation": "Posizione riservata"
   }
 }

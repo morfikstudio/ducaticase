@@ -15,12 +15,17 @@ export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`
     "listingIndustrial",
     "listingHospitality",
     "listingLand"
-  ] && coalesce(isArchived, false) != true && country == "IT"] | order(_createdAt desc) [0...10]{
+  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) [0...10]{
     _id,
     _type,
+    title,
     listingContractType,
     price,
+    country,
     city,
+    province,
+    address,
+    postalCode,
     listingLabel,
     "typology": select(
       _type == "listingCountryHouses" => countryHouseTypology,

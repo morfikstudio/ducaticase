@@ -25,17 +25,18 @@ type ListingsFiltersDrawerProps = {
   isOpen: boolean
   locale: AppLocale
   selectedContract: "sale" | "rent" | null
-  selectedMacros: string[]
+  visibleContractOptions: ("sale" | "rent")[]
+  selectedCategories: string[]
   selectedCities: string[]
   shouldShowTypology: boolean
   effectiveSelectedTypologies: string[]
-  visibleMacroOptions: MacroOption[]
+  visibleCategoryOptions: MacroOption[]
   typologyOptions: TypologyOption[]
   cityOptions: string[]
   onClose: () => void
   onClearFilters: () => void
   onToggleContract: (value: "sale" | "rent", selected: boolean) => void
-  onToggleMacro: (value: string) => void
+  onToggleCategory: (value: string) => void
   onToggleTypology: (value: string) => void
   onToggleCity: (value: string) => void
 }
@@ -58,17 +59,18 @@ export function ListingsFiltersDrawer({
   isOpen,
   locale,
   selectedContract,
-  selectedMacros,
+  visibleContractOptions,
+  selectedCategories,
   selectedCities,
   shouldShowTypology,
   effectiveSelectedTypologies,
-  visibleMacroOptions,
+  visibleCategoryOptions,
   typologyOptions,
   cityOptions,
   onClose,
   onClearFilters,
   onToggleContract,
-  onToggleMacro,
+  onToggleCategory,
   onToggleTypology,
   onToggleCity,
 }: ListingsFiltersDrawerProps) {
@@ -105,7 +107,7 @@ export function ListingsFiltersDrawer({
   const CollapsibleSection = useCallback(
     ({ title, isOpen, onToggle, children }: CollapsibleSectionProps) => {
       return (
-        <section className="mt-6 pb-3 border-b border-light-gray">
+        <section className="mt-6 pb-3 border-b border-gray">
           <button
             type="button"
             onClick={onToggle}
@@ -155,7 +157,7 @@ export function ListingsFiltersDrawer({
           className={cn(
             "type-body-2 text-accent",
             "transition cursor-pointer",
-            "border rounded-md border-light-gray",
+            "border rounded-md border-gray",
             selected ? "font-medium bg-[#F1F1F1] border-accent" : "",
             variant === "l" ? "px-3 py-4" : "px-3 py-2",
             "hover:border-accent",
@@ -230,8 +232,13 @@ export function ListingsFiltersDrawer({
           </p>
 
           {/* CONTRACT TYPE */}
-          <div className="mt-5 grid grid-cols-2 gap-2">
-            {(["sale", "rent"] as const).map((value) => {
+          <div
+            className={cn(
+              "mt-5 grid gap-2",
+              visibleContractOptions.length > 1 ? "grid-cols-2" : "grid-cols-1",
+            )}
+          >
+            {visibleContractOptions.map((value) => {
               const label = listingContractTypeLabel(value, locale) ?? value
               const selected = selectedContract === value
 
@@ -254,14 +261,14 @@ export function ListingsFiltersDrawer({
             </p>
 
             <div className="mt-4 grid grid-cols-2 gap-2">
-              {visibleMacroOptions.map((option) => {
-                const selected = selectedMacros.includes(option.value)
+              {visibleCategoryOptions.map((option) => {
+                const selected = selectedCategories.includes(option.value)
                 return (
                   <FilterButton
                     key={option.value}
                     title={option.title}
                     selected={selected}
-                    onClick={() => onToggleMacro(option.value)}
+                    onClick={() => onToggleCategory(option.value)}
                     variant="m"
                   />
                 )
@@ -281,7 +288,13 @@ export function ListingsFiltersDrawer({
                 return (
                   <label
                     key={city}
-                    className="flex w-full cursor-pointer items-center gap-3 rounded-md px-3 py-2 text-xs text-neutral-700 transition-colors hover:bg-neutral-200 dark:text-white dark:hover:bg-neutral-900"
+                    className={cn(
+                      "w-full px-3 py-2",
+                      "flex items-center gap-3",
+                      "cursor-pointer rounded-md",
+                      "hover:bg-light-gray",
+                      "transition-colors",
+                    )}
                   >
                     <Checkbox
                       checked={checked}
@@ -316,7 +329,13 @@ export function ListingsFiltersDrawer({
                     return (
                       <label
                         key={option.value}
-                        className="flex w-full cursor-pointer items-center gap-3 rounded-md px-3 py-2 text-xs text-neutral-700 transition-colors hover:bg-neutral-200 dark:text-white dark:hover:bg-neutral-900"
+                        className={cn(
+                          "w-full px-3 py-2",
+                          "flex items-center gap-3",
+                          "cursor-pointer rounded-md",
+                          "hover:bg-light-gray",
+                          "transition-colors",
+                        )}
                       >
                         <Checkbox
                           checked={checked}
@@ -341,7 +360,7 @@ export function ListingsFiltersDrawer({
             onClick={onClearFilters}
             className={cn(
               "px-4 py-5",
-              "border-t border-light-gray",
+              "border-t border-gray",
               "type-button text-accent",
               "cursor-pointer",
               "hover:bg-neutral-100",
