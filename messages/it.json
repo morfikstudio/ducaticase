@@ -10,5 +10,28 @@
     "rentPrice": "Canone",
     "surface": "Superficie",
     "updatedAt": "Aggiornato"
+  },
+  "listingsResults": {
+    "headerTitle": "I nostri Immobili",
+    "headerDescription": "Esplora le nostre proposte immobiliari e trova la soluzione più adatta alle tue esigenze",
+    "countryItaly": "Italia",
+    "countryInternational": "Estero",
+    "filtersButton": "Filtri",
+    "filtersTitle": "Filtri",
+    "close": "Chiudi",
+    "closeFiltersPanelAriaLabel": "Chiudi pannello filtri",
+    "category": "Categoria",
+    "typology": "Tipologia",
+    "location": "Località",
+    "noTypologyAvailable": "Nessuna tipologia disponibile",
+    "clearFilters": "Azzera",
+    "applyFilters": "Applica",
+    "sortBy": "Ordina per",
+    "sortPriceDesc": "Prezzo decrescente",
+    "sortPriceAsc": "Prezzo crescente",
+    "sortRecentDesc": "Piu recenti",
+    "sortRecentAsc": "Meno recenti",
+    "noListingsFound": "Nessun annuncio trovato",
+    "showingResults": "Mostrando {current} di {total}"
   }
 }

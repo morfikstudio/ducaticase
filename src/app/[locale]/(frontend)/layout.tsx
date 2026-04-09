@@ -1,5 +1,6 @@
 import BreakpointProvider from "@/components/providers/BreakpointProvider"
 import LenisProvider from "@/components/providers/LenisProvider"
+import FocusVisibleModality from "@/components/providers/FocusVisibleProvider"
 
 export default function FrontendLayout({
   children,
@@ -10,6 +11,7 @@ export default function FrontendLayout({
     <LenisProvider>
       {children}
       <BreakpointProvider />
+      <FocusVisibleModality />
     </LenisProvider>
   )
 }

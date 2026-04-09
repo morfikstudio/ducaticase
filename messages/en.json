@@ -10,5 +10,28 @@
     "rentPrice": "Rent",
     "surface": "Surface",
     "updatedAt": "Updated"
+  },
+  "listingsResults": {
+    "headerTitle": "Our Properties",
+    "headerDescription": "Explore our real estate proposals and find the solution that best suits your needs",
+    "countryItaly": "Italy",
+    "countryInternational": "International",
+    "filtersButton": "Filters",
+    "filtersTitle": "Filters",
+    "close": "Close",
+    "closeFiltersPanelAriaLabel": "Close filters panel",
+    "category": "Category",
+    "typology": "Typology",
+    "location": "Location",
+    "noTypologyAvailable": "No typology available",
+    "clearFilters": "Clear",
+    "applyFilters": "Apply",
+    "sortBy": "Sort by",
+    "sortPriceDesc": "Price descending",
+    "sortPriceAsc": "Price ascending",
+    "sortRecentDesc": "Most recent",
+    "sortRecentAsc": "Least recent",
+    "noListingsFound": "No listings found",
+    "showingResults": "Showing {current} of {total}"
   }
 }

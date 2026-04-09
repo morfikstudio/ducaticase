@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo } from "react"
 import { useSearchParams } from "next/navigation"
 
 import { usePathname, useRouter } from "@/i18n/navigation"
@@ -9,16 +9,12 @@ import { MACRO_CATEGORY_OPTIONS } from "@/sanity/lib/constants"
 import { listingTypologyLabel } from "@/sanity/lib/listingTypologyLabel"
 import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
 
-import { ListingsFiltersDrawer } from "./ListingsFiltersDrawer"
-import { ListingsList } from "./ListingsList"
-import { ListingsSortPanel } from "./ListingsSortPanel"
-
 type ListingsEntry = LISTINGS_PREVIEW_QUERY_RESULT[number]
 type ContractType = "sale" | "rent"
 type TypologyMacroValue = "countryHouses" | "commercial" | "industrial"
 type SortOption = "priceDesc" | "priceAsc" | "recentDesc" | "recentAsc"
 
-type ListingsResultsProps = {
+type UseListingsFiltersParams = {
   listings: ListingsEntry[]
   locale: AppLocale
 }
@@ -47,11 +43,10 @@ function normalizeSort(value: string | null): SortOption {
   return "recentDesc"
 }
 
-export function ListingsResults({
+export function useListingsFilters({
   listings,
   locale,
-}: ListingsResultsProps) {
-  const [isFiltersPanelOpen, setIsFiltersPanelOpen] = useState(false)
+}: UseListingsFiltersParams) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -279,6 +274,26 @@ export function ListingsResults({
     router.replace(pathname)
   }
 
+  const toggleContract = (value: "sale" | "rent", selected: boolean) => {
+    updateSearchParams((params) => {
+      if (selected) {
+        params.delete("contract")
+      } else {
+        params.set("contract", value)
+      }
+    })
+  }
+
+  const changeSort = (value: SortOption) => {
+    updateSearchParams((params) => {
+      if (value === "recentDesc") {
+        params.delete("sort")
+        return
+      }
+      params.set("sort", value)
+    })
+  }
+
   useEffect(() => {
     if (selectedMacros.length === 0) return
 
@@ -326,81 +341,23 @@ export function ListingsResults({
     })
   }, [selectedTypologies, shouldShowTypology, typologyOptions])
 
-  useEffect(() => {
-    if (!isFiltersPanelOpen) return
-
-    const originalOverflow = document.body.style.overflow
-    document.body.style.overflow = "hidden"
-
-    return () => {
-      document.body.style.overflow = originalOverflow
-    }
-  }, [isFiltersPanelOpen])
-
-  return (
-    <div className="mt-4">
-      <div className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-neutral-200 p-4 dark:border-neutral-800">
-        <button
-          type="button"
-          onClick={() => setIsFiltersPanelOpen(true)}
-          className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm font-medium text-neutral-800 transition hover:border-neutral-500 dark:border-neutral-700 dark:text-white dark:hover:border-neutral-500"
-        >
-          Filtri
-        </button>
-        <p className="text-sm text-neutral-500 dark:text-neutral-400">
-          {sortedListings.length} risultati
-        </p>
-      </div>
-
-      <ListingsFiltersDrawer
-        isOpen={isFiltersPanelOpen}
-        locale={locale}
-        selectedContract={selectedContract}
-        selectedMacros={selectedMacros}
-        selectedCities={selectedCities}
-        shouldShowTypology={shouldShowTypology}
-        effectiveSelectedTypologies={effectiveSelectedTypologies}
-        visibleMacroOptions={visibleMacroOptions}
-        typologyOptions={typologyOptions}
-        cityOptions={cityOptions}
-        onClose={() => setIsFiltersPanelOpen(false)}
-        onClearFilters={clearFilters}
-        onToggleContract={(value, selected) =>
-          updateSearchParams((params) => {
-            if (selected) {
-              params.delete("contract")
-            } else {
-              params.set("contract", value)
-            }
-          })
-        }
-        onToggleMacro={(value) => toggleMultiValue("macro", value)}
-        onToggleTypology={(value) => toggleMultiValue("typology", value)}
-        onToggleCity={(value) => toggleMultiValue("city", value)}
-      />
-
-      <div className="min-w-0">
-        <ListingsSortPanel
-          selectedSort={selectedSort}
-          onChangeSort={(value) =>
-            updateSearchParams((params) => {
-              if (value === "recentDesc") {
-                params.delete("sort")
-                return
-              }
-              params.set("sort", value)
-            })
-          }
-        />
-
-        {filteredListings.length === 0 ? (
-          <p className="text-sm text-neutral-500">
-            Nessun annuncio trovato con questi filtri.
-          </p>
-        ) : (
-          <ListingsList listings={sortedListings} locale={locale} />
-        )}
-      </div>
-    </div>
-  )
+  return {
+    selectedContract,
+    selectedSort,
+    selectedMacros,
+    selectedCities,
+    shouldShowTypology,
+    effectiveSelectedTypologies,
+    visibleMacroOptions,
+    typologyOptions,
+    cityOptions,
+    filteredListings,
+    sortedListings,
+    clearFilters,
+    toggleContract,
+    toggleMacro: (value: string) => toggleMultiValue("macro", value),
+    toggleTypology: (value: string) => toggleMultiValue("typology", value),
+    toggleCity: (value: string) => toggleMultiValue("city", value),
+    changeSort,
+  }
 }

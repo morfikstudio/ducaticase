@@ -8,10 +8,10 @@
   /* Color variables */
   --color-bg: var(--color-black);
   --color-primary: var(--color-white);
+  --color-accent: var(--color-black);
 
   /* --color-secondary: #afafaf;
   --color-tertiary: #b7b7b7;
-  --color-accent: #000000;
   --color-active-link: #878787; */
 
   /* Fonts */
@@ -49,6 +49,47 @@
   }
 }
 
+@utility type-body-1 {
+  font-family: var(--font-sans);
+  font-size: 24px;
+  line-height: 144%;
+  letter-spacing: 0;
+  font-weight: 300;
+
+  @media (width < 48rem) {
+    font-size: 20px;
+  }
+}
+
+@utility type-body-2 {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 156%;
+  letter-spacing: 0;
+  font-weight: 300;
+
+  @media (width < 48rem) {
+    font-size: 14px;
+  }
+}
+
+@utility type-body-3 {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 156%;
+  letter-spacing: 0;
+  font-weight: 300;
+}
+
+@utility type-button {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
 /* ─── Global styles ─────────────────────────────────────────────────────────── */
 
 html,
@@ -56,4 +97,16 @@ body {
   background-color: var(--color-bg);
   color: var(--color-primary);
   font-family: var(--font-sans);
+  font-weight: 300;
+}
+
+/* ─── Focus ──────────────────────────────────────────────────────────────────── */
+
+*:focus {
+  outline: none;
+}
+
+html[data-input-modality="keyboard"] *:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
