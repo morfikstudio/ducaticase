@@ -86,7 +86,7 @@ function listingCategoryTitle(_type: unknown): string | undefined {
   }
 
   const row = CATEGORY_OPTIONS.find((o) => o.documentType === _type)
-  return row?.title
+  return row?.title.it
 }
 
 export function listingPreview(options?: ListingPreviewOptions) {

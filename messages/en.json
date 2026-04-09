@@ -37,6 +37,7 @@
     "paginationPrevAriaLabel": "Previous page",
     "paginationNextAriaLabel": "Next page",
     "paginationPageAriaLabel": "Go to page {page}",
-    "reservedLocation": "Location withheld"
+    "reservedLocation": "Location withheld",
+    "genericListingCategory": "Listing"
   }
 }

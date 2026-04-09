@@ -202,7 +202,7 @@ export function ListingDetail({ listing, locale }: ListingDetailProps) {
   const t = useTranslations("listingDetail")
   const category =
     CATEGORY_OPTIONS.find((row) => row.documentType === listing.metadata._type)
-      ?.title ?? "—"
+      ?.title[locale] ?? "—"
   const typology = listingTypologyLabel(
     listing.metadata._type,
     listing.typology,

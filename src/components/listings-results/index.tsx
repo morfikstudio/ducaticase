@@ -12,7 +12,6 @@ import { useListingsStore } from "@/stores/listingsStore"
 import { Container } from "@/components/ui/Container"
 import { Button } from "@/components/ui/Button"
 
-import { LISTINGS_PAGE_SIZE } from "./listingsPaginationConstants"
 import { ListingsHeader } from "./subcomponents/ListingsHeader"
 import { ListingsFiltersDrawer } from "./subcomponents/ListingsFiltersDrawer"
 import { ListingsList } from "./subcomponents/ListingsList"
@@ -25,6 +24,8 @@ import { useListingsFilters } from "./hooks/useListingsFilters"
 type ListingsResultsProps = {
   locale: AppLocale
 }
+
+const LISTINGS_PAGE_SIZE = 10
 
 export function ListingsResults({ locale }: ListingsResultsProps) {
   const [isFiltersPanelOpen, setIsFiltersPanelOpen] = useState(false)

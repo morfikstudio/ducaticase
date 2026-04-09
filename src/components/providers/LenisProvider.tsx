@@ -8,6 +8,8 @@ import {
   type ReactNode,
 } from "react"
 
+import { prefersReducedMotion } from "@/utils/reducedMotion"
+
 type LenisContextType = {
   lenis: Lenis | null
   animationKey: number
@@ -28,18 +30,15 @@ const LenisContext = createContext<LenisContextType>({
 const defaultEasing = (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
 
 function getLenisOptions(): LenisOptions {
-  const prefersReducedMotion =
-    typeof window !== "undefined"
-      ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      : false
+  const rm = prefersReducedMotion()
 
   return {
     autoRaf: false,
-    duration: prefersReducedMotion ? 0 : 0.5,
+    duration: rm ? 0 : 0.5,
     easing: defaultEasing,
     syncTouch: false,
     anchors: true,
-    smoothWheel: !prefersReducedMotion,
+    smoothWheel: !rm,
   }
 }
 

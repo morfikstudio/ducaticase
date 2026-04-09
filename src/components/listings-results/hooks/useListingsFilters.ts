@@ -135,8 +135,11 @@ export function useListingsFilters({
     () =>
       CATEGORY_OPTIONS.filter((option) =>
         availableCategories.has(option.value),
-      ),
-    [availableCategories],
+      ).map((option) => ({
+        value: option.value,
+        title: option.title[locale],
+      })),
+    [availableCategories, locale],
   )
 
   const categoryByDocumentType = useMemo(

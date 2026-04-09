@@ -9,37 +9,37 @@ import {
 
 export const CATEGORY_OPTIONS = [
   {
-    title: "Residenziale",
+    title: { it: "Residenziale", en: "Residential" },
     value: "residential",
     documentType: "listingResidential",
     icon: HomeIcon,
   },
   {
-    title: "Dimore oltre la città",
+    title: { it: "Dimore oltre la città", en: "Country homes" },
     value: "countryHouses",
     documentType: "listingCountryHouses",
     icon: SunIcon,
   },
   {
-    title: "Negozi e uffici",
+    title: { it: "Negozi e uffici", en: "Shops and offices" },
     value: "commercial",
     documentType: "listingShopsAndOffices",
     icon: BasketIcon,
   },
   {
-    title: "Industriale",
+    title: { it: "Industriale", en: "Industrial" },
     value: "industrial",
     documentType: "listingIndustrial",
     icon: CubeIcon,
   },
   {
-    title: "Hospitality",
+    title: { it: "Hospitality", en: "Hospitality" },
     value: "hospitality",
     documentType: "listingHospitality",
     icon: HeartIcon,
   },
   {
-    title: "Terreni",
+    title: { it: "Terreni", en: "Land" },
     value: "land",
     documentType: "listingLand",
     icon: EarthGlobeIcon,
@@ -52,7 +52,7 @@ export type ListingTypeName = (typeof CATEGORY_OPTIONS)[number]["documentType"]
 
 export const LISTING_DOCUMENT_SPECS = CATEGORY_OPTIONS.map((o) => ({
   name: o.documentType,
-  title: o.title,
+  title: o.title.it,
   icon: o.icon,
 }))
 

@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { useTranslations } from "next-intl"
 
-import { prefersReducedMotion } from "@/utils/prefersReducedMotion"
+import { prefersReducedMotion } from "@/utils/reducedMotion"
 
 type ListingsResultsCountProps = {
   page: number

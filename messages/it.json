@@ -37,6 +37,7 @@
     "paginationPrevAriaLabel": "Pagina precedente",
     "paginationNextAriaLabel": "Pagina successiva",
     "paginationPageAriaLabel": "Vai alla pagina {page}",
-    "reservedLocation": "Posizione riservata"
+    "reservedLocation": "Posizione riservata",
+    "genericListingCategory": "Annuncio"
   }
 }

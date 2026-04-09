@@ -31,9 +31,11 @@ export function ListingCard({ entry, locale }: ListingCardProps) {
     entry.listingLabel as LocalizedString | null | undefined,
     locale,
   )
+  const categoryRow = CATEGORY_OPTIONS.find(
+    (row) => row.documentType === entry._type,
+  )
   const categorySectionTitle =
-    CATEGORY_OPTIONS.find((row) => row.documentType === entry._type)?.title ??
-    "Annuncio"
+    categoryRow?.title[locale] ?? t("genericListingCategory")
   const title =
     listingTitle?.trim() || label || typology || categorySectionTitle
   const contractType = (entry as { listingContractType?: string | null })
