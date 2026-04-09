@@ -263,7 +263,7 @@ export function useListingsFilters({
     const nextParams = new URLSearchParams(searchParams.toString())
     updater(nextParams)
     const query = nextParams.toString()
-    router.replace(query ? `${pathname}?${query}` : pathname)
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false })
   }
 
   const toggleMultiValue = (key: string, value: string) => {
@@ -295,7 +295,7 @@ export function useListingsFilters({
   }
 
   const clearFilters = () => {
-    router.replace(pathname)
+    router.replace(pathname, { scroll: false })
   }
 
   const toggleContract = (value: "sale" | "rent", selected: boolean) => {
