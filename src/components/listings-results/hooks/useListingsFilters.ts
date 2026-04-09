@@ -141,9 +141,7 @@ export function useListingsFilters({
 
   const categoryByDocumentType = useMemo(
     () =>
-      new Map(
-        CATEGORY_OPTIONS.map((option) => [option.documentType, option]),
-      ),
+      new Map(CATEGORY_OPTIONS.map((option) => [option.documentType, option])),
     [],
   )
 
@@ -171,7 +169,10 @@ export function useListingsFilters({
     const map = new Map<string, Set<string>>()
     if (effectiveSelectedTypologies.length === 0) return map
 
-    for (const [categoryValue, categoryTypologies] of typologiesByCategory.entries()) {
+    for (const [
+      categoryValue,
+      categoryTypologies,
+    ] of typologiesByCategory.entries()) {
       const selectedForMacro = effectiveSelectedTypologies.filter((typology) =>
         categoryTypologies.has(typology),
       )
@@ -211,7 +212,10 @@ export function useListingsFilters({
         const categoryScopedTypologies =
           selectedTypologiesByCategory.get(entryCategory)
         if (categoryScopedTypologies) {
-          if (!entry.typology || !categoryScopedTypologies.has(entry.typology)) {
+          if (
+            !entry.typology ||
+            !categoryScopedTypologies.has(entry.typology)
+          ) {
             return false
           }
         }
@@ -277,7 +281,7 @@ export function useListingsFilters({
 
       if (nextValues.length === 0) {
         params.delete(key)
-      if (key === "category") {
+        if (key === "category") {
           params.delete("typology")
         }
         return

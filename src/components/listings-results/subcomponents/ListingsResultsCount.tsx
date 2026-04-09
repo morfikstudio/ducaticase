@@ -62,7 +62,10 @@ export function ListingsResultsCount({
   return (
     <div className="inline-block min-h-[1.35em] overflow-hidden align-bottom">
       <p ref={ref} className="type-body-3 text-primary">
-        {t("showingPages", { page: display.page, totalPages: display.totalPages })}
+        {t("showingPages", {
+          page: display.page,
+          totalPages: display.totalPages,
+        })}
       </p>
     </div>
   )

@@ -237,10 +237,7 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
 
         {sortedListings.length > 0 && (
           <div className="mt-12 flex items-center justify-between">
-            <ListingsResultsCount
-              page={currentPage}
-              totalPages={totalPages}
-            />
+            <ListingsResultsCount page={currentPage} totalPages={totalPages} />
             <ListingsSortPanel
               selectedSort={selectedSort}
               onChangeSort={changeSort}

@@ -32,9 +32,10 @@ export function ListingCard({ entry, locale }: ListingCardProps) {
     locale,
   )
   const categorySectionTitle =
-    CATEGORY_OPTIONS.find((row) => row.documentType === entry._type)
-      ?.title ?? "Annuncio"
-  const title = listingTitle?.trim() || label || typology || categorySectionTitle
+    CATEGORY_OPTIONS.find((row) => row.documentType === entry._type)?.title ??
+    "Annuncio"
+  const title =
+    listingTitle?.trim() || label || typology || categorySectionTitle
   const contractType = (entry as { listingContractType?: string | null })
     .listingContractType
   const price = formatListingPrice(

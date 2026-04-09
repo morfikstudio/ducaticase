@@ -48,8 +48,7 @@ export const CATEGORY_OPTIONS = [
 
 export type CategoryValue = (typeof CATEGORY_OPTIONS)[number]["value"]
 
-export type ListingTypeName =
-  (typeof CATEGORY_OPTIONS)[number]["documentType"]
+export type ListingTypeName = (typeof CATEGORY_OPTIONS)[number]["documentType"]
 
 export const LISTING_DOCUMENT_SPECS = CATEGORY_OPTIONS.map((o) => ({
   name: o.documentType,
