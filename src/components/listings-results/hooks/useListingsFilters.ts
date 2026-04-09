@@ -261,6 +261,7 @@ export function useListingsFilters({
 
   const updateSearchParams = (updater: (params: URLSearchParams) => void) => {
     const nextParams = new URLSearchParams(searchParams.toString())
+    nextParams.delete("page")
     updater(nextParams)
     const query = nextParams.toString()
     router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false })

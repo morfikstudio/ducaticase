@@ -32,7 +32,11 @@
     "sortRecentDesc": "Piu recenti",
     "sortRecentAsc": "Meno recenti",
     "noListingsFound": "Nessun annuncio trovato",
-    "showingResults": "Mostrando {current} di {total}",
+    "showingPages": "Mostrando {page} di {totalPages}",
+    "paginationNavAriaLabel": "Pagine dei risultati",
+    "paginationPrevAriaLabel": "Pagina precedente",
+    "paginationNextAriaLabel": "Pagina successiva",
+    "paginationPageAriaLabel": "Vai alla pagina {page}",
     "reservedLocation": "Posizione riservata"
   }
 }

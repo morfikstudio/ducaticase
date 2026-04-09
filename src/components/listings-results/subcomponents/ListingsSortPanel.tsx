@@ -34,13 +34,20 @@ export function ListingsSortPanel({
           <button
             type="button"
             className={cn(
-              "inline-flex items-center gap-1",
+              "group inline-flex items-center gap-1",
               "type-body-3 text-primary",
               "cursor-pointer",
               "rounded-sm",
             )}
           >
-            <span>{t("sortBy")}</span>
+            <span
+              className={cn(
+                "underline-offset-4 decoration-1",
+                "group-hover:underline group-focus-visible:underline",
+              )}
+            >
+              {t("sortBy")}
+            </span>
             <span
               className={cn(
                 "inline-flex h-6 w-6 items-center justify-center",

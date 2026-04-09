@@ -300,9 +300,7 @@ export function ListingsFiltersDrawer({
                       checked={checked}
                       onCheckedChange={() => onToggleCity(city)}
                     />
-                    <span className="text-sm text-neutral-900 dark:text-white">
-                      {city}
-                    </span>
+                    <span className="type-body-2 text-accent">{city}</span>
                   </label>
                 )
               })}
@@ -341,7 +339,7 @@ export function ListingsFiltersDrawer({
                           checked={checked}
                           onCheckedChange={() => onToggleTypology(option.value)}
                         />
-                        <span className="text-sm text-neutral-900 dark:text-white">
+                        <span className="type-body-2 text-accent">
                           {option.label}
                         </span>
                       </label>

@@ -32,7 +32,11 @@
     "sortRecentDesc": "Most recent",
     "sortRecentAsc": "Least recent",
     "noListingsFound": "No listings found",
-    "showingResults": "Showing {current} of {total}",
+    "showingPages": "Showing {page} of {totalPages}",
+    "paginationNavAriaLabel": "Results pagination",
+    "paginationPrevAriaLabel": "Previous page",
+    "paginationNextAriaLabel": "Next page",
+    "paginationPageAriaLabel": "Go to page {page}",
     "reservedLocation": "Location withheld"
   }
 }
