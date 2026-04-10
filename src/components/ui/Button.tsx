@@ -8,6 +8,7 @@ type ButtonIcon = "filters"
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   icon?: ButtonIcon
+  chevron?: "up" | "down"
   isActive?: boolean
   disabled?: boolean
 }
@@ -38,6 +39,7 @@ function renderIcon(icon: ButtonIcon) {
 export function Button({
   className,
   icon,
+  chevron,
   isActive = false,
   disabled = false,
   children,
@@ -62,6 +64,31 @@ export function Button({
     >
       {icon ? <span aria-hidden="true">{renderIcon(icon)}</span> : null}
       <span>{children}</span>
+      {chevron ? (
+        <span
+          aria-hidden="true"
+          className={cn(
+            "transition-transform duration-200",
+            chevron === "up" ? "rotate-180" : "",
+          )}
+        >
+          <svg
+            width="10"
+            height="6"
+            viewBox="0 0 10 6"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0.75 1L5 5L9.25 1"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+      ) : null}
     </button>
   )
 }

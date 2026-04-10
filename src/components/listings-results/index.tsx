@@ -6,14 +6,17 @@ import { useTranslations } from "next-intl"
 
 import type { AppLocale } from "@/i18n/routing"
 import { usePathname, useRouter } from "@/i18n/navigation"
-import { useLenis } from "@/components/providers/LenisProvider"
 import { useListingsStore } from "@/stores/listingsStore"
 
+import { cn } from "@/utils/classNames"
+
+import { useLenis } from "@/components/providers/LenisProvider"
 import { Container } from "@/components/ui/Container"
 import { Button } from "@/components/ui/Button"
 
 import { ListingsHeader } from "./subcomponents/ListingsHeader"
 import { ListingsFiltersDrawer } from "./subcomponents/ListingsFiltersDrawer"
+import { ListingsCategoriesBar } from "./subcomponents/ListingsCategoriesBar"
 import { ListingsList } from "./subcomponents/ListingsList"
 import { ListingsPagination } from "./subcomponents/ListingsPagination"
 import { ListingsSortPanel } from "./subcomponents/ListingsSortPanel"
@@ -29,6 +32,7 @@ const LISTINGS_PAGE_SIZE = 10
 
 export function ListingsResults({ locale }: ListingsResultsProps) {
   const [isFiltersPanelOpen, setIsFiltersPanelOpen] = useState(false)
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
   const [paginationExitNonce, setPaginationExitNonce] = useState(0)
   const listings = useListingsStore((state) => state.countryFilteredListings)
   const isListingsHydrated = useListingsStore((state) => state.isHydrated)
@@ -225,15 +229,48 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
           }}
         />
 
-        <div className="mt-12 md:mt-32 flex justify-center md:justify-end">
-          <Button
-            icon="filters"
-            onClick={() => setIsFiltersPanelOpen(true)}
-            isActive={isFiltersPanelOpen}
-            className="w-full md:w-auto"
-          >
-            {t("filtersButton")}
-          </Button>
+        <div className="mt-12 md:mt-32 flex flex-col gap-4">
+          <div className="flex items-center justify-end gap-4 lg:justify-between">
+            <Button
+              chevron={isCategoriesOpen ? "up" : "down"}
+              isActive={isCategoriesOpen}
+              onClick={() => setIsCategoriesOpen((v) => !v)}
+              className="hidden lg:inline-flex lg:w-auto"
+            >
+              {t("categoriesButton")}
+            </Button>
+
+            <Button
+              icon="filters"
+              onClick={() => {
+                setIsCategoriesOpen(false)
+                setIsFiltersPanelOpen(true)
+              }}
+              isActive={isFiltersPanelOpen}
+              className="w-full lg:w-auto"
+            >
+              {t("filtersButton")}
+            </Button>
+          </div>
+
+          {visibleCategoryOptions.length > 0 ? (
+            <div
+              className={cn(
+                "hidden lg:grid transition-[grid-template-rows] duration-300 ease-out",
+                isCategoriesOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+              )}
+            >
+              <div className="overflow-hidden" inert={!isCategoriesOpen}>
+                <div className="py-1">
+                  <ListingsCategoriesBar
+                    visibleCategoryOptions={visibleCategoryOptions}
+                    selectedCategories={selectedCategories}
+                    onToggleCategory={toggleCategory}
+                  />
+                </div>
+              </div>
+            </div>
+          ) : null}
         </div>
 
         {sortedListings.length > 0 && (
