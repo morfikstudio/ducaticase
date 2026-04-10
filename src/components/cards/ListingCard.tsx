@@ -26,7 +26,7 @@ export function ListingCard({ entry, locale }: ListingCardProps) {
   const t = useTranslations("listingsResults")
   const thumbUrl = getSanityImageUrl(entry.mainImage, 1200, 1500)
   const typology = listingTypologyLabel(entry._type, entry.typology, locale)
-  const listingTitle = (entry as { title?: string | null }).title
+  const listingTitle = pickLocalizedString(entry.title, locale)
   const label = pickLocalizedString(
     entry.listingLabel as LocalizedString | null | undefined,
     locale,
@@ -37,7 +37,7 @@ export function ListingCard({ entry, locale }: ListingCardProps) {
   const categorySectionTitle =
     categoryRow?.title[locale] ?? t("genericListingCategory")
   const title =
-    listingTitle?.trim() || label || typology || categorySectionTitle
+    listingTitle || label || typology || categorySectionTitle
   const contractType = (entry as { listingContractType?: string | null })
     .listingContractType
   const price = formatListingPrice(

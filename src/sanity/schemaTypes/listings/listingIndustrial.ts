@@ -1,4 +1,4 @@
-import { ALL_FIELDS_GROUP, defineField, defineType } from "sanity"
+import { ALL_FIELDS_GROUP, defineType } from "sanity"
 
 import { INDUSTRIAL_TYPOLOGY_OPTIONS } from "../../lib/constants"
 import {
@@ -35,6 +35,7 @@ import {
   industrialTypologyField,
   isArchivedField,
   listingContractTypeField,
+  listingTitleField,
   landAreaSqmField,
   officeAreaSqmField,
   mainImageField,
@@ -104,13 +105,7 @@ export const listingIndustrial = defineType({
     addressField({ group: "location" }),
     postalCodeField({ group: "location" }),
     /* Contenuto */
-    defineField({
-      name: "title",
-      title: "Titolo",
-      type: "string",
-      group: "content",
-      validation: (Rule) => Rule.required(),
-    }),
+    listingTitleField({ group: "content" }),
     mainImageField({ required: true, group: "content" }),
     descriptionField({ group: "content" }),
     excerptField({ group: "content" }),

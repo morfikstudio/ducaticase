@@ -121,6 +121,7 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
       postalCode
     },
     "content": {
+      title,
       listingLabel,
       "mainImage": mainImage {
         ...,

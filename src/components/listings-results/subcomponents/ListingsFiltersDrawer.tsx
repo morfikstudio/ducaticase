@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useTranslations } from "next-intl"
 
 import type { AppLocale } from "@/i18n/routing"
@@ -80,6 +80,20 @@ export function ListingsFiltersDrawer({
   const [isVisible, setIsVisible] = useState(false)
   const lenis = useLenis()
   const t = useTranslations("listingsResults")
+
+  const hasActiveFilters = useMemo(
+    () =>
+      selectedContract != null ||
+      selectedCategories.length > 0 ||
+      selectedCities.length > 0 ||
+      effectiveSelectedTypologies.length > 0,
+    [
+      selectedContract,
+      selectedCategories,
+      selectedCities,
+      effectiveSelectedTypologies,
+    ],
+  )
 
   useEffect(() => {
     if (isOpen) {
@@ -355,13 +369,15 @@ export function ListingsFiltersDrawer({
         <div className="grid grid-cols-2">
           <button
             type="button"
+            disabled={!hasActiveFilters}
             onClick={onClearFilters}
             className={cn(
               "px-4 py-5",
               "border-t border-gray",
               "type-button text-accent",
-              "cursor-pointer",
-              "hover:bg-neutral-100",
+              hasActiveFilters
+                ? "cursor-pointer hover:bg-neutral-100"
+                : "cursor-not-allowed opacity-40",
             )}
           >
             {t("clearFilters")}
@@ -369,12 +385,14 @@ export function ListingsFiltersDrawer({
 
           <button
             type="button"
+            disabled={!hasActiveFilters}
             onClick={onClose}
             className={cn(
               "px-4 py-5",
-              "bg-accent",
-              "type-button text-primary",
-              "cursor-pointer",
+              "type-button",
+              hasActiveFilters
+                ? "bg-accent text-primary cursor-pointer"
+                : "bg-accent/40 text-primary/60 cursor-not-allowed",
             )}
           >
             {t("applyFilters")}

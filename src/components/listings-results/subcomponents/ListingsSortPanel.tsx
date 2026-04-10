@@ -29,7 +29,7 @@ export function ListingsSortPanel({
 
   return (
     <div className="flex justify-end">
-      <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen}>
+      <DropdownMenu.Root modal={false} open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenu.Trigger asChild>
           <button
             type="button"

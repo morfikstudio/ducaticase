@@ -118,6 +118,10 @@ export {
 } from "./contents/descriptionField"
 export { excerptField, type ExcerptFieldOptions } from "./contents/excerptField"
 export {
+  listingTitleField,
+  type ListingTitleFieldOptions,
+} from "./contents/listingTitleField"
+export {
   mainImageField,
   type MainImageFieldOptions,
 } from "./contents/mainImageField"

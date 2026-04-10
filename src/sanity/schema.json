@@ -678,9 +678,10 @@
       "title": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "inline",
+          "name": "localizedString"
         },
-        "optional": false
+        "optional": true
       },
       "mainImage": {
         "type": "objectAttribute",
@@ -2057,9 +2058,10 @@
       "title": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "inline",
+          "name": "localizedString"
         },
-        "optional": false
+        "optional": true
       },
       "mainImage": {
         "type": "objectAttribute",
@@ -3225,9 +3227,10 @@
       "title": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "inline",
+          "name": "localizedString"
         },
-        "optional": false
+        "optional": true
       },
       "mainImage": {
         "type": "objectAttribute",
@@ -4461,9 +4464,10 @@
       "title": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "inline",
+          "name": "localizedString"
         },
-        "optional": false
+        "optional": true
       },
       "mainImage": {
         "type": "objectAttribute",
@@ -5689,9 +5693,10 @@
       "title": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "inline",
+          "name": "localizedString"
         },
-        "optional": false
+        "optional": true
       },
       "mainImage": {
         "type": "objectAttribute",
@@ -6981,9 +6986,10 @@
       "title": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "inline",
+          "name": "localizedString"
         },
-        "optional": false
+        "optional": true
       },
       "mainImage": {
         "type": "objectAttribute",

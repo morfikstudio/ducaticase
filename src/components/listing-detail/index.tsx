@@ -208,6 +208,15 @@ export function ListingDetail({ listing, locale }: ListingDetailProps) {
     listing.typology,
     locale,
   )
+  const headingTitle =
+    pickLocalizedString(listing.content.title, locale) ||
+    pickLocalizedString(
+      listing.content.listingLabel as LocalizedString | null | undefined,
+      locale,
+    ) ||
+    typology ||
+    (category !== "—" ? category : "") ||
+    "Immobile"
   const listingContractType =
     (listing.metadata as { listingContractType?: string | null })
       .listingContractType ?? null
@@ -250,7 +259,7 @@ export function ListingDetail({ listing, locale }: ListingDetailProps) {
           {t("badge")}
         </p>
         <h1 className="mt-1 text-2xl font-semibold text-neutral-900 dark:text-white">
-          {typology ?? "Immobile"}
+          {headingTitle}
         </h1>
         <div className="mt-3 grid gap-3 text-sm text-neutral-700 dark:text-neutral-300 sm:grid-cols-3">
           <div>
