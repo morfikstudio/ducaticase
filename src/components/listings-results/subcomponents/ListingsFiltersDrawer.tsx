@@ -191,7 +191,7 @@ export function ListingsFiltersDrawer({
         aria-label={t("closeFiltersPanelAriaLabel")}
         className={cn(
           "absolute inset-0",
-          "bg-black/45 pointer-events-auto",
+          "bg-black/60 pointer-events-auto",
           "transition-opacity duration-300 ease-out",
           isVisible ? "opacity-100" : "opacity-0",
         )}
@@ -238,6 +238,8 @@ export function ListingsFiltersDrawer({
           className={cn(
             "relative px-6 md:px-10 py-14",
             "min-h-0 flex-1 overflow-y-auto overscroll-contain touch-pan-y",
+            /* Prevent scroll snapping when the scrollbar appears */
+            "[scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
           )}
         >
           {/* TITLE */}

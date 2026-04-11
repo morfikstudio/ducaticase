@@ -1,4 +1,8 @@
 {
+  "breadcrumbs": {
+    "listings": "Immobili",
+    "listingDetail": "Scheda"
+  },
   "listingDetail": {
     "badge": "Annuncio immobiliare",
     "category": "Macrocategoria",

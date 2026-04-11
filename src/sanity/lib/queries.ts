@@ -1,5 +1,19 @@
 import { defineQuery, groq } from "next-sanity"
 
+export const MENU_SITE_CONTENT_QUERY = defineQuery(groq`
+  *[_type == "siteContent" && sectionType == "menu"]
+    | order(_updatedAt desc)
+    [0] {
+      _id,
+      menu {
+        headerTagline,
+        payoff,
+        navLinks[] { label, path },
+        socialLinks[] { label, href }
+      }
+    }
+`)
+
 export const FOOTER_SITE_CONTENT_QUERY = defineQuery(groq`
   *[_type == "siteContent" && sectionType == "footer"]
     | order(_updatedAt desc)

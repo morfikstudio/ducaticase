@@ -1,4 +1,8 @@
 {
+  "breadcrumbs": {
+    "listings": "Properties",
+    "listingDetail": "Detail"
+  },
   "listingDetail": {
     "badge": "Real estate listing",
     "category": "Macro category",

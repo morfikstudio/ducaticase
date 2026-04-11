@@ -4,9 +4,8 @@ import { Link } from "@/i18n/navigation"
 import { Container } from "@/components/ui/Container"
 import { cn } from "@/utils/classNames"
 
-import { FooterLogoLink } from "./FooterLogoLink"
-
 import type { FooterContent } from "@/lib/formatFooterContent"
+import { Logo } from "@/components/ui/Logo"
 
 function hrefUsesNativeAnchor(href: string): boolean {
   return (
@@ -79,7 +78,7 @@ function ContactLines({
         <p>
           <a
             href={`mailto:${email}`}
-            className="transition-opacity hover:opacity-80"
+            className="hover:underline underline-offset-4"
           >
             {email}
           </a>
@@ -89,7 +88,7 @@ function ContactLines({
         <p>
           <a
             href={`tel:${phone}`}
-            className="transition-opacity hover:opacity-80"
+            className="hover:underline underline-offset-4"
           >
             {phone}
           </a>
@@ -136,7 +135,9 @@ export default function Footer({ content }: FooterProps) {
           )}
         >
           <div className="flex max-w-md flex-col lg:max-w-sm">
-            <FooterLogoLink />
+            <Link href="/" aria-label="Ducati Case — Home">
+              <Logo />
+            </Link>
 
             {showPayoff ? (
               <div className="mt-8 md:mt-6">
@@ -155,7 +156,7 @@ export default function Footer({ content }: FooterProps) {
                   rel="noopener noreferrer"
                   className={cn(
                     "type-body-3 text-primary",
-                    "transition-opacity hover:opacity-80",
+                    "hover:underline underline-offset-4",
                   )}
                   aria-label={`${addressLine1}, ${addressLine2} — apri in Google Maps`}
                 >
@@ -176,7 +177,7 @@ export default function Footer({ content }: FooterProps) {
               {navLinks.map(({ label, href }, index) => {
                 const className = cn(
                   "type-body-3 text-primary",
-                  "transition-opacity hover:opacity-80",
+                  "hover:underline underline-offset-4",
                 )
                 const key = `${href}-${index}`
                 return hrefUsesNativeAnchor(href) ? (
@@ -201,7 +202,7 @@ export default function Footer({ content }: FooterProps) {
                   className={cn(
                     "inline-flex items-center gap-1.5",
                     "type-body-3 text-primary",
-                    "transition-opacity hover:opacity-80",
+                    "hover:underline underline-offset-4",
                   )}
                 >
                   <span>{label}</span>
@@ -217,7 +218,7 @@ export default function Footer({ content }: FooterProps) {
                 rel="noopener noreferrer"
                 className={cn(
                   "type-body-3 text-primary",
-                  "inline-block transition-opacity hover:opacity-80",
+                  "inline-block hover:underline underline-offset-4",
                 )}
                 aria-label={`${addressLine1}, ${addressLine2} — apri in Google Maps`}
               >
@@ -248,8 +249,8 @@ export default function Footer({ content }: FooterProps) {
               <a
                 href={privacyPolicyUrl}
                 className={cn(
-                  "type-body-3 text-primary transition-opacity",
-                  "hover:opacity-80 md:text-right",
+                  "type-body-3 text-primary",
+                  "hover:underline underline-offset-4 md:text-right",
                 )}
               >
                 {privacyPolicyLabel}
@@ -258,8 +259,8 @@ export default function Footer({ content }: FooterProps) {
               <Link
                 href={privacyPolicyUrl}
                 className={cn(
-                  "type-body-3 text-primary transition-opacity",
-                  "hover:opacity-80 md:text-right",
+                  "type-body-3 text-primary",
+                  "hover:underline underline-offset-4 md:text-right",
                 )}
               >
                 {privacyPolicyLabel}

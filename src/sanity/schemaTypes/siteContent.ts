@@ -3,12 +3,24 @@ import { defineField, defineType } from "sanity"
 
 import { apiVersion } from "../env"
 
-const SECTION_OPTIONS = [{ title: "Footer", value: "footer" }] as const
+const SECTION_OPTIONS = [
+  { title: "Footer", value: "footer" },
+  { title: "Menu", value: "menu" },
+] as const
 
 type SectionType = (typeof SECTION_OPTIONS)[number]["value"]
 
 type SiteContentDoc = {
   sectionType?: SectionType
+}
+
+function titleAndSectionForNewDocument(
+  document: SiteContentDoc | undefined,
+): { title: string; sectionType: SectionType } {
+  if (document?.sectionType === "menu") {
+    return { title: "Menu", sectionType: "menu" }
+  }
+  return { title: "Footer", sectionType: "footer" }
 }
 
 export const siteContent = defineType({
@@ -17,17 +29,21 @@ export const siteContent = defineType({
   title: "\u200B",
   type: "document",
   icon: DocumentTextIcon,
-  initialValue: () => ({
-    /** Used by the editor as document title (avoid "Untitled"). */
-    title: "Footer",
-    sectionType: "footer",
-  }),
+  initialValue: ({ document }) => {
+    const { title, sectionType } = titleAndSectionForNewDocument(
+      document as SiteContentDoc | undefined,
+    )
+    return { title, sectionType }
+  },
   validation: (Rule) =>
     Rule.custom(async (_value, context) => {
       const doc = context.document as
         | { _id?: string; sectionType?: string }
         | undefined
-      if (!doc || doc.sectionType !== "footer") {
+      if (!doc?.sectionType) {
+        return true
+      }
+      if (doc.sectionType !== "footer" && doc.sectionType !== "menu") {
         return true
       }
       const id = doc._id
@@ -38,12 +54,19 @@ export const siteContent = defineType({
         ? [id, id.slice("drafts.".length)]
         : [`drafts.${id}`, id]
       const client = context.getClient({ apiVersion })
+      const section = doc.sectionType
       const duplicateCount = await client.fetch<number>(
-        `count(*[_type == "siteContent" && sectionType == "footer" && !(_id in $ids)])`,
-        { ids },
+        `count(*[_type == "siteContent" && sectionType == $section && !(_id in $ids)])`,
+        { ids, section },
       )
       if (duplicateCount > 0) {
-        return "Esiste già un documento Footer. Elimina quello esistente prima di crearne un altro."
+        const label =
+          section === "footer"
+            ? "Footer"
+            : section === "menu"
+              ? "Menu"
+              : section
+        return `Esiste già un documento ${label}. Elimina quello esistente prima di crearne un altro.`
       }
       return true
     }),
@@ -52,7 +75,12 @@ export const siteContent = defineType({
       name: "title",
       title: "Titolo",
       type: "string",
-      initialValue: "Footer",
+      initialValue: ({ document }) => {
+        const { title } = titleAndSectionForNewDocument(
+          document as SiteContentDoc | undefined,
+        )
+        return title
+      },
       readOnly: true,
       hidden: true,
     }),
@@ -72,6 +100,13 @@ export const siteContent = defineType({
       hidden: ({ document }) =>
         (document as SiteContentDoc)?.sectionType !== "footer",
     }),
+    defineField({
+      name: "menu",
+      title: "Menu",
+      type: "menuSettings",
+      hidden: ({ document }) =>
+        (document as SiteContentDoc)?.sectionType !== "menu",
+    }),
   ],
   preview: {
     select: {
@@ -79,13 +114,19 @@ export const siteContent = defineType({
       sectionType: "sectionType",
     },
     prepare({ title, sectionType }) {
+      if (sectionType === "footer" || sectionType === "menu") {
+        const option = SECTION_OPTIONS.find((o) => o.value === sectionType)
+        return {
+          title: option?.title ?? "Contenuto sito",
+        }
+      }
       const trimmed = typeof title === "string" ? title.trim() : ""
       if (trimmed !== "") {
         return { title: trimmed }
       }
       const option = SECTION_OPTIONS.find((o) => o.value === sectionType)
       return {
-        title: option?.title ?? "Footer",
+        title: option?.title ?? "Contenuto sito",
       }
     },
   },

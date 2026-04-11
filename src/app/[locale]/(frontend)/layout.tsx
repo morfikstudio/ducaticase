@@ -1,14 +1,23 @@
 import type { AppLocale } from "@/i18n/routing"
 import { sanityFetch } from "@/sanity/lib/client"
-import { FOOTER_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
-import type { FOOTER_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
+import {
+  MENU_SITE_CONTENT_QUERY,
+  FOOTER_SITE_CONTENT_QUERY,
+} from "@/sanity/lib/queries"
+import type {
+  MENU_SITE_CONTENT_QUERY_RESULT,
+  FOOTER_SITE_CONTENT_QUERY_RESULT,
+} from "@/sanity/types"
 
 import LenisProvider from "@/components/providers/LenisProvider"
 import BreakpointProvider from "@/components/providers/BreakpointProvider"
 import FocusVisibleModality from "@/components/providers/FocusVisibleProvider"
+import Breadcrumbs from "@/components/ui/Breadcrumbs"
+import NavBar from "@/components/nav/NavBar"
 import Footer from "@/components/footer"
 
 import { footerContentFromSanity } from "@/lib/formatFooterContent"
+import { menuContentFromSanity } from "@/lib/formatMenuContent"
 
 type FrontendLayoutProps = Readonly<{
   children: React.ReactNode
@@ -22,19 +31,28 @@ export default async function FrontendLayout({
   const { locale: localeParam } = await params
   const locale = localeParam as AppLocale
 
-  const footerDoc = (await sanityFetch({
-    query: FOOTER_SITE_CONTENT_QUERY,
-    revalidate: 60,
-  })) as FOOTER_SITE_CONTENT_QUERY_RESULT
+  const [menuDoc, footerDoc] = await Promise.all([
+    sanityFetch({
+      query: MENU_SITE_CONTENT_QUERY,
+      revalidate: 60,
+    }) as Promise<MENU_SITE_CONTENT_QUERY_RESULT>,
+    sanityFetch({
+      query: FOOTER_SITE_CONTENT_QUERY,
+      revalidate: 60,
+    }) as Promise<FOOTER_SITE_CONTENT_QUERY_RESULT>,
+  ])
 
   const footerContent = footerContentFromSanity(footerDoc, locale)
+  const menuContent = menuContentFromSanity(menuDoc, locale)
 
   return (
     <LenisProvider>
+      <NavBar locale={locale} menuContent={menuContent} />
+      <Breadcrumbs />
       <div className="flex min-h-screen flex-col">
         <div className="flex-1">{children}</div>
-        <Footer content={footerContent} />
       </div>
+      <Footer content={footerContent} />
 
       <BreakpointProvider />
       <FocusVisibleModality />

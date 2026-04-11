@@ -2,6 +2,7 @@ import { type SchemaTypeDefinition } from "sanity"
 
 import { listingTypes } from "./listingTypes"
 import { customSpecificationItem } from "./objects/customSpecificationItem"
+import { menuSettings } from "./objects/menuSettings"
 import { footerSettings } from "./objects/footerSettings"
 import {
   localizedPortableTextObject,
@@ -13,6 +14,7 @@ import { siteContent } from "./siteContent"
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     customSpecificationItem,
+    menuSettings,
     footerSettings,
     localizedStringObject,
     localizedTextObject,

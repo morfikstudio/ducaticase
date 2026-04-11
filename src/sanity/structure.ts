@@ -28,6 +28,19 @@ export const structure: StructureResolver = (S) =>
                       { field: "_updatedAt", direction: "desc" },
                     ]),
                 ),
+              S.listItem()
+                .title("Menu")
+                .icon(DesktopIcon)
+                .id("siteContentMenu")
+                .child(
+                  S.documentList()
+                    .title("Menu")
+                    .schemaType("siteContent")
+                    .filter('_type == "siteContent" && sectionType == "menu"')
+                    .defaultOrdering([
+                      { field: "_updatedAt", direction: "desc" },
+                    ]),
+                ),
             ]),
         ),
       S.divider(),

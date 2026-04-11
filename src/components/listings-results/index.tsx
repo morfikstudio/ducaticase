@@ -221,7 +221,7 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
 
   return (
     <div>
-      <Container className="pt-48 pb-24">
+      <Container className="pt-30 md:pt-20 pb-24">
         <ListingsHeader
           activeCountry={selectedCountry}
           onCountrySwitch={(value) => {
