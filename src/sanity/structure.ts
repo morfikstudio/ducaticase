@@ -7,10 +7,29 @@ export const structure: StructureResolver = (S) =>
   S.list()
     .title("Ducati Case")
     .items([
-      S.documentTypeListItem("siteContent")
+      S.listItem()
         .title("Contenuti Sito")
         .icon(DesktopIcon)
-        .id("siteContent"),
+        .id("siteContentRoot")
+        .child(
+          S.list()
+            .title("Contenuti Sito")
+            .items([
+              S.listItem()
+                .title("Footer")
+                .icon(DesktopIcon)
+                .id("siteContentFooter")
+                .child(
+                  S.documentList()
+                    .title("Footer")
+                    .schemaType("siteContent")
+                    .filter('_type == "siteContent" && sectionType == "footer"')
+                    .defaultOrdering([
+                      { field: "_updatedAt", direction: "desc" },
+                    ]),
+                ),
+            ]),
+        ),
       S.divider(),
       S.listItem()
         .title("Annunci immobiliari")

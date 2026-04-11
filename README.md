@@ -26,7 +26,7 @@ Real estate listings site built with [Sanity.io](https://sanity.io) and [Next.js
 
 ## Content model
 
-- **`siteContent`** — global site content; translations via **document internationalization** (one document per locale, IT/EN in Studio).
+- **`siteContent`** — global site sections as separate documents (e.g. Footer, future Home/About). Each document has a **`sectionType`**; translatable strings use **`localizedText`** (`it` / `en` on the same document). The frontend resolves copy with `pickLocalizedString` (see `src/sanity/lib/locale.ts`) and fetches via GROQ in `src/sanity/lib/queries.ts` (e.g. `FOOTER_SITE_CONTENT_QUERY`).
 - **Listing** — dedicated document types; user-facing copy (label, excerpt, description) is **localized** (`it` / `en` on the same document); numbers, structured addresses, enums, and media are shared:
   - Residential (`listingResidential`)
   - Country homes (`listingCountryHouses`)

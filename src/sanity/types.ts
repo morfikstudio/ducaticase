@@ -1313,51 +1313,45 @@ export type ListingResidential = {
   climateControl?: "autonomous" | "centralized" | "preInstallation"
 }
 
-export type CustomSpecificationItem = {
-  _type: "customSpecificationItem"
-  label: string
-  valueKind: "text" | "number"
-  textValue?: string
-  numberValue?: number
-}
-
-export type TranslationMetadata = {
-  _id: string
-  _type: "translation.metadata"
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  translations?: InternationalizedArrayReference
-  schemaTypes?: Array<string>
-}
-
-export type InternationalizedArrayReference = Array<
-  {
-    _key: string
-  } & InternationalizedArrayReferenceValue
->
-
-export type SiteContentReference = {
-  _ref: string
-  _type: "reference"
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: "siteContent"
-}
-
-export type InternationalizedArrayReferenceValue = {
-  _type: "internationalizedArrayReferenceValue"
-  value?: SiteContentReference
-  language: string
-}
-
 export type SiteContent = {
   _id: string
   _type: "siteContent"
   _createdAt: string
   _updatedAt: string
   _rev: string
-  language?: string
-  title: string
+  title?: string
+  sectionType?: "footer"
+  footer?: FooterSettings
+}
+
+export type FooterSettings = {
+  _type: "footerSettings"
+  payoff?: LocalizedText
+  email?: string
+  phone?: string
+  addressLine1?: string
+  addressLine2?: string
+  vat?: LocalizedString
+  navLinks?: Array<{
+    label?: LocalizedString
+    path?: string
+    _key: string
+  }>
+  privacyPolicyLabel?: LocalizedString
+  privacyPolicyPath?: string
+  socialLinks?: Array<{
+    label?: string
+    href?: string
+    _key: string
+  }>
+}
+
+export type CustomSpecificationItem = {
+  _type: "customSpecificationItem"
+  label: string
+  valueKind: "text" | "number"
+  textValue?: string
+  numberValue?: number
 }
 
 export type SanityImagePaletteSwatch = {
@@ -1477,12 +1471,9 @@ export type AllSanitySchemaTypes =
   | ListingShopsAndOffices
   | ListingCountryHouses
   | ListingResidential
-  | CustomSpecificationItem
-  | TranslationMetadata
-  | InternationalizedArrayReference
-  | SiteContentReference
-  | InternationalizedArrayReferenceValue
   | SiteContent
+  | FooterSettings
+  | CustomSpecificationItem
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -1494,20 +1485,29 @@ export type AllSanitySchemaTypes =
   | Slug
 
 // Source: src/sanity/lib/queries.ts
-// Variable: SITE_CONTENT_QUERY
-// Query: coalesce(    *[_type == "siteContent" && language == $locale][0]{ _id, title, language },    *[_type == "siteContent" && language == "it"][0]{ _id, title, language } // fallback to IT if missing  )
-export type SITE_CONTENT_QUERY_RESULT =
-  | {
-      _id: string
-      title: string
-      language: "it"
-    }
-  | {
-      _id: string
-      title: string
-      language: string | null
-    }
-  | null
+// Variable: FOOTER_SITE_CONTENT_QUERY
+// Query: *[_type == "siteContent" && sectionType == "footer"]    | order(_updatedAt desc)    [0] {      _id,      footer {        payoff,        email,        phone,        addressLine1,        addressLine2,        vat,        navLinks[] { label, path },        privacyPolicyLabel,        privacyPolicyPath,        socialLinks[] { label, href }      }    }
+export type FOOTER_SITE_CONTENT_QUERY_RESULT = {
+  _id: string
+  footer: {
+    payoff: LocalizedText | null
+    email: string | null
+    phone: string | null
+    addressLine1: string | null
+    addressLine2: string | null
+    vat: LocalizedString | null
+    navLinks: Array<{
+      label: LocalizedString | null
+      path: string | null
+    }> | null
+    privacyPolicyLabel: LocalizedString | null
+    privacyPolicyPath: string | null
+    socialLinks: Array<{
+      label: string | null
+      href: string | null
+    }> | null
+  } | null
+} | null
 
 // Source: src/sanity/lib/queries.ts
 // Variable: LISTINGS_PREVIEW_QUERY
@@ -4032,7 +4032,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
 import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  coalesce(\n    *[_type == "siteContent" && language == $locale][0]{ _id, title, language },\n    *[_type == "siteContent" && language == "it"][0]{ _id, title, language } // fallback to IT if missing\n  )\n': SITE_CONTENT_QUERY_RESULT
+    '\n  *[_type == "siteContent" && sectionType == "footer"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      footer {\n        payoff,\n        email,\n        phone,\n        addressLine1,\n        addressLine2,\n        vat,\n        navLinks[] { label, path },\n        privacyPolicyLabel,\n        privacyPolicyPath,\n        socialLinks[] { label, href }\n      }\n    }\n': FOOTER_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) { // ... order(_createdAt desc) [0...10]{\n    _id,\n    _type,\n    title,\n    listingContractType,\n    price,\n    country,\n    city,\n    province,\n    address,\n    postalCode,\n    listingLabel,\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "mainImage": mainImage {\n      ...,\n      asset->\n    }\n  }\n': LISTINGS_PREVIEW_QUERY_RESULT
     '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true && _id == $id][0]{\n    "metadata": {\n      _id,\n      _type,\n      listingContractType,\n      _createdAt,\n      _updatedAt,\n      _rev\n    },\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "propertySheet": select(\n      _type == "listingResidential" => {\n        price,\n        commercialAreaSqm,\n        condoFees,\n        floor,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingCountryHouses" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingShopsAndOffices" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        displayWindows,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingIndustrial" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        heightMeters,\n        buildingYear,\n        energyClass\n      },\n      _type == "listingHospitality" => {\n        price,\n        commercialAreaSqm,\n        roomCount,\n        energyClass\n      },\n      _type == "listingLand" => {\n        price,\n        commercialAreaSqm,\n        landAccess,\n        hasFencedProperty\n      }\n    ),\n    "location": {\n      country,\n      province,\n      city,\n      address,\n      postalCode\n    },\n    "content": {\n      title,\n      listingLabel,\n      "mainImage": mainImage {\n        ...,\n        asset->\n      },\n      description,\n      excerpt\n    },\n    "floorPlans": select(\n      _type == "listingLand" => {\n        "items": null\n      },\n      {\n        "items": floorPlans[] {\n          ...,\n          asset->\n        }\n      }\n    ),\n    "additionalFields": select(\n      _type == "listingResidential" => {\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl\n      },\n      _type == "listingCountryHouses" => {\n        outdoorAreaSqm,\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl,\n        condoFees\n      },\n      _type == "listingShopsAndOffices" => {\n        furnishing,\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        conciergeServiceShops,\n        officeLayout,\n        condoFees\n      },\n      _type == "listingIndustrial" => {\n        hasLoadingDocks,\n        hasOverheadCranes,\n        shedAreaSqm,\n        officeAreaSqm,\n        landAreaSqm,\n        hasChangingRoom,\n        hasFencedProperty,\n        conciergeService,\n        hasAccessibleRestroom,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        hasDrivableAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        heating\n      },\n      _type == "listingHospitality" => {\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        outdoorAreaSqm,\n        heating,\n        pool,\n        hasTennisCourt,\n        customSpecifications\n      },\n      _type == "listingLand" => {\n        buildable,\n        agricultural\n      }\n    )\n  }\n': LISTING_BY_ID_QUERY_RESULT
   }

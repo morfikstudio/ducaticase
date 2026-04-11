@@ -36,8 +36,7 @@ export function ListingCard({ entry, locale }: ListingCardProps) {
   )
   const categorySectionTitle =
     categoryRow?.title[locale] ?? t("genericListingCategory")
-  const title =
-    listingTitle || label || typology || categorySectionTitle
+  const title = listingTitle || label || typology || categorySectionTitle
   const contractType = (entry as { listingContractType?: string | null })
     .listingContractType
   const price = formatListingPrice(

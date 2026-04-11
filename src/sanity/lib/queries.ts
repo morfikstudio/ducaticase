@@ -1,10 +1,23 @@
 import { defineQuery, groq } from "next-sanity"
 
-export const SITE_CONTENT_QUERY = defineQuery(groq`
-  coalesce(
-    *[_type == "siteContent" && language == $locale][0]{ _id, title, language },
-    *[_type == "siteContent" && language == "it"][0]{ _id, title, language } // fallback to IT if missing
-  )
+export const FOOTER_SITE_CONTENT_QUERY = defineQuery(groq`
+  *[_type == "siteContent" && sectionType == "footer"]
+    | order(_updatedAt desc)
+    [0] {
+      _id,
+      footer {
+        payoff,
+        email,
+        phone,
+        addressLine1,
+        addressLine2,
+        vat,
+        navLinks[] { label, path },
+        privacyPolicyLabel,
+        privacyPolicyPath,
+        socialLinks[] { label, href }
+      }
+    }
 `)
 
 export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`

@@ -1,10 +1,9 @@
 "use client"
 
 /**
- * This configuration is used to for the Sanity Studio that’s mounted on the `/app/studio/[[...tool]]/page.tsx` route
+ * This configuration is used to for the Sanity Studio that's mounted on the `/app/studio/[[...tool]]/page.tsx` route
  */
 
-import { documentInternationalization } from "@sanity/document-internationalization"
 import { itITLocale } from "@sanity/locale-it-it"
 import { AddIcon } from "@sanity/icons"
 import { visionTool } from "@sanity/vision"
@@ -20,9 +19,7 @@ export default defineConfig({
   basePath: "/studio",
   projectId,
   dataset,
-  // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,
-  // Pulsante "Crea" nei pannelli lista: sempre icona + (non l'icona del tipo documento).
   document: {
     newDocumentOptions: (prev) =>
       prev.map((item) => ({
@@ -32,15 +29,7 @@ export default defineConfig({
   },
   plugins: [
     itITLocale(),
-    documentInternationalization({
-      supportedLanguages: [
-        { id: "it", title: "Italiano" },
-        { id: "en", title: "English" },
-      ],
-      schemaTypes: ["siteContent"],
-    }),
     structureTool({ structure }),
-    // Vision is for querying with GROQ from inside the Studio
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
   ],
