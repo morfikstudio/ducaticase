@@ -106,12 +106,13 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
     [currentPage, sortedListings],
   )
 
-  const hasSingleResultOnPage = totalCount === 1
+  const hasSingleResultOnPage = listings.length === 1
 
   useEffect(() => {
-    if (!hasSingleResultOnPage || !isFiltersPanelOpen) return
+    if (!hasSingleResultOnPage) return
     setIsFiltersPanelOpen(false)
-  }, [hasSingleResultOnPage, isFiltersPanelOpen])
+    setIsCategoriesOpen(false)
+  }, [hasSingleResultOnPage])
 
   useEffect(() => {
     if (!isListingsHydrated) return
@@ -273,41 +274,24 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
             <Button
               chevron={isCategoriesOpen ? "up" : "down"}
               isActive={isCategoriesOpen}
+              disabled={hasSingleResultOnPage}
               onClick={() => setIsCategoriesOpen((v) => !v)}
               className="hidden lg:inline-flex lg:w-auto"
             >
               {t("categoriesButton")}
             </Button>
 
-            <div
-              className={cn(
-                "grid w-full min-w-0 transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none lg:w-auto",
-                hasSingleResultOnPage ? "grid-rows-[0fr]" : "grid-rows-[1fr]",
-              )}
+            <Button
+              icon="filters"
+              disabled={hasSingleResultOnPage}
+              onClick={() => {
+                setIsCategoriesOpen(false)
+                setIsFiltersPanelOpen(true)
+              }}
+              className="w-full lg:w-auto"
             >
-              <div className="min-h-0 overflow-hidden">
-                <div
-                  className={cn(
-                    "w-full transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none",
-                    hasSingleResultOnPage
-                      ? "pointer-events-none opacity-0 translate-y-1 motion-reduce:translate-y-0"
-                      : "opacity-100 translate-y-0",
-                  )}
-                  inert={hasSingleResultOnPage ? true : undefined}
-                >
-                  <Button
-                    icon="filters"
-                    onClick={() => {
-                      setIsCategoriesOpen(false)
-                      setIsFiltersPanelOpen(true)
-                    }}
-                    className="w-full lg:w-auto"
-                  >
-                    {t("filtersButton")}
-                  </Button>
-                </div>
-              </div>
-            </div>
+              {t("filtersButton")}
+            </Button>
           </div>
 
           {visibleCategoryOptions.length > 0 ? (

@@ -372,7 +372,10 @@ export function ListingsFiltersDrawer({
           <button
             type="button"
             disabled={!hasActiveFilters}
-            onClick={onClearFilters}
+            onClick={() => {
+              onClearFilters()
+              onClose()
+            }}
             className={cn(
               "px-4 py-5",
               "border-t border-gray",

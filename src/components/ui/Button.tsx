@@ -53,10 +53,11 @@ export function Button({
         "px-8 py-3",
         "type-button rounded-[4px] border",
         "cursor-pointer transition-all duration-200",
-        disabled ? "opacity-50 cursor-not-allowed" : "",
-        isActive
-          ? "border-primary bg-primary text-accent"
-          : "border-gray text-primary hover:border-primary hover:bg-primary hover:text-accent",
+        disabled
+          ? "opacity-50 cursor-not-allowed"
+          : isActive
+            ? "border-primary bg-primary text-accent"
+            : "border-gray text-primary hover:border-primary hover:bg-primary hover:text-accent",
         className,
       )}
       disabled={disabled}
