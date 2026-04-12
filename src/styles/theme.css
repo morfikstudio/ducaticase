@@ -44,6 +44,19 @@
   }
 }
 
+@utility type-heading-1 {
+  font-family: var(--font-sans);
+  font-size: 40px;
+  line-height: 108%;
+  letter-spacing: -2%;
+  font-weight: 300;
+
+  @media (width < 48rem) {
+    font-size: 40px;
+    line-height: 120%;
+  }
+}
+
 @utility type-body-1 {
   font-family: var(--font-sans);
   font-size: 24px;

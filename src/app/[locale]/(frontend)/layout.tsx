@@ -9,12 +9,12 @@ import type {
   FOOTER_SITE_CONTENT_QUERY_RESULT,
 } from "@/sanity/types"
 
-import LenisProvider from "@/components/providers/LenisProvider"
-import BreakpointProvider from "@/components/providers/BreakpointProvider"
-import FocusVisibleModality from "@/components/providers/FocusVisibleProvider"
-import Breadcrumbs from "@/components/ui/Breadcrumbs"
-import NavBar from "@/components/nav/NavBar"
-import Footer from "@/components/footer"
+import { LenisProvider } from "@/components/providers/LenisProvider"
+import { BreakpointProvider } from "@/components/providers/BreakpointProvider"
+import { FocusVisibleModality } from "@/components/providers/FocusVisibleProvider"
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs"
+import { NavBar } from "@/components/nav/NavBar"
+import { Footer } from "@/components/footer"
 
 import { footerContentFromSanity } from "@/lib/formatFooterContent"
 import { menuContentFromSanity } from "@/lib/formatMenuContent"

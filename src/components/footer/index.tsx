@@ -104,7 +104,7 @@ type FooterProps = {
   content: FooterContent
 }
 
-export default function Footer({ content }: FooterProps) {
+export function Footer({ content }: FooterProps) {
   const {
     payoff,
     email,

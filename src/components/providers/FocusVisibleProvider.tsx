@@ -6,7 +6,7 @@ import { useEffect } from "react"
  * Tracks active input modality on <html> so focus rings are shown only
  * when navigation comes from keyboard.
  */
-export default function FocusVisibleModality() {
+export function FocusVisibleModality() {
   useEffect(() => {
     const root = document.documentElement
     const setKeyboard = () =>

@@ -12,7 +12,7 @@ type BreadcrumbItem = {
   href?: string
 }
 
-export default function Breadcrumbs() {
+export function Breadcrumbs() {
   const pathname = usePathname()
   const t = useTranslations("breadcrumbs")
   const segments = pathname.split("/").filter(Boolean)

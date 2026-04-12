@@ -42,7 +42,7 @@ function getLenisOptions(): LenisOptions {
   }
 }
 
-export default function LenisProvider({ children }: { children: ReactNode }) {
+export function LenisProvider({ children }: { children: ReactNode }) {
   const [lenis, setLenis] = useState<Lenis | null>(null)
   const [animationKey, setAnimationKey] = useState(0)
   const pathname = usePathname()

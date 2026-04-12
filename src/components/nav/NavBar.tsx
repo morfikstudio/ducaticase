@@ -23,7 +23,7 @@ type NavBarProps = {
   menuContent: MenuContent
 }
 
-export default function NavBar({ locale, menuContent }: NavBarProps) {
+export function NavBar({ locale, menuContent }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
   const lenis = useLenis()
