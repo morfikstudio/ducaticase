@@ -134,13 +134,18 @@ export default function Footer({ content }: FooterProps) {
             "lg:gap-16",
           )}
         >
-          <div className="flex max-w-md flex-col lg:max-w-sm">
+          <div
+            className={cn(
+              "flex flex-col lg:justify-between",
+              "max-w-md lg:max-w-sm",
+            )}
+          >
             <Link href="/" aria-label="Ducati Case — Home">
               <Logo />
             </Link>
 
             {showPayoff ? (
-              <div className="mt-8 md:mt-6">
+              <div className="mt-12">
                 <PayoffMultiline
                   text={payoff}
                   className="type-body-1 text-primary"
@@ -169,7 +174,8 @@ export default function Footer({ content }: FooterProps) {
 
           <div
             className={cn(
-              "hidden flex-1 gap-x-10 gap-y-10 md:grid md:grid-cols-2",
+              "hidden flex-1 gap-x-10 md:grid md:grid-cols-2",
+              "gap-y-10 md:gap-y-16 lg:gap-y-24",
               "lg:max-w-xl lg:justify-self-end",
             )}
           >
