@@ -8,6 +8,7 @@ import type { AppLocale } from "@/i18n/routing"
 import { cn } from "@/utils/classNames"
 
 import { useLenis } from "@/components/providers/LenisProvider"
+import { Container } from "@/components/ui/Container"
 import { Logo } from "@/components/ui/Logo"
 
 import type { MenuContent } from "@/lib/formatMenuContent"
@@ -126,9 +127,11 @@ export default function NavBar({ locale, menuContent }: NavBarProps) {
           willChange: "transform",
         }}
       >
-        <div className="px-6 md:px-10 h-16 md:h-[76px] flex items-center">
+        <Container
+          className={cn("h-16 md:h-[76px] max-w-auto", "flex items-center")}
+        >
           {/* ── MOBILE layout ─────────────────────────────────── */}
-          <div className="flex w-full items-center md:hidden">
+          <div className="relative flex w-full items-center md:hidden">
             {/* Hamburger — left */}
             <button
               type="button"
@@ -139,23 +142,21 @@ export default function NavBar({ locale, menuContent }: NavBarProps) {
               {HamburgerIcon}
             </button>
 
-            {/* Logo — center */}
-            <div className="flex-1 flex justify-center">
-              <Link
-                href="/"
-                aria-label="Ducati Case — Home"
-                className="inline-block w-[72px] text-primary [&_svg]:w-full [&_svg]:h-auto"
-              >
-                <Logo />
-              </Link>
-            </div>
+            {/* Logo */}
+            <Link
+              href="/"
+              aria-label="Ducati Case — Home"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-block w-[72px] text-primary [&_svg]:w-full [&_svg]:h-auto"
+            >
+              <Logo />
+            </Link>
 
             {/* Language — right */}
             <button
               type="button"
               onClick={switchLocale}
               className={cn(
-                "shrink-0 type-button text-primary",
+                "ml-auto shrink-0 type-button text-primary",
                 "cursor-pointer transition-opacity hover:opacity-60",
               )}
             >
@@ -209,7 +210,7 @@ export default function NavBar({ locale, menuContent }: NavBarProps) {
               </button>
             </div>
           </div>
-        </div>
+        </Container>
       </header>
 
       <NavDrawer

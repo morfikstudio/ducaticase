@@ -91,13 +91,14 @@ export function NavDrawer({
       {/* Drawer panel */}
       <aside
         className={cn(
-          "absolute right-0 top-0 z-10",
+          "absolute top-0 z-10",
+          "left-0 md:left-auto md:right-0",
           "h-full w-full max-w-[580px]",
           "flex flex-col",
           "pointer-events-auto overflow-hidden",
           "bg-dark text-primary shadow-2xl",
           "transition-transform duration-300 ease-out",
-          isVisible ? "translate-x-0" : "translate-x-full",
+          isVisible ? "translate-x-0" : "-translate-x-full md:translate-x-full",
         )}
       >
         {/* Close button */}

@@ -2,7 +2,10 @@
 
 import { useTranslations } from "next-intl"
 import { usePathname, Link } from "@/i18n/navigation"
+
 import { cn } from "@/utils/classNames"
+
+import { Container } from "@/components/ui/Container"
 
 type BreadcrumbItem = {
   label: string
@@ -21,7 +24,10 @@ export default function Breadcrumbs() {
   if (segments[0] === "immobili") {
     items = [
       { label: "Home", href: "/" },
-      { label: t("listings"), href: segments.length > 1 ? "/immobili" : undefined },
+      {
+        label: t("listings"),
+        href: segments.length > 1 ? "/immobili" : undefined,
+      },
       ...(segments.length > 1 ? [{ label: t("listingDetail") }] : []),
     ]
   } else {
@@ -40,7 +46,7 @@ export default function Breadcrumbs() {
   }
 
   return (
-    <div className="hidden md:block px-10 pt-24">
+    <Container className="hidden md:block max-w-auto pt-24">
       <nav aria-label="Breadcrumb" className={cn("flex items-center gap-2")}>
         <ol className="flex items-center gap-2">
           {items.map((item, index) => {
@@ -72,6 +78,6 @@ export default function Breadcrumbs() {
           })}
         </ol>
       </nav>
-    </div>
+    </Container>
   )
 }

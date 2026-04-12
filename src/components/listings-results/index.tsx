@@ -42,6 +42,7 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
 
   const resultsAnchorRef = useRef<HTMLDivElement>(null)
   const pagingTargetRef = useRef<number | null>(null)
+  const countryTargetRef = useRef<string | null>(null)
   const exitInProgressRef = useRef(false)
   const lenis = useLenis()
 
@@ -105,6 +106,13 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
     [currentPage, sortedListings],
   )
 
+  const hasSingleResultOnPage = totalCount === 1
+
+  useEffect(() => {
+    if (!hasSingleResultOnPage || !isFiltersPanelOpen) return
+    setIsFiltersPanelOpen(false)
+  }, [hasSingleResultOnPage, isFiltersPanelOpen])
+
   useEffect(() => {
     if (!isListingsHydrated) return
 
@@ -158,13 +166,17 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
 
   const handlePaginationExitComplete = useCallback(() => {
     const page = pagingTargetRef.current
+    const country = countryTargetRef.current
     pagingTargetRef.current = null
+    countryTargetRef.current = null
     exitInProgressRef.current = false
     setPaginationExitNonce(0)
     if (page != null) {
       goToPage(page)
+    } else if (country != null) {
+      changeCountry(country as "it" | "intl")
     }
-  }, [goToPage])
+  }, [goToPage, changeCountry])
 
   const handlePaginationNavigate = useCallback(
     (page: number) => {
@@ -203,6 +215,35 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
     [currentPage, goToPage, lenis],
   )
 
+  const handleCountrySwitch = useCallback(
+    (value: "it" | "intl") => {
+      if (value === selectedCountry) return
+      if (exitInProgressRef.current) return
+
+      const reduceMotion =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+      if (reduceMotion) {
+        changeCountry(value)
+        return
+      }
+
+      exitInProgressRef.current = true
+      countryTargetRef.current = value
+
+      const anchor = resultsAnchorRef.current
+      if (lenis && anchor) {
+        lenis.scrollTo(anchor, { offset: -96, force: true })
+      } else if (anchor) {
+        anchor.scrollIntoView({ behavior: "smooth", block: "start" })
+      }
+
+      setPaginationExitNonce((n) => n + 1)
+    },
+    [selectedCountry, changeCountry, lenis],
+  )
+
   useEffect(() => {
     setSelectedCountry(selectedCountry)
   }, [selectedCountry, setSelectedCountry])
@@ -224,9 +265,7 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
       <Container className="pt-30 md:pt-20 pb-24">
         <ListingsHeader
           activeCountry={selectedCountry}
-          onCountrySwitch={(value) => {
-            changeCountry(value)
-          }}
+          onCountrySwitch={handleCountrySwitch}
         />
 
         <div className="mt-12 md:mt-32 flex flex-col gap-4">
@@ -240,17 +279,35 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
               {t("categoriesButton")}
             </Button>
 
-            <Button
-              icon="filters"
-              onClick={() => {
-                setIsCategoriesOpen(false)
-                setIsFiltersPanelOpen(true)
-              }}
-              isActive={isFiltersPanelOpen}
-              className="w-full lg:w-auto"
+            <div
+              className={cn(
+                "grid w-full min-w-0 transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none lg:w-auto",
+                hasSingleResultOnPage ? "grid-rows-[0fr]" : "grid-rows-[1fr]",
+              )}
             >
-              {t("filtersButton")}
-            </Button>
+              <div className="min-h-0 overflow-hidden">
+                <div
+                  className={cn(
+                    "w-full transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none",
+                    hasSingleResultOnPage
+                      ? "pointer-events-none opacity-0 translate-y-1 motion-reduce:translate-y-0"
+                      : "opacity-100 translate-y-0",
+                  )}
+                  inert={hasSingleResultOnPage ? true : undefined}
+                >
+                  <Button
+                    icon="filters"
+                    onClick={() => {
+                      setIsCategoriesOpen(false)
+                      setIsFiltersPanelOpen(true)
+                    }}
+                    className="w-full lg:w-auto"
+                  >
+                    {t("filtersButton")}
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
 
           {visibleCategoryOptions.length > 0 ? (
@@ -315,7 +372,7 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
       </Container>
 
       <ListingsFiltersDrawer
-        isOpen={isFiltersPanelOpen}
+        isOpen={isFiltersPanelOpen && !hasSingleResultOnPage}
         locale={locale}
         selectedContract={selectedContract}
         visibleContractOptions={visibleContractOptions}
