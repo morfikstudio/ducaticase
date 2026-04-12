@@ -73,7 +73,7 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
     toggleCity,
     changeSort,
     changeCountry,
-  } = useListingsFilters({ listings, locale })
+  } = useListingsFilters({ listings, locale, isHydrated: isListingsHydrated })
 
   const totalCount = sortedListings.length
   const totalPages = useMemo(

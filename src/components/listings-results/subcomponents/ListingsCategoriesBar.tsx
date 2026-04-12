@@ -37,10 +37,12 @@ export function ListingsCategoriesBar({
                 : "border-dark bg-dark text-primary hover:border-primary hover:bg-primary hover:text-accent",
             )}
           >
-            <span className="h-[10px] w-[10px] shrink-0" aria-hidden="true" />
             <span className="min-w-0 truncate">{option.title}</span>
             <span
-              className="flex h-[10px] w-[10px] shrink-0 items-center justify-center"
+              className={cn(
+                "flex h-[10px] shrink-0 items-center justify-center overflow-hidden transition-all duration-200",
+                isSelected ? "w-[10px] opacity-100" : "w-0 opacity-0",
+              )}
               aria-hidden="true"
             >
               <svg
@@ -49,10 +51,6 @@ export function ListingsCategoriesBar({
                 viewBox="0 0 10 10"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className={cn(
-                  "transition-opacity duration-200",
-                  isSelected ? "opacity-100" : "opacity-0",
-                )}
               >
                 <path
                   d="M1 1L9 9M9 1L1 9"

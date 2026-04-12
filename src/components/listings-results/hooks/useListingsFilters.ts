@@ -18,6 +18,7 @@ type SortOption = "priceDesc" | "priceAsc" | "recentDesc" | "recentAsc"
 type UseListingsFiltersParams = {
   listings: ListingsEntry[]
   locale: AppLocale
+  isHydrated: boolean
 }
 
 function parseCsv(value: string | null): string[] {
@@ -51,6 +52,7 @@ function normalizeCountry(value: string | null): CountryValue {
 export function useListingsFilters({
   listings,
   locale,
+  isHydrated,
 }: UseListingsFiltersParams) {
   const router = useRouter()
   const pathname = usePathname()
@@ -337,6 +339,7 @@ export function useListingsFilters({
   }
 
   useEffect(() => {
+    if (!isHydrated) return
     if (selectedCategories.length === 0) return
 
     const normalizedCategories = selectedCategories.filter((category) =>
@@ -358,9 +361,10 @@ export function useListingsFilters({
       }
       params.set("category", toCsv(normalizedCategories))
     })
-  }, [selectedCategories, availableCategories])
+  }, [isHydrated, selectedCategories, availableCategories])
 
   useEffect(() => {
+    if (!isHydrated) return
     if (selectedTypologies.length === 0) return
 
     const validTypologies = new Set(typologyOptions.map((item) => item.value))
@@ -383,16 +387,17 @@ export function useListingsFilters({
       }
       params.set("typology", toCsv(normalizedTypologies))
     })
-  }, [selectedTypologies, shouldShowTypology, typologyOptions])
+  }, [isHydrated, selectedTypologies, shouldShowTypology, typologyOptions])
 
   useEffect(() => {
+    if (!isHydrated) return
     if (!selectedContract) return
     if (visibleContractOptions.includes(selectedContract)) return
 
     updateSearchParams((params) => {
       params.delete("contract")
     })
-  }, [selectedContract, visibleContractOptions])
+  }, [isHydrated, selectedContract, visibleContractOptions])
 
   return {
     selectedCountry,
