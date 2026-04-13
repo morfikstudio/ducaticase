@@ -104,7 +104,14 @@ Warning: this overwrites production with development. Use only when intentional.
    NEXT_PUBLIC_SANITY_DATASET=production
    ```
 
-   Optional: `NEXT_PUBLIC_SANITY_API_VERSION` (default: `2026-02-23`), `NEXT_PUBLIC_ALLOW_INDEXING`, `NEXT_PUBLIC_SITE_URL` (public site URL, SEO), `SANITY_API_TOKEN` (if needed for scripts or integrations).
+   Optional: `NEXT_PUBLIC_SANITY_API_VERSION` (default: `2026-02-23`), `NEXT_PUBLIC_ALLOW_INDEXING`, `NEXT_PUBLIC_SITE_URL` (public site URL, SEO), `SANITY_API_TOKEN` (if needed for scripts or integrations), `SANITY_STUDIO_GOOGLE_MAPS_API_KEY` (for the Studio map field).
+
+   For Google Maps integration in Studio, enable these APIs on the same Google Cloud project key:
+   - Maps JavaScript API
+   - Places API
+   - Static Maps API
+
+   Restrict the key by HTTP referrer/domain for security.
 
 3. **Development server**
 

@@ -88,6 +88,13 @@
         },
         "optional": true
       },
+      "listingSearchTokens": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "price": {
         "type": "objectAttribute",
         "value": {
@@ -675,6 +682,14 @@
         },
         "optional": true
       },
+      "map": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "geopoint"
+        },
+        "optional": true
+      },
       "title": {
         "type": "objectAttribute",
         "value": {
@@ -738,7 +753,7 @@
         },
         "optional": true
       },
-      "description": {
+      "excerpt": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -746,11 +761,11 @@
         },
         "optional": true
       },
-      "excerpt": {
+      "description": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "localizedText"
+          "name": "localizedPortableText"
         },
         "optional": true
       },
@@ -767,36 +782,6 @@
           "type": "boolean"
         },
         "optional": true
-      }
-    }
-  },
-  {
-    "name": "localizedText",
-    "type": "type",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "localizedText"
-          }
-        },
-        "it": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "en": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        }
       }
     }
   },
@@ -1293,6 +1278,43 @@
     }
   },
   {
+    "name": "geopoint",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "geopoint"
+          }
+        },
+        "lat": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "number"
+          },
+          "optional": true
+        },
+        "lng": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "number"
+          },
+          "optional": true
+        },
+        "alt": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "number"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "type": "type",
     "name": "sanity.fileAsset.reference",
     "value": {
@@ -1378,6 +1400,13 @@
               "value": "rent"
             }
           ]
+        },
+        "optional": true
+      },
+      "listingSearchTokens": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },
@@ -2055,6 +2084,14 @@
         },
         "optional": true
       },
+      "map": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "geopoint"
+        },
+        "optional": true
+      },
       "title": {
         "type": "objectAttribute",
         "value": {
@@ -2118,7 +2155,7 @@
         },
         "optional": true
       },
-      "description": {
+      "excerpt": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -2126,11 +2163,11 @@
         },
         "optional": true
       },
-      "excerpt": {
+      "description": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "localizedText"
+          "name": "localizedPortableText"
         },
         "optional": true
       },
@@ -2434,6 +2471,13 @@
               "value": "rent"
             }
           ]
+        },
+        "optional": true
+      },
+      "listingSearchTokens": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },
@@ -3224,6 +3268,14 @@
         },
         "optional": true
       },
+      "map": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "geopoint"
+        },
+        "optional": true
+      },
       "title": {
         "type": "objectAttribute",
         "value": {
@@ -3287,7 +3339,7 @@
         },
         "optional": true
       },
-      "description": {
+      "excerpt": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -3295,11 +3347,11 @@
         },
         "optional": true
       },
-      "excerpt": {
+      "description": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "localizedText"
+          "name": "localizedPortableText"
         },
         "optional": true
       },
@@ -3613,6 +3665,13 @@
               "value": "rent"
             }
           ]
+        },
+        "optional": true
+      },
+      "listingSearchTokens": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },
@@ -4461,6 +4520,14 @@
         },
         "optional": true
       },
+      "map": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "geopoint"
+        },
+        "optional": true
+      },
       "title": {
         "type": "objectAttribute",
         "value": {
@@ -4524,7 +4591,7 @@
         },
         "optional": true
       },
-      "description": {
+      "excerpt": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -4532,11 +4599,11 @@
         },
         "optional": true
       },
-      "excerpt": {
+      "description": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "localizedText"
+          "name": "localizedPortableText"
         },
         "optional": true
       },
@@ -4866,6 +4933,13 @@
               "value": "rent"
             }
           ]
+        },
+        "optional": true
+      },
+      "listingSearchTokens": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },
@@ -5690,6 +5764,14 @@
         },
         "optional": true
       },
+      "map": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "geopoint"
+        },
+        "optional": true
+      },
       "title": {
         "type": "objectAttribute",
         "value": {
@@ -5753,7 +5835,7 @@
         },
         "optional": true
       },
-      "description": {
+      "excerpt": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -5761,11 +5843,11 @@
         },
         "optional": true
       },
-      "excerpt": {
+      "description": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "localizedText"
+          "name": "localizedPortableText"
         },
         "optional": true
       },
@@ -6126,6 +6208,13 @@
               "value": "rent"
             }
           ]
+        },
+        "optional": true
+      },
+      "listingSearchTokens": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },
@@ -6983,6 +7072,14 @@
         },
         "optional": true
       },
+      "map": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "geopoint"
+        },
+        "optional": true
+      },
       "title": {
         "type": "objectAttribute",
         "value": {
@@ -7046,7 +7143,7 @@
         },
         "optional": true
       },
-      "description": {
+      "excerpt": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -7054,11 +7151,11 @@
         },
         "optional": true
       },
-      "excerpt": {
+      "description": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "localizedText"
+          "name": "localizedPortableText"
         },
         "optional": true
       },
@@ -7658,6 +7755,36 @@
     }
   },
   {
+    "name": "localizedText",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "localizedText"
+          }
+        },
+        "it": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "en": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "name": "customSpecificationItem",
     "type": "type",
     "value": {
@@ -7707,6 +7834,50 @@
             "type": "number"
           },
           "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "geopointRadius",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "geopointRadius"
+          }
+        },
+        "lat": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "number"
+          },
+          "optional": false
+        },
+        "lng": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "number"
+          },
+          "optional": false
+        },
+        "alt": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "number"
+          },
+          "optional": true
+        },
+        "radius": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "number"
+          },
+          "optional": false
         }
       }
     }
@@ -8253,43 +8424,6 @@
           "name": "sanity.assetSourceData"
         },
         "optional": true
-      }
-    }
-  },
-  {
-    "name": "geopoint",
-    "type": "type",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "geopoint"
-          }
-        },
-        "lat": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "number"
-          },
-          "optional": true
-        },
-        "lng": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "number"
-          },
-          "optional": true
-        },
-        "alt": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "number"
-          },
-          "optional": true
-        }
       }
     }
   },

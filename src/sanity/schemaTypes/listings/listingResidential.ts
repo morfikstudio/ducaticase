@@ -30,6 +30,7 @@ import {
   heatingField,
   isArchivedField,
   listingTitleField,
+  mapField,
   mainImageField,
   listingContractTypeField,
   listingSearchTokensField,
@@ -71,6 +72,7 @@ export const listingResidential = defineType({
     cityField({ required: true, group: "location" }),
     addressField({ group: "location" }),
     postalCodeField({ group: "location" }),
+    mapField({ group: "location" }),
     /* Contenuto */
     listingTitleField({ group: "content" }),
     mainImageField({ required: true, group: "content" }),

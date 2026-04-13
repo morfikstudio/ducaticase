@@ -53,6 +53,7 @@ export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`
     province,
     address,
     postalCode,
+    map,
     listingLabel,
     "typology": select(
       _type == "listingCountryHouses" => countryHouseTypology,

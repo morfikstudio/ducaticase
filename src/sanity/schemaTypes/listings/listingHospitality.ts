@@ -26,6 +26,7 @@ import {
   listingContractTypeField,
   listingSearchTokensField,
   listingTitleField,
+  mapField,
   mainImageField,
   parkingSpacesField,
   priceField,
@@ -63,6 +64,7 @@ export const listingHospitality = defineType({
     cityField({ required: true, group: "location" }),
     addressField({ group: "location" }),
     postalCodeField({ group: "location" }),
+    mapField({ group: "location" }),
     /* Contenuto */
     listingTitleField({ group: "content" }),
     mainImageField({ required: true, group: "content" }),

@@ -39,6 +39,7 @@ import {
   listingTitleField,
   landAreaSqmField,
   officeAreaSqmField,
+  mapField,
   mainImageField,
   parkingSpacesField,
   priceField,
@@ -106,6 +107,7 @@ export const listingIndustrial = defineType({
     cityField({ required: true, group: "location" }),
     addressField({ group: "location" }),
     postalCodeField({ group: "location" }),
+    mapField({ group: "location" }),
     /* Contenuto */
     listingTitleField({ group: "content" }),
     mainImageField({ required: true, group: "content" }),
