@@ -1,6 +1,14 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
+import gsap from "gsap"
 import { useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 
@@ -9,6 +17,7 @@ import { usePathname, useRouter } from "@/i18n/navigation"
 import { useListingsStore } from "@/stores/listingsStore"
 
 import { cn } from "@/utils/classNames"
+import { prefersReducedMotion } from "@/utils/reducedMotion"
 
 import { useLenis } from "@/components/providers/LenisProvider"
 import { Container } from "@/components/ui/Container"
@@ -41,6 +50,16 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
   )
 
   const resultsAnchorRef = useRef<HTMLDivElement>(null)
+
+  /* Entry animation start */
+  const headerEntranceRef = useRef<HTMLDivElement>(null)
+  const categoriesBtnEntranceRef = useRef<HTMLDivElement>(null)
+  const filtersBtnEntranceRef = useRef<HTMLDivElement>(null)
+  const resultsCountEntranceRef = useRef<HTMLDivElement>(null)
+  const sortPanelEntranceRef = useRef<HTMLDivElement>(null)
+  const toolbarEntranceDoneRef = useRef(false)
+  /* Entry animation end */
+
   const pagingTargetRef = useRef<number | null>(null)
   const countryTargetRef = useRef<string | null>(null)
   const exitInProgressRef = useRef(false)
@@ -261,37 +280,99 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
     }
   }, [isFiltersPanelOpen])
 
+  /* Entry animation */
+  useLayoutEffect(() => {
+    if (!isListingsHydrated || toolbarEntranceDoneRef.current) return
+
+    if (prefersReducedMotion()) {
+      toolbarEntranceDoneRef.current = true
+      return
+    }
+
+    let cancelled = false
+    const rafId = requestAnimationFrame(() => {
+      if (cancelled || toolbarEntranceDoneRef.current) return
+
+      const sequence = [
+        headerEntranceRef.current,
+        categoriesBtnEntranceRef.current,
+        filtersBtnEntranceRef.current,
+        resultsCountEntranceRef.current,
+        sortPanelEntranceRef.current,
+      ].filter((el): el is HTMLDivElement => el != null)
+
+      if (sequence.length === 0) return
+
+      gsap.set(sequence, { opacity: 0, y: 20 })
+      gsap.to(sequence, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: "power2.out",
+        onComplete: () => {
+          toolbarEntranceDoneRef.current = true
+        },
+      })
+    })
+
+    return () => {
+      cancelled = true
+      cancelAnimationFrame(rafId)
+      const toKill = [
+        headerEntranceRef.current,
+        categoriesBtnEntranceRef.current,
+        filtersBtnEntranceRef.current,
+        resultsCountEntranceRef.current,
+        sortPanelEntranceRef.current,
+      ].filter((el): el is HTMLDivElement => el != null)
+
+      if (toKill.length > 0) {
+        gsap.killTweensOf(toKill)
+      }
+    }
+  }, [isListingsHydrated])
+
   return (
     <div>
       <Container className="pt-30 md:pt-20 pb-24">
-        <ListingsHeader
-          activeCountry={selectedCountry}
-          onCountrySwitch={handleCountrySwitch}
-        />
+        <div ref={headerEntranceRef}>
+          <ListingsHeader
+            activeCountry={selectedCountry}
+            onCountrySwitch={handleCountrySwitch}
+          />
+        </div>
 
         <div className="mt-12 md:mt-32 flex flex-col gap-4">
           <div className="flex items-center justify-end gap-4 lg:justify-between">
-            <Button
-              chevron={isCategoriesOpen ? "up" : "down"}
-              isActive={isCategoriesOpen}
-              disabled={hasSingleResultOnPage}
-              onClick={() => setIsCategoriesOpen((v) => !v)}
+            <div
+              ref={categoriesBtnEntranceRef}
               className="hidden lg:inline-flex lg:w-auto"
             >
-              {t("categoriesButton")}
-            </Button>
+              <Button
+                chevron={isCategoriesOpen ? "up" : "down"}
+                isActive={isCategoriesOpen}
+                disabled={hasSingleResultOnPage}
+                onClick={() => setIsCategoriesOpen((v) => !v)}
+                className="lg:w-auto"
+              >
+                {t("categoriesButton")}
+              </Button>
+            </div>
 
-            <Button
-              icon="filters"
-              disabled={hasSingleResultOnPage}
-              onClick={() => {
-                setIsCategoriesOpen(false)
-                setIsFiltersPanelOpen(true)
-              }}
-              className="w-full lg:w-auto"
-            >
-              {t("filtersButton")}
-            </Button>
+            <div ref={filtersBtnEntranceRef} className="w-full lg:w-auto">
+              <Button
+                icon="filters"
+                disabled={hasSingleResultOnPage}
+                onClick={() => {
+                  setIsCategoriesOpen(false)
+                  setIsFiltersPanelOpen(true)
+                }}
+                className="w-full lg:w-auto"
+              >
+                {t("filtersButton")}
+              </Button>
+            </div>
           </div>
 
           {visibleCategoryOptions.length > 0 ? (
@@ -316,11 +397,18 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
 
         {sortedListings.length > 0 && (
           <div className="mt-12 flex items-center justify-between">
-            <ListingsResultsCount page={currentPage} totalPages={totalPages} />
-            <ListingsSortPanel
-              selectedSort={selectedSort}
-              onChangeSort={changeSort}
-            />
+            <div ref={resultsCountEntranceRef}>
+              <ListingsResultsCount
+                page={currentPage}
+                totalPages={totalPages}
+              />
+            </div>
+            <div ref={sortPanelEntranceRef} className="min-w-0">
+              <ListingsSortPanel
+                selectedSort={selectedSort}
+                onChangeSort={changeSort}
+              />
+            </div>
           </div>
         )}
 

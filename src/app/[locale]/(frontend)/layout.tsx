@@ -53,7 +53,6 @@ export default async function FrontendLayout({
         <div className="flex-1">{children}</div>
       </div>
       <Footer content={footerContent} />
-
       <BreakpointProvider />
       <FocusVisibleModality />
     </LenisProvider>
