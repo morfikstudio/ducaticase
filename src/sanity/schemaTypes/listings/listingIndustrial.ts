@@ -35,6 +35,7 @@ import {
   industrialTypologyField,
   isArchivedField,
   listingContractTypeField,
+  listingSearchTokensField,
   listingTitleField,
   landAreaSqmField,
   officeAreaSqmField,
@@ -56,16 +57,17 @@ export const listingIndustrial = defineType({
   type: "document",
   groups: [
     { name: "propertySheet", title: "Scheda immobile", default: true },
+    { name: "optionals", title: "Campi opzionali" },
     { name: "location", title: "Località" },
     { name: "content", title: "Contenuto" },
     { name: "floorPlans", title: "Planimetrie" },
-    { name: "optionals", title: "Campi aggiuntivi" },
     { ...ALL_FIELDS_GROUP, hidden: true },
   ],
   fields: [
     /* Scheda immobile */
     isArchivedField({ group: "propertySheet" }),
     listingContractTypeField({ required: true, group: "propertySheet" }),
+    listingSearchTokensField({ group: "propertySheet" }),
     priceField({ group: "propertySheet" }),
     industrialTypologyField({ required: true, group: "propertySheet" }),
     commercialAreaSqmField({ required: true, group: "propertySheet" }),
@@ -107,11 +109,11 @@ export const listingIndustrial = defineType({
     /* Contenuto */
     listingTitleField({ group: "content" }),
     mainImageField({ required: true, group: "content" }),
-    descriptionField({ group: "content" }),
     excerptField({ group: "content" }),
+    descriptionField({ group: "content" }),
     /* Planimetrie */
     floorPlansField({ group: "floorPlans" }),
-    /* Campi aggiuntivi (solo per Capannoni) */
+    /* Campi opzionali (solo per Capannoni) */
     {
       ...hasLoadingDocksField({ group: "optionals", required: false }),
       hidden: ({ document }) =>
@@ -197,7 +199,7 @@ export const listingIndustrial = defineType({
       hidden: ({ document }) =>
         (document as IndustrialDoc)?.industrialTypology !== "sheds",
     },
-    /* Campi aggiuntivi (Magazzini e Capannoni) */
+    /* Campi opzionali (Magazzini e Capannoni) */
     hasAccessibleRestroomField({ group: "optionals" }),
     {
       ...hasLoadingUnloadingField({ group: "optionals", required: false }),

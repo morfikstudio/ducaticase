@@ -33,7 +33,7 @@ export function descriptionField(options?: DescriptionFieldOptions) {
   return defineField({
     ...(options?.group ? { group: options.group } : {}),
     name: "description",
-    title: "Descrizione",
+    title: "Descrizione completa",
     type: "localizedPortableText",
     validation: (Rule) =>
       Rule.custom((value: LocalizedPT) => {

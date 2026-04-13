@@ -3,6 +3,7 @@ import { defineField } from "sanity"
 
 import {
   CATEGORY_OPTIONS,
+  LISTING_CONTRACT_TYPE_OPTIONS,
   type LocalizedTypologyOption,
 } from "../../lib/constants"
 
@@ -89,6 +90,14 @@ function listingCategoryTitle(_type: unknown): string | undefined {
   return row?.title.it
 }
 
+function listingContractTypeLabel(value: unknown): string | undefined {
+  if (typeof value !== "string" || value.trim() === "") {
+    return undefined
+  }
+
+  return LISTING_CONTRACT_TYPE_OPTIONS.find((o) => o.value === value)?.title.it
+}
+
 export function listingPreview(options?: ListingPreviewOptions) {
   const typologyField = options?.typologyField
   const typologyOptions = options?.typologyOptions ?? []
@@ -99,7 +108,7 @@ export function listingPreview(options?: ListingPreviewOptions) {
       listingLabelEn: "listingLabel.en",
       media: "mainImage",
       _type: "_type",
-      isArchived: "isArchived",
+      listingContractType: "listingContractType",
       ...(typologyField ? { typologyValue: typologyField } : {}),
       streetName: "address.streetName",
       streetNumber: "address.streetNumber",
@@ -112,7 +121,7 @@ export function listingPreview(options?: ListingPreviewOptions) {
       listingLabelEn,
       media,
       _type,
-      isArchived,
+      listingContractType,
       typologyValue,
       streetName,
       streetNumber,
@@ -124,7 +133,7 @@ export function listingPreview(options?: ListingPreviewOptions) {
       listingLabelEn?: string | null
       media?: unknown
       _type?: string | null
-      isArchived?: boolean | null
+      listingContractType?: string | null
       typologyValue?: string | null
       streetName?: string | null
       streetNumber?: string | null
@@ -144,7 +153,7 @@ export function listingPreview(options?: ListingPreviewOptions) {
         ? listingTypologyTitle(typologyValue, typologyOptions)
         : undefined
       const categoryTitle = listingCategoryTitle(_type)
-      const contextTitle = typologyTitle ?? categoryTitle
+      const contractLabel = listingContractTypeLabel(listingContractType)
 
       const labelIt =
         typeof listingLabelIt === "string" ? listingLabelIt.trim() : ""
@@ -155,7 +164,7 @@ export function listingPreview(options?: ListingPreviewOptions) {
       const mediaMaybe = isPreviewImageMedia(media) ? { media } : {}
 
       if (label) {
-        const subtitle = [contextTitle, locationText]
+        const subtitle = [contractLabel, typologyTitle]
           .filter((s): s is string => typeof s === "string" && s !== "")
           .join(" · ")
 
@@ -166,9 +175,12 @@ export function listingPreview(options?: ListingPreviewOptions) {
         } as PreviewValue
       }
 
-      const baseTitle = locationText ?? contextTitle ?? "—"
+      const baseTitle = locationText ?? typologyTitle ?? categoryTitle ?? "—"
       const title = baseTitle
-      const subtitle = [locationText && contextTitle ? contextTitle : undefined]
+      const subtitle = [
+        contractLabel,
+        typologyTitle,
+      ]
         .filter((s): s is string => typeof s === "string" && s !== "")
         .join(" · ")
 

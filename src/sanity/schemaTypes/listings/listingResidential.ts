@@ -32,6 +32,7 @@ import {
   listingTitleField,
   mainImageField,
   listingContractTypeField,
+  listingSearchTokensField,
   parkingSpacesField,
   priceField,
   poolField,
@@ -45,16 +46,17 @@ export const listingResidential = defineType({
   type: "document",
   groups: [
     { name: "propertySheet", title: "Scheda immobile", default: true },
+    { name: "optionals", title: "Campi opzionali" },
     { name: "location", title: "Località" },
     { name: "content", title: "Contenuto" },
     { name: "floorPlans", title: "Planimetrie" },
-    { name: "optionals", title: "Campi aggiuntivi" },
     { ...ALL_FIELDS_GROUP, hidden: true },
   ],
   fields: [
     /* Scheda immobile */
     isArchivedField({ group: "propertySheet" }),
     listingContractTypeField({ required: true, group: "propertySheet" }),
+    listingSearchTokensField({ group: "propertySheet" }),
     priceField({ group: "propertySheet" }),
     commercialAreaSqmField({ required: true, group: "propertySheet" }),
     condoFeesField({ required: true, group: "propertySheet" }),
@@ -72,11 +74,11 @@ export const listingResidential = defineType({
     /* Contenuto */
     listingTitleField({ group: "content" }),
     mainImageField({ required: true, group: "content" }),
-    descriptionField({ group: "content" }),
     excerptField({ group: "content" }),
+    descriptionField({ group: "content" }),
     /* Planimetrie */
     floorPlansField({ group: "floorPlans" }),
-    /* Campi aggiuntivi */
+    /* Campi opzionali */
     furnishingField({ group: "optionals" }),
     gardenField({ group: "optionals" }),
     carBoxField({ group: "optionals" }),

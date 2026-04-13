@@ -91,16 +91,6 @@ export function useListingsFilters({
     return (["sale", "rent"] as const).filter((value) => available.has(value))
   }, [listings])
 
-  const cityOptions = useMemo(() => {
-    return Array.from(
-      new Set(
-        listings
-          .map((entry) => entry.city?.trim())
-          .filter((city): city is string => Boolean(city)),
-      ),
-    ).sort((a, b) => a.localeCompare(b, locale))
-  }, [listings, locale])
-
   const typologyOptions = useMemo(() => {
     const map = new Map<string, string>()
     for (const entry of listings) {
@@ -189,7 +179,8 @@ export function useListingsFilters({
     return map
   }, [effectiveSelectedTypologies, typologiesByCategory])
 
-  const filteredListings = useMemo(() => {
+  /** All filters except city, so location checkboxes stay stable when cities are selected (OR). */
+  const listingsMatchingNonCityFilters = useMemo(() => {
     return listings.filter((entry) => {
       const entryContract = (entry as { listingContractType?: string | null })
         .listingContractType
@@ -201,13 +192,6 @@ export function useListingsFilters({
       if (selectedCategories.length > 0) {
         const category = categoryByDocumentType.get(entry._type)
         if (!category || !selectedCategories.includes(category.value)) {
-          return false
-        }
-      }
-
-      if (selectedCities.length > 0) {
-        const city = entry.city?.trim()
-        if (!city || !selectedCities.includes(city)) {
           return false
         }
       }
@@ -232,10 +216,28 @@ export function useListingsFilters({
     listings,
     selectedContract,
     selectedCategories,
-    selectedCities,
     selectedTypologiesByCategory,
     categoryByDocumentType,
   ])
+
+  const cityOptions = useMemo(() => {
+    return Array.from(
+      new Set(
+        listingsMatchingNonCityFilters
+          .map((entry) => entry.city?.trim())
+          .filter((city): city is string => Boolean(city)),
+      ),
+    ).sort((a, b) => a.localeCompare(b, locale))
+  }, [listingsMatchingNonCityFilters, locale])
+
+  const filteredListings = useMemo(() => {
+    if (selectedCities.length === 0) return listingsMatchingNonCityFilters
+
+    return listingsMatchingNonCityFilters.filter((entry) => {
+      const city = entry.city?.trim()
+      return Boolean(city && selectedCities.includes(city))
+    })
+  }, [listingsMatchingNonCityFilters, selectedCities])
 
   const listingOrderMap = useMemo(() => {
     return new Map(listings.map((entry, index) => [entry._id, index]))
@@ -398,6 +400,29 @@ export function useListingsFilters({
       params.delete("contract")
     })
   }, [isHydrated, selectedContract, visibleContractOptions])
+
+  useEffect(() => {
+    if (!isHydrated) return
+    if (selectedCities.length === 0) return
+
+    const validCities = new Set(cityOptions)
+    const normalizedCities = selectedCities.filter((city) =>
+      validCities.has(city),
+    )
+    const changed =
+      normalizedCities.length !== selectedCities.length ||
+      normalizedCities.some((city, idx) => city !== selectedCities[idx])
+
+    if (!changed) return
+
+    updateSearchParams((params) => {
+      if (normalizedCities.length === 0) {
+        params.delete("city")
+        return
+      }
+      params.set("city", toCsv(normalizedCities))
+    })
+  }, [isHydrated, selectedCities, cityOptions])
 
   return {
     selectedCountry,

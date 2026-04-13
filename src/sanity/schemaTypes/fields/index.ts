@@ -196,6 +196,10 @@ export {
   listingContractTypeField,
   type ListingContractTypeFieldOptions,
 } from "./listing/listingContractTypeField"
+export {
+  listingSearchTokensField,
+  type ListingSearchTokensFieldOptions,
+} from "./listing/listingSearchTokensField"
 
 /* Industrial (listing-specific fields; wire in listing schemas as needed) */
 export {

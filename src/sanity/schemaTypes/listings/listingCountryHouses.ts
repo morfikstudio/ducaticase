@@ -31,6 +31,7 @@ import {
   heatingField,
   isArchivedField,
   listingContractTypeField,
+  listingSearchTokensField,
   listingTitleField,
   mainImageField,
   outdoorAreaSqmField,
@@ -47,16 +48,17 @@ export const listingCountryHouses = defineType({
   type: "document",
   groups: [
     { name: "propertySheet", title: "Scheda immobile", default: true },
+    { name: "optionals", title: "Campi opzionali" },
     { name: "location", title: "Località" },
     { name: "content", title: "Contenuto" },
     { name: "floorPlans", title: "Planimetrie" },
-    { name: "optionals", title: "Campi aggiuntivi" },
     { ...ALL_FIELDS_GROUP, hidden: true },
   ],
   fields: [
     /* Scheda immobile */
     isArchivedField({ group: "propertySheet" }),
     listingContractTypeField({ required: true, group: "propertySheet" }),
+    listingSearchTokensField({ group: "propertySheet" }),
     priceField({ group: "propertySheet" }),
     countryHouseTypologyField({ required: true, group: "propertySheet" }),
     commercialAreaSqmField({ required: true, group: "propertySheet" }),
@@ -73,11 +75,11 @@ export const listingCountryHouses = defineType({
     /* Contenuto */
     listingTitleField({ group: "content" }),
     mainImageField({ required: true, group: "content" }),
-    descriptionField({ group: "content" }),
     excerptField({ group: "content" }),
+    descriptionField({ group: "content" }),
     /* Planimetrie */
     floorPlansField({ group: "floorPlans" }),
-    /* Campi aggiuntivi */
+    /* Campi opzionali */
     outdoorAreaSqmField({ group: "optionals" }),
     furnishingField({ group: "optionals" }),
     gardenField({ group: "optionals" }),

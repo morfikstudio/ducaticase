@@ -15,6 +15,7 @@ import {
   isArchivedField,
   landAccessField,
   listingContractTypeField,
+  listingSearchTokensField,
   listingTitleField,
   mainImageField,
   priceField,
@@ -28,15 +29,16 @@ export const listingLand = defineType({
   type: "document",
   groups: [
     { name: "propertySheet", title: "Scheda immobile", default: true },
+    { name: "optionals", title: "Campi opzionali" },
     { name: "location", title: "Località" },
     { name: "content", title: "Contenuto" },
-    { name: "optionals", title: "Campi aggiuntivi" },
     { ...ALL_FIELDS_GROUP, hidden: true },
   ],
   fields: [
     /* Scheda immobile */
     isArchivedField({ group: "propertySheet" }),
     listingContractTypeField({ required: true, group: "propertySheet" }),
+    listingSearchTokensField({ group: "propertySheet" }),
     priceField({ group: "propertySheet" }),
     commercialAreaSqmField({ required: true, group: "propertySheet" }),
     landAccessField({ required: true, group: "propertySheet" }),
@@ -50,9 +52,9 @@ export const listingLand = defineType({
     /* Contenuto */
     listingTitleField({ group: "content" }),
     mainImageField({ required: true, group: "content" }),
-    descriptionField({ group: "content" }),
     excerptField({ group: "content" }),
-    /* Campi aggiuntivi */
+    descriptionField({ group: "content" }),
+    /* Campi opzionali */
     buildableField({ group: "optionals" }),
     agriculturalField({ group: "optionals" }),
   ],

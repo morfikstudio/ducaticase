@@ -38,6 +38,8 @@ export function mainImageField(options?: MainImageFieldOptions) {
       defineField({
         name: "alt",
         title: "Testo alternativo",
+        description:
+          "Descrivi in modo chiaro il contenuto dell'immagine. Serve per chi usa screen reader e aiuta i motori di ricerca (SEO).",
         type: "localizedString",
       }),
     ],
