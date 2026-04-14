@@ -155,6 +155,10 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
         ...,
         asset->
       },
+      "gallery": gallery[] {
+        ...,
+        asset->
+      },
       description,
       excerpt
     },

@@ -13,6 +13,7 @@ import {
   energyClassField,
   excerptField,
   floorPlansField,
+  galleryImagesField,
   hasAccessibleAccessField,
   hasAccessibleRestroomField,
   hasFireProtectionSystemField,
@@ -68,6 +69,7 @@ export const listingHospitality = defineType({
     /* Contenuto */
     listingTitleField({ group: "content" }),
     mainImageField({ required: true, group: "content" }),
+    galleryImagesField({ group: "content" }),
     excerptField({ group: "content" }),
     descriptionField({ group: "content" }),
     /* Planimetrie */

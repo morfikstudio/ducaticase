@@ -20,6 +20,7 @@ import {
   floorField,
   floorPlansField,
   furnishingField,
+  galleryImagesField,
   hasAccessibleAccessField,
   hasAccessibleRestroomField,
   hasAlarmSystemField,
@@ -109,6 +110,7 @@ export const listingShopsAndOffices = defineType({
     /* Contenuto */
     listingTitleField({ group: "content" }),
     mainImageField({ required: true, group: "content" }),
+    galleryImagesField({ group: "content" }),
     excerptField({ group: "content" }),
     descriptionField({ group: "content" }),
     /* Planimetrie */

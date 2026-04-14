@@ -4,16 +4,11 @@
     "listingDetail": "Detail"
   },
   "listingDetail": {
-    "badge": "Real estate listing",
-    "category": "Macro category",
-    "contractType": "Contract type",
-    "typology": "Typology",
-    "location": "Location",
-    "price": "Price",
-    "salePrice": "Sale price",
-    "rentPrice": "Rent",
-    "surface": "Surface",
-    "updatedAt": "Updated"
+    "viewAll": "View all",
+    "close": "Close",
+    "previousImage": "Previous image",
+    "nextImage": "Next image",
+    "imageCount": "{current} / {total}"
   },
   "listingsResults": {
     "headerTitle": "Our Properties",

@@ -4,16 +4,11 @@
     "listingDetail": "Scheda"
   },
   "listingDetail": {
-    "badge": "Annuncio immobiliare",
-    "category": "Macrocategoria",
-    "contractType": "Contratto",
-    "typology": "Tipologia",
-    "location": "Località",
-    "price": "Prezzo",
-    "salePrice": "Prezzo vendita",
-    "rentPrice": "Canone",
-    "surface": "Superficie",
-    "updatedAt": "Aggiornato"
+    "viewAll": "Vedi tutte",
+    "close": "Chiudi",
+    "previousImage": "Immagine precedente",
+    "nextImage": "Immagine successiva",
+    "imageCount": "{current} / {total}"
   },
   "listingsResults": {
     "headerTitle": "I nostri Immobili",

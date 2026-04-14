@@ -1,7 +1,7 @@
 import { defineField } from "sanity"
 
 import { apiVersion } from "../../../env"
-import { MAX_MAIN_IMAGE_BYTES } from "../../../lib/constants"
+import { MAX_IMAGES_BYTES } from "../../../lib/constants"
 import { FIELD_REQUIRED_IT } from "../../../lib/validationMessages"
 
 export type MainImageFieldOptions = {
@@ -9,7 +9,7 @@ export type MainImageFieldOptions = {
   group?: string
 }
 
-const maxMb = MAX_MAIN_IMAGE_BYTES / (1024 * 1024)
+const maxMb = MAX_IMAGES_BYTES / (1024 * 1024)
 
 export function mainImageField(options?: MainImageFieldOptions) {
   const required = options?.required ?? false
@@ -64,7 +64,7 @@ export function mainImageField(options?: MainImageFieldOptions) {
         if (typeof size !== "number") {
           return true
         }
-        if (size > MAX_MAIN_IMAGE_BYTES) {
+        if (size > MAX_IMAGES_BYTES) {
           return `L'immagine supera il limite di ${maxMb} MB. Carica un file più piccolo.`
         }
         return true

@@ -113,6 +113,10 @@ export {
 
 /* Contents */
 export {
+  galleryImagesField,
+  type GalleryImagesFieldOptions,
+} from "./contents/galleryImagesField"
+export {
   descriptionField,
   type DescriptionFieldOptions,
 } from "./contents/descriptionField"

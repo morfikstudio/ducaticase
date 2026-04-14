@@ -1,10 +1,12 @@
+/* Reserve scrollbar space on the viewport at all times — avoids layout shift
+   when scrollability toggles (e.g. Lenis stop/start, modals). No JS hacks needed. */
+html {
+  scrollbar-gutter: stable;
+}
+
 html.lenis,
 html.lenis body {
   height: auto;
-}
-
-html.lenis {
-  scrollbar-gutter: stable;
 }
 
 .lenis.lenis-smooth {

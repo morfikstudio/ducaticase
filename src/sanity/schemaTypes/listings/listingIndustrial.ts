@@ -20,6 +20,7 @@ import {
   excerptField,
   floorField,
   floorPlansField,
+  galleryImagesField,
   heightMetersField,
   hasAccessibleAccessField,
   hasAccessibleRestroomField,
@@ -111,6 +112,7 @@ export const listingIndustrial = defineType({
     /* Contenuto */
     listingTitleField({ group: "content" }),
     mainImageField({ required: true, group: "content" }),
+    galleryImagesField({ group: "content" }),
     excerptField({ group: "content" }),
     descriptionField({ group: "content" }),
     /* Planimetrie */

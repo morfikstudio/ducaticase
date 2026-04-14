@@ -10,7 +10,7 @@ type Props = {
   locale: AppLocale
 }
 
-export default function PortableTextComponent({ text, locale }: Props) {
+export function PortableTextComponent({ text, locale }: Props) {
   const description = pickLocalizedPortableText(text, locale)
 
   const descriptionBlocks =
