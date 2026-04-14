@@ -310,6 +310,8 @@ export const LOCATION_COUNTRY_OPTIONS = [
   { title: "Austria", value: "AT" },
   { title: "Francia", value: "FR" },
   { title: "Germania", value: "DE" },
+  { title: "Paesi Bassi", value: "NL" },
+  { title: "Spagna", value: "ES" },
 ] as const
 
 export const ITALIAN_PROVINCE_OPTIONS = [
@@ -423,7 +425,7 @@ export const ITALIAN_PROVINCE_OPTIONS = [
 ] as const
 
 export const MAX_MAIN_IMAGE_BYTES = 2 * 1024 * 1024
-export const MAX_FLOOR_PLAN_PDF_BYTES = 10 * 1024 * 1024
+export const MAX_FLOOR_PLAN_FILE_BYTES = 3 * 1024 * 1024
 
 export const OFFICE_LAYOUT_OPTIONS = [
   { title: "Open space", value: "openSpace" },

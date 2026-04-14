@@ -41,7 +41,7 @@ export type ListingLand = {
     otherSpecification?: string
   }
   hasFencedProperty?: boolean
-  country?: "IT" | "CH" | "AT" | "FR" | "DE"
+  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
   province?:
     | "AG"
     | "AL"
@@ -282,7 +282,7 @@ export type ListingHospitality = {
       | "F"
       | "G"
   }
-  country?: "IT" | "CH" | "AT" | "FR" | "DE"
+  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
   province?:
     | "AG"
     | "AL"
@@ -498,7 +498,7 @@ export type ListingIndustrial = {
       | "F"
       | "G"
   }
-  country?: "IT" | "CH" | "AT" | "FR" | "DE"
+  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
   province?:
     | "AG"
     | "AL"
@@ -718,7 +718,7 @@ export type ListingShopsAndOffices = {
       | "F"
       | "G"
   }
-  country?: "IT" | "CH" | "AT" | "FR" | "DE"
+  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
   province?:
     | "AG"
     | "AL"
@@ -939,7 +939,7 @@ export type ListingCountryHouses = {
       | "F"
       | "G"
   }
-  country?: "IT" | "CH" | "AT" | "FR" | "DE"
+  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
   province?:
     | "AG"
     | "AL"
@@ -1167,7 +1167,7 @@ export type ListingResidential = {
       | "F"
       | "G"
   }
-  country?: "IT" | "CH" | "AT" | "FR" | "DE"
+  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
   province?:
     | "AG"
     | "AL"
@@ -1580,7 +1580,7 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
         amount?: number
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "FR" | "IT" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -1738,7 +1738,7 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
         amount?: number
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "FR" | "IT" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -1896,7 +1896,7 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
         amount?: number
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "FR" | "IT" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -2054,7 +2054,7 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
         amount?: number
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "FR" | "IT" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -2212,7 +2212,7 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
         amount?: number
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "FR" | "IT" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -2370,7 +2370,7 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
         amount?: number
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "FR" | "IT" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -2548,7 +2548,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         hasFencedProperty: boolean | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "FR" | "IT" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -2780,7 +2780,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         } | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "FR" | "IT" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -3070,7 +3070,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         } | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "FR" | "IT" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -3347,7 +3347,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         } | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "FR" | "IT" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -3627,7 +3627,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         } | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "FR" | "IT" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -3883,7 +3883,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         } | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "FR" | "IT" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
         province:
           | "AG"
           | "AL"
