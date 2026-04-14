@@ -77,43 +77,10 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
     router.replace(pathname, { locale: otherLocale })
   }
 
-  const HamburgerIcon = (
-    <svg
-      width="22"
-      height="14"
-      viewBox="0 0 22 14"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <line
-        x1="0"
-        y1="1"
-        x2="22"
-        y2="1"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <line
-        x1="0"
-        y1="7"
-        x2="22"
-        y2="7"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <line
-        x1="0"
-        y1="13"
-        x2="22"
-        y2="13"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
+  const hamburgerButtonClass = cn(
+    "group inline-flex items-center justify-center text-primary",
+    "cursor-pointer",
+    "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40",
   )
 
   return (
@@ -137,9 +104,13 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
               type="button"
               aria-label="Apri menu"
               onClick={() => setIsMenuOpen(true)}
-              className="text-primary cursor-pointer shrink-0"
+              className={cn(hamburgerButtonClass, "shrink-0")}
             >
-              {HamburgerIcon}
+              <span className="flex h-[14px] w-[22px] flex-col justify-between">
+                <span className="h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-[2px]" />
+                <span className="h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 ease-out group-hover:translate-x-[2.5px]" />
+                <span className="h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 ease-out group-hover:translate-y-0.5 group-hover:translate-x-[2px]" />
+              </span>
             </button>
 
             {/* Logo */}
@@ -204,9 +175,13 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
                 type="button"
                 aria-label="Apri menu"
                 onClick={() => setIsMenuOpen(true)}
-                className="text-primary cursor-pointer"
+                className={hamburgerButtonClass}
               >
-                {HamburgerIcon}
+                <span className="flex h-[14px] w-[22px] flex-col justify-between">
+                  <span className="h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-[2px]" />
+                  <span className="h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 ease-out group-hover:translate-x-[3.5px]" />
+                  <span className="h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 ease-out group-hover:translate-y-0.5 group-hover:translate-x-[2px]" />
+                </span>
               </button>
             </div>
           </div>
