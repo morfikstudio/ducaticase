@@ -4,14 +4,20 @@
     "listingDetail": "Scheda immobile"
   },
   "listingDetail": {
+    "downloadBrochure": "Scarica la brochure",
+    "bookVisit": "Prenota una visita",
+    "squareMeters": "mq",
     "moreDetails": "Più dettagli",
     "lessDetails": "Meno dettagli",
-    "floorPlans": "Planimetrie",
+    "floorPlan": "Planimetria",
     "viewAll": "Vedi tutte",
     "close": "Chiudi",
     "previousImage": "Immagine precedente",
     "nextImage": "Immagine successiva",
-    "imageCount": "{current} / {total}"
+    "imageCount": "{current} / {total}",
+    "energyEfficiency": "Efficienza energetica",
+    "energyClassNotClassifiable": "Non classificabile",
+    "energyClassInProgress": "In fase di realizzazione"
   },
   "listingsResults": {
     "headerTitle": "I nostri Immobili",

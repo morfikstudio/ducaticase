@@ -86,10 +86,12 @@ export function Description({
   const hasFloorPlans = planItems.length > 0
   const shouldShow = hasExcerpt || hasDescription || hasFloorPlans
 
+  /* Initial state */
   useLayoutEffect(() => {
     if (!shouldShow || !sectionRef.current) {
       return
     }
+
     gsap.set(sectionRef.current, { opacity: 0, y: 20 })
   }, [shouldShow])
 
@@ -119,7 +121,6 @@ export function Description({
   const firstPlan = planItems[0]
   const firstAsset = firstPlan?.asset
   const firstPlanUrl = firstAsset?.url
-  const extraPlans = planItems.slice(1)
 
   const actionJustify =
     hasDescription && hasFloorPlans
@@ -129,11 +130,7 @@ export function Description({
         : "md:justify-start"
 
   return (
-    <section
-      ref={sectionRef}
-      className="mt-6 w-full md:mt-8"
-      style={{ opacity: 0 }}
-    >
+    <section ref={sectionRef} className="w-full" style={{ opacity: 0 }}>
       <div className="w-full">
         {/* EXCERPT */}
         {hasExcerpt ? (
@@ -236,34 +233,8 @@ export function Description({
                     className="group/floor"
                     iconClassName="group-hover/floor:rotate-[45deg] group-hover/floor:translate-y-0"
                   >
-                    {t("floorPlans")}
+                    {t("floorPlan")}
                   </Button>
-                  {extraPlans.length > 0 ? (
-                    <ul className="flex list-none flex-col items-end gap-1 pl-0">
-                      {extraPlans.map((item) => {
-                        const asset = item.asset
-                        const url = asset?.url
-                        if (!url || !asset) {
-                          return null
-                        }
-                        const label =
-                          asset.originalFilename?.trim() || t("floorPlans")
-                        return (
-                          <li key={item._key}>
-                            <a
-                              href={url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              download={asset.originalFilename ?? undefined}
-                              className="type-body-3 text-primary underline-offset-4 hover:underline"
-                            >
-                              {label}
-                            </a>
-                          </li>
-                        )
-                      })}
-                    </ul>
-                  ) : null}
                 </div>
               ) : null}
             </div>

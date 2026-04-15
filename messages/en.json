@@ -4,14 +4,20 @@
     "listingDetail": "Property detail"
   },
   "listingDetail": {
+    "downloadBrochure": "Download brochure",
+    "bookVisit": "Book a visit",
+    "squareMeters": "sqm",
     "moreDetails": "More details",
     "lessDetails": "Less details",
-    "floorPlans": "Floor plans",
+    "floorPlan": "Floor plan",
     "viewAll": "View all",
     "close": "Close",
     "previousImage": "Previous image",
     "nextImage": "Next image",
-    "imageCount": "{current} / {total}"
+    "imageCount": "{current} / {total}",
+    "energyEfficiency": "Energy efficiency",
+    "energyClassNotClassifiable": "Not classifiable",
+    "energyClassInProgress": "In progress"
   },
   "listingsResults": {
     "headerTitle": "Our Properties",

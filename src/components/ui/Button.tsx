@@ -4,11 +4,13 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react"
 
 import { cn } from "@/utils/classNames"
 
-type ButtonIcon = "externalLink" | "filters" | "detailsArrow"
+type ButtonIcon = "externalLink" | "filters" | "detailsArrow" | "download"
 type ButtonVariant = "primary" | "secondary"
 
 type ButtonSharedProps = {
   variant?: ButtonVariant
+  /** Primary variant only: visually highlights the button by default. */
+  highlight?: boolean
   icon?: ButtonIcon
   /** Where to render `icon`. Chevron is always after the label. */
   iconPosition?: "start" | "end"
@@ -94,6 +96,32 @@ function renderIcon(icon: ButtonIcon) {
           />
         </svg>
       )
+    case "download":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="16"
+          viewBox="0 0 20 16"
+          fill="none"
+        >
+          <path
+            d="M0.799805 8.09961V14.3996H18.7998V8.09961"
+            stroke="currentColor"
+            strokeWidth="1.6"
+          />
+          <path
+            d="M5.75 5.84961L9.8 9.89961L13.85 5.84961"
+            stroke="currentColor"
+            strokeWidth="1.6"
+          />
+          <path
+            d="M9.7998 9.9V0"
+            stroke="currentColor"
+            strokeWidth="1.6"
+          />
+        </svg>
+      )
     default:
       return null
   }
@@ -101,11 +129,13 @@ function renderIcon(icon: ButtonIcon) {
 
 function getButtonClasses({
   variant,
+  highlight,
   disabled,
   isActive,
   className,
 }: {
   variant: ButtonVariant
+  highlight: boolean
   disabled: boolean
   isActive: boolean
   className?: string
@@ -126,8 +156,8 @@ function getButtonClasses({
     "cursor-pointer transition-all duration-200",
     disabled
       ? "cursor-not-allowed opacity-50"
-      : isActive
-        ? "border-primary bg-primary text-accent"
+      : isActive || highlight
+        ? "border-primary bg-primary text-accent hover:border-primary hover:bg-primary hover:text-accent"
         : "border-gray text-primary hover:border-primary hover:bg-primary hover:text-accent",
     className,
   )
@@ -137,6 +167,7 @@ export function Button(props: ButtonProps) {
   const {
     className,
     variant = "primary",
+    highlight = false,
     icon,
     iconPosition = "start",
     chevron,
@@ -148,7 +179,13 @@ export function Button(props: ButtonProps) {
     ...rest
   } = props
 
-  const classes = getButtonClasses({ variant, disabled, isActive, className })
+  const classes = getButtonClasses({
+    variant,
+    highlight,
+    disabled,
+    isActive,
+    className,
+  })
 
   const iconEl = icon ? (
     <span

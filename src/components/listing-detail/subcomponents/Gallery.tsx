@@ -19,17 +19,13 @@ import { GalleryLightbox } from "./GalleryLightbox"
 
 type Content = NonNullable<LISTING_BY_ID_QUERY_RESULT>["content"]
 
-type GalleryModuleProps = {
+type GalleryProps = {
   mainImage: Content["mainImage"]
   gallery: Content["gallery"]
   locale: AppLocale
 }
 
-export function GalleryModule({
-  mainImage,
-  gallery,
-  locale,
-}: GalleryModuleProps) {
+export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
   const t = useTranslations("listingDetail")
   const [loadedCount, setLoadedCount] = useState(0)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
