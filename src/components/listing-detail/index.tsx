@@ -12,6 +12,7 @@ import { Description } from "./subcomponents/Description"
 import { ListingSpecs } from "./subcomponents/ListingSpecs"
 import { EnergyClassDisplay } from "./subcomponents/EnergyClassDisplay"
 import { ListingLocationMap } from "./subcomponents/ListingLocationMap"
+import { RelatedListings } from "./subcomponents/RelatedListings"
 
 type ListingDetailProps = {
   listing: NonNullable<LISTING_BY_ID_QUERY_RESULT>
@@ -78,6 +79,10 @@ export function ListingDetail({ listing, locale }: ListingDetailProps) {
           />
         </div>
       ) : null}
+
+      <div className="my-16 md:my-32">
+        <RelatedListings locale={locale} />
+      </div>
     </Container>
   )
 }
