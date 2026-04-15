@@ -75,7 +75,7 @@ export function ListingCard({ entry, locale }: ListingCardProps) {
       <Link
         className="group relative block aspect-4/5 overflow-hidden rounded-md bg-neutral-900"
         href={`/immobili/${entry._id}`}
-        target="_blank"
+        target="_self"
       >
         <div className="absolute inset-0">
           {thumbUrl ? (

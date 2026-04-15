@@ -4,6 +4,9 @@
     "listingDetail": "Scheda"
   },
   "listingDetail": {
+    "moreDetails": "Più dettagli",
+    "lessDetails": "Meno dettagli",
+    "floorPlans": "Planimetrie",
     "viewAll": "Vedi tutte",
     "close": "Chiudi",
     "previousImage": "Immagine precedente",

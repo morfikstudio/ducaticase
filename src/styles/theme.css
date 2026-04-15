@@ -1,4 +1,7 @@
+@import "./animations.css";
+
 @theme {
+  --animate-label-in: label-in 0.25s ease-out;
   --color-black: #181818;
   --color-dark: #353638;
   --color-dark-gray: #858d94;

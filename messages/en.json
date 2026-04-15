@@ -4,6 +4,9 @@
     "listingDetail": "Detail"
   },
   "listingDetail": {
+    "moreDetails": "More details",
+    "lessDetails": "Less details",
+    "floorPlans": "Floor plans",
     "viewAll": "View all",
     "close": "Close",
     "previousImage": "Previous image",
