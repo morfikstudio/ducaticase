@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 import { Link, usePathname, useRouter } from "@/i18n/navigation"
 import type { AppLocale } from "@/i18n/routing"
@@ -25,8 +25,12 @@ type NavBarProps = {
 
 export function NavBar({ locale, menuContent }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const isMenuOpenRef = useRef(isMenuOpen)
   const headerRef = useRef<HTMLElement>(null)
+  const previousFocusBeforeMenuRef = useRef<HTMLElement | null>(null)
   const lenis = useLenis()
+
+  isMenuOpenRef.current = isMenuOpen
   const pathname = usePathname()
   const router = useRouter()
 
@@ -65,10 +69,35 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
     return () => lenis.off("scroll", onScroll)
   }, [lenis])
 
-  // Close menu on route change
-  useEffect(() => {
+  const restoreFocusAfterMenu = useCallback(() => {
+    const el = previousFocusBeforeMenuRef.current
+    previousFocusBeforeMenuRef.current = null
+    if (el && typeof el.focus === "function") {
+      try {
+        el.focus()
+      } catch {
+        /* ignore */
+      }
+    }
+  }, [])
+
+  const openMenu = useCallback(() => {
+    previousFocusBeforeMenuRef.current = document.activeElement as HTMLElement | null
+    setIsMenuOpen(true)
+  }, [])
+
+  const closeMenu = useCallback(() => {
     setIsMenuOpen(false)
-  }, [pathname])
+    requestAnimationFrame(() => {
+      restoreFocusAfterMenu()
+    })
+  }, [restoreFocusAfterMenu])
+
+  // Close menu on route change (restore focus if it was open)
+  useEffect(() => {
+    if (!isMenuOpenRef.current) return
+    closeMenu()
+  }, [pathname, closeMenu])
 
   const otherLocale: AppLocale = locale === "it" ? "en" : "it"
   const otherLocaleLabel = otherLocale.toUpperCase()
@@ -103,7 +132,7 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
             <button
               type="button"
               aria-label="Apri menu"
-              onClick={() => setIsMenuOpen(true)}
+              onClick={openMenu}
               className={cn(hamburgerButtonClass, "shrink-0")}
             >
               <span className="flex h-[14px] w-[22px] flex-col justify-between">
@@ -174,7 +203,7 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
               <button
                 type="button"
                 aria-label="Apri menu"
-                onClick={() => setIsMenuOpen(true)}
+                onClick={openMenu}
                 className={hamburgerButtonClass}
               >
                 <span className="flex h-[14px] w-[22px] flex-col justify-between">
@@ -190,7 +219,7 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
 
       <NavDrawer
         isOpen={isMenuOpen}
-        onClose={() => setIsMenuOpen(false)}
+        onClose={closeMenu}
         navLinks={menuContent.navLinks}
         socialLinks={menuContent.socialLinks}
         payoff={menuContent.payoff}

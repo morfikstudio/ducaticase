@@ -1,12 +1,21 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { Link } from "@/i18n/navigation"
 import { cn } from "@/utils/classNames"
 import { useLenis } from "@/components/providers/LenisProvider"
 
 import type { MenuNavLink, MenuSocialLink } from "@/lib/formatMenuContent"
+
+const FOCUSABLE_SELECTOR =
+  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+
+function getFocusableElements(container: HTMLElement) {
+  return Array.from(
+    container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+  ).filter((el) => el.getAttribute("aria-hidden") !== "true")
+}
 
 type NavDrawerProps = {
   isOpen: boolean
@@ -47,6 +56,8 @@ export function NavDrawer({
 }: NavDrawerProps) {
   const [shouldRender, setShouldRender] = useState(isOpen)
   const [isVisible, setIsVisible] = useState(false)
+  const dialogContainerRef = useRef<HTMLDivElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
   const lenis = useLenis()
 
   useEffect(() => {
@@ -71,10 +82,69 @@ export function NavDrawer({
     }
   }, [lenis, isOpen])
 
+  // Move focus to close control when the drawer is visible
+  useEffect(() => {
+    if (!isOpen || !isVisible) return
+    const raf = requestAnimationFrame(() => {
+      closeButtonRef.current?.focus()
+    })
+    return () => cancelAnimationFrame(raf)
+  }, [isOpen, isVisible])
+
+  // Keep Tab / Shift+Tab inside the modal layer (overlay + panel)
+  useEffect(() => {
+    if (!isOpen || !shouldRender) return
+    const container = dialogContainerRef.current
+    if (!container) return
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return
+
+      const focusables = getFocusableElements(container)
+      if (focusables.length === 0) return
+
+      const first = focusables[0]
+      const last = focusables[focusables.length - 1]
+      const active = document.activeElement as HTMLElement | null
+
+      if (!container.contains(active)) {
+        e.preventDefault()
+        first.focus()
+        return
+      }
+
+      if (e.shiftKey) {
+        if (active === first) {
+          e.preventDefault()
+          last.focus()
+        }
+      } else if (active === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+
+    container.addEventListener("keydown", onKeyDown)
+    return () => container.removeEventListener("keydown", onKeyDown)
+  }, [isOpen, shouldRender])
+
+  // Escape closes the drawer (parent restores focus)
+  useEffect(() => {
+    if (!isOpen) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose()
+    }
+    document.addEventListener("keydown", onKeyDown)
+    return () => document.removeEventListener("keydown", onKeyDown)
+  }, [isOpen, onClose])
+
   if (!shouldRender) return null
 
   return (
-    <div className="fixed inset-0 z-50 pointer-events-none">
+    <div
+      ref={dialogContainerRef}
+      className="fixed inset-0 z-50 pointer-events-none"
+    >
       {/* Overlay */}
       <button
         type="button"
@@ -90,6 +160,9 @@ export function NavDrawer({
 
       {/* Drawer panel */}
       <aside
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu di navigazione"
         className={cn(
           "absolute top-0 z-10",
           "left-0 md:left-auto md:right-0",
@@ -103,6 +176,7 @@ export function NavDrawer({
       >
         {/* Close button */}
         <button
+          ref={closeButtonRef}
           type="button"
           className="absolute right-6 top-6 text-primary cursor-pointer z-10"
           aria-label="Chiudi menu"
