@@ -17,7 +17,8 @@
     "imageCount": "{current} / {total}",
     "energyEfficiency": "Energy efficiency",
     "energyClassNotClassifiable": "Not classifiable",
-    "energyClassInProgress": "In progress"
+    "energyClassInProgress": "In progress",
+    "listingMapBlockAria": "Location map: open in Google Maps."
   },
   "listingsResults": {
     "headerTitle": "Our Properties",

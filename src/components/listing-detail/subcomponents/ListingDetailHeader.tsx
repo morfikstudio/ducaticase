@@ -10,6 +10,7 @@ import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
 import { prefersReducedMotion } from "@/utils/reducedMotion"
 
 import { cn } from "@/utils/classNames"
+import { buildListingLocationText } from "@/lib/buildListingLocationText"
 import { formatListingPrice } from "@/lib/formatListingPrice"
 
 import { Button } from "@/components/ui/Button"
@@ -24,23 +25,6 @@ type ListingDetailHeaderProps = {
   locale: AppLocale
 }
 
-function buildLocationText(location: Listing["location"]): string | null {
-  const address = location?.address
-  const street = [address?.streetName, address?.streetNumber]
-    .map((p) => (typeof p === "string" ? p.trim() : ""))
-    .filter(Boolean)
-    .join(" ")
-
-  const city = location?.city?.trim()
-  const province = location?.province?.trim()
-  const cityWithProvince =
-    city && province
-      ? `${city} (${province})`
-      : city || (province ? `(${province})` : "")
-
-  return [street, cityWithProvince].filter(Boolean).join(" · ") || null
-}
-
 export function ListingDetailHeader({
   content,
   location,
@@ -52,7 +36,7 @@ export function ListingDetailHeader({
   const sectionRef = useRef<HTMLElement>(null)
 
   const title = pickLocalizedString(content.title, locale)
-  const locationText = buildLocationText(location)
+  const locationText = buildListingLocationText(location)
   const price = formatListingPrice(
     propertySheet?.price,
     locale,
