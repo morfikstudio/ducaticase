@@ -16,7 +16,8 @@ type Content = NonNullable<LISTING_BY_ID_QUERY_RESULT>["content"]
 type FloorPlans = NonNullable<LISTING_BY_ID_QUERY_RESULT>["floorPlans"]
 
 type DescriptionProps = {
-  content: Pick<Content, "excerpt" | "description">
+  excerpt: Content["excerpt"]
+  description: Content["description"]
   floorPlans: FloorPlans | null | undefined
   locale: AppLocale
 }
@@ -67,15 +68,20 @@ function getFloorPlanItemsWithUrl(
   )
 }
 
-export function Description({ content, floorPlans, locale }: DescriptionProps) {
+export function Description({
+  excerpt,
+  description,
+  floorPlans,
+  locale,
+}: DescriptionProps) {
   const t = useTranslations("listingDetail")
   const panelId = useId()
   const toggleId = useId()
   const sectionRef = useRef<HTMLElement>(null)
   const [expanded, setExpanded] = useState(false)
 
-  const hasExcerpt = hasPortableText(content.excerpt, locale)
-  const hasDescription = hasPortableText(content.description, locale)
+  const hasExcerpt = hasPortableText(excerpt, locale)
+  const hasDescription = hasPortableText(description, locale)
   const planItems = getFloorPlanItemsWithUrl(floorPlans)
   const hasFloorPlans = planItems.length > 0
   const shouldShow = hasExcerpt || hasDescription || hasFloorPlans
@@ -133,7 +139,7 @@ export function Description({ content, floorPlans, locale }: DescriptionProps) {
         {hasExcerpt ? (
           <div className="grid grid-cols-12">
             <PortableTextComponent
-              text={content.excerpt}
+              text={excerpt}
               locale={locale}
               className={cn(
                 "col-span-12 md:col-start-3 md:col-span-8",
@@ -172,7 +178,7 @@ export function Description({ content, floorPlans, locale }: DescriptionProps) {
                   )}
                 >
                   <PortableTextComponent
-                    text={content.description}
+                    text={description}
                     locale={locale}
                     className={descriptionPortableClassName}
                   />
@@ -200,6 +206,11 @@ export function Description({ content, floorPlans, locale }: DescriptionProps) {
                   icon="detailsArrow"
                   iconPosition="end"
                   rotateIcon={expanded}
+                  iconClassName={
+                    expanded
+                      ? "group-hover:-translate-y-0.75"
+                      : "group-hover:translate-y-0.75"
+                  }
                   aria-expanded={expanded}
                   aria-controls={panelId}
                   onClick={() => setExpanded((v) => !v)}

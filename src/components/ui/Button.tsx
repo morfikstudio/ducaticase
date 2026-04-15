@@ -155,7 +155,6 @@ export function Button(props: ButtonProps) {
       aria-hidden="true"
       className={cn(
         "shrink-0 transition-transform duration-300 ease-out motion-reduce:transition-none",
-        "group-hover:-translate-y-1",
         rotateIcon && "rotate-180",
         iconClassName,
       )}

@@ -23,10 +23,8 @@ export function ListingDetail({ listing, locale }: ListingDetailProps) {
 
       <div className="my-16 md:my-32">
         <Description
-          content={{
-            excerpt: listing.content.excerpt,
-            description: listing.content.description,
-          }}
+          excerpt={listing.content.excerpt}
+          description={listing.content.description}
           floorPlans={listing.floorPlans}
           locale={locale}
         />
