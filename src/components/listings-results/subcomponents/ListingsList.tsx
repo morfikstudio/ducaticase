@@ -23,6 +23,7 @@ export function ListingsList({
   onPaginationExitComplete,
 }: ListingsListProps) {
   const ulRef = useRef<HTMLUListElement>(null)
+
   const onExitCompleteRef = useRef(onPaginationExitComplete)
   onExitCompleteRef.current = onPaginationExitComplete
 
@@ -107,13 +108,15 @@ export function ListingsList({
   }, [paginationExitNonce])
 
   return (
-    <ul
-      ref={ulRef}
-      className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8"
-    >
-      {listings.map((entry) => (
-        <ListingCard key={entry._id} entry={entry} locale={locale} />
-      ))}
-    </ul>
+    <section>
+      <ul
+        ref={ulRef}
+        className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8"
+      >
+        {listings.map((entry) => (
+          <ListingCard key={entry._id} entry={entry} locale={locale} />
+        ))}
+      </ul>
+    </section>
   )
 }

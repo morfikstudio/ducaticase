@@ -1,10 +1,12 @@
 "use client"
 
-import { useEffect, useLayoutEffect, useRef } from "react"
+import { useEffect, useLayoutEffect } from "react"
 import { useTranslations } from "next-intl"
 import gsap from "gsap"
 
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
+
+import { useInView } from "@/hooks/useInView"
 
 import { prefersReducedMotion } from "@/utils/reducedMotion"
 import { cn } from "@/utils/classNames"
@@ -75,7 +77,8 @@ function getRatingLabel(
 
 export function EnergyClassDisplay({ energyClass }: EnergyClassDisplayProps) {
   const t = useTranslations("listingDetail")
-  const sectionRef = useRef<HTMLElement>(null)
+  const { ref: sectionRef, show } = useInView()
+
   const shouldShow = Boolean(energyClass)
 
   /* Initial state */
@@ -89,7 +92,7 @@ export function EnergyClassDisplay({ energyClass }: EnergyClassDisplayProps) {
 
   /* Entry animation */
   useEffect(() => {
-    if (!shouldShow || !sectionRef.current) {
+    if (!show || !shouldShow || !sectionRef.current) {
       return
     }
 
@@ -101,10 +104,11 @@ export function EnergyClassDisplay({ energyClass }: EnergyClassDisplayProps) {
     gsap.to(sectionRef.current, {
       opacity: 1,
       y: 0,
-      duration: 0.5,
+      duration: 1,
       ease: "power2.out",
+      clearProps: "all",
     })
-  }, [shouldShow])
+  }, [show, shouldShow])
 
   if (!energyClass) {
     return null

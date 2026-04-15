@@ -1,16 +1,20 @@
 "use client"
 
-import { useEffect, useId, useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useId, useLayoutEffect, useState } from "react"
 import gsap from "gsap"
 import { useTranslations } from "next-intl"
 
 import type { AppLocale } from "@/i18n/routing"
-import { Button } from "@/components/ui/Button"
-import { PortableTextComponent } from "@/components/ui/PortableText"
 import { pickLocalizedPortableText } from "@/sanity/lib/locale"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
+
+import { useInView } from "@/hooks/useInView"
+
 import { prefersReducedMotion } from "@/utils/reducedMotion"
 import { cn } from "@/utils/classNames"
+
+import { Button } from "@/components/ui/Button"
+import { PortableTextComponent } from "@/components/ui/PortableText"
 
 type Content = NonNullable<LISTING_BY_ID_QUERY_RESULT>["content"]
 type FloorPlans = NonNullable<LISTING_BY_ID_QUERY_RESULT>["floorPlans"]
@@ -75,9 +79,10 @@ export function Description({
   locale,
 }: DescriptionProps) {
   const t = useTranslations("listingDetail")
+  const { ref: sectionRef, show } = useInView()
+
   const panelId = useId()
   const toggleId = useId()
-  const sectionRef = useRef<HTMLElement>(null)
   const [expanded, setExpanded] = useState(false)
 
   const hasExcerpt = hasPortableText(excerpt, locale)
@@ -97,7 +102,7 @@ export function Description({
 
   /* Entry animation */
   useEffect(() => {
-    if (!shouldShow || !sectionRef.current) {
+    if (!show || !shouldShow || !sectionRef.current) {
       return
     }
 
@@ -109,10 +114,11 @@ export function Description({
     gsap.to(sectionRef.current, {
       opacity: 1,
       y: 0,
-      duration: 0.5,
+      duration: 1,
       ease: "power2.out",
+      clearProps: "all",
     })
-  }, [shouldShow])
+  }, [show, shouldShow])
 
   if (!shouldShow) {
     return null

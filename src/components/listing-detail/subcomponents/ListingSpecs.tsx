@@ -1,5 +1,11 @@
 "use client"
 
+import { useEffect, useLayoutEffect } from "react"
+import gsap from "gsap"
+
+import { useInView } from "@/hooks/useInView"
+
+import { prefersReducedMotion } from "@/utils/reducedMotion"
 import { cn } from "@/utils/classNames"
 
 type SpecRowData = {
@@ -52,8 +58,34 @@ function SpecColumn({ rows }: { rows: SpecRowData[] }) {
 }
 
 export function ListingSpecs() {
+  const { ref: sectionRef, show } = useInView()
+
+  /* Initial state */
+  useLayoutEffect(() => {
+    if (!sectionRef.current) return
+    gsap.set(sectionRef.current, { opacity: 0, y: 20 })
+  }, [])
+
+  /* Entry animation */
+  useEffect(() => {
+    if (!show || !sectionRef.current) return
+
+    if (prefersReducedMotion()) {
+      gsap.set(sectionRef.current, { opacity: 1, y: 0 })
+      return
+    }
+
+    gsap.to(sectionRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "power2.out",
+      clearProps: "all",
+    })
+  }, [show])
+
   return (
-    <section className="w-full">
+    <section ref={sectionRef} className="w-full">
       <h2 className="type-heading-1 text-primary">Caratteristiche</h2>
 
       <div className="grid grid-cols-1 gap-y-0 md:grid-cols-2 md:gap-x-6 mt-6">

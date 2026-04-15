@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server"
 
+import { LISTING_STATIC_MAP_ZOOM } from "@/lib/listingStaticMap"
+
 const STATIC_MAP_BASE = "https://maps.googleapis.com/maps/api/staticmap"
 const MAX_DIMENSION = 640
-const ZOOM = 15
 
 /** Roadmap desaturated to grayscale (Static Maps styling). */
 const GRAYSCALE_STYLE_PARAMS = ["feature:all|saturation:-100"] as const
@@ -29,19 +30,31 @@ function parseDimension(value: string | null): number | null {
   return n
 }
 
+function parseZoom(value: string | null): number | null {
+  if (value == null || value === "") {
+    return null
+  }
+  const n = Math.floor(Number(value))
+  if (!Number.isFinite(n) || n < 1 || n > 21) {
+    return null
+  }
+  return n
+}
+
 function buildGoogleStaticMapUrl(params: {
   lat: number
   lng: number
   width: number
   height: number
+  zoom: number
   apiKey: string
 }): string {
-  const { lat, lng, width, height, apiKey } = params
+  const { lat, lng, width, height, zoom, apiKey } = params
 
   const search = new URLSearchParams()
 
   search.set("center", `${lat},${lng}`)
-  search.set("zoom", String(ZOOM))
+  search.set("zoom", String(zoom))
   search.set("size", `${width}x${height}`)
   search.set("scale", "2")
   search.set("maptype", "roadmap")
@@ -62,6 +75,7 @@ export async function GET(request: Request) {
   const lng = parseCoord(searchParams.get("lng"))
   const width = parseDimension(searchParams.get("w"))
   const height = parseDimension(searchParams.get("h"))
+  const zoom = parseZoom(searchParams.get("z")) ?? LISTING_STATIC_MAP_ZOOM
 
   if (lat == null || lng == null || width == null || height == null) {
     return NextResponse.json(
@@ -86,7 +100,14 @@ export async function GET(request: Request) {
     )
   }
 
-  const googleUrl = buildGoogleStaticMapUrl({ lat, lng, width, height, apiKey })
+  const googleUrl = buildGoogleStaticMapUrl({
+    lat,
+    lng,
+    width,
+    height,
+    zoom,
+    apiKey,
+  })
 
   let upstream: Response
 

@@ -1,14 +1,6 @@
 "use client"
 
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react"
-import gsap from "gsap"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 
@@ -17,7 +9,6 @@ import { usePathname, useRouter } from "@/i18n/navigation"
 import { useListingsStore } from "@/stores/listingsStore"
 
 import { cn } from "@/utils/classNames"
-import { prefersReducedMotion } from "@/utils/reducedMotion"
 
 import { useLenis } from "@/components/providers/LenisProvider"
 import { Container } from "@/components/ui/Container"
@@ -279,59 +270,6 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
       document.body.style.overflow = originalOverflow
     }
   }, [isFiltersPanelOpen])
-
-  /* Entry animation */
-  useLayoutEffect(() => {
-    if (!isListingsHydrated || toolbarEntranceDoneRef.current) return
-
-    if (prefersReducedMotion()) {
-      toolbarEntranceDoneRef.current = true
-      return
-    }
-
-    let cancelled = false
-    const rafId = requestAnimationFrame(() => {
-      if (cancelled || toolbarEntranceDoneRef.current) return
-
-      const sequence = [
-        headerEntranceRef.current,
-        categoriesBtnEntranceRef.current,
-        filtersBtnEntranceRef.current,
-        resultsCountEntranceRef.current,
-        sortPanelEntranceRef.current,
-      ].filter((el): el is HTMLDivElement => el != null)
-
-      if (sequence.length === 0) return
-
-      gsap.set(sequence, { opacity: 0, y: 20 })
-      gsap.to(sequence, {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        stagger: 0.1,
-        ease: "power2.out",
-        onComplete: () => {
-          toolbarEntranceDoneRef.current = true
-        },
-      })
-    })
-
-    return () => {
-      cancelled = true
-      cancelAnimationFrame(rafId)
-      const toKill = [
-        headerEntranceRef.current,
-        categoriesBtnEntranceRef.current,
-        filtersBtnEntranceRef.current,
-        resultsCountEntranceRef.current,
-        sortPanelEntranceRef.current,
-      ].filter((el): el is HTMLDivElement => el != null)
-
-      if (toKill.length > 0) {
-        gsap.killTweensOf(toKill)
-      }
-    }
-  }, [isListingsHydrated])
 
   return (
     <div>

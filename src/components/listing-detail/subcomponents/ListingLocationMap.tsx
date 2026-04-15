@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl"
 import gsap from "gsap"
 
 import { useInView } from "@/hooks/useInView"
+import { LISTING_STATIC_MAP_ZOOM } from "@/lib/listingStaticMap"
 
 import { prefersReducedMotion } from "@/utils/reducedMotion"
 import { cn } from "@/utils/classNames"
@@ -26,6 +27,7 @@ function staticMapProxyUrl(
     lng: String(lng),
     w: String(width),
     h: String(height),
+    z: String(LISTING_STATIC_MAP_ZOOM),
   })
   return `/api/maps/static?${params.toString()}`
 }

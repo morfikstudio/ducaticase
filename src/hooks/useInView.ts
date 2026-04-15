@@ -2,58 +2,25 @@
 
 import { useEffect, useRef, useState, type RefObject } from "react"
 
-export type UseInViewOptions = {
-  /**
-   * Extra margin (in px) added below and above the viewport for the load observer.
-   * Equivalent to "100vh" but expressed in pixels so IntersectionObserver accepts it.
-   * Default: window.innerHeight at the time the observer is created.
-   */
-  loadMarginPx?: number
-  /** Visibility threshold for the show observer. Default: 0.1 */
-  showThreshold?: number
-  /** Optional scroll container. Default: browser viewport */
-  root?: Element | null
-}
-
 export type UseInViewReturn = {
-  /** Attach to the element you want to observe. */
   ref: RefObject<HTMLElement | null>
-  /** True once the element is within `loadRootMargin` of the viewport. Never resets. */
+  /** True once the element is within one viewport-height of the visible area. Never resets. */
   load: boolean
-  /** True once at least `showThreshold` of the element is visible. Never resets. */
+  /** True once the top of the element has crossed the 75% mark of the viewport height. Never resets. */
   show: boolean
 }
 
-const DEFAULT_SHOW_THRESHOLD = 0.5
-
-export function useInView(options?: UseInViewOptions): UseInViewReturn {
-  const {
-    loadMarginPx,
-    showThreshold = DEFAULT_SHOW_THRESHOLD,
-    root = null,
-  } = options ?? {}
-
+export function useInView(): UseInViewReturn {
   const ref = useRef<HTMLElement | null>(null)
-  const [isMounted, setIsMounted] = useState(false)
   const [load, setLoad] = useState(false)
   const [show, setShow] = useState(false)
 
   useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  useEffect(() => {
-    if (!isMounted) {
-      return
-    }
-
     const el = ref.current
-    if (!el) {
-      return
-    }
+    if (!el) return
 
-    // IntersectionObserver only accepts px/% — resolve the load margin at runtime.
-    const marginPx = loadMarginPx ?? window.innerHeight
+    const vh = window.innerHeight
+    const marginPx = vh
     const loadRootMargin = `${marginPx}px 0px`
 
     const loadObserver = new IntersectionObserver(
@@ -63,7 +30,7 @@ export function useInView(options?: UseInViewOptions): UseInViewReturn {
           loadObserver.disconnect()
         }
       },
-      { root, rootMargin: loadRootMargin, threshold: 0 },
+      { rootMargin: loadRootMargin, threshold: 0 },
     )
 
     const showObserver = new IntersectionObserver(
@@ -73,17 +40,24 @@ export function useInView(options?: UseInViewOptions): UseInViewReturn {
           showObserver.disconnect()
         }
       },
-      { root, rootMargin: "0px", threshold: showThreshold },
+      { rootMargin: "0px 0px -25% 0px", threshold: 0 },
     )
 
     loadObserver.observe(el)
     showObserver.observe(el)
 
+    // Synchronous check for elements already in viewport at load time,
+    // since IntersectionObserver fires asynchronously and may miss the
+    // initial state in SSR/hydration scenarios.
+    const rect = el.getBoundingClientRect()
+    if (rect.top < vh + marginPx) setLoad(true)
+    if (rect.top < vh * 0.75) setShow(true)
+
     return () => {
       loadObserver.disconnect()
       showObserver.disconnect()
     }
-  }, [isMounted, root, loadMarginPx, showThreshold])
+  }, [])
 
   return { ref, load, show }
 }

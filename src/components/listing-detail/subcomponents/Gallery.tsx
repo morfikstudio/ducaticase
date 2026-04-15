@@ -7,11 +7,11 @@ import { useTranslations } from "next-intl"
 import type { AppLocale } from "@/i18n/routing"
 
 import { pickLocalizedString } from "@/sanity/lib/locale"
-import { getSanityImageUrl } from "@/lib/sanity"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
 
 import { useBreakpoint } from "@/stores/breakpointStore"
 
+import { getSanityImageUrl } from "@/lib/sanity"
 import { prefersReducedMotion } from "@/utils/reducedMotion"
 import { cn } from "@/utils/classNames"
 
@@ -27,10 +27,11 @@ type GalleryProps = {
 
 export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
   const t = useTranslations("listingDetail")
-  const [loadedCount, setLoadedCount] = useState(0)
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const sectionRef = useRef<HTMLElement>(null)
+
+  const [loadedCount, setLoadedCount] = useState(0)
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const { current: breakpoint } = useBreakpoint()
   const isMobileLayout =
@@ -44,12 +45,16 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
   // Wait for mainImage + first 2 thumbs before revealing the gallery.
   const triggerAt = 1 + Math.min(thumbs.length, 2)
 
-  /* Entry animation - initial state */
+  /* Initial state */
   useLayoutEffect(() => {
+    if (!sectionRef.current) {
+      return
+    }
+
     gsap.set(sectionRef.current, { opacity: 0, y: 20 })
   }, [])
 
-  // Animate in once mainImage + first 2 thumbs have fired onLoad.
+  /* Entry animation */
   useEffect(() => {
     if (loadedCount < triggerAt || !sectionRef.current) return
 
@@ -61,8 +66,9 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
     gsap.to(sectionRef.current, {
       opacity: 1,
       y: 0,
-      duration: 0.5,
+      duration: 1,
       ease: "power2.out",
+      clearProps: "all",
     })
   }, [loadedCount, triggerAt])
 

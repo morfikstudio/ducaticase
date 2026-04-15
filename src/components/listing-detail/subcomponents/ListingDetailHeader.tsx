@@ -7,11 +7,13 @@ import { useTranslations } from "next-intl"
 import type { AppLocale } from "@/i18n/routing"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
-import { prefersReducedMotion } from "@/utils/reducedMotion"
 
-import { cn } from "@/utils/classNames"
+import { useInView } from "@/hooks/useInView"
+
 import { buildListingLocationText } from "@/lib/buildListingLocationText"
 import { formatListingPrice } from "@/lib/formatListingPrice"
+import { prefersReducedMotion } from "@/utils/reducedMotion"
+import { cn } from "@/utils/classNames"
 
 import { Button } from "@/components/ui/Button"
 
@@ -33,6 +35,7 @@ export function ListingDetailHeader({
   locale,
 }: ListingDetailHeaderProps) {
   const t = useTranslations("listingDetail")
+
   const sectionRef = useRef<HTMLElement>(null)
 
   const title = pickLocalizedString(content.title, locale)
@@ -73,8 +76,9 @@ export function ListingDetailHeader({
     gsap.to(sectionRef.current, {
       opacity: 1,
       y: 0,
-      duration: 0.5,
+      duration: 1,
       ease: "power2.out",
+      clearProps: "all",
     })
   }, [])
 
