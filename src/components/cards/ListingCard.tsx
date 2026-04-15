@@ -24,7 +24,7 @@ type ListingCardProps = {
 
 export function ListingCard({ entry, locale }: ListingCardProps) {
   const t = useTranslations("listingsResults")
-  const thumbUrl = getSanityImageUrl(entry.mainImage, 1200, 1500)
+  const thumbUrl = getSanityImageUrl(entry.mainImage, 1200, 1500, 30)
   const typology = listingTypologyLabel(entry._type, entry.typology, locale)
   const listingTitle = pickLocalizedString(entry.title, locale)
   const label = pickLocalizedString(
