@@ -424,6 +424,21 @@ export function useListingsFilters({
     })
   }, [isHydrated, selectedCities, cityOptions])
 
+  const hasActiveListingFilters = useMemo(() => {
+    if (searchParams.get("contract")) return true
+    if (parseCsv(searchParams.get("category")).length > 0) return true
+    if (parseCsv(searchParams.get("city")).length > 0) return true
+    if (parseCsv(searchParams.get("typology")).length > 0) return true
+    if (searchParams.get("sort")) return true
+    if (searchParams.get("country") === "intl") return true
+    const pageRaw = searchParams.get("page")
+    if (pageRaw) {
+      const n = parseInt(pageRaw, 10)
+      if (Number.isFinite(n) && n > 1) return true
+    }
+    return false
+  }, [searchParams])
+
   return {
     selectedCountry,
     selectedContract,
@@ -445,5 +460,6 @@ export function useListingsFilters({
     toggleCity: (value: string) => toggleMultiValue("city", value),
     changeSort,
     changeCountry,
+    hasActiveListingFilters,
   }
 }

@@ -2,25 +2,17 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { useTranslations } from "next-intl"
-
 import type { AppLocale } from "@/i18n/routing"
 import { usePathname, useRouter } from "@/i18n/navigation"
 import { useListingsStore } from "@/stores/listingsStore"
 
-import { cn } from "@/utils/classNames"
-
 import { useLenis } from "@/components/providers/LenisProvider"
 import { Container } from "@/components/ui/Container"
-import { Button } from "@/components/ui/Button"
 
 import { ListingsHeader } from "./subcomponents/ListingsHeader"
 import { ListingsFiltersDrawer } from "./subcomponents/ListingsFiltersDrawer"
-import { ListingsCategoriesBar } from "./subcomponents/ListingsCategoriesBar"
 import { ListingsList } from "./subcomponents/ListingsList"
-import { ListingsPagination } from "./subcomponents/ListingsPagination"
-import { ListingsSortPanel } from "./subcomponents/ListingsSortPanel"
-import { ListingsResultsCount } from "./subcomponents/ListingsResultsCount"
+import { ListingsResultsToolbar } from "./subcomponents/ListingsResultsToolbar"
 
 import { useListingsFilters } from "./hooks/useListingsFilters"
 
@@ -44,11 +36,6 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
 
   /* Entry animation start */
   const headerEntranceRef = useRef<HTMLDivElement>(null)
-  const categoriesBtnEntranceRef = useRef<HTMLDivElement>(null)
-  const filtersBtnEntranceRef = useRef<HTMLDivElement>(null)
-  const resultsCountEntranceRef = useRef<HTMLDivElement>(null)
-  const sortPanelEntranceRef = useRef<HTMLDivElement>(null)
-  const toolbarEntranceDoneRef = useRef(false)
   /* Entry animation end */
 
   const pagingTargetRef = useRef<number | null>(null)
@@ -61,7 +48,6 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
   const pathname = usePathname()
   const searchParamsKey = searchParams.toString()
 
-  const t = useTranslations("listingsResults")
   const {
     selectedCountry,
     selectedContract,
@@ -83,6 +69,7 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
     toggleCity,
     changeSort,
     changeCountry,
+    hasActiveListingFilters,
   } = useListingsFilters({ listings, locale, isHydrated: isListingsHydrated })
 
   const totalCount = sortedListings.length
@@ -114,6 +101,14 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
         currentPage * LISTINGS_PAGE_SIZE,
       ),
     [currentPage, sortedListings],
+  )
+
+  const showNoListingsMessage = useMemo(
+    () =>
+      isListingsHydrated &&
+      filteredListings.length === 0 &&
+      hasActiveListingFilters,
+    [isListingsHydrated, filteredListings.length, hasActiveListingFilters],
   )
 
   const hasSingleResultOnPage = listings.length === 1
@@ -281,103 +276,41 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
           />
         </div>
 
-        <div className="mt-12 md:mt-32 flex flex-col gap-4">
-          <div className="flex items-center justify-end gap-4 lg:justify-between">
-            <div
-              ref={categoriesBtnEntranceRef}
-              className="hidden lg:inline-flex lg:w-auto"
-            >
-              <Button
-                chevron={isCategoriesOpen ? "up" : "down"}
-                isActive={isCategoriesOpen}
-                disabled={hasSingleResultOnPage}
-                onClick={() => setIsCategoriesOpen((v) => !v)}
-                className="lg:w-auto"
-              >
-                {t("categoriesButton")}
-              </Button>
-            </div>
-
-            <div ref={filtersBtnEntranceRef} className="w-full lg:w-auto">
-              <Button
-                icon="filters"
-                disabled={hasSingleResultOnPage}
-                onClick={() => {
-                  setIsCategoriesOpen(false)
-                  setIsFiltersPanelOpen(true)
-                }}
-                className="w-full lg:w-auto"
-              >
-                {t("filtersButton")}
-              </Button>
-            </div>
-          </div>
-
-          {visibleCategoryOptions.length > 0 ? (
-            <div
-              className={cn(
-                "hidden lg:grid transition-[grid-template-rows] duration-300 ease-out",
-                isCategoriesOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
-              )}
-            >
-              <div className="overflow-hidden" inert={!isCategoriesOpen}>
-                <div className="py-1">
-                  <ListingsCategoriesBar
-                    visibleCategoryOptions={visibleCategoryOptions}
-                    selectedCategories={selectedCategories}
-                    onToggleCategory={toggleCategory}
-                  />
-                </div>
-              </div>
-            </div>
-          ) : null}
+        <div className="mt-12 md:mt-32">
+          <ListingsResultsToolbar
+            hasSingleResultOnPage={hasSingleResultOnPage}
+            isCategoriesOpen={isCategoriesOpen}
+            setIsCategoriesOpen={setIsCategoriesOpen}
+            onOpenFiltersPanel={() => setIsFiltersPanelOpen(true)}
+            visibleCategoryOptions={visibleCategoryOptions}
+            selectedCategories={selectedCategories}
+            onToggleCategory={toggleCategory}
+            hasResults={sortedListings.length > 0}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            selectedSort={selectedSort}
+            onChangeSort={changeSort}
+          />
         </div>
-
-        {sortedListings.length > 0 && (
-          <div className="mt-12 flex items-center justify-between">
-            <div ref={resultsCountEntranceRef}>
-              <ListingsResultsCount
-                page={currentPage}
-                totalPages={totalPages}
-              />
-            </div>
-            <div ref={sortPanelEntranceRef} className="min-w-0">
-              <ListingsSortPanel
-                selectedSort={selectedSort}
-                onChangeSort={changeSort}
-              />
-            </div>
-          </div>
-        )}
 
         <div
           ref={resultsAnchorRef}
           className="mt-12 min-w-0 scroll-mt-32"
           aria-live="polite"
         >
-          {filteredListings.length === 0 ? (
-            <p className="type-body-1 text-primary">{t("noListingsFound")}</p>
-          ) : (
-            <>
-              <ListingsList
-                key={currentPage}
-                listings={paginatedListings}
-                locale={locale}
-                paginationExitNonce={paginationExitNonce}
-                onPaginationExitComplete={handlePaginationExitComplete}
-              />
-
-              {totalCount > LISTINGS_PAGE_SIZE ? (
-                <div className="mt-16 md:mt-24">
-                  <ListingsPagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onUserPageChange={handlePaginationNavigate}
-                  />
-                </div>
-              ) : null}
-            </>
-          )}
+          <ListingsList
+            key={currentPage}
+            listings={paginatedListings}
+            locale={locale}
+            paginationExitNonce={paginationExitNonce}
+            onPaginationExitComplete={handlePaginationExitComplete}
+            isListingsHydrated={isListingsHydrated}
+            showNoListingsMessage={showNoListingsMessage}
+            totalCount={totalCount}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onUserPageChange={handlePaginationNavigate}
+          />
         </div>
       </Container>
 

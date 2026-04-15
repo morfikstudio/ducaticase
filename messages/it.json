@@ -42,6 +42,8 @@
     "sortPriceAsc": "Prezzo crescente",
     "sortRecentDesc": "Piu recenti",
     "sortRecentAsc": "Meno recenti",
+    "toolbarSectionAriaLabel": "Filtri e ordinamento",
+    "listingsGridSectionAriaLabel": "Elenco risultati",
     "noListingsFound": "Nessun annuncio trovato",
     "showingPages": "Mostrando {page} di {totalPages}",
     "paginationNavAriaLabel": "Pagine dei risultati",

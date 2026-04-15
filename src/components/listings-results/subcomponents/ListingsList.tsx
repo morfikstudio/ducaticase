@@ -1,19 +1,30 @@
 "use client"
 
 import { useLayoutEffect, useRef } from "react"
+import { useTranslations } from "next-intl"
 import gsap from "gsap"
 
 import { ListingCard } from "@/components/cards/ListingCard"
 import type { AppLocale } from "@/i18n/routing"
 import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
 
+import { ListingsPagination } from "./ListingsPagination"
+
 type ListingsEntry = LISTINGS_PREVIEW_QUERY_RESULT[number]
+
+const LISTINGS_PAGE_SIZE = 10
 
 type ListingsListProps = {
   listings: ListingsEntry[]
   locale: AppLocale
   paginationExitNonce: number
   onPaginationExitComplete?: () => void
+  isListingsHydrated: boolean
+  showNoListingsMessage: boolean
+  totalCount: number
+  currentPage: number
+  totalPages: number
+  onUserPageChange: (page: number) => void
 }
 
 export function ListingsList({
@@ -21,7 +32,14 @@ export function ListingsList({
   locale,
   paginationExitNonce,
   onPaginationExitComplete,
+  isListingsHydrated,
+  showNoListingsMessage,
+  totalCount,
+  currentPage,
+  totalPages,
+  onUserPageChange,
 }: ListingsListProps) {
+  const t = useTranslations("listingsResults")
   const ulRef = useRef<HTMLUListElement>(null)
 
   const onExitCompleteRef = useRef(onPaginationExitComplete)
@@ -107,16 +125,38 @@ export function ListingsList({
     }
   }, [paginationExitNonce])
 
+  if (!isListingsHydrated) {
+    return null
+  }
+
+  if (showNoListingsMessage) {
+    return (
+      <p className="type-body-1 text-primary">{t("noListingsFound")}</p>
+    )
+  }
+
   return (
-    <section>
-      <ul
-        ref={ulRef}
-        className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8"
-      >
-        {listings.map((entry) => (
-          <ListingCard key={entry._id} entry={entry} locale={locale} />
-        ))}
-      </ul>
-    </section>
+    <>
+      <section aria-label={t("listingsGridSectionAriaLabel")}>
+        <ul
+          ref={ulRef}
+          className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8"
+        >
+          {listings.map((entry) => (
+            <ListingCard key={entry._id} entry={entry} locale={locale} />
+          ))}
+        </ul>
+      </section>
+
+      {totalCount > LISTINGS_PAGE_SIZE ? (
+        <div className="mt-16 md:mt-24">
+          <ListingsPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onUserPageChange={onUserPageChange}
+          />
+        </div>
+      ) : null}
+    </>
   )
 }
