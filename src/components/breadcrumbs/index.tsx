@@ -11,6 +11,7 @@ import { prefersReducedMotion } from "@/utils/reducedMotion"
 import { Container } from "@/components/ui/Container"
 
 type BreadcrumbItem = {
+  id: string
   label: string
   href?: string
 }
@@ -20,45 +21,80 @@ export function Breadcrumbs() {
   const t = useTranslations("breadcrumbs")
 
   const olRef = useRef<HTMLOListElement>(null)
+  const prevItemIdsRef = useRef<Set<string>>(new Set())
 
   const items = useMemo((): BreadcrumbItem[] => {
     const segments = pathname.split("/").filter(Boolean)
+
     if (segments.length === 0) return []
 
     if (segments[0] === "immobili") {
       return [
-        { label: "Home", href: "/" },
+        { id: "home", label: "Home", href: "/" },
         {
+          id: "immobili",
           label: t("listings"),
           href: segments.length > 1 ? "/immobili" : undefined,
         },
-        ...(segments.length > 1 ? [{ label: t("listingDetail") }] : []),
+        ...(segments.length > 1
+          ? [{ id: "immobili-detail", label: t("listingDetail") }]
+          : []),
       ]
     }
 
     return [
-      { label: "Home", href: "/" },
-      ...segments.map((segment, index) => ({
-        label: segment
-          .replace(/-/g, " ")
-          .replace(/\b\w/g, (char) => char.toUpperCase()),
-        href:
-          index < segments.length - 1
-            ? "/" + segments.slice(0, index + 1).join("/")
-            : undefined,
-      })),
+      { id: "home", label: "Home", href: "/" },
+      ...segments.map(
+        (segment, index): BreadcrumbItem => ({
+          id:
+            "/" +
+            segments
+              .slice(0, index + 1)
+              .join("/")
+              .toLowerCase(),
+          label: segment
+            .replace(/-/g, " ")
+            .replace(/\b\w/g, (char) => char.toUpperCase()),
+          href:
+            index < segments.length - 1
+              ? "/" + segments.slice(0, index + 1).join("/")
+              : undefined,
+        }),
+      ),
     ]
   }, [pathname, t])
 
   /* Entry animation */
   useLayoutEffect(() => {
-    if (items.length === 0 || !olRef.current || prefersReducedMotion()) {
+    /* Initial state */
+    if (items.length === 0 || !olRef.current) {
+      prevItemIdsRef.current = new Set(items.map((item) => item.id))
       return
     }
 
-    const elements = olRef.current.querySelectorAll<HTMLElement>(":scope > li")
+    /* Exit animation (reduced motion) */
+    if (prefersReducedMotion()) {
+      prevItemIdsRef.current = new Set(items.map((item) => item.id))
+      return
+    }
+
+    const prevItemIds = prevItemIdsRef.current
+    const nextItemIds = new Set(items.map((item) => item.id))
+    const newItems = items.filter((item) => !prevItemIds.has(item.id))
+
+    const selector = newItems
+      .map((item) => `:scope > li[data-breadcrumb-id="${item.id}"]`)
+      .join(", ")
+
+    if (!selector) {
+      prevItemIdsRef.current = nextItemIds
+      return
+    }
+
+    const elements = olRef.current.querySelectorAll<HTMLElement>(selector)
 
     if (elements.length === 0) {
+      prevItemIdsRef.current = nextItemIds
       return
     }
 
@@ -73,6 +109,7 @@ export function Breadcrumbs() {
 
     return () => {
       gsap.killTweensOf(elements)
+      prevItemIdsRef.current = nextItemIds
     }
   }, [pathname, items.length])
 
@@ -83,7 +120,11 @@ export function Breadcrumbs() {
           {items.map((item, index) => {
             const isLast = index === items.length - 1
             return (
-              <li key={index} className="flex items-center gap-2">
+              <li
+                key={item.id}
+                data-breadcrumb-id={item.id}
+                className="flex items-center gap-2"
+              >
                 {index > 0 && (
                   <span className="type-body-3 text-gray" aria-hidden="true">
                     /
