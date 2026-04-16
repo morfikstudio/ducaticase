@@ -6,7 +6,10 @@ import gsap from "gsap"
 import { Swiper, SwiperSlide } from "swiper/react"
 
 import type { AppLocale } from "@/i18n/routing"
-import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
+import type {
+  LISTING_BY_ID_QUERY_RESULT,
+  LISTINGS_PREVIEW_QUERY_RESULT,
+} from "@/sanity/types"
 
 import { useInView } from "@/hooks/useInView"
 import { prefersReducedMotion } from "@/utils/reducedMotion"
@@ -15,64 +18,17 @@ import { ListingCard } from "@/components/cards/ListingCard"
 
 import "swiper/css"
 
-const PLACEHOLDER_LISTINGS: LISTINGS_PREVIEW_QUERY_RESULT = [
-  {
-    _id: "placeholder-1",
-    _type: "listingResidential",
-    title: { it: "Reggia con terreno", en: "Estate with land" },
-    listingContractType: "sale",
-    price: { amount: 3100000 },
-    country: "IT",
-    city: "Torre Baldone",
-    province: "BE",
-    address: { streetName: "Avvia Sile", streetNumber: "41" },
-    postalCode: "24040",
-    map: null,
-    listingLabel: null,
-    typology: null,
-    mainImage: null,
-  },
-  {
-    _id: "placeholder-2",
-    _type: "listingResidential",
-    title: { it: "Villa con piscina", en: "Villa with pool" },
-    listingContractType: "sale",
-    price: { amount: 1850000 },
-    country: "IT",
-    city: "Bergamo",
-    province: "BG",
-    address: { streetName: "Via Roma", streetNumber: "12" },
-    postalCode: "24100",
-    map: null,
-    listingLabel: null,
-    typology: null,
-    mainImage: null,
-  },
-  {
-    _id: "placeholder-3",
-    _type: "listingResidential",
-    title: { it: "Villa con piscina", en: "Villa with pool" },
-    listingContractType: "sale",
-    price: { amount: 1850000 },
-    country: "IT",
-    city: "Bergamo",
-    province: "BG",
-    address: { streetName: "Via Roma", streetNumber: "12" },
-    postalCode: "24100",
-    map: null,
-    listingLabel: null,
-    typology: null,
-    mainImage: null,
-  },
-] as LISTINGS_PREVIEW_QUERY_RESULT
+type ListingPreviewEntry = LISTINGS_PREVIEW_QUERY_RESULT[number]
 
 type RelatedListingsProps = {
   locale: AppLocale
+  entries: NonNullable<LISTING_BY_ID_QUERY_RESULT>["relatedListings"]
 }
 
-export function RelatedListings({ locale }: RelatedListingsProps) {
+export function RelatedListings({ locale, entries }: RelatedListingsProps) {
   const t = useTranslations("listingDetail")
   const { ref: sectionRef, show } = useInView()
+  const cards = entries as ListingPreviewEntry[]
 
   useLayoutEffect(() => {
     if (!sectionRef.current) return
@@ -96,6 +52,10 @@ export function RelatedListings({ locale }: RelatedListingsProps) {
     })
   }, [show, sectionRef])
 
+  if (entries.length === 0) {
+    return null
+  }
+
   return (
     <section ref={sectionRef} style={{ opacity: 0 }}>
       <h2 className="type-heading-1 text-primary mb-8 md:mb-12">
@@ -110,7 +70,7 @@ export function RelatedListings({ locale }: RelatedListingsProps) {
           slidesOffsetBefore={24}
           slidesOffsetAfter={24}
         >
-          {PLACEHOLDER_LISTINGS.map((entry) => (
+          {cards.map((entry) => (
             <SwiperSlide key={entry._id}>
               <ListingCard entry={entry} locale={locale} />
             </SwiperSlide>
@@ -120,7 +80,7 @@ export function RelatedListings({ locale }: RelatedListingsProps) {
 
       {/* Desktop: CSS grid, same as listings page */}
       <ul className="hidden md:grid grid-cols-2 gap-8">
-        {PLACEHOLDER_LISTINGS.map((entry) => (
+        {cards.map((entry) => (
           <ListingCard key={entry._id} entry={entry} locale={locale} />
         ))}
       </ul>

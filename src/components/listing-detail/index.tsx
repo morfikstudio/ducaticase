@@ -80,9 +80,11 @@ export function ListingDetail({ listing, locale }: ListingDetailProps) {
         </div>
       ) : null}
 
-      <div className="my-16 md:my-32">
-        <RelatedListings locale={locale} />
-      </div>
+      {listing.relatedListings.length > 0 ? (
+        <div className="my-16 md:my-32">
+          <RelatedListings entries={listing.relatedListings} locale={locale} />
+        </div>
+      ) : null}
     </Container>
   )
 }

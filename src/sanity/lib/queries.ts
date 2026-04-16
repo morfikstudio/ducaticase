@@ -53,7 +53,6 @@ export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`
     province,
     address,
     postalCode,
-    map,
     listingLabel,
     "typology": select(
       _type == "listingCountryHouses" => countryHouseTypology,
@@ -263,6 +262,41 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
         buildable,
         agricultural
       }
-    )
+    ),
+    "relatedListings": *[
+      _type in [
+        "listingResidential",
+        "listingCountryHouses",
+        "listingShopsAndOffices",
+        "listingIndustrial",
+        "listingHospitality",
+        "listingLand"
+      ] &&
+      coalesce(isArchived, false) != true &&
+      _id != ^._id &&
+      _type == ^._type &&
+      city == ^.city
+    ] | order(_createdAt desc)[0...2] {
+      _id,
+      _type,
+      title,
+      listingContractType,
+      price,
+      city,
+      province,
+      address,
+      postalCode,
+      listingLabel,
+      "typology": select(
+        _type == "listingCountryHouses" => countryHouseTypology,
+        _type == "listingShopsAndOffices" => shopsAndOfficesTypology,
+        _type == "listingIndustrial" => industrialTypology,
+        true => null
+      ),
+      "mainImage": mainImage {
+        ...,
+        asset->
+      }
+    }
   }
 `)
