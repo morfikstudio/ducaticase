@@ -146,7 +146,8 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
       city,
       address,
       postalCode,
-      map
+      map,
+      positionInfo
     },
     "content": {
       title,

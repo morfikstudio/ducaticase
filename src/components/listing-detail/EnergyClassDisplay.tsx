@@ -1,14 +1,11 @@
 "use client"
 
-import { useEffect, useLayoutEffect } from "react"
 import { useTranslations } from "next-intl"
-import gsap from "gsap"
 
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
 
-import { useInView } from "@/hooks/useInView"
+import { useGsapReveal } from "@/hooks/useGsapReveal"
 
-import { prefersReducedMotion } from "@/utils/reducedMotion"
 import { cn } from "@/utils/classNames"
 
 /** `propertySheet` is a per-typology union; `listingLand` has no `energyClass`. */
@@ -76,39 +73,8 @@ function getRatingLabel(
 }
 
 export function EnergyClassDisplay({ energyClass }: EnergyClassDisplayProps) {
+  const { ref: wrapRef } = useGsapReveal()
   const t = useTranslations("listingDetail")
-  const { ref: sectionRef, show } = useInView()
-
-  const shouldShow = Boolean(energyClass)
-
-  /* Initial state */
-  useLayoutEffect(() => {
-    if (!shouldShow || !sectionRef.current) {
-      return
-    }
-
-    gsap.set(sectionRef.current, { opacity: 0, y: 20 })
-  }, [shouldShow])
-
-  /* Entry animation */
-  useEffect(() => {
-    if (!show || !shouldShow || !sectionRef.current) {
-      return
-    }
-
-    if (prefersReducedMotion()) {
-      gsap.set(sectionRef.current, { opacity: 1, y: 0 })
-      return
-    }
-
-    gsap.to(sectionRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power2.out",
-      clearProps: "all",
-    })
-  }, [show, shouldShow])
 
   if (!energyClass) {
     return null
@@ -129,7 +95,7 @@ export function EnergyClassDisplay({ energyClass }: EnergyClassDisplayProps) {
         : (ratingLabel ?? null)
 
   return (
-    <section ref={sectionRef} className="w-full" style={{ opacity: 0 }}>
+    <div ref={wrapRef} className="w-full" style={{ opacity: 0 }}>
       <h2 className="type-heading-1 text-primary">
         {t("energyEfficiency")}
         {valueLabel && `: ${valueLabel}`}
@@ -158,6 +124,6 @@ export function EnergyClassDisplay({ energyClass }: EnergyClassDisplayProps) {
           )
         })}
       </div>
-    </section>
+    </div>
   )
 }

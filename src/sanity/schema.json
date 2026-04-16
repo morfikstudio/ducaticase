@@ -698,6 +698,14 @@
         },
         "optional": true
       },
+      "positionInfo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localizedText"
+        },
+        "optional": true
+      },
       "title": {
         "type": "objectAttribute",
         "value": {
@@ -1358,6 +1366,36 @@
             "type": "number"
           },
           "optional": false
+        }
+      }
+    }
+  },
+  {
+    "name": "localizedText",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "localizedText"
+          }
+        },
+        "it": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "en": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
         }
       }
     }
@@ -2182,6 +2220,14 @@
         "value": {
           "type": "inline",
           "name": "geopoint"
+        },
+        "optional": true
+      },
+      "positionInfo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localizedText"
         },
         "optional": true
       },
@@ -3451,6 +3497,14 @@
         "value": {
           "type": "inline",
           "name": "geopoint"
+        },
+        "optional": true
+      },
+      "positionInfo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localizedText"
         },
         "optional": true
       },
@@ -4791,6 +4845,14 @@
         },
         "optional": true
       },
+      "positionInfo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localizedText"
+        },
+        "optional": true
+      },
       "title": {
         "type": "objectAttribute",
         "value": {
@@ -6117,6 +6179,14 @@
         "value": {
           "type": "inline",
           "name": "geopoint"
+        },
+        "optional": true
+      },
+      "positionInfo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localizedText"
         },
         "optional": true
       },
@@ -7513,6 +7583,14 @@
         },
         "optional": true
       },
+      "positionInfo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localizedText"
+        },
+        "optional": true
+      },
       "title": {
         "type": "objectAttribute",
         "value": {
@@ -8258,36 +8336,6 @@
                 }
               }
             }
-          },
-          "optional": true
-        }
-      }
-    }
-  },
-  {
-    "name": "localizedText",
-    "type": "type",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "localizedText"
-          }
-        },
-        "it": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "en": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
           },
           "optional": true
         }

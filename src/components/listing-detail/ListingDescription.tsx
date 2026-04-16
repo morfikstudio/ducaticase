@@ -1,16 +1,14 @@
 "use client"
 
-import { useEffect, useId, useLayoutEffect, useState } from "react"
-import gsap from "gsap"
+import { useState, useId } from "react"
 import { useTranslations } from "next-intl"
 
 import type { AppLocale } from "@/i18n/routing"
 import { pickLocalizedPortableText } from "@/sanity/lib/locale"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
 
-import { useInView } from "@/hooks/useInView"
+import { useGsapReveal } from "@/hooks/useGsapReveal"
 
-import { prefersReducedMotion } from "@/utils/reducedMotion"
 import { cn } from "@/utils/classNames"
 
 import { Button } from "@/components/ui/Button"
@@ -19,7 +17,7 @@ import { PortableTextComponent } from "@/components/ui/PortableText"
 type Content = NonNullable<LISTING_BY_ID_QUERY_RESULT>["content"]
 type FloorPlans = NonNullable<LISTING_BY_ID_QUERY_RESULT>["floorPlans"]
 
-type DescriptionProps = {
+type ListingDescriptionProps = {
   excerpt: Content["excerpt"]
   description: Content["description"]
   floorPlans: FloorPlans | null | undefined
@@ -72,14 +70,14 @@ function getFloorPlanItemsWithUrl(
   )
 }
 
-export function Description({
+export function ListingDescription({
   excerpt,
   description,
   floorPlans,
   locale,
-}: DescriptionProps) {
+}: ListingDescriptionProps) {
   const t = useTranslations("listingDetail")
-  const { ref: sectionRef, show } = useInView()
+  const { ref: wrapRef } = useGsapReveal()
 
   const panelId = useId()
   const toggleId = useId()
@@ -89,40 +87,6 @@ export function Description({
   const hasDescription = hasPortableText(description, locale)
   const planItems = getFloorPlanItemsWithUrl(floorPlans)
   const hasFloorPlans = planItems.length > 0
-  const shouldShow = hasExcerpt || hasDescription || hasFloorPlans
-
-  /* Initial state */
-  useLayoutEffect(() => {
-    if (!shouldShow || !sectionRef.current) {
-      return
-    }
-
-    gsap.set(sectionRef.current, { opacity: 0, y: 20 })
-  }, [shouldShow])
-
-  /* Entry animation */
-  useEffect(() => {
-    if (!show || !shouldShow || !sectionRef.current) {
-      return
-    }
-
-    if (prefersReducedMotion()) {
-      gsap.set(sectionRef.current, { opacity: 1, y: 0 })
-      return
-    }
-
-    gsap.to(sectionRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power2.out",
-      clearProps: "all",
-    })
-  }, [show, shouldShow])
-
-  if (!shouldShow) {
-    return null
-  }
 
   const firstPlan = planItems[0]
   const firstAsset = firstPlan?.asset
@@ -136,7 +100,7 @@ export function Description({
         : "md:justify-start"
 
   return (
-    <section ref={sectionRef} className="w-full" style={{ opacity: 0 }}>
+    <div ref={wrapRef} className="w-full" style={{ opacity: 0 }}>
       <div className="w-full">
         {/* EXCERPT */}
         {hasExcerpt ? (
@@ -247,6 +211,6 @@ export function Description({
           </div>
         ) : null}
       </div>
-    </section>
+    </div>
   )
 }

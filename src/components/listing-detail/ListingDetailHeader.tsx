@@ -1,18 +1,15 @@
 "use client"
 
-import { useEffect, useLayoutEffect, useRef } from "react"
-import gsap from "gsap"
 import { useTranslations } from "next-intl"
 
 import type { AppLocale } from "@/i18n/routing"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
 
-import { useInView } from "@/hooks/useInView"
+import { useGsapReveal } from "@/hooks/useGsapReveal"
 
 import { buildListingLocationText } from "@/lib/buildListingLocationText"
 import { formatListingPrice } from "@/lib/formatListingPrice"
-import { prefersReducedMotion } from "@/utils/reducedMotion"
 import { cn } from "@/utils/classNames"
 
 import { Button } from "@/components/ui/Button"
@@ -34,9 +31,8 @@ export function ListingDetailHeader({
   metadata,
   locale,
 }: ListingDetailHeaderProps) {
+  const { ref: wrapRef } = useGsapReveal({ delay: 0.2 })
   const t = useTranslations("listingDetail")
-
-  const sectionRef = useRef<HTMLElement>(null)
 
   const title = pickLocalizedString(content.title, locale)
   const locationText = buildListingLocationText(location)
@@ -53,37 +49,8 @@ export function ListingDetailHeader({
     `Placeholder 2`,
   ].filter(Boolean)
 
-  /* Initial state */
-  useLayoutEffect(() => {
-    if (!sectionRef.current) {
-      return
-    }
-
-    gsap.set(sectionRef.current, { opacity: 0, y: 20 })
-  }, [])
-
-  /* Entry animation */
-  useEffect(() => {
-    if (!sectionRef.current) {
-      return
-    }
-
-    if (prefersReducedMotion()) {
-      gsap.set(sectionRef.current, { opacity: 1, y: 0 })
-      return
-    }
-
-    gsap.to(sectionRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power2.out",
-      clearProps: "all",
-    })
-  }, [])
-
   return (
-    <section ref={sectionRef} className="w-full" style={{ opacity: 0 }}>
+    <section ref={wrapRef} className="w-full" style={{ opacity: 0 }}>
       <div className="flex flex-col items-start justify-between gap-4">
         <div
           className={cn(

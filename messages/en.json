@@ -19,6 +19,7 @@
     "energyClassNotClassifiable": "Not classifiable",
     "energyClassInProgress": "In progress",
     "listingMapBlockAria": "Location map: open in Google Maps.",
+    "positionInfoTitle": "Location",
     "relatedListingsTitle": "Related listings"
   },
   "listingsResults": {

@@ -149,6 +149,10 @@ export {
   type ProvinceFieldOptions,
 } from "./location/provinceField"
 export { mapField, type MapFieldOptions } from "./location/mapField"
+export {
+  positionInfoField,
+  type PositionInfoFieldOptions,
+} from "./location/positionInfoField"
 
 /* Parking */
 export { carBoxField, type CarBoxFieldOptions } from "./parking/carBoxField"
