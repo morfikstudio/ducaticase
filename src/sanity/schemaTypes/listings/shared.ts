@@ -177,10 +177,7 @@ export function listingPreview(options?: ListingPreviewOptions) {
 
       const baseTitle = locationText ?? typologyTitle ?? categoryTitle ?? "—"
       const title = baseTitle
-      const subtitle = [
-        contractLabel,
-        typologyTitle,
-      ]
+      const subtitle = [contractLabel, typologyTitle]
         .filter((s): s is string => typeof s === "string" && s !== "")
         .join(" · ")
 

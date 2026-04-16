@@ -130,9 +130,7 @@ export function ListingsList({
   }
 
   if (showNoListingsMessage) {
-    return (
-      <p className="type-body-1 text-primary">{t("noListingsFound")}</p>
-    )
+    return <p className="type-body-1 text-primary">{t("noListingsFound")}</p>
   }
 
   return (

@@ -14,9 +14,10 @@ type SiteContentDoc = {
   sectionType?: SectionType
 }
 
-function titleAndSectionForNewDocument(
-  document: SiteContentDoc | undefined,
-): { title: string; sectionType: SectionType } {
+function titleAndSectionForNewDocument(document: SiteContentDoc | undefined): {
+  title: string
+  sectionType: SectionType
+} {
   if (document?.sectionType === "menu") {
     return { title: "Menu", sectionType: "menu" }
   }

@@ -82,7 +82,8 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
   }, [])
 
   const openMenu = useCallback(() => {
-    previousFocusBeforeMenuRef.current = document.activeElement as HTMLElement | null
+    previousFocusBeforeMenuRef.current =
+      document.activeElement as HTMLElement | null
     setIsMenuOpen(true)
   }, [])
 

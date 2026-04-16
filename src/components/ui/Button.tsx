@@ -115,11 +115,7 @@ function renderIcon(icon: ButtonIcon) {
             stroke="currentColor"
             strokeWidth="1.6"
           />
-          <path
-            d="M9.7998 9.9V0"
-            stroke="currentColor"
-            strokeWidth="1.6"
-          />
+          <path d="M9.7998 9.9V0" stroke="currentColor" strokeWidth="1.6" />
         </svg>
       )
     default:

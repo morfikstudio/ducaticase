@@ -35,7 +35,9 @@ export default defineConfig({
   plugins: [
     itITLocale(),
     structureTool({ structure }),
-    ...(googleMapsApiKey ? [googleMapsInput({ apiKey: googleMapsApiKey })] : []),
+    ...(googleMapsApiKey
+      ? [googleMapsInput({ apiKey: googleMapsApiKey })]
+      : []),
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
   ],

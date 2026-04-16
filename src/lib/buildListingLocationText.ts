@@ -4,7 +4,9 @@ export type ListingLocationLike = {
   province?: string | null
 } | null
 
-export function getListingStreetLine(location: ListingLocationLike): string | null {
+export function getListingStreetLine(
+  location: ListingLocationLike,
+): string | null {
   const address = location?.address
   const street = [address?.streetName, address?.streetNumber]
     .map((p) => (typeof p === "string" ? p.trim() : ""))
@@ -14,7 +16,9 @@ export function getListingStreetLine(location: ListingLocationLike): string | nu
   return street || null
 }
 
-export function getListingCityLine(location: ListingLocationLike): string | null {
+export function getListingCityLine(
+  location: ListingLocationLike,
+): string | null {
   const city = location?.city?.trim()
   const province = location?.province?.trim()
   const cityWithProvince =
@@ -25,8 +29,12 @@ export function getListingCityLine(location: ListingLocationLike): string | null
   return cityWithProvince || null
 }
 
-export function buildListingLocationText(location: ListingLocationLike): string | null {
-  return [getListingStreetLine(location), getListingCityLine(location)]
-    .filter(Boolean)
-    .join(" · ") || null
+export function buildListingLocationText(
+  location: ListingLocationLike,
+): string | null {
+  return (
+    [getListingStreetLine(location), getListingCityLine(location)]
+      .filter(Boolean)
+      .join(" · ") || null
+  )
 }
