@@ -14,6 +14,8 @@ import { EnergyClassDisplay } from "@/components/listing-detail/EnergyClassDispl
 import { ListingLocationMap } from "@/components/listing-detail/ListingLocationMap"
 import { RelatedListings } from "@/components/listing-detail/RelatedListings"
 
+import { buildOptionalSpecRows } from "@/lib/listingOptionalSpecs"
+
 type Props = {
   params: Promise<{ locale: string; id: string }>
 }
@@ -61,6 +63,13 @@ export default async function ListingDetailPage({ params }: Props) {
 
   const hasValidRelatedListings = listing.relatedListings.length > 0
 
+  const optionalSpecRows = buildOptionalSpecRows(
+    listing.metadata._type,
+    listing.additionalFields,
+    locale,
+  )
+  const hasOptionalSpecs = optionalSpecRows.length > 0
+
   return (
     <main className="w-full overflow-x-clip">
       <Container className="pt-20 md:pt-10">
@@ -97,9 +106,11 @@ export default async function ListingDetailPage({ params }: Props) {
           </section>
         ) : null}
 
-        <section className="my-16 md:my-32">
-          <ListingSpecs />
-        </section>
+        {hasOptionalSpecs ? (
+          <section className="my-16 md:my-32">
+            <ListingSpecs rows={optionalSpecRows} />
+          </section>
+        ) : null}
 
         {energyClass ? (
           <section className="my-16 md:my-32">

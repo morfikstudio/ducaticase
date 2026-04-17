@@ -20,7 +20,38 @@
     "energyClassInProgress": "In fase di realizzazione",
     "listingMapBlockAria": "Mappa della posizione: apri in Google Maps.",
     "positionInfoTitle": "Posizione",
-    "relatedListingsTitle": "Immobili correlati"
+    "relatedListingsTitle": "Immobili correlati",
+    "specs": {
+      "title": "Caratteristiche",
+      "booleanYes": "Sì",
+      "booleanNo": "No",
+      "unitSqm": "mq",
+      "values": {
+        "autonomous": "Autonomo",
+        "centralized": "Centralizzato",
+        "preInstallation": "Predisposizione impianto",
+        "other": "Altro",
+        "furnished": "Arredato",
+        "unfurnished": "Non arredato",
+        "partiallyFurnished": "Parzialmente arredato",
+        "kitchenOnlyFurnished": "Solo cucina arredata",
+        "private": "Privato",
+        "shared": "Comune",
+        "privateAndShared": "Privato e comune",
+        "single": "Singolo",
+        "double": "Doppio",
+        "covered": "Coperto",
+        "uncovered": "Scoperto",
+        "yes": "Sì",
+        "condominium": "Condominiale",
+        "fullDay": "Intera giornata",
+        "halfDay": "Mezza giornata",
+        "none": "No",
+        "openSpace": "Open space",
+        "individualOffices": "Uffici singoli",
+        "unknown": "—"
+      }
+    }
   },
   "listingsResults": {
     "headerTitle": "I nostri Immobili",

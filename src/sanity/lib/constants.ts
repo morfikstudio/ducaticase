@@ -130,8 +130,8 @@ export const OPTIONAL_FIELD_LABELS: Record<string, LocalizedLabel> = {
     it: "Specifiche aggiuntive",
     en: "Additional specifications",
   },
-  buildable: { it: "Edificabile", en: "Buildable" },
-  agricultural: { it: "Agricolo", en: "Agricultural" },
+  isBuildable: { it: "Edificabile", en: "Buildable" },
+  isAgricultural: { it: "Agricolo", en: "Agricultural" },
 }
 
 export function typologyOptionsForStudio(

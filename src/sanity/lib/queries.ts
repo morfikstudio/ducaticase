@@ -260,8 +260,8 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
         customSpecifications
       },
       _type == "listingLand" => {
-        buildable,
-        agricultural
+        isBuildable,
+        isAgricultural
       }
     ),
     "relatedListings": *[

@@ -20,7 +20,38 @@
     "energyClassInProgress": "In progress",
     "listingMapBlockAria": "Location map: open in Google Maps.",
     "positionInfoTitle": "Location",
-    "relatedListingsTitle": "Related listings"
+    "relatedListingsTitle": "Related listings",
+    "specs": {
+      "title": "Features",
+      "booleanYes": "Yes",
+      "booleanNo": "No",
+      "unitSqm": "sqm",
+      "values": {
+        "autonomous": "Autonomous",
+        "centralized": "Centralized",
+        "preInstallation": "Pre-installation",
+        "other": "Other",
+        "furnished": "Furnished",
+        "unfurnished": "Unfurnished",
+        "partiallyFurnished": "Partially furnished",
+        "kitchenOnlyFurnished": "Kitchen only furnished",
+        "private": "Private",
+        "shared": "Shared",
+        "privateAndShared": "Private and shared",
+        "single": "Single",
+        "double": "Double",
+        "covered": "Covered",
+        "uncovered": "Uncovered",
+        "yes": "Yes",
+        "condominium": "Condominium",
+        "fullDay": "Full day",
+        "halfDay": "Half day",
+        "none": "None",
+        "openSpace": "Open space",
+        "individualOffices": "Individual offices",
+        "unknown": "—"
+      }
+    }
   },
   "listingsResults": {
     "headerTitle": "Our Properties",
