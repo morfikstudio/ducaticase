@@ -26,7 +26,11 @@ export type UseGsapRevealResult<T extends HTMLElement = HTMLDivElement> = {
   ref: RefObject<T | null>
   /** True once the element is within one viewport-height of the visible area. Never resets. */
   load: boolean
-  /** True once the top of the element has crossed the 75% mark of the viewport height. Never resets. */
+  /**
+   * True once the reveal should run: at load, if the element intersects the
+   * full viewport; after load, when it intersects the scroll reveal zone
+   * (root margin −25% bottom). Never resets.
+   */
   show: boolean
 }
 
@@ -79,12 +83,15 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
     loadObserver.observe(el)
     showObserver.observe(el)
 
-    // Synchronous check for elements already in viewport at load time —
-    // IntersectionObserver fires asynchronously and would otherwise miss the
-    // initial state for above-the-fold elements.
+    /** Synchronous check: IO fires async and can miss the first paint. For
+     * `show`, treat "already on screen at load" as any overlap with the full
+     * viewport — not the scroll reveal band (−25% bottom), which only applies
+     * once the user scrolls elements in from outside the viewport.
+     */
     const rect = el.getBoundingClientRect()
+    const intersectsFullViewport = rect.bottom > 0 && rect.top < vh
     if (rect.top < vh + marginPx) setLoad(true)
-    if (rect.top < vh * 0.75) setInViewShow(true)
+    if (intersectsFullViewport) setInViewShow(true)
 
     return () => {
       loadObserver.disconnect()
