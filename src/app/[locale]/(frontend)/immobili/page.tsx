@@ -23,7 +23,7 @@ export default async function ListingsPage({ params }: ListingsPageProps) {
   })) as LISTINGS_PREVIEW_QUERY_RESULT
 
   return (
-    <main>
+    <main className="w-full overflow-x-clip">
       <ListingsStoreHydrator listings={listings} />
       <Suspense fallback={<LoadingSpinner className="min-h-[40vh]" />}>
         <ListingsResults locale={locale} />

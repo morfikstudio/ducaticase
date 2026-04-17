@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl"
 
 import { useGsapReveal } from "@/hooks/useGsapReveal"
+
 import { LISTING_STATIC_MAP_ZOOM } from "@/lib/listingStaticMap"
 import {
   buildListingLocationText,

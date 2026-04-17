@@ -1,16 +1,9 @@
 "use client"
 
-import {
-  useEffect,
-  useLayoutEffect,
-  type Dispatch,
-  type SetStateAction,
-} from "react"
+import { type Dispatch, type SetStateAction } from "react"
 import { useTranslations } from "next-intl"
-import gsap from "gsap"
 
-import { useInView } from "@/hooks/useInView"
-import { prefersReducedMotion } from "@/utils/reducedMotion"
+import { useGsapReveal } from "@/hooks/useGsapReveal"
 import { cn } from "@/utils/classNames"
 
 import { Button } from "@/components/ui/Button"
@@ -56,33 +49,11 @@ export function ListingsResultsToolbar({
   onChangeSort,
 }: ListingsResultsToolbarProps) {
   const t = useTranslations("listingsResults")
-  const { ref: sectionRef, show } = useInView()
-
-  useLayoutEffect(() => {
-    if (!sectionRef.current) return
-    gsap.set(sectionRef.current, { opacity: 0, y: 20 })
-  }, [sectionRef])
-
-  useEffect(() => {
-    if (!show || !sectionRef.current) return
-
-    if (prefersReducedMotion()) {
-      gsap.set(sectionRef.current, { opacity: 1, y: 0 })
-      return
-    }
-
-    gsap.to(sectionRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power2.out",
-      clearProps: "all",
-    })
-  }, [show, sectionRef])
+  const { ref: wrapRef } = useGsapReveal()
 
   return (
     <section
-      ref={sectionRef}
+      ref={wrapRef}
       style={{ opacity: 0 }}
       aria-label={t("toolbarSectionAriaLabel")}
     >

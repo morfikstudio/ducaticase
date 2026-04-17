@@ -134,17 +134,15 @@ export function ListingsList({
   }
 
   return (
-    <>
-      <section aria-label={t("listingsGridSectionAriaLabel")}>
-        <ul
-          ref={ulRef}
-          className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8"
-        >
-          {listings.map((entry) => (
-            <ListingCard key={entry._id} entry={entry} locale={locale} />
-          ))}
-        </ul>
-      </section>
+    <section aria-label={t("listingsGridSectionAriaLabel")}>
+      <ul
+        ref={ulRef}
+        className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8"
+      >
+        {listings.map((entry) => (
+          <ListingCard key={entry._id} entry={entry} locale={locale} />
+        ))}
+      </ul>
 
       {totalCount > LISTINGS_PAGE_SIZE ? (
         <div className="mt-16 md:mt-24">
@@ -155,6 +153,6 @@ export function ListingsList({
           />
         </div>
       ) : null}
-    </>
+    </section>
   )
 }

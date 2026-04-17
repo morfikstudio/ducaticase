@@ -132,12 +132,12 @@ export default async function ListingDetailPage({ params }: Props) {
         ) : null}
 
         {hasValidRelatedListings ? (
-          <div className="my-16 md:my-32">
+          <section className="my-16 md:my-32">
             <RelatedListings
               entries={listing.relatedListings}
               locale={locale}
             />
-          </div>
+          </section>
         ) : null}
       </Container>
     </main>

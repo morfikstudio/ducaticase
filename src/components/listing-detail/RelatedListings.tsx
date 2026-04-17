@@ -11,7 +11,8 @@ import type {
   LISTINGS_PREVIEW_QUERY_RESULT,
 } from "@/sanity/types"
 
-import { useInView } from "@/hooks/useInView"
+import { useGsapReveal } from "@/hooks/useGsapReveal"
+
 import { prefersReducedMotion } from "@/utils/reducedMotion"
 
 import { ListingCard } from "@/components/cards/ListingCard"
@@ -27,37 +28,16 @@ type RelatedListingsProps = {
 
 export function RelatedListings({ locale, entries }: RelatedListingsProps) {
   const t = useTranslations("listingDetail")
-  const { ref: sectionRef, show } = useInView()
+  const { ref: wrapRef } = useGsapReveal()
+
   const cards = entries as ListingPreviewEntry[]
-
-  useLayoutEffect(() => {
-    if (!sectionRef.current) return
-    gsap.set(sectionRef.current, { opacity: 0, y: 20 })
-  }, [sectionRef])
-
-  useEffect(() => {
-    if (!show || !sectionRef.current) return
-
-    if (prefersReducedMotion()) {
-      gsap.set(sectionRef.current, { opacity: 1, y: 0 })
-      return
-    }
-
-    gsap.to(sectionRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power2.out",
-      clearProps: "all",
-    })
-  }, [show, sectionRef])
 
   if (entries.length === 0) {
     return null
   }
 
   return (
-    <section ref={sectionRef} style={{ opacity: 0 }}>
+    <div ref={wrapRef} style={{ opacity: 0 }}>
       <h2 className="type-heading-1 text-primary mb-8 md:mb-12">
         {t("relatedListingsTitle")}
       </h2>
@@ -84,6 +64,6 @@ export function RelatedListings({ locale, entries }: RelatedListingsProps) {
           <ListingCard key={entry._id} entry={entry} locale={locale} />
         ))}
       </ul>
-    </section>
+    </div>
   )
 }
