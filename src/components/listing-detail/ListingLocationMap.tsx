@@ -108,8 +108,15 @@ export function ListingLocationMap({
   ) : null
 
   const mapBlock = (
-    <div
+    <a
+      href={externalMapsUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={t("listingMapBlockAria")}
       className={cn(
+        "group relative block cursor-pointer rounded-sm outline-none",
+        "transition-opacity group-hover:opacity-90",
+        "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg",
         "w-full rounded-md overflow-hidden bg-light-gray",
         "aspect-4/5 md:aspect-video",
         "md:min-w-0",
@@ -128,51 +135,50 @@ export function ListingLocationMap({
           decoding="async"
         />
       </picture>
-    </div>
+
+      <span
+        aria-hidden
+        className={cn(
+          "pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2",
+          "flex size-7 items-center justify-center rounded-full bg-black shadow-md",
+          "md:size-8",
+        )}
+      >
+        <span className="size-1.5 rounded-full bg-white md:size-2" />
+      </span>
+    </a>
   )
 
   return (
     <div ref={wrapRef} className="w-full" style={{ opacity: 0 }}>
-      <a
-        href={externalMapsUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={t("listingMapBlockAria")}
+      <div
         className={cn(
-          "group block cursor-pointer rounded-sm outline-none",
-          "transition-opacity group-hover:opacity-90",
-          "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg",
+          "mt-8 gap-8",
+          bothTextBlocks && [
+            "flex flex-col",
+            "md:grid md:grid-cols-[minmax(0,auto)_minmax(0,1fr)] md:grid-rows-[auto_auto]",
+            "md:items-start",
+          ],
+          hasPositionBlock &&
+            !hasAddress && [
+              "grid [grid-template-areas:'info'_'pic']",
+              "md:[grid-template-areas:'info'_'pic']",
+            ],
+          !hasPositionBlock &&
+            hasAddress && [
+              "grid [grid-template-areas:'addr'_'pic']",
+              "md:grid-cols-[minmax(0,auto)_minmax(0,1fr)] md:grid-rows-1",
+              "md:[grid-template-areas:'addr_pic']",
+            ],
+          !hasPositionBlock &&
+            !hasAddress &&
+            "grid grid-cols-1 [grid-template-areas:'pic']",
         )}
       >
-        <div
-          className={cn(
-            "mt-8 gap-8",
-            bothTextBlocks && [
-              "flex flex-col",
-              "md:grid md:grid-cols-[minmax(0,auto)_minmax(0,1fr)] md:grid-rows-[auto_auto]",
-              "md:items-start",
-            ],
-            hasPositionBlock &&
-              !hasAddress && [
-                "grid [grid-template-areas:'info'_'pic']",
-                "md:[grid-template-areas:'info'_'pic']",
-              ],
-            !hasPositionBlock &&
-              hasAddress && [
-                "grid [grid-template-areas:'addr'_'pic']",
-                "md:grid-cols-[minmax(0,auto)_minmax(0,1fr)] md:grid-rows-1",
-                "md:[grid-template-areas:'addr_pic']",
-              ],
-            !hasPositionBlock &&
-              !hasAddress &&
-              "grid grid-cols-1 [grid-template-areas:'pic']",
-          )}
-        >
-          {hasPositionBlock ? positionBlock : null}
-          {hasAddress ? addressBlock : null}
-          {mapBlock}
-        </div>
-      </a>
+        {hasPositionBlock ? positionBlock : null}
+        {hasAddress ? addressBlock : null}
+        {mapBlock}
+      </div>
     </div>
   )
 }
