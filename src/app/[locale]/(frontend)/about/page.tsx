@@ -76,6 +76,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
         )
       })}
 
+      {/* today section */}
       {hasTodaySection && (
         <section>
           <AboutSection
