@@ -13,7 +13,7 @@ import { Container } from "@/components/ui/Container"
 import { SanityImage } from "@/components/ui/SanityImage"
 import { PortableTextComponent } from "@/components/ui/PortableText"
 
-type SplitBannerProps = {
+type SplitSectionProps = {
   title?: string
   subtitle?: string
   body?: Parameters<typeof PortableTextComponent>[0]["text"]
@@ -25,7 +25,7 @@ type SplitBannerProps = {
   reverse?: boolean
 }
 
-export function SplitBanner({
+export function SplitSection({
   title = "",
   subtitle = "",
   body,
@@ -34,7 +34,7 @@ export function SplitBanner({
   imagePortrait,
   imageAlt,
   reverse = false,
-}: SplitBannerProps) {
+}: SplitSectionProps) {
   const hasAnyImage = Boolean(imageLandscape ?? imagePortrait)
 
   const [imageReady, setImageReady] = useState(!hasAnyImage)

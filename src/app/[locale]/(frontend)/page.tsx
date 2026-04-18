@@ -1,5 +1,5 @@
-import { SplitBanner } from "@/components/split-banner"
-import { StatementHero } from "@/components/statement-hero"
+import { SplitBanner } from "@/components/SplitBanner"
+import { StatementHero } from "@/components/StatementHero"
 import { Spacer } from "@/components/ui/Spacer"
 
 export default async function Page() {

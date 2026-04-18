@@ -12,8 +12,8 @@ import type {
 import { LenisProvider } from "@/components/providers/LenisProvider"
 import { BreakpointProvider } from "@/components/providers/BreakpointProvider"
 import { FocusVisibleModality } from "@/components/providers/FocusVisibleProvider"
-import { Breadcrumbs } from "@/components/breadcrumbs"
-import { NavBar } from "@/components/nav/NavBar"
+import { Breadcrumbs } from "@/components/Breadcrumbs"
+import { NavBar } from "@/components/NavBar"
 import { Footer } from "@/components/footer"
 
 import { footerContentFromSanity } from "@/lib/formatFooterContent"

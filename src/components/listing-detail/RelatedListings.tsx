@@ -15,7 +15,7 @@ import { useGsapReveal } from "@/hooks/useGsapReveal"
 
 import { prefersReducedMotion } from "@/utils/reducedMotion"
 
-import { ListingCard } from "@/components/cards/ListingCard"
+import { ListingCard } from "@/components/ListingCard"
 
 import "swiper/css"
 

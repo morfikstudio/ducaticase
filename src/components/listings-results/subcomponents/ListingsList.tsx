@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef } from "react"
 import { useTranslations } from "next-intl"
 import gsap from "gsap"
 
-import { ListingCard } from "@/components/cards/ListingCard"
+import { ListingCard } from "@/components/ListingCard"
 import type { AppLocale } from "@/i18n/routing"
 import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
 

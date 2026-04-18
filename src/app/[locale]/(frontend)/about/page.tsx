@@ -5,9 +5,9 @@ import { pickLocalizedString } from "@/sanity/lib/locale"
 import { ABOUT_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
 import type { ABOUT_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
 
-import { HeroText } from "@/components/about/HeroText"
-import { SplitBanner } from "@/components/about/SplitBanner"
-import { AboutSection } from "@/components/about/AboutSection"
+import { HeroText } from "@/components/HeroText"
+import { SplitSection } from "@/components/SplitSection"
+import { AboutSection } from "@/components/AboutSection"
 
 type AboutPageProps = {
   params: Promise<{ locale: string }>
@@ -63,7 +63,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
         return (
           <section key={block._key}>
-            <SplitBanner
+            <SplitSection
               title={title}
               subtitle={subtitle}
               body={block.body ?? undefined}
