@@ -7,6 +7,7 @@ import type { ABOUT_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
 
 import { HeroText } from "@/components/about/HeroText"
 import { SplitBanner } from "@/components/about/SplitBanner"
+import { AboutSection } from "@/components/about/AboutSection"
 
 type AboutPageProps = {
   params: Promise<{ locale: string }>
@@ -28,6 +29,17 @@ export default async function AboutPage({ params }: AboutPageProps) {
   const heroMobile = data?.aboutPage?.heroImages?.imageMobile
 
   const blocks = data?.aboutPage?.historySection ?? []
+
+  const today = data?.aboutPage?.todaySection
+  const todayTitle =
+    pickLocalizedString(today?.title ?? undefined, locale) ?? ""
+  const todaySubtitle =
+    pickLocalizedString(today?.subtitle ?? undefined, locale) ?? ""
+  const todayText = pickLocalizedString(today?.text ?? undefined, locale) ?? ""
+  const hasTodaySection =
+    todayTitle.trim() !== "" ||
+    todaySubtitle.trim() !== "" ||
+    todayText.trim() !== ""
 
   return (
     <main className="w-full overflow-x-clip">
@@ -63,6 +75,16 @@ export default async function AboutPage({ params }: AboutPageProps) {
           </section>
         )
       })}
+
+      {hasTodaySection && (
+        <section>
+          <AboutSection
+            title={todayTitle}
+            subtitle={todaySubtitle}
+            text={todayText}
+          />
+        </section>
+      )}
     </main>
   )
 }

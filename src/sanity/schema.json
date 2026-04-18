@@ -8147,6 +8147,14 @@
             }
           },
           "optional": true
+        },
+        "todaySection": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "aboutTodaySection"
+          },
+          "optional": true
         }
       }
     }
@@ -8402,6 +8410,46 @@
                 }
               }
             }
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "aboutTodaySection",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "aboutTodaySection"
+          }
+        },
+        "title": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedString"
+          },
+          "optional": true
+        },
+        "subtitle": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedString"
+          },
+          "optional": true
+        },
+        "text": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedText"
           },
           "optional": true
         }

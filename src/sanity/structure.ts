@@ -42,12 +42,12 @@ export const structure: StructureResolver = (S) =>
                     ]),
                 ),
               S.listItem()
-                .title("About Page")
+                .title("Pagina About")
                 .icon(DesktopIcon)
                 .id("siteContentAboutPage")
                 .child(
                   S.documentList()
-                    .title("About Page")
+                    .title("Pagina About")
                     .schemaType("siteContent")
                     .filter(
                       '_type == "siteContent" && sectionType == "aboutPage"',

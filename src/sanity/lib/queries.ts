@@ -67,6 +67,11 @@ export const ABOUT_SITE_CONTENT_QUERY = defineQuery(groq`
               asset->
             }
           }
+        },
+        todaySection {
+          title,
+          subtitle,
+          text
         }
       }
     }

@@ -28,10 +28,10 @@ export default defineConfig({
   initialValueTemplates: [
     {
       id: "siteContent-aboutPage",
-      title: "About Page",
+      title: "Pagina About",
       schemaType: "siteContent",
       value: () => ({
-        title: "About Page",
+        title: "Pagina About",
         sectionType: "aboutPage",
       }),
     },

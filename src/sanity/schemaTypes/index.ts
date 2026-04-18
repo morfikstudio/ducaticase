@@ -5,6 +5,7 @@ import { customSpecificationItem } from "./objects/customSpecificationItem"
 import { aboutHeroResponsiveImage } from "./objects/aboutHeroResponsiveImage"
 import { aboutHistoryBlock } from "./objects/aboutHistoryBlock"
 import { aboutPageSettings } from "./objects/aboutPageSettings"
+import { aboutTodaySection } from "./objects/aboutTodaySection"
 import { aboutResponsiveImage } from "./objects/aboutResponsiveImage"
 import { menuSettings } from "./objects/menuSettings"
 import { footerSettings } from "./objects/footerSettings"
@@ -21,6 +22,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     aboutResponsiveImage,
     aboutHeroResponsiveImage,
     aboutHistoryBlock,
+    aboutTodaySection,
     aboutPageSettings,
     menuSettings,
     footerSettings,

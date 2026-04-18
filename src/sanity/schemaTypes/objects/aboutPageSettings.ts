@@ -12,7 +12,8 @@ export const aboutPageSettings = defineType({
   groups: [
     { ...ALL_FIELDS_GROUP, hidden: true },
     { name: "hero", title: "Hero", default: true },
-    { name: "history", title: "Storia" },
+    { name: "history", title: "La nostra Storia" },
+    { name: "today", title: "Chi siamo oggi" },
   ],
   fields: [
     defineField({
@@ -33,6 +34,12 @@ export const aboutPageSettings = defineType({
       type: "array",
       group: "history",
       of: [defineArrayMember({ type: "aboutHistoryBlock" })],
+    }),
+    defineField({
+      name: "todaySection",
+      title: "Contenuto",
+      type: "aboutTodaySection",
+      group: "today",
     }),
   ],
 })

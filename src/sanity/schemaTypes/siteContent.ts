@@ -6,10 +6,19 @@ import { apiVersion } from "../env"
 const SECTION_OPTIONS = [
   { title: "Footer", value: "footer" },
   { title: "Menu", value: "menu" },
-  { title: "About Page", value: "aboutPage" },
+  { title: "Pagina About", value: "aboutPage" },
 ] as const
 
 type SectionType = (typeof SECTION_OPTIONS)[number]["value"]
+
+const SITE_CONTENT_LIST_PREVIEW_TITLE: Record<
+  "footer" | "menu" | "aboutPage",
+  string
+> = {
+  footer: "Footer",
+  menu: "Menu",
+  aboutPage: "Pagina About",
+}
 
 type SiteContentDoc = {
   sectionType?: SectionType
@@ -23,7 +32,7 @@ function titleAndSectionForNewDocument(document: SiteContentDoc | undefined): {
     return { title: "Menu", sectionType: "menu" }
   }
   if (document?.sectionType === "aboutPage") {
-    return { title: "About Page", sectionType: "aboutPage" }
+    return { title: "Pagina About", sectionType: "aboutPage" }
   }
   return { title: "Footer", sectionType: "footer" }
 }
@@ -75,7 +84,7 @@ export const siteContent = defineType({
             : section === "menu"
               ? "Menu"
               : section === "aboutPage"
-                ? "About Page"
+                ? "Pagina About"
                 : section
         return `Esiste già un documento ${label}. Elimina quello esistente prima di crearne un altro.`
       }
@@ -106,21 +115,21 @@ export const siteContent = defineType({
     }),
     defineField({
       name: "footer",
-      title: "Footer",
+      title: "Contenuto",
       type: "footerSettings",
       hidden: ({ document }) =>
         (document as SiteContentDoc)?.sectionType !== "footer",
     }),
     defineField({
       name: "menu",
-      title: "Menu",
+      title: "Contenuto",
       type: "menuSettings",
       hidden: ({ document }) =>
         (document as SiteContentDoc)?.sectionType !== "menu",
     }),
     defineField({
       name: "aboutPage",
-      title: "About Page",
+      title: "Contenuto",
       type: "aboutPageSettings",
       hidden: ({ document }) =>
         (document as SiteContentDoc)?.sectionType !== "aboutPage",
@@ -137,9 +146,9 @@ export const siteContent = defineType({
         sectionType === "menu" ||
         sectionType === "aboutPage"
       ) {
-        const option = SECTION_OPTIONS.find((o) => o.value === sectionType)
+        const key = sectionType as keyof typeof SITE_CONTENT_LIST_PREVIEW_TITLE
         return {
-          title: option?.title ?? "Contenuto sito",
+          title: SITE_CONTENT_LIST_PREVIEW_TITLE[key],
         }
       }
       const trimmed = typeof title === "string" ? title.trim() : ""
