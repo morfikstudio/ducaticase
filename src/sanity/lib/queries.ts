@@ -34,6 +34,44 @@ export const FOOTER_SITE_CONTENT_QUERY = defineQuery(groq`
     }
 `)
 
+export const ABOUT_SITE_CONTENT_QUERY = defineQuery(groq`
+  *[_type == "siteContent" && sectionType == "aboutPage"]
+    | order(_updatedAt desc)
+    [0] {
+      _id,
+      aboutPage {
+        heroImages {
+          "imageDesktop": imageDesktop {
+            ...,
+            asset->
+          },
+          "imageMobile": imageMobile {
+            ...,
+            asset->
+          }
+        },
+        heroText,
+        historySection[] {
+          _key,
+          title,
+          subtitle,
+          body,
+          reverse,
+          images {
+            "imageDesktop": imageDesktop {
+              ...,
+              asset->
+            },
+            "imageMobile": imageMobile {
+              ...,
+              asset->
+            }
+          }
+        }
+      }
+    }
+`)
+
 export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`
   *[_type in [
     "listingResidential",

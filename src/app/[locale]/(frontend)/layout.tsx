@@ -48,7 +48,9 @@ export default async function FrontendLayout({
   return (
     <LenisProvider>
       <NavBar locale={locale} menuContent={menuContent} />
-      <Breadcrumbs />
+      <div className="absolute top-0 left-0 w-full z-10">
+        <Breadcrumbs />
+      </div>
       <div className="flex min-h-screen flex-col">
         <div className="flex-1">{children}</div>
       </div>

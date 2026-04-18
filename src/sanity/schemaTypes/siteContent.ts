@@ -6,6 +6,7 @@ import { apiVersion } from "../env"
 const SECTION_OPTIONS = [
   { title: "Footer", value: "footer" },
   { title: "Menu", value: "menu" },
+  { title: "About Page", value: "aboutPage" },
 ] as const
 
 type SectionType = (typeof SECTION_OPTIONS)[number]["value"]
@@ -20,6 +21,9 @@ function titleAndSectionForNewDocument(document: SiteContentDoc | undefined): {
 } {
   if (document?.sectionType === "menu") {
     return { title: "Menu", sectionType: "menu" }
+  }
+  if (document?.sectionType === "aboutPage") {
+    return { title: "About Page", sectionType: "aboutPage" }
   }
   return { title: "Footer", sectionType: "footer" }
 }
@@ -44,7 +48,11 @@ export const siteContent = defineType({
       if (!doc?.sectionType) {
         return true
       }
-      if (doc.sectionType !== "footer" && doc.sectionType !== "menu") {
+      if (
+        doc.sectionType !== "footer" &&
+        doc.sectionType !== "menu" &&
+        doc.sectionType !== "aboutPage"
+      ) {
         return true
       }
       const id = doc._id
@@ -66,7 +74,9 @@ export const siteContent = defineType({
             ? "Footer"
             : section === "menu"
               ? "Menu"
-              : section
+              : section === "aboutPage"
+                ? "About Page"
+                : section
         return `Esiste già un documento ${label}. Elimina quello esistente prima di crearne un altro.`
       }
       return true
@@ -108,6 +118,13 @@ export const siteContent = defineType({
       hidden: ({ document }) =>
         (document as SiteContentDoc)?.sectionType !== "menu",
     }),
+    defineField({
+      name: "aboutPage",
+      title: "About Page",
+      type: "aboutPageSettings",
+      hidden: ({ document }) =>
+        (document as SiteContentDoc)?.sectionType !== "aboutPage",
+    }),
   ],
   preview: {
     select: {
@@ -115,7 +132,11 @@ export const siteContent = defineType({
       sectionType: "sectionType",
     },
     prepare({ title, sectionType }) {
-      if (sectionType === "footer" || sectionType === "menu") {
+      if (
+        sectionType === "footer" ||
+        sectionType === "menu" ||
+        sectionType === "aboutPage"
+      ) {
         const option = SECTION_OPTIONS.find((o) => o.value === sectionType)
         return {
           title: option?.title ?? "Contenuto sito",

@@ -25,6 +25,17 @@ export default defineConfig({
   projectId,
   dataset,
   schema,
+  initialValueTemplates: [
+    {
+      id: "siteContent-aboutPage",
+      title: "About Page",
+      schemaType: "siteContent",
+      value: () => ({
+        title: "About Page",
+        sectionType: "aboutPage",
+      }),
+    },
+  ],
   document: {
     newDocumentOptions: (prev) =>
       prev.map((item) => ({

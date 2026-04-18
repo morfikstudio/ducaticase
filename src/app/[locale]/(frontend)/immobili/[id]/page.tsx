@@ -71,7 +71,7 @@ export default async function ListingDetailPage({ params }: Props) {
   const hasOptionalSpecs = optionalSpecRows.length > 0
 
   return (
-    <main className="w-full overflow-x-clip">
+    <main className="w-full overflow-x-clip md:pt-32">
       <Container className="pt-20 md:pt-10">
         {hasValidGallery ? (
           <section>

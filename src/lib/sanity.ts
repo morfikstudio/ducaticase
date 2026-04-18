@@ -38,3 +38,20 @@ export function getSanityImageUrl(
 
   return img.dpr(2).url()
 }
+
+const HERO_DESKTOP_16_9 = { width: 2400, height: 1350 } as const
+const HERO_MOBILE_9_16 = { width: 1080, height: 1920 } as const
+
+/**
+ * URL immagine hero con ritaglio 16:9 (desktop) o 9:16 (mobile), usando hotspot Sanity.
+ */
+export function getAboutHeroBackgroundUrl(
+  image: SanityImageSource | null | undefined,
+  variant: "desktop16_9" | "mobile9_16",
+  quality = 82,
+): string | undefined {
+  if (!image) return undefined
+  const { width, height } =
+    variant === "desktop16_9" ? HERO_DESKTOP_16_9 : HERO_MOBILE_9_16
+  return getSanityImageUrl(image, width, height, quality)
+}

@@ -41,6 +41,24 @@ export const structure: StructureResolver = (S) =>
                       { field: "_updatedAt", direction: "desc" },
                     ]),
                 ),
+              S.listItem()
+                .title("About Page")
+                .icon(DesktopIcon)
+                .id("siteContentAboutPage")
+                .child(
+                  S.documentList()
+                    .title("About Page")
+                    .schemaType("siteContent")
+                    .filter(
+                      '_type == "siteContent" && sectionType == "aboutPage"',
+                    )
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem("siteContent-aboutPage"),
+                    ])
+                    .defaultOrdering([
+                      { field: "_updatedAt", direction: "desc" },
+                    ]),
+                ),
             ]),
         ),
       S.divider(),
