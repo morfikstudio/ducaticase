@@ -1,18 +1,16 @@
 "use client"
 
 import { useCallback, useState, useMemo } from "react"
-import Image from "next/image"
 import { useTranslations } from "next-intl"
 
 import type { AppLocale } from "@/i18n/routing"
 
-import { pickLocalizedString } from "@/sanity/lib/locale"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
 
 import { useBreakpoint } from "@/stores/breakpointStore"
 import { useGsapReveal } from "@/hooks/useGsapReveal"
 
-import { getSanityImageUrl } from "@/lib/sanity"
+import { SanityImage } from "@/components/ui/SanityImage"
 import { cn } from "@/utils/classNames"
 
 import { GalleryLightbox } from "./GalleryLightbox"
@@ -70,15 +68,18 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
               "md:col-span-1 md:row-span-2 md:aspect-auto",
             )}
           >
-            <Image
-              src={getSanityImageUrl(mainImage, 950, 530) ?? ""}
-              alt={
-                pickLocalizedString(mainImage?.alt ?? undefined, locale) ?? ""
-              }
+            <SanityImage
+              landscape={mainImage}
+              locale={locale}
+              landscapeParams={{
+                width: 950,
+                height: 530,
+                sizes: "(min-width: 768px) 64vw, 100vw",
+                quality: 50,
+              }}
               fill
-              className="object-cover"
-              sizes="(min-width: 768px) 64vw, 100vw"
               priority
+              className="object-cover"
               onLoad={bumpGateProgress}
               onError={bumpGateProgress}
             />
@@ -86,15 +87,11 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
 
           {/* THUMBS */}
           {[0, 1, 2, 3].map((i) => {
-            const url = thumbs[i]
-              ? getSanityImageUrl(thumbs[i], 300, 300)
-              : undefined
-            const alt =
-              pickLocalizedString(thumbs[i]?.alt ?? undefined, locale) ?? ""
+            const thumb = thumbs[i]
             const wrapperClassName = i >= 2 ? "hidden md:block" : undefined
             const isViewAll = i === viewAllIndex
 
-            if (!url) return null
+            if (!thumb) return null
 
             if (isViewAll) {
               return (
@@ -107,12 +104,17 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                   )}
                   onClick={() => setLightboxIndex(0)}
                 >
-                  <Image
-                    src={url}
-                    alt={alt}
+                  <SanityImage
+                    landscape={thumb}
+                    locale={locale}
+                    landscapeParams={{
+                      width: 300,
+                      height: 300,
+                      sizes: "(min-width: 768px) 18vw, 50vw",
+                      quality: 50,
+                    }}
                     fill
                     className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                    sizes="(min-width: 768px) 18vw, 50vw"
                     onLoad={bumpGateProgress}
                     onError={bumpGateProgress}
                   />
@@ -136,12 +138,16 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                   wrapperClassName,
                 )}
               >
-                <Image
-                  src={url}
-                  alt={alt}
+                <SanityImage
+                  landscape={thumb}
+                  locale={locale}
+                  landscapeParams={{
+                    width: 300,
+                    height: 300,
+                    sizes: "(min-width: 768px) 18vw, 50vw",
+                  }}
                   fill
                   className="object-cover"
-                  sizes="(min-width: 768px) 18vw, 50vw"
                   onLoad={bumpGateProgress}
                   onError={bumpGateProgress}
                 />

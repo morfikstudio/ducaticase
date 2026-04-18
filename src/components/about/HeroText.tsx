@@ -3,6 +3,7 @@
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
 import type { AppLocale } from "@/i18n/routing"
+
 import { useGsapReveal } from "@/hooks/useGsapReveal"
 
 import { cn } from "@/utils/classNames"
@@ -13,19 +14,19 @@ import { SanityImage } from "@/components/ui/SanityImage"
 type HeroTextProps = {
   text: string
   locale: AppLocale
-  heroDesktop?: SanityImageSource | null
-  heroMobile?: SanityImageSource | null
+  heroLandscape?: SanityImageSource | null
+  heroPortrait?: SanityImageSource | null
 }
 
 export function HeroText({
   text,
   locale,
-  heroDesktop,
-  heroMobile,
+  heroLandscape,
+  heroPortrait,
 }: HeroTextProps) {
   const { ref: wrapRef } = useGsapReveal()
 
-  const hasBg = Boolean(heroDesktop ?? heroMobile)
+  const hasBg = Boolean(heroLandscape ?? heroPortrait)
 
   return (
     <div
@@ -36,16 +37,16 @@ export function HeroText({
       {hasBg ? (
         <>
           <SanityImage
-            desktop={heroDesktop}
-            mobile={heroMobile}
+            landscape={heroLandscape}
+            portrait={heroPortrait}
             locale={locale}
-            desktopParams={{
+            landscapeParams={{
               width: 2400,
               height: 1350,
               quality: 82,
               sizes: "100vw",
             }}
-            mobileParams={{
+            portraitParams={{
               width: 1080,
               height: 1920,
               quality: 82,

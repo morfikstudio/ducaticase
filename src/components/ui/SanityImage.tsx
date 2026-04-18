@@ -21,17 +21,17 @@ function localizedAltFromSource(
 
 /**
  * Resolves the `alt` string: optional `alt` prop wins; otherwise localized
- * `alt` from desktop image, then mobile, using `locale`; if still empty,
+ * `alt` from the landscape image, then portrait, using `locale`; if still empty,
  * `altFallback` (e.g. section title).
  */
 export function resolveSanityImageAlt(options: {
   alt?: string
   locale?: AppLocale
-  desktop?: SanityImageSource | null
-  mobile?: SanityImageSource | null
+  landscape?: SanityImageSource | null
+  portrait?: SanityImageSource | null
   altFallback?: string
 }): string {
-  const { alt, locale, desktop, mobile, altFallback } = options
+  const { alt, locale, landscape, portrait, altFallback } = options
 
   if (alt !== undefined) {
     return alt
@@ -39,8 +39,8 @@ export function resolveSanityImageAlt(options: {
 
   if (locale) {
     const fromCms =
-      pickLocalizedString(localizedAltFromSource(desktop), locale) ??
-      pickLocalizedString(localizedAltFromSource(mobile), locale) ??
+      pickLocalizedString(localizedAltFromSource(landscape), locale) ??
+      pickLocalizedString(localizedAltFromSource(portrait), locale) ??
       ""
     if (fromCms.trim() !== "") {
       return fromCms
@@ -62,14 +62,14 @@ type ImageParams = {
 }
 
 type SanityImageProps = {
-  /** Desktop image source from Sanity (at least one of desktop/mobile required). */
-  desktop?: SanityImageSource | null
-  /** Mobile image source from Sanity (at least one of desktop/mobile required). */
-  mobile?: SanityImageSource | null
+  /** Landscape-oriented asset (shown from `breakpoint` upward). */
+  landscape?: SanityImageSource | null
+  /** Portrait-oriented asset (shown below `breakpoint`). */
+  portrait?: SanityImageSource | null
 
   /**
    * When set, overrides `alt` from the Sanity image fields (`alt` localized on
-   * desktop, then mobile). Omit to derive from CMS using `locale`.
+   * landscape, then portrait). Omit to derive from CMS using `locale`.
    */
   alt?: string
 
@@ -79,14 +79,14 @@ type SanityImageProps = {
   /** If CMS `alt` is empty and `alt` prop is omitted, use this string (e.g. heading). */
   altFallback?: string
 
-  /** Params for URL generation and Next.js Image dimensions — desktop variant. */
-  desktopParams: ImageParams
-  /** Params for URL generation and Next.js Image dimensions — mobile variant.
-   *  Falls back to `desktopParams` when omitted. */
-  mobileParams?: ImageParams
+  /** Params for URL generation and Next.js Image dimensions — landscape variant. */
+  landscapeParams: ImageParams
+  /** Params for URL generation and Next.js Image dimensions — portrait variant.
+   *  Falls back to `landscapeParams` when omitted. */
+  portraitParams?: ImageParams
 
-  /** Tailwind breakpoint at which the desktop image is shown (default "md").
-   *  Below the breakpoint the mobile image is shown. */
+  /** Tailwind breakpoint from which the landscape image is shown (default "md").
+   *  Below the breakpoint the portrait image is shown. */
   breakpoint?: "sm" | "md" | "lg" | "xl"
 
   /** Use Next.js fill mode — the parent must have `position: relative/absolute/fixed`.
@@ -103,10 +103,10 @@ type SanityImageProps = {
 }
 
 const BREAKPOINT_CLASSES = {
-  sm: { desktop: "hidden sm:block", mobile: "sm:hidden" },
-  md: { desktop: "hidden md:block", mobile: "md:hidden" },
-  lg: { desktop: "hidden lg:block", mobile: "lg:hidden" },
-  xl: { desktop: "hidden xl:block", mobile: "xl:hidden" },
+  sm: { landscape: "hidden sm:block", portrait: "sm:hidden" },
+  md: { landscape: "hidden md:block", portrait: "md:hidden" },
+  lg: { landscape: "hidden lg:block", portrait: "lg:hidden" },
+  xl: { landscape: "hidden xl:block", portrait: "xl:hidden" },
 } as const
 
 /** Next.js `Image` needs a positive height for aspect ratio when `fill` is false. */
@@ -116,13 +116,13 @@ function intrinsicImageHeight(width: number, height?: number): number {
 }
 
 export function SanityImage({
-  desktop,
-  mobile,
+  landscape,
+  portrait,
   alt,
   locale,
   altFallback,
-  desktopParams,
-  mobileParams,
+  landscapeParams,
+  portraitParams,
   breakpoint = "md",
   fill = false,
   priority = false,
@@ -130,21 +130,31 @@ export function SanityImage({
   onLoad,
   onError,
 }: SanityImageProps) {
-  const dp = desktopParams
-  const mp = mobileParams ?? desktopParams
+  const lp = landscapeParams
+  const pp = portraitParams ?? landscapeParams
 
   const resolvedAlt = resolveSanityImageAlt({
     alt,
     locale,
-    desktop,
-    mobile,
+    landscape,
+    portrait,
     altFallback,
   })
 
-  const desktopUrl = getSanityImageUrl(desktop, dp.width, dp.height, dp.quality)
-  const mobileUrl = getSanityImageUrl(mobile, mp.width, mp.height, mp.quality)
+  const landscapeUrl = getSanityImageUrl(
+    landscape,
+    lp.width,
+    lp.height,
+    lp.quality,
+  )
+  const portraitUrl = getSanityImageUrl(
+    portrait,
+    pp.width,
+    pp.height,
+    pp.quality,
+  )
 
-  const hasBoth = Boolean(desktopUrl && mobileUrl)
+  const hasBoth = Boolean(landscapeUrl && portraitUrl)
   const bpClasses = BREAKPOINT_CLASSES[breakpoint]
 
   const sharedProps = {
@@ -154,41 +164,41 @@ export function SanityImage({
     onError,
   } as const
 
-  if (hasBoth && desktopUrl && mobileUrl) {
+  if (hasBoth && landscapeUrl && portraitUrl) {
     return (
       <>
         <Image
           {...sharedProps}
-          src={desktopUrl}
+          src={landscapeUrl}
           {...(fill
             ? { fill: true }
             : {
-                width: dp.width,
-                height: intrinsicImageHeight(dp.width, dp.height),
+                width: lp.width,
+                height: intrinsicImageHeight(lp.width, lp.height),
                 style: { width: "100%", height: "auto" },
               })}
-          sizes={dp.sizes}
-          className={cn(bpClasses.desktop, className)}
+          sizes={lp.sizes}
+          className={cn(bpClasses.landscape, className)}
         />
         <Image
           {...sharedProps}
-          src={mobileUrl}
+          src={portraitUrl}
           {...(fill
             ? { fill: true }
             : {
-                width: mp.width,
-                height: intrinsicImageHeight(mp.width, mp.height),
+                width: pp.width,
+                height: intrinsicImageHeight(pp.width, pp.height),
                 style: { width: "100%", height: "auto" },
               })}
-          sizes={mp.sizes}
-          className={cn(bpClasses.mobile, className)}
+          sizes={pp.sizes}
+          className={cn(bpClasses.portrait, className)}
         />
       </>
     )
   }
 
-  const singleUrl = desktopUrl ?? mobileUrl
-  const singleParams = desktopUrl ? dp : mp
+  const singleUrl = landscapeUrl ?? portraitUrl
+  const singleParams = landscapeUrl ? lp : pp
 
   if (!singleUrl) return null
 

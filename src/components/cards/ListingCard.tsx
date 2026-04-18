@@ -1,10 +1,8 @@
-import Image from "next/image"
 import { useTranslations } from "next-intl"
 
 import { Link } from "@/i18n/navigation"
 import type { AppLocale } from "@/i18n/routing"
 import { formatListingPrice } from "@/lib/formatListingPrice"
-import { getSanityImageUrl } from "@/lib/sanity"
 import { CATEGORY_OPTIONS } from "@/sanity/lib/constants"
 import { listingContractTypeLabel } from "@/sanity/lib/listingContractTypeLabel"
 import { pickLocalizedString } from "@/sanity/lib/locale"
@@ -13,6 +11,7 @@ import type {
   LISTINGS_PREVIEW_QUERY_RESULT,
   LocalizedString,
 } from "@/sanity/types"
+import { SanityImage } from "@/components/ui/SanityImage"
 import { cn } from "@/utils/classNames"
 
 type ListingsEntry = LISTINGS_PREVIEW_QUERY_RESULT[number]
@@ -24,7 +23,6 @@ type ListingCardProps = {
 
 export function ListingCard({ entry, locale }: ListingCardProps) {
   const t = useTranslations("listingsResults")
-  const thumbUrl = getSanityImageUrl(entry.mainImage, 1200, 1500, 30)
   const typology = listingTypologyLabel(entry._type, entry.typology, locale)
   const listingTitle = pickLocalizedString(entry.title, locale)
   const label = pickLocalizedString(
@@ -78,13 +76,19 @@ export function ListingCard({ entry, locale }: ListingCardProps) {
         target="_self"
       >
         <div className="absolute inset-0">
-          {thumbUrl ? (
-            <Image
-              src={thumbUrl}
+          {entry.mainImage ? (
+            <SanityImage
+              landscape={entry.mainImage}
+              locale={locale}
               alt={title}
+              landscapeParams={{
+                width: 1200,
+                height: 1500,
+                quality: 30,
+                sizes: "(min-width: 768px) 50vw, 100vw",
+              }}
               fill
               className="object-cover transition duration-500 group-hover:scale-[1.03]"
-              sizes="(min-width: 768px) 50vw, 100vw"
             />
           ) : (
             <div className="h-full w-full bg-linear-to-br from-neutral-700 to-neutral-900" />

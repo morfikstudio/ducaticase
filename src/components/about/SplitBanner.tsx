@@ -1,21 +1,25 @@
 "use client"
 
+import { useCallback, useState } from "react"
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
 import type { AppLocale } from "@/i18n/routing"
+
 import { useGsapReveal } from "@/hooks/useGsapReveal"
-import { PortableTextComponent } from "@/components/ui/PortableText"
-import { SanityImage } from "@/components/ui/SanityImage"
+
 import { cn } from "@/utils/classNames"
+
 import { Container } from "@/components/ui/Container"
+import { SanityImage } from "@/components/ui/SanityImage"
+import { PortableTextComponent } from "@/components/ui/PortableText"
 
 type SplitBannerProps = {
   title?: string
   subtitle?: string
   body?: Parameters<typeof PortableTextComponent>[0]["text"]
   locale: AppLocale
-  imageDesktop?: SanityImageSource | null
-  imageMobile?: SanityImageSource | null
+  imageLandscape?: SanityImageSource | null
+  imagePortrait?: SanityImageSource | null
   /** Overrides localized CMS `alt` when set. */
   imageAlt?: string
   reverse?: boolean
@@ -26,14 +30,21 @@ export function SplitBanner({
   subtitle = "",
   body,
   locale,
-  imageDesktop,
-  imageMobile,
+  imageLandscape,
+  imagePortrait,
   imageAlt,
   reverse = false,
 }: SplitBannerProps) {
-  const { ref: wrapRef } = useGsapReveal()
+  const hasAnyImage = Boolean(imageLandscape ?? imagePortrait)
 
-  const hasAnyImage = Boolean(imageDesktop ?? imageMobile)
+  const [imageReady, setImageReady] = useState(!hasAnyImage)
+  const handleImageSettled = useCallback(() => {
+    requestAnimationFrame(() => {
+      setImageReady(true)
+    })
+  }, [])
+
+  const { ref: wrapRef } = useGsapReveal({ ready: imageReady })
 
   return (
     <div
@@ -75,21 +86,23 @@ export function SplitBanner({
           {hasAnyImage ? (
             <div className="mt-24 w-full lg:mt-0 lg:flex-1 lg:min-w-0">
               <SanityImage
-                desktop={imageDesktop}
-                mobile={imageMobile}
+                landscape={imageLandscape}
+                portrait={imagePortrait}
                 locale={locale}
                 alt={imageAlt}
                 altFallback={title}
                 breakpoint="lg"
-                desktopParams={{
+                landscapeParams={{
                   width: 1400,
                   sizes: "(max-width: 1023px) 0px, (min-width: 1024px) 75vw",
                 }}
-                mobileParams={{
+                portraitParams={{
                   width: 900,
                   sizes: "(max-width: 1023px) 100vw, 0px",
                 }}
                 className="h-auto w-full"
+                onLoad={handleImageSettled}
+                onError={handleImageSettled}
               />
             </div>
           ) : null}

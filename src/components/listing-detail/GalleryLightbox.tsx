@@ -2,17 +2,15 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { createPortal } from "react-dom"
-import Image from "next/image"
 import { useTranslations } from "next-intl"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Keyboard } from "swiper/modules"
 import type { Swiper as SwiperType } from "swiper"
 
 import type { AppLocale } from "@/i18n/routing"
-import { pickLocalizedString } from "@/sanity/lib/locale"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
-import { getSanityImageUrl } from "@/lib/sanity"
 
+import { SanityImage } from "@/components/ui/SanityImage"
 import { useBreakpoint } from "@/stores/breakpointStore"
 import { useLenis } from "@/components/providers/LenisProvider"
 import { cn } from "@/utils/classNames"
@@ -227,8 +225,6 @@ export function GalleryLightbox({
     return () => document.removeEventListener("keydown", handleKey)
   }, [handleClose])
 
-  if (!mounted) return null
-
   const counter = useMemo(
     () =>
       t("imageCount", {
@@ -237,6 +233,8 @@ export function GalleryLightbox({
       }),
     [currentIndex, images.length, t],
   )
+
+  if (!mounted) return null
 
   const content = (
     <div
@@ -270,42 +268,42 @@ export function GalleryLightbox({
           className="h-full w-full"
           data-lenis-prevent
         >
-          {images.map((image, i) => {
-            const url = getSanityImageUrl(image, isMobile ? 1200 : 1800)
-            const alt =
-              pickLocalizedString(image?.alt ?? undefined, locale) ?? ""
-
-            return (
-              <SwiperSlide
-                key={i}
-                className={cn(
-                  "box-border flex items-center justify-center",
-                  isMobile ? "h-auto! w-full" : "relative h-full! w-full",
-                )}
-              >
-                {url ? (
-                  isMobile ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={url}
-                      alt={alt}
-                      className="w-full h-auto block"
-                      loading={i === initialIndex ? "eager" : "lazy"}
-                    />
-                  ) : (
-                    <Image
-                      src={url}
-                      alt={alt}
-                      fill
-                      className="object-contain"
-                      sizes="(min-width: 768px) calc(100vw - 100px), 100vw"
-                      priority={i === initialIndex}
-                    />
-                  )
-                ) : null}
-              </SwiperSlide>
-            )
-          })}
+          {images.map((image, i) => (
+            <SwiperSlide
+              key={i}
+              className={cn(
+                "box-border flex items-center justify-center",
+                isMobile ? "h-auto! w-full" : "relative h-full! w-full",
+              )}
+            >
+              {isMobile ? (
+                <SanityImage
+                  landscape={image}
+                  locale={locale}
+                  landscapeParams={{
+                    width: 1200,
+                    sizes: "100vw",
+                  }}
+                  priority={i === initialIndex}
+                  className="block h-auto w-full"
+                />
+              ) : (
+                <div className="relative h-full w-full">
+                  <SanityImage
+                    landscape={image}
+                    locale={locale}
+                    landscapeParams={{
+                      width: 1800,
+                      sizes: "(min-width: 768px) calc(100vw - 100px), 100vw",
+                    }}
+                    fill
+                    priority={i === initialIndex}
+                    className="object-contain"
+                  />
+                </div>
+              )}
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
 

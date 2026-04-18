@@ -35,8 +35,8 @@ export default async function AboutPage({ params }: AboutPageProps) {
         <HeroText
           text={heroText}
           locale={locale}
-          heroDesktop={heroDesktop}
-          heroMobile={heroMobile}
+          heroLandscape={heroDesktop}
+          heroPortrait={heroMobile}
         />
       </section>
 
@@ -56,8 +56,8 @@ export default async function AboutPage({ params }: AboutPageProps) {
               subtitle={subtitle}
               body={block.body ?? undefined}
               locale={locale}
-              imageDesktop={desktop}
-              imageMobile={mobile}
+              imageLandscape={desktop}
+              imagePortrait={mobile}
               reverse={block.reverse === true}
             />
           </section>
