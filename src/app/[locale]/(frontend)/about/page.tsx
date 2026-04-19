@@ -8,6 +8,7 @@ import type { ABOUT_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
 import { HeroText } from "@/components/HeroText"
 import { SplitSection } from "@/components/SplitSection"
 import { AboutSection } from "@/components/AboutSection"
+import { FeatureGrid } from "@/components/FeatureGrid"
 import { SplitBanner } from "@/components/SplitBanner"
 
 type AboutPageProps = {
@@ -45,6 +46,28 @@ export default async function AboutPage({ params }: AboutPageProps) {
     todayTitle.trim() !== "" ||
     todaySubtitle.trim() !== "" ||
     todayText.trim() !== ""
+
+  // SECTORS SECTION
+  const sectorsRaw = data?.aboutPage?.sectorsSection ?? []
+  const sectorsWithImage = sectorsRaw.filter(
+    (
+      block,
+    ): block is (typeof sectorsRaw)[number] & {
+      image: NonNullable<(typeof sectorsRaw)[number]["image"]>
+    } => Boolean(block.image?.asset),
+  )
+  const hasSectorsSection = sectorsWithImage.length > 0
+  const sectorsHeading =
+    pickLocalizedString(
+      data?.aboutPage?.sectorsHeading ?? undefined,
+      locale,
+    )?.trim() || "I settori in cui operiamo"
+  const sectorItems = sectorsWithImage.map((block) => ({
+    _key: block._key,
+    title: pickLocalizedString(block.title ?? undefined, locale) ?? "",
+    text: pickLocalizedString(block.text ?? undefined, locale) ?? "",
+    image: block.image,
+  }))
 
   // HIGHLIGHTS SECTION
   const highlightsRaw = data?.aboutPage?.highlightsSection ?? []
@@ -105,6 +128,17 @@ export default async function AboutPage({ params }: AboutPageProps) {
           />
         </section>
       )}
+
+      {/* sectors section */}
+      {hasSectorsSection ? (
+        <section>
+          <FeatureGrid
+            heading={sectorsHeading}
+            items={sectorItems}
+            locale={locale}
+          />
+        </section>
+      ) : null}
 
       {/* highlights section */}
       {hasHighlightsSection ? (

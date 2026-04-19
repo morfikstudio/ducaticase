@@ -24,17 +24,15 @@ export function AboutSection({ title, subtitle, text }: AboutSectionProps) {
         "lg:min-h-svh",
       )}
     >
-      <div
-        ref={wrapRef}
-        style={{ opacity: 0 }}
-        className="flex w-full flex-1 md:items-center"
-      >
+      <div className="flex w-full flex-1 md:items-center">
         <Container className="w-full">
           <div
             className={cn(
               "grid grid-cols-12 gap-y-10 md:items-start md:gap-y-0",
               "h-full",
             )}
+            ref={wrapRef}
+            style={{ opacity: 0 }}
           >
             <p
               className={cn(

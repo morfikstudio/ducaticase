@@ -12,10 +12,6 @@ import { cn } from "@/utils/classNames"
 import { ButtonCta } from "@/components/ui/ButtonCta"
 import { SanityImage } from "@/components/ui/SanityImage"
 
-/** Base 720×686 (~1.05); URL a risoluzione doppia per nitidezza (dpr già in getSanityImageUrl). */
-const SPLIT_BANNER_IMAGE_WIDTH = 1440
-const SPLIT_BANNER_IMAGE_HEIGHT = 1372
-
 /** Converte `<br>`, `<br />` ecc. in newline per `whitespace-pre-line` (contenuto da CMS/HTML leggero). */
 function brTagsToNewlines(text: string): string {
   return text.replace(/<br\s*\/?>/gi, "\n")
@@ -93,8 +89,8 @@ export function SplitBanner({
                 alt={imageAlt}
                 altFallback={title}
                 landscapeParams={{
-                  width: SPLIT_BANNER_IMAGE_WIDTH,
-                  height: SPLIT_BANNER_IMAGE_HEIGHT,
+                  width: 1440,
+                  height: 1372,
                   quality: 80,
                   sizes: "(max-width: 1023px) 100vw, 50vw",
                 }}

@@ -9,6 +9,7 @@ import { aboutHistoryBlock } from "./objects/aboutHistoryBlock"
 import { aboutPageSettings } from "./objects/aboutPageSettings"
 import { aboutTodaySection } from "./objects/aboutTodaySection"
 import { aboutResponsiveImage } from "./objects/aboutResponsiveImage"
+import { aboutSectorBlock } from "./objects/aboutSectorBlock"
 import { menuSettings } from "./objects/menuSettings"
 import { footerSettings } from "./objects/footerSettings"
 import {
@@ -25,6 +26,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     aboutHeroResponsiveImage,
     aboutHighlightCta,
     aboutHighlightBlock,
+    aboutSectorBlock,
     aboutHistoryBlock,
     aboutTodaySection,
     aboutPageSettings,

@@ -14,6 +14,7 @@ export const aboutPageSettings = defineType({
     { name: "hero", title: "Hero", default: true },
     { name: "history", title: "La nostra Storia" },
     { name: "today", title: "Chi siamo oggi" },
+    { name: "sectors", title: "I nostri settori" },
     { name: "highlights", title: "In evidenza" },
   ],
   fields: [
@@ -41,6 +42,33 @@ export const aboutPageSettings = defineType({
       title: "Contenuto",
       type: "aboutTodaySection",
       group: "today",
+    }),
+    defineField({
+      name: "sectorsHeading",
+      title: "Titolo sezione",
+      description: "Titolo sopra l’elenco dei settori (italiano e inglese).",
+      type: "localizedString",
+      group: "sectors",
+      validation: (Rule) =>
+        Rule.custom((value: { it?: string; en?: string } | undefined) => {
+          const it = value?.it?.trim() ?? ""
+          const en = value?.en?.trim() ?? ""
+          if (it === "" && en === "") return true
+          if (it === "") {
+            return "Inserisci il titolo in italiano (o svuota anche l’inglese)."
+          }
+          if (en === "") {
+            return "Inserisci il titolo in inglese (o svuota anche l’italiano)."
+          }
+          return true
+        }),
+    }),
+    defineField({
+      name: "sectorsSection",
+      title: "Settori",
+      type: "array",
+      group: "sectors",
+      of: [defineArrayMember({ type: "aboutSectorBlock" })],
     }),
     defineField({
       name: "highlightsSection",

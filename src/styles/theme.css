@@ -60,6 +60,19 @@
   }
 }
 
+@utility type-heading-2 {
+  font-family: var(--font-sans);
+  font-size: 24px;
+  line-height: 156%;
+  letter-spacing: 4%;
+  font-weight: 500;
+  text-transform: uppercase;
+
+  @media (width < 48rem) {
+    font-size: 16px;
+  }
+}
+
 @utility type-body-1 {
   font-family: var(--font-sans);
   font-size: 24px;
