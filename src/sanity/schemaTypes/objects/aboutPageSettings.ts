@@ -7,13 +7,14 @@ import {
 
 export const aboutPageSettings = defineType({
   name: "aboutPageSettings",
-  title: "Pagina About",
+  title: "Chi siamo",
   type: "object",
   groups: [
     { ...ALL_FIELDS_GROUP, hidden: true },
     { name: "hero", title: "Hero", default: true },
     { name: "history", title: "La nostra Storia" },
     { name: "today", title: "Chi siamo oggi" },
+    { name: "highlights", title: "In evidenza" },
   ],
   fields: [
     defineField({
@@ -40,6 +41,13 @@ export const aboutPageSettings = defineType({
       title: "Contenuto",
       type: "aboutTodaySection",
       group: "today",
+    }),
+    defineField({
+      name: "highlightsSection",
+      title: "In evidenza",
+      type: "array",
+      group: "highlights",
+      of: [defineArrayMember({ type: "aboutHighlightBlock" })],
     }),
   ],
 })

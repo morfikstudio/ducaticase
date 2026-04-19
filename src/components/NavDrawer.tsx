@@ -170,7 +170,7 @@ export function NavDrawer({
           "flex flex-col",
           "pointer-events-auto overflow-hidden",
           "bg-dark text-primary shadow-2xl",
-          "transition-transform duration-300 ease-out",
+          "transition-transform duration-500 ease-in-out",
           isVisible ? "translate-x-0" : "-translate-x-full md:translate-x-full",
         )}
       >
@@ -244,13 +244,22 @@ export function NavDrawer({
                       target="_blank"
                       rel="noopener noreferrer"
                       className={cn(
-                        "inline-flex items-center gap-1.5",
+                        "group inline-flex items-center gap-1.5",
                         "type-body-3 text-primary",
                         "hover:underline underline-offset-4",
                       )}
                     >
                       <span>{label}</span>
-                      <ExternalLinkIcon />
+                      <span
+                        className={cn(
+                          "inline-block origin-center",
+                          "transition-transform duration-300 ease-out",
+                          "group-hover:rotate-45",
+                        )}
+                        aria-hidden
+                      >
+                        <ExternalLinkIcon />
+                      </span>
                     </a>
                   </li>
                 ))}

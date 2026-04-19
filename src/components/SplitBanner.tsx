@@ -1,6 +1,20 @@
+"use client"
+
+import { useCallback, useState } from "react"
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
+
+import type { AppLocale } from "@/i18n/routing"
+
+import { useGsapReveal } from "@/hooks/useGsapReveal"
+
 import { cn } from "@/utils/classNames"
 
 import { ButtonCta } from "@/components/ui/ButtonCta"
+import { SanityImage } from "@/components/ui/SanityImage"
+
+/** Base 720×686 (~1.05); URL a risoluzione doppia per nitidezza (dpr già in getSanityImageUrl). */
+const SPLIT_BANNER_IMAGE_WIDTH = 1440
+const SPLIT_BANNER_IMAGE_HEIGHT = 1372
 
 /** Converte `<br>`, `<br />` ecc. in newline per `whitespace-pre-line` (contenuto da CMS/HTML leggero). */
 function brTagsToNewlines(text: string): string {
@@ -10,12 +24,12 @@ function brTagsToNewlines(text: string): string {
 export type SplitBannerProps = {
   title: string
   description: string
-  ctaLabel: string
-  /** Se assente, il CTA è mostrato come testo stilizzato (non cliccabile) */
+  ctaLabel?: string
   ctaHref?: string
-  imageSrc: string
-  imageAlt: string
-  /** Inverte colonne su desktop (immagine a sinistra) */
+  image?: SanityImageSource | null
+  locale: AppLocale
+  /** Override dell’alt localizzato da CMS (come `imageAlt` in SplitSection). */
+  imageAlt?: string
   reverse?: boolean
   className?: string
 }
@@ -23,51 +37,79 @@ export type SplitBannerProps = {
 export function SplitBanner({
   title,
   description,
-  ctaLabel,
-  ctaHref,
-  imageSrc,
+  ctaLabel = undefined,
+  ctaHref = undefined,
+  image,
+  locale,
   imageAlt,
   reverse = false,
   className,
 }: SplitBannerProps) {
+  const hasImage = Boolean(image)
+
+  const [imageReady, setImageReady] = useState(!hasImage)
+  const handleImageSettled = useCallback(() => {
+    requestAnimationFrame(() => {
+      setImageReady(true)
+    })
+  }, [])
+
+  const { ref: wrapRef } = useGsapReveal({ ready: imageReady })
+
   return (
     <section className={cn("bg-bg", className)}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 lg:min-h-[min(100vh,686px)]">
-        <div
-          className={cn(
-            "flex flex-col justify-center gap-11 px-6 py-14 lg:px-12 lg:py-20 xl:pl-24",
-            reverse ? "lg:order-2" : "lg:order-1",
-          )}
-        >
-          <div className="flex max-w-[499px] flex-col gap-7">
-            <div className="type-heading-1 text-primary">{title}</div>
-            <p className="type-body-2 whitespace-pre-line text-gray">
-              {brTagsToNewlines(description)}
-            </p>
+      <div ref={wrapRef} className="w-full" style={{ opacity: 0 }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 lg:min-h-[min(100vh,686px)]">
+          <div
+            className={cn(
+              "flex flex-col justify-center gap-11 px-6 py-16 lg:px-12 lg:py-20 xl:pl-24",
+              reverse ? "lg:order-2" : "lg:order-1",
+            )}
+          >
+            <div className="flex max-w-[500px] flex-col gap-7">
+              <div className="type-heading-1 text-primary">{title}</div>
+              <p className="type-body-2 whitespace-pre-line text-gray">
+                {brTagsToNewlines(description)}
+              </p>
+            </div>
+
+            {ctaLabel && ctaHref ? (
+              <ButtonCta className="self-start" href={ctaHref}>
+                {ctaLabel}
+              </ButtonCta>
+            ) : null}
           </div>
 
-          <ButtonCta className="self-start" href={ctaHref ?? ""}>
-            {ctaLabel}
-          </ButtonCta>
-        </div>
+          {hasImage ? (
+            <div
+              className={cn(
+                "relative aspect-720/686 w-full min-h-0 overflow-hidden lg:aspect-auto lg:h-full",
+                reverse ? "lg:order-1" : "lg:order-2",
+              )}
+            >
+              <SanityImage
+                landscape={image}
+                locale={locale}
+                alt={imageAlt}
+                altFallback={title}
+                landscapeParams={{
+                  width: SPLIT_BANNER_IMAGE_WIDTH,
+                  height: SPLIT_BANNER_IMAGE_HEIGHT,
+                  quality: 80,
+                  sizes: "(max-width: 1023px) 100vw, 50vw",
+                }}
+                fill
+                className="object-cover object-center"
+                onLoad={handleImageSettled}
+                onError={handleImageSettled}
+              />
 
-        <div
-          className={cn(
-            "relative min-h-[280px] w-full overflow-hidden lg:min-h-0",
-            reverse ? "lg:order-1" : "lg:order-2",
-          )}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element -- URL da CMS o CDN esterni */}
-          <img
-            src={imageSrc}
-            alt={imageAlt}
-            className="size-full min-h-[280px] object-cover lg:absolute lg:inset-0 lg:min-h-full"
-          />
-
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 bg-linear-to-b from-[rgba(27,27,27,0.22)] to-[rgba(0,0,0,0)] to-[20.452%]"
-          />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-linear-to-b from-[rgba(27,27,27,0.22)] to-[rgba(0,0,0,0)] to-[20.452%]"
+              />
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

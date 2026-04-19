@@ -206,13 +206,22 @@ export function Footer({ content }: FooterProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
-                    "inline-flex items-center gap-1.5",
+                    "group inline-flex items-center gap-1.5",
                     "type-body-3 text-primary",
                     "hover:underline underline-offset-4",
                   )}
                 >
                   <span>{label}</span>
-                  <ExternalLinkIcon className="translate-y-px" />
+                  <span
+                    className={cn(
+                      "inline-block origin-center translate-y-px",
+                      "transition-transform duration-300 ease-out",
+                      "group-hover:rotate-45",
+                    )}
+                    aria-hidden
+                  >
+                    <ExternalLinkIcon />
+                  </span>
                 </a>
               ))}
             </nav>

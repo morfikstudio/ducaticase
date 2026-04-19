@@ -8,6 +8,7 @@ import type { ABOUT_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
 import { HeroText } from "@/components/HeroText"
 import { SplitSection } from "@/components/SplitSection"
 import { AboutSection } from "@/components/AboutSection"
+import { SplitBanner } from "@/components/SplitBanner"
 
 type AboutPageProps = {
   params: Promise<{ locale: string }>
@@ -22,14 +23,18 @@ export default async function AboutPage({ params }: AboutPageProps) {
     revalidate: 60,
   })) as ABOUT_SITE_CONTENT_QUERY_RESULT
 
+  // HERO SECTION
   const heroText =
     pickLocalizedString(data?.aboutPage?.heroText ?? undefined, locale) ?? ""
-
   const heroDesktop = data?.aboutPage?.heroImages?.imageDesktop
   const heroMobile = data?.aboutPage?.heroImages?.imageMobile
+  const hasHeroSection = heroText.trim() !== "" || heroDesktop || heroMobile
 
+  // HISTORY BLOCKS SECTION
   const blocks = data?.aboutPage?.historySection ?? []
+  const hasHistorySection = blocks.length > 0
 
+  // TODAY SECTION
   const today = data?.aboutPage?.todaySection
   const todayTitle =
     pickLocalizedString(today?.title ?? undefined, locale) ?? ""
@@ -41,40 +46,54 @@ export default async function AboutPage({ params }: AboutPageProps) {
     todaySubtitle.trim() !== "" ||
     todayText.trim() !== ""
 
+  // HIGHLIGHTS SECTION
+  const highlightsRaw = data?.aboutPage?.highlightsSection ?? []
+  const highlightsWithImage = highlightsRaw.filter((block) =>
+    Boolean(block.image?.asset),
+  )
+  const hasHighlightsSection = highlightsWithImage.length > 0
+
   return (
     <main className="w-full overflow-x-clip">
-      <section>
-        <HeroText
-          text={heroText}
-          locale={locale}
-          heroLandscape={heroDesktop}
-          heroPortrait={heroMobile}
-        />
-      </section>
+      {/* hero section */}
+      {hasHeroSection ? (
+        <section>
+          <HeroText
+            text={heroText}
+            locale={locale}
+            heroLandscape={heroDesktop}
+            heroPortrait={heroMobile}
+          />
+        </section>
+      ) : null}
 
       {/* history blocks */}
-      {blocks.map((block) => {
-        const title =
-          pickLocalizedString(block.title ?? undefined, locale) ?? ""
-        const subtitle =
-          pickLocalizedString(block.subtitle ?? undefined, locale) ?? ""
-        const desktop = block.images?.imageDesktop
-        const mobile = block.images?.imageMobile
+      {hasHistorySection ? (
+        <section>
+          {blocks.map((block) => {
+            const title =
+              pickLocalizedString(block.title ?? undefined, locale) ?? ""
+            const subtitle =
+              pickLocalizedString(block.subtitle ?? undefined, locale) ?? ""
+            const desktop = block.images?.imageDesktop
+            const mobile = block.images?.imageMobile
 
-        return (
-          <section key={block._key}>
-            <SplitSection
-              title={title}
-              subtitle={subtitle}
-              body={block.body ?? undefined}
-              locale={locale}
-              imageLandscape={desktop}
-              imagePortrait={mobile}
-              reverse={block.reverse === true}
-            />
-          </section>
-        )
-      })}
+            return (
+              <div className="w-full" key={block._key}>
+                <SplitSection
+                  title={title}
+                  subtitle={subtitle}
+                  body={block.body ?? undefined}
+                  locale={locale}
+                  imageLandscape={desktop}
+                  imagePortrait={mobile}
+                  reverse={block.reverse === true}
+                />
+              </div>
+            )
+          })}
+        </section>
+      ) : null}
 
       {/* today section */}
       {hasTodaySection && (
@@ -86,6 +105,39 @@ export default async function AboutPage({ params }: AboutPageProps) {
           />
         </section>
       )}
+
+      {/* highlights section */}
+      {hasHighlightsSection ? (
+        <section>
+          {highlightsWithImage.map((block, index) => {
+            const title =
+              pickLocalizedString(block.title ?? undefined, locale) ?? ""
+            const description =
+              pickLocalizedString(block.text ?? undefined, locale) ?? ""
+            const imageAlt =
+              pickLocalizedString(block.image?.alt ?? undefined, locale) ?? ""
+
+            const ctaLabel =
+              pickLocalizedString(block.cta?.label ?? undefined, locale) ?? ""
+            const ctaPath = block.cta?.path?.trim() ?? ""
+            const showCta = ctaLabel.trim() !== "" && ctaPath !== ""
+
+            return (
+              <SplitBanner
+                key={block._key}
+                title={title}
+                description={description}
+                ctaLabel={showCta ? ctaLabel : undefined}
+                ctaHref={showCta ? ctaPath : undefined}
+                image={block.image ?? undefined}
+                locale={locale}
+                imageAlt={imageAlt}
+                reverse={index % 2 === 0}
+              />
+            )
+          })}
+        </section>
+      ) : null}
     </main>
   )
 }

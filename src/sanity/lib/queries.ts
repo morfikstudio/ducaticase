@@ -72,6 +72,19 @@ export const ABOUT_SITE_CONTENT_QUERY = defineQuery(groq`
           title,
           subtitle,
           text
+        },
+        highlightsSection[] {
+          _key,
+          title,
+          text,
+          image {
+            ...,
+            asset->
+          },
+          cta {
+            label,
+            path
+          }
         }
       }
     }

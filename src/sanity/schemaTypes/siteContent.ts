@@ -6,7 +6,7 @@ import { apiVersion } from "../env"
 const SECTION_OPTIONS = [
   { title: "Footer", value: "footer" },
   { title: "Menu", value: "menu" },
-  { title: "Pagina About", value: "aboutPage" },
+  { title: "Chi siamo", value: "aboutPage" },
 ] as const
 
 type SectionType = (typeof SECTION_OPTIONS)[number]["value"]
@@ -17,7 +17,7 @@ const SITE_CONTENT_LIST_PREVIEW_TITLE: Record<
 > = {
   footer: "Footer",
   menu: "Menu",
-  aboutPage: "Pagina About",
+  aboutPage: "Chi siamo",
 }
 
 type SiteContentDoc = {
@@ -32,7 +32,7 @@ function titleAndSectionForNewDocument(document: SiteContentDoc | undefined): {
     return { title: "Menu", sectionType: "menu" }
   }
   if (document?.sectionType === "aboutPage") {
-    return { title: "Pagina About", sectionType: "aboutPage" }
+    return { title: "Chi siamo", sectionType: "aboutPage" }
   }
   return { title: "Footer", sectionType: "footer" }
 }
@@ -84,7 +84,7 @@ export const siteContent = defineType({
             : section === "menu"
               ? "Menu"
               : section === "aboutPage"
-                ? "Pagina About"
+                ? "ASD siamo"
                 : section
         return `Esiste già un documento ${label}. Elimina quello esistente prima di crearne un altro.`
       }

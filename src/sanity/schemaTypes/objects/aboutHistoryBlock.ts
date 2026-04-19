@@ -36,8 +36,10 @@ export const aboutHistoryBlock = defineType({
     select: {
       titleIt: "title.it",
       subtitleIt: "subtitle.it",
+      imageDesktop: "images.imageDesktop",
+      imageMobile: "images.imageMobile",
     },
-    prepare({ titleIt, subtitleIt }) {
+    prepare({ titleIt, subtitleIt, imageDesktop, imageMobile }) {
       const title =
         typeof titleIt === "string" && titleIt.trim() !== ""
           ? titleIt.trim()
@@ -46,9 +48,11 @@ export const aboutHistoryBlock = defineType({
         typeof subtitleIt === "string" && subtitleIt.trim() !== ""
           ? subtitleIt.trim()
           : undefined
+      const media = imageDesktop ?? imageMobile
       return {
         title,
         subtitle,
+        media,
       }
     },
   },

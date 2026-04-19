@@ -3,6 +3,8 @@ import { type SchemaTypeDefinition } from "sanity"
 import { listingTypes } from "./listingTypes"
 import { customSpecificationItem } from "./objects/customSpecificationItem"
 import { aboutHeroResponsiveImage } from "./objects/aboutHeroResponsiveImage"
+import { aboutHighlightBlock } from "./objects/aboutHighlightBlock"
+import { aboutHighlightCta } from "./objects/aboutHighlightCta"
 import { aboutHistoryBlock } from "./objects/aboutHistoryBlock"
 import { aboutPageSettings } from "./objects/aboutPageSettings"
 import { aboutTodaySection } from "./objects/aboutTodaySection"
@@ -21,6 +23,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     customSpecificationItem,
     aboutResponsiveImage,
     aboutHeroResponsiveImage,
+    aboutHighlightCta,
+    aboutHighlightBlock,
     aboutHistoryBlock,
     aboutTodaySection,
     aboutPageSettings,
