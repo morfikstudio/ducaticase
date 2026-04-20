@@ -42,6 +42,24 @@ export const structure: StructureResolver = (S) =>
                     ]),
                 ),
               S.listItem()
+                .title("Home")
+                .icon(DesktopIcon)
+                .id("siteContentHomePage")
+                .child(
+                  S.documentList()
+                    .title("Home")
+                    .schemaType("siteContent")
+                    .filter(
+                      '_type == "siteContent" && sectionType == "homePage"',
+                    )
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem("siteContent-homePage"),
+                    ])
+                    .defaultOrdering([
+                      { field: "_updatedAt", direction: "desc" },
+                    ]),
+                ),
+              S.listItem()
                 .title("Chi siamo")
                 .icon(DesktopIcon)
                 .id("siteContentAboutPage")

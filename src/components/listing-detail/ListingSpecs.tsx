@@ -66,7 +66,7 @@ export function ListingSpecs({ rows }: ListingSpecsProps) {
 
   return (
     <div ref={wrapRef} className="w-full" style={{ opacity: 0 }}>
-      <h2 className="type-heading-1 text-primary">{tSpecs("title")}</h2>
+      <h2 className="type-heading-2 text-primary">{tSpecs("title")}</h2>
 
       <dl className={cn("mt-6 min-w-0", "md:columns-2 md:gap-x-6")}>
         {visibleRows.map((row, index) => (

@@ -39,7 +39,7 @@ export function FeatureGrid({ heading, locale, items }: FeatureGridProps) {
         <Container>
           <h3
             className={cn(
-              "type-heading-2 text-gray",
+              "type-heading-3 text-gray",
               "mx-auto max-md:text-center",
             )}
           >
@@ -84,7 +84,7 @@ function FeatureCard({ title, text, image, locale }: FeatureCardProps) {
         "px-6 pb-8 pt-10 md:rounded-[6px] md:px-8 md:pb-10 md:pt-12",
       )}
     >
-      <div className="type-heading-1 text-accent shrink-0 md:max-w-[300px]">
+      <div className="type-heading-2 text-accent shrink-0 md:max-w-[300px]">
         {title}
       </div>
 

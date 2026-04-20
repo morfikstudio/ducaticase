@@ -27,6 +27,15 @@ export default defineConfig({
   schema,
   initialValueTemplates: [
     {
+      id: "siteContent-homePage",
+      title: "Home",
+      schemaType: "siteContent",
+      value: () => ({
+        title: "Home",
+        sectionType: "homePage",
+      }),
+    },
+    {
       id: "siteContent-aboutPage",
       title: "Chi siamo",
       schemaType: "siteContent",

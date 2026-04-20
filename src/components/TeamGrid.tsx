@@ -90,7 +90,7 @@ export function TeamGrid({
             {title && (
               <div
                 className={cn(
-                  "type-heading-2 md:type-body-2 md:font-medium",
+                  "type-heading-3 md:type-body-2 md:font-medium",
                   "text-dark-gray",
                 )}
               >
@@ -99,7 +99,7 @@ export function TeamGrid({
             )}
 
             {subtitle && (
-              <div className="type-body-1 md:type-heading-1">{subtitle}</div>
+              <div className="type-body-1 md:type-heading-2">{subtitle}</div>
             )}
           </div>
 

@@ -68,7 +68,7 @@ export function HeroText({
           <Container>
             <h1
               className={cn(
-                "type-heading-1 max-md:text-[30px] md:text-center text-primary",
+                "type-heading-2 max-md:text-[30px] md:text-center text-primary",
                 "mx-auto md:max-w-[900px]",
               )}
             >

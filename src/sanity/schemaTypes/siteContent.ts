@@ -6,17 +6,19 @@ import { apiVersion } from "../env"
 const SECTION_OPTIONS = [
   { title: "Footer", value: "footer" },
   { title: "Menu", value: "menu" },
+  { title: "Home", value: "homePage" },
   { title: "Chi siamo", value: "aboutPage" },
 ] as const
 
 type SectionType = (typeof SECTION_OPTIONS)[number]["value"]
 
 const SITE_CONTENT_LIST_PREVIEW_TITLE: Record<
-  "footer" | "menu" | "aboutPage",
+  "footer" | "menu" | "homePage" | "aboutPage",
   string
 > = {
   footer: "Footer",
   menu: "Menu",
+  homePage: "Home",
   aboutPage: "Chi siamo",
 }
 
@@ -30,6 +32,9 @@ function titleAndSectionForNewDocument(document: SiteContentDoc | undefined): {
 } {
   if (document?.sectionType === "menu") {
     return { title: "Menu", sectionType: "menu" }
+  }
+  if (document?.sectionType === "homePage") {
+    return { title: "Home", sectionType: "homePage" }
   }
   if (document?.sectionType === "aboutPage") {
     return { title: "Chi siamo", sectionType: "aboutPage" }
@@ -60,6 +65,7 @@ export const siteContent = defineType({
       if (
         doc.sectionType !== "footer" &&
         doc.sectionType !== "menu" &&
+        doc.sectionType !== "homePage" &&
         doc.sectionType !== "aboutPage"
       ) {
         return true
@@ -83,9 +89,11 @@ export const siteContent = defineType({
             ? "Footer"
             : section === "menu"
               ? "Menu"
-              : section === "aboutPage"
-                ? "ASD siamo"
-                : section
+              : section === "homePage"
+                ? "Home"
+                : section === "aboutPage"
+                  ? "Chi siamo"
+                  : section
         return `Esiste già un documento ${label}. Elimina quello esistente prima di crearne un altro.`
       }
       return true
@@ -128,6 +136,13 @@ export const siteContent = defineType({
         (document as SiteContentDoc)?.sectionType !== "menu",
     }),
     defineField({
+      name: "homePage",
+      title: "Contenuto",
+      type: "homePageSettings",
+      hidden: ({ document }) =>
+        (document as SiteContentDoc)?.sectionType !== "homePage",
+    }),
+    defineField({
       name: "aboutPage",
       title: "Contenuto",
       type: "aboutPageSettings",
@@ -144,6 +159,7 @@ export const siteContent = defineType({
       if (
         sectionType === "footer" ||
         sectionType === "menu" ||
+        sectionType === "homePage" ||
         sectionType === "aboutPage"
       ) {
         const key = sectionType as keyof typeof SITE_CONTENT_LIST_PREVIEW_TITLE
