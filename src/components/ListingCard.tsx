@@ -78,10 +78,10 @@ export function ListingCard({ entry, locale }: ListingCardProps) {
         <div className="absolute inset-0">
           {entry.mainImage ? (
             <SanityImage
-              landscape={entry.mainImage}
+              image={entry.mainImage}
               locale={locale}
               alt={title}
-              landscapeParams={{
+              params={{
                 width: 1200,
                 height: 1500,
                 quality: 30,

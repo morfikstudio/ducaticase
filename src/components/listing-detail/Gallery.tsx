@@ -69,9 +69,9 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
             )}
           >
             <SanityImage
-              landscape={mainImage}
+              image={mainImage}
               locale={locale}
-              landscapeParams={{
+              params={{
                 width: 950,
                 height: 530,
                 sizes: "(min-width: 768px) 64vw, 100vw",
@@ -105,9 +105,9 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                   onClick={() => setLightboxIndex(0)}
                 >
                   <SanityImage
-                    landscape={thumb}
+                    image={thumb}
                     locale={locale}
-                    landscapeParams={{
+                    params={{
                       width: 300,
                       height: 300,
                       sizes: "(min-width: 768px) 18vw, 50vw",
@@ -139,9 +139,9 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                 )}
               >
                 <SanityImage
-                  landscape={thumb}
+                  image={thumb}
                   locale={locale}
-                  landscapeParams={{
+                  params={{
                     width: 300,
                     height: 300,
                     sizes: "(min-width: 768px) 18vw, 50vw",

@@ -166,10 +166,10 @@ function MemberCardDesktop({ member, locale }: MemberCardProps) {
       <div className="relative aspect-5/7 w-full overflow-hidden bg-gray/15">
         {member.image ? (
           <SanityImage
-            landscape={member.image}
+            image={member.image}
             locale={locale}
             altFallback={title}
-            landscapeParams={{
+            params={{
               width: 788,
               height: 1106,
               quality: 85,
@@ -213,10 +213,10 @@ function MemberCardMobile({ member, locale }: MemberCardProps) {
       <div className="relative aspect-5/7 w-full overflow-hidden bg-gray/15">
         {member.image ? (
           <SanityImage
-            landscape={member.image}
+            image={member.image}
             locale={locale}
             altFallback={title}
-            landscapeParams={{
+            params={{
               width: 788,
               height: 1106,
               quality: 85,

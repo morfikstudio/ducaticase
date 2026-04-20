@@ -278,9 +278,9 @@ export function GalleryLightbox({
             >
               {isMobile ? (
                 <SanityImage
-                  landscape={image}
+                  image={image}
                   locale={locale}
-                  landscapeParams={{
+                  params={{
                     width: 1200,
                     sizes: "100vw",
                   }}
@@ -290,9 +290,9 @@ export function GalleryLightbox({
               ) : (
                 <div className="relative h-full w-full">
                   <SanityImage
-                    landscape={image}
+                    image={image}
                     locale={locale}
-                    landscapeParams={{
+                    params={{
                       width: 1800,
                       sizes: "(min-width: 768px) calc(100vw - 100px), 100vw",
                     }}

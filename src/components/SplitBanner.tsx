@@ -84,11 +84,11 @@ export function SplitBanner({
               )}
             >
               <SanityImage
-                landscape={image}
+                image={image}
                 locale={locale}
                 alt={imageAlt}
                 altFallback={title}
-                landscapeParams={{
+                params={{
                   width: 1440,
                   height: 1372,
                   quality: 80,
