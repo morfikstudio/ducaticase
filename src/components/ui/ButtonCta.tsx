@@ -9,12 +9,14 @@ export type ButtonCtaProps = Omit<AppLinkProps, "className" | "href"> & {
   href: AppLinkProps["href"]
   className?: string
   isActive?: boolean
+  variant?: "default" | "dark"
 }
 
 export function ButtonCta({
   href,
   className,
   isActive = false,
+  variant = "default",
   children,
   ...linkProps
 }: ButtonCtaProps) {
@@ -26,9 +28,11 @@ export function ButtonCta({
         "px-8 py-3",
         "type-button rounded-[4px] border",
         "transition-all duration-200",
-        isActive
-          ? "border-primary bg-primary text-accent"
-          : "border-gray text-primary hover:border-primary hover:bg-primary hover:text-accent",
+        variant === "dark"
+          ? "border-black bg-black text-white hover:border-black hover:bg-transparent hover:text-black"
+          : isActive
+            ? "border-primary bg-primary text-accent"
+            : "border-gray text-primary hover:border-primary hover:bg-primary hover:text-accent",
         className,
       )}
       {...linkProps}

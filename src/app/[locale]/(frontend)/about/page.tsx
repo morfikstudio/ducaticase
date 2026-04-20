@@ -10,6 +10,7 @@ import { SplitSection } from "@/components/SplitSection"
 import { AboutSection } from "@/components/AboutSection"
 import { FeatureGrid } from "@/components/FeatureGrid"
 import { SplitBanner } from "@/components/SplitBanner"
+import { TeamGrid } from "@/components/TeamGrid"
 
 type AboutPageProps = {
   params: Promise<{ locale: string }>
@@ -75,6 +76,25 @@ export default async function AboutPage({ params }: AboutPageProps) {
     Boolean(block.image?.asset),
   )
   const hasHighlightsSection = highlightsWithImage.length > 0
+
+  // TEAM SECTION
+  const teamSection = data?.aboutPage?.teamSection
+  const teamTitle =
+    pickLocalizedString(teamSection?.title ?? undefined, locale) ?? ""
+  const teamSubtitle =
+    pickLocalizedString(teamSection?.subtitle ?? undefined, locale) ?? ""
+  const teamText =
+    pickLocalizedString(teamSection?.text ?? undefined, locale) ?? ""
+  const teamCtaLabel =
+    pickLocalizedString(teamSection?.cta?.label ?? undefined, locale) ?? ""
+  const teamCtaPath = teamSection?.cta?.path?.trim() ?? ""
+  const showTeamCta = teamCtaLabel.trim() !== "" && teamCtaPath !== ""
+  const teamMembers = teamSection?.teamMember ?? []
+  const hasTeamSection =
+    teamTitle.trim() !== "" ||
+    teamSubtitle.trim() !== "" ||
+    teamText.trim() !== "" ||
+    teamMembers.length > 0
 
   return (
     <main className="w-full overflow-x-clip">
@@ -170,6 +190,21 @@ export default async function AboutPage({ params }: AboutPageProps) {
               />
             )
           })}
+        </section>
+      ) : null}
+
+      {/* team section */}
+      {hasTeamSection ? (
+        <section>
+          <TeamGrid
+            title={teamTitle}
+            subtitle={teamSubtitle}
+            text={teamText}
+            ctaLabel={showTeamCta ? teamCtaLabel : undefined}
+            ctaHref={showTeamCta ? teamCtaPath : undefined}
+            locale={locale}
+            members={teamMembers}
+          />
         </section>
       ) : null}
     </main>

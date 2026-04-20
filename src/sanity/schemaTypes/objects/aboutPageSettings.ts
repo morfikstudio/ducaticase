@@ -16,6 +16,7 @@ export const aboutPageSettings = defineType({
     { name: "today", title: "Chi siamo oggi" },
     { name: "sectors", title: "I nostri settori" },
     { name: "highlights", title: "In evidenza" },
+    { name: "team", title: "Il team" },
   ],
   fields: [
     defineField({
@@ -76,6 +77,12 @@ export const aboutPageSettings = defineType({
       type: "array",
       group: "highlights",
       of: [defineArrayMember({ type: "aboutHighlightBlock" })],
+    }),
+    defineField({
+      name: "teamSection",
+      title: "Il team",
+      type: "aboutTeamSection",
+      group: "team",
     }),
   ],
 })

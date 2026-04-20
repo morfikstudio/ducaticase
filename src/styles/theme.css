@@ -132,6 +132,11 @@ body {
   font-weight: 300;
 }
 
+::selection {
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
 /* ─── Focus ──────────────────────────────────────────────────────────────────── */
 
 *:focus {

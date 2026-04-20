@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity"
+import { defineArrayMember, defineField, defineType } from "sanity"
 
 import { apiVersion } from "../../env"
 import { MAX_IMAGES_BYTES } from "../../lib/constants"
@@ -6,24 +6,19 @@ import { FIELD_REQUIRED_IT } from "../../lib/validationMessages"
 
 const maxMb = MAX_IMAGES_BYTES / (1024 * 1024)
 
-type LocalizedStringValue = { it?: string; en?: string } | undefined
 type LocalizedTextValue = { it?: string; en?: string } | undefined
 
-type HighlightCtaValue =
-  | { label?: LocalizedStringValue; path?: string }
-  | undefined
-
-export const aboutHighlightBlock = defineType({
-  name: "aboutHighlightBlock",
-  title: "Highlight",
+export const teamMemberType = defineType({
+  name: "teamMemberType",
+  title: "Membro del team",
   type: "object",
   fields: [
     defineField({
       name: "title",
       title: "Titolo",
-      type: "localizedString",
+      type: "localizedText",
       validation: (Rule) =>
-        Rule.custom((value: LocalizedStringValue) => {
+        Rule.custom((value: LocalizedTextValue) => {
           const it = value?.it?.trim() ?? ""
           return it !== "" ? true : FIELD_REQUIRED_IT
         }),
@@ -41,11 +36,11 @@ export const aboutHighlightBlock = defineType({
     defineField({
       name: "image",
       title: "Immagine",
-      description: `Massimo ${maxMb} MB.`,
+      description: `Massimo ${maxMb} MB. Ritaglio consigliato 5:7.`,
       type: "image",
       options: {
         hotspot: {
-          previews: [{ title: "Anteprima", aspectRatio: 4 / 3 }],
+          previews: [{ title: "Anteprima 5:7", aspectRatio: 5 / 7 }],
         },
       },
       initialValue: {
@@ -88,31 +83,11 @@ export const aboutHighlightBlock = defineType({
         }),
     }),
     defineField({
-      name: "cta",
-      title: "Call to action (opzionale)",
-      description:
-        "Lasciare vuoto per nascondere il pulsante. Se compili un campo, compila entrambi (etichetta e pagina).",
-      type: "aboutHighlightCta",
-      validation: (Rule) =>
-        Rule.custom((value: HighlightCtaValue) => {
-          if (value == null) {
-            return true
-          }
-          const path = typeof value.path === "string" ? value.path.trim() : ""
-          const labelIt = value.label?.it?.trim() ?? ""
-          const labelEn = value.label?.en?.trim() ?? ""
-          const hasLabel = labelIt !== "" || labelEn !== ""
-          if (path === "" && !hasLabel) {
-            return true
-          }
-          if (path !== "" && !hasLabel) {
-            return "Inserisci l’etichetta se hai selezionato una pagina."
-          }
-          if (hasLabel && path === "") {
-            return "Seleziona una pagina per la call to action."
-          }
-          return true
-        }),
+      name: "roles",
+      title: "Ruoli",
+      type: "array",
+      of: [defineArrayMember({ type: "localizedString" })],
+      validation: (Rule) => Rule.min(1).error("Inserisci almeno un ruolo."),
     }),
   ],
   preview: {
@@ -124,7 +99,7 @@ export const aboutHighlightBlock = defineType({
       const title =
         typeof titleIt === "string" && titleIt.trim() !== ""
           ? titleIt.trim()
-          : "Highlight"
+          : "Membro del team"
       return { title, media }
     },
   },

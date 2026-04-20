@@ -95,6 +95,25 @@ export const ABOUT_SITE_CONTENT_QUERY = defineQuery(groq`
             ...,
             asset->
           }
+        },
+        teamSection {
+          title,
+          subtitle,
+          text,
+          cta {
+            label,
+            path
+          },
+          teamMember[] {
+            _key,
+            title,
+            text,
+            image {
+              ...,
+              asset->
+            },
+            roles[]
+          }
         }
       }
     }

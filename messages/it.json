@@ -84,5 +84,9 @@
     "paginationPageAriaLabel": "Vai alla pagina {page}",
     "reservedLocation": "Posizione riservata",
     "genericListingCategory": "Annuncio"
+  },
+  "teamGrid": {
+    "openMemberDescription": "Apri descrizione membro",
+    "closeMemberDescription": "Chiudi descrizione membro"
   }
 }

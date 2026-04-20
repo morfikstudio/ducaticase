@@ -8156,28 +8156,6 @@
           },
           "optional": true
         },
-        "highlightsSection": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "array",
-            "of": {
-              "type": "object",
-              "attributes": {
-                "_key": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              },
-              "rest": {
-                "type": "inline",
-                "name": "aboutHighlightBlock"
-              }
-            }
-          },
-          "optional": true
-        },
         "sectorsHeading": {
           "type": "objectAttribute",
           "value": {
@@ -8205,6 +8183,36 @@
                 "name": "aboutSectorBlock"
               }
             }
+          },
+          "optional": true
+        },
+        "highlightsSection": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "_key": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "rest": {
+                "type": "inline",
+                "name": "aboutHighlightBlock"
+              }
+            }
+          },
+          "optional": true
+        },
+        "teamSection": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "aboutTeamSection"
           },
           "optional": true
         }
@@ -8469,6 +8477,76 @@
     }
   },
   {
+    "name": "aboutTeamSection",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "aboutTeamSection"
+          }
+        },
+        "title": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedText"
+          },
+          "optional": true
+        },
+        "subtitle": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedText"
+          },
+          "optional": true
+        },
+        "text": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedText"
+          },
+          "optional": true
+        },
+        "cta": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "aboutHighlightCta"
+          },
+          "optional": true
+        },
+        "teamMember": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "_key": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "rest": {
+                "type": "inline",
+                "name": "teamMemberType"
+              }
+            }
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "name": "aboutTodaySection",
     "type": "type",
     "value": {
@@ -8626,6 +8704,176 @@
                   "type": "string",
                   "value": "image"
                 }
+              }
+            }
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "aboutHighlightCta",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "aboutHighlightCta"
+          }
+        },
+        "label": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedString"
+          },
+          "optional": true
+        },
+        "path": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "/"
+              },
+              {
+                "type": "string",
+                "value": "/affidaci-il-tuo-immobile"
+              },
+              {
+                "type": "string",
+                "value": "/about"
+              },
+              {
+                "type": "string",
+                "value": "/immobili"
+              },
+              {
+                "type": "string",
+                "value": "/ducati-per-le-aziende"
+              },
+              {
+                "type": "string",
+                "value": "/contact"
+              },
+              {
+                "type": "string",
+                "value": "/ricerca-su-misura"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "teamMemberType",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "teamMemberType"
+          }
+        },
+        "title": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedText"
+          },
+          "optional": true
+        },
+        "text": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedText"
+          },
+          "optional": true
+        },
+        "image": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "object",
+            "attributes": {
+              "asset": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageAsset.reference"
+                },
+                "optional": true
+              },
+              "media": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "unknown"
+                },
+                "optional": true
+              },
+              "hotspot": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageHotspot"
+                },
+                "optional": true
+              },
+              "crop": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageCrop"
+                },
+                "optional": true
+              },
+              "alt": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "localizedString"
+                },
+                "optional": true
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "image"
+                }
+              }
+            }
+          },
+          "optional": true
+        },
+        "roles": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "_key": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "rest": {
+                "type": "inline",
+                "name": "localizedString"
               }
             }
           },
@@ -8991,67 +9239,6 @@
           "value": {
             "type": "inline",
             "name": "aboutHighlightCta"
-          },
-          "optional": true
-        }
-      }
-    }
-  },
-  {
-    "name": "aboutHighlightCta",
-    "type": "type",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "aboutHighlightCta"
-          }
-        },
-        "label": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "localizedString"
-          },
-          "optional": true
-        },
-        "path": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "string",
-                "value": "/"
-              },
-              {
-                "type": "string",
-                "value": "/affidaci-il-tuo-immobile"
-              },
-              {
-                "type": "string",
-                "value": "/about"
-              },
-              {
-                "type": "string",
-                "value": "/immobili"
-              },
-              {
-                "type": "string",
-                "value": "/ducati-per-le-aziende"
-              },
-              {
-                "type": "string",
-                "value": "/contact"
-              },
-              {
-                "type": "string",
-                "value": "/ricerca-su-misura"
-              }
-            ]
           },
           "optional": true
         }

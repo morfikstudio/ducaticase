@@ -84,5 +84,9 @@
     "paginationPageAriaLabel": "Go to page {page}",
     "reservedLocation": "Location withheld",
     "genericListingCategory": "Listing"
+  },
+  "teamGrid": {
+    "openMemberDescription": "Open member description",
+    "closeMemberDescription": "Close member description"
   }
 }

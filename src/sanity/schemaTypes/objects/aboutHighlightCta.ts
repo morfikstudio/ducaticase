@@ -5,7 +5,8 @@ import { INTERNAL_SITE_PATH_OPTIONS } from "../../lib/internalSitePaths"
 export const aboutHighlightCta = defineType({
   name: "aboutHighlightCta",
   title: "Call to action",
-  description: "Opzionale. Compila etichetta e pagina solo se vuoi mostrare il pulsante.",
+  description:
+    "Opzionale. Compila etichetta e pagina solo se vuoi mostrare il pulsante.",
   type: "object",
   fields: [
     defineField({

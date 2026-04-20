@@ -8,8 +8,10 @@ import { aboutHighlightCta } from "./objects/aboutHighlightCta"
 import { aboutHistoryBlock } from "./objects/aboutHistoryBlock"
 import { aboutPageSettings } from "./objects/aboutPageSettings"
 import { aboutTodaySection } from "./objects/aboutTodaySection"
+import { aboutTeamSection } from "./objects/aboutTeamSection"
 import { aboutResponsiveImage } from "./objects/aboutResponsiveImage"
 import { aboutSectorBlock } from "./objects/aboutSectorBlock"
+import { teamMemberType } from "./objects/teamMemberType"
 import { menuSettings } from "./objects/menuSettings"
 import { footerSettings } from "./objects/footerSettings"
 import {
@@ -29,6 +31,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     aboutSectorBlock,
     aboutHistoryBlock,
     aboutTodaySection,
+    teamMemberType,
+    aboutTeamSection,
     aboutPageSettings,
     menuSettings,
     footerSettings,
