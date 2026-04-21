@@ -114,6 +114,7 @@ export function IntroSection({
                 className={text2ClassName}
               />
             ) : null}
+
             {ctaOnRight ? (
               <Button href={ctaHref} variant="primary" className="self-start">
                 {ctaLabel}

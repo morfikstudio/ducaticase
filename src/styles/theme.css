@@ -150,8 +150,8 @@ main {
 }
 
 ::selection {
-  background-color: var(--color-white);
-  color: var(--color-black);
+  background-color: var(--color-dark);
+  color: var(--color-white);
 }
 
 /* ─── Focus ──────────────────────────────────────────────────────────────────── */

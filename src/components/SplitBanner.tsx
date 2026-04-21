@@ -9,7 +9,7 @@ import { useGsapReveal } from "@/hooks/useGsapReveal"
 
 import { cn } from "@/utils/classNames"
 
-import { ButtonCta } from "@/components/ui/ButtonCta"
+import { Button } from "@/components/ui/Button"
 import { SanityImage } from "@/components/ui/SanityImage"
 
 function brTagsToNewlines(text: string): string {
@@ -47,7 +47,6 @@ export function SplitBanner({
       setImageReady(true)
     })
   }, [])
-
   const { ref: wrapRef } = useGsapReveal({ ready: imageReady })
 
   return (
@@ -70,9 +69,9 @@ export function SplitBanner({
             </div>
 
             {ctaLabel && ctaHref ? (
-              <ButtonCta className="self-start" href={ctaHref}>
+              <Button className="self-start" href={ctaHref}>
                 {ctaLabel}
-              </ButtonCta>
+              </Button>
             ) : null}
           </div>
 

@@ -105,7 +105,7 @@ export function ListingsCarousel({
           </p>
 
           <Button
-            href={`/${locale}/immobili`}
+            href="/immobili"
             variant="primary"
             className="shrink-0 self-start"
           >

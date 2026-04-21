@@ -12,9 +12,10 @@ import type {
 import { LenisProvider } from "@/components/providers/LenisProvider"
 import { BreakpointProvider } from "@/components/providers/BreakpointProvider"
 import { FocusVisibleModality } from "@/components/providers/FocusVisibleProvider"
-import { Breadcrumbs } from "@/components/Breadcrumbs"
-import { NavBar } from "@/components/NavBar"
-import { Footer } from "@/components/footer"
+
+import { NavBar } from "@/components/core/NavBar"
+import { Footer } from "@/components/core/Footer"
+import { Breadcrumbs } from "@/components/core/Breadcrumbs"
 
 import { footerContentFromSanity } from "@/lib/formatFooterContent"
 import { menuContentFromSanity } from "@/lib/formatMenuContent"

@@ -59,12 +59,6 @@ export function StatementHero({
     const lgQuery = window.matchMedia("(min-width: 1024px)")
 
     const update = () => {
-      console.log(
-        "update",
-        el.offsetHeight / 2,
-        lgQuery.matches ? 0 : el.offsetHeight / 2,
-      )
-
       setTitleOverflow(lgQuery.matches ? 0 : el.offsetHeight / 2)
     }
 

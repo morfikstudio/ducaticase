@@ -3,10 +3,11 @@
 import { useEffect, useRef, useState } from "react"
 
 import { Link } from "@/i18n/navigation"
-import { cn } from "@/utils/classNames"
-import { useLenis } from "@/components/providers/LenisProvider"
 
 import type { MenuNavLink, MenuSocialLink } from "@/lib/formatMenuContent"
+import { cn } from "@/utils/classNames"
+
+import { useLenis } from "@/components/providers/LenisProvider"
 
 const FOCUSABLE_SELECTOR =
   'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'

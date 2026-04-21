@@ -13,7 +13,7 @@ import { useGsapReveal } from "@/hooks/useGsapReveal"
 import { cn } from "@/utils/classNames"
 
 import { Container } from "@/components/ui/Container"
-import { ButtonCta } from "@/components/ui/ButtonCta"
+import { Button } from "@/components/ui/Button"
 import { SanityImage } from "@/components/ui/SanityImage"
 
 type TeamMemberItem = {
@@ -138,9 +138,9 @@ export function TeamGrid({
           >
             {text && <div className="type-body-1">{text}</div>}
             {ctaLabel && ctaHref && (
-              <ButtonCta href={ctaHref} variant="dark">
+              <Button href={ctaHref} variant="reverse">
                 {ctaLabel}
-              </ButtonCta>
+              </Button>
             )}
           </div>
         </Container>

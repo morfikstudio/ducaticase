@@ -1,11 +1,12 @@
 "use client"
 
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react"
+import { Link } from "@/i18n/navigation"
 
 import { cn } from "@/utils/classNames"
 
 type ButtonIcon = "externalLink" | "filters" | "detailsArrow" | "download"
-type ButtonVariant = "primary" | "secondary"
+type ButtonVariant = "primary" | "secondary" | "reverse"
 
 type ButtonSharedProps = {
   variant?: ButtonVariant
@@ -145,6 +146,21 @@ function getButtonClasses({
     )
   }
 
+  if (variant === "reverse") {
+    return cn(
+      "inline-flex items-center justify-center gap-3",
+      "px-8 py-3",
+      "type-button rounded-[4px] border border-black",
+      "cursor-pointer transition-all duration-200",
+      disabled
+        ? "cursor-not-allowed bg-transparent text-black opacity-50"
+        : isActive || highlight
+          ? "bg-black text-primary hover:bg-black hover:text-primary"
+          : "bg-transparent text-black hover:bg-black hover:text-primary",
+      className,
+    )
+  }
+
   return cn(
     "inline-flex items-center justify-center gap-3",
     "px-8 py-3",
@@ -244,9 +260,9 @@ export function Button(props: ButtonProps) {
   if ("href" in rest && rest.href !== undefined) {
     const { href, ...anchorProps } = rest
     return (
-      <a href={href} className={classes} {...anchorProps}>
+      <Link href={href} className={classes} {...anchorProps}>
         {body}
-      </a>
+      </Link>
     )
   }
 

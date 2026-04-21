@@ -2,17 +2,19 @@ import { useTranslations } from "next-intl"
 
 import { Link } from "@/i18n/navigation"
 import type { AppLocale } from "@/i18n/routing"
-import { formatListingPrice } from "@/lib/formatListingPrice"
+
 import { CATEGORY_OPTIONS } from "@/sanity/lib/constants"
-import { listingContractTypeLabel } from "@/sanity/lib/listingContractTypeLabel"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import { listingTypologyLabel } from "@/sanity/lib/listingTypologyLabel"
 import type {
   LISTINGS_PREVIEW_QUERY_RESULT,
   LocalizedString,
 } from "@/sanity/types"
-import { SanityImage } from "@/components/ui/SanityImage"
+
+import { formatListingPrice } from "@/lib/formatListingPrice"
 import { cn } from "@/utils/classNames"
+
+import { SanityImage } from "@/components/ui/SanityImage"
 
 type ListingsEntry = LISTINGS_PREVIEW_QUERY_RESULT[number]
 

@@ -1,4 +1,4 @@
-import type { AppLocale } from "@/i18n/routing"
+import { routing, type AppLocale } from "@/i18n/routing"
 import { getTranslations } from "next-intl/server"
 
 import { sanityFetch } from "@/sanity/lib/client"
@@ -23,20 +23,32 @@ import { SplitBanner } from "@/components/SplitBanner"
 import { StatementHero } from "@/components/StatementHero"
 import { WaveText } from "@/components/WaveText"
 
+function normalizePathnameForIntlLink(path: string): string {
+  const trimmed = path.trim()
+  const withSlash =
+    trimmed === "" || trimmed === "/"
+      ? "/"
+      : trimmed.startsWith("/")
+        ? trimmed
+        : `/${trimmed}`
+
+  for (const loc of routing.locales) {
+    const localeRoot = `/${loc}`
+    if (withSlash === localeRoot) return "/"
+    if (withSlash.startsWith(`${localeRoot}/`)) {
+      return withSlash.slice(localeRoot.length) || "/"
+    }
+  }
+
+  return withSlash
+}
+
 function portableTextHasBlocks(
   text: Parameters<typeof pickLocalizedPortableText>[0],
   locale: AppLocale,
 ): boolean {
   const blocks = pickLocalizedPortableText(text, locale)
   return Array.isArray(blocks) && blocks.length > 0
-}
-
-function pathWithLocalePrefix(locale: AppLocale, path: string): string {
-  const trimmed = path.trim()
-  const normalized =
-    trimmed === "" ? "/" : trimmed.startsWith("/") ? trimmed : `/${trimmed}`
-  if (normalized === "/") return `/${locale}`
-  return `/${locale}${normalized}`
 }
 
 function portableTextToPlain(
@@ -88,34 +100,35 @@ export default async function Page({ params }: PageProps) {
     revalidate: 60,
   })) as HOME_SITE_CONTENT_QUERY_RESULT
 
+  const homePage = data?.homePage
+
   // HERO
-  const hero = data?.homePage
   const heroTitle =
-    pickLocalizedString(hero?.heroTitle ?? undefined, locale) ?? ""
-  const heroLandscape = hero?.heroImage?.imageLandscape
-  const heroPortrait = hero?.heroImage?.imagePortrait
+    pickLocalizedString(homePage?.heroTitle ?? undefined, locale) ?? ""
+  const heroLandscape = homePage?.heroImage?.imageLandscape
+  const heroPortrait = homePage?.heroImage?.imagePortrait
   const hasHero =
     heroTitle.trim() !== "" ||
     Boolean(heroLandscape?.asset ?? heroPortrait?.asset)
 
   // INTRO
-  const whoCta = hero?.whoWeAreCta
+  const whoCta = homePage?.whoWeAreCta
   const whoCtaLabel =
     pickLocalizedString(whoCta?.label ?? undefined, locale) ?? ""
   const whoCtaPath = whoCta?.path?.trim() ?? ""
   const showWhoCta = whoCtaLabel.trim() !== "" && whoCtaPath !== ""
   const whoCtaHref = showWhoCta
-    ? pathWithLocalePrefix(locale, whoCtaPath)
+    ? normalizePathnameForIntlLink(whoCtaPath)
     : undefined
   const hasIntro =
-    portableTextHasBlocks(hero?.whoWeAreText1, locale) ||
-    portableTextHasBlocks(hero?.whoWeAreText2, locale) ||
+    portableTextHasBlocks(homePage?.whoWeAreText1, locale) ||
+    portableTextHasBlocks(homePage?.whoWeAreText2, locale) ||
     showWhoCta
 
   // PAYOFF
   const payoffTitle =
-    pickLocalizedString(hero?.payoffTitle ?? undefined, locale) ?? ""
-  const payoffImage = hero?.payoffImage
+    pickLocalizedString(homePage?.payoffTitle ?? undefined, locale) ?? ""
+  const payoffImage = homePage?.payoffImage
   const payoffLandscape = payoffImage?.imageLandscape
   const payoffPortrait = payoffImage?.imagePortrait
   const hasPayoff =
@@ -123,7 +136,7 @@ export default async function Page({ params }: PageProps) {
     Boolean(payoffLandscape?.asset ?? payoffPortrait?.asset)
 
   // HIGHLIGHTS
-  const highlightsRaw = hero?.highlights ?? []
+  const highlightsRaw = homePage?.highlights ?? []
   const highlightsWithImage = highlightsRaw.filter((block) =>
     Boolean(block.image?.asset),
   )
@@ -131,23 +144,24 @@ export default async function Page({ params }: PageProps) {
 
   // FEATURED LISTINGS
   const tHome = await getTranslations({ locale, namespace: "homePage" })
-  const featuredRaw = hero?.featuredListings ?? []
+  const featuredRaw = homePage?.featuredListings ?? []
   const featuredEntries = featuredRaw.filter(isListingPreviewWithImage)
   const hasFeaturedListings = featuredEntries.length > 0
 
   // TESTIMONIALS
-  const testimonialsRaw = hero?.testimonials ?? []
+  const testimonialsRaw = homePage?.testimonials ?? []
   const testimonialEntries = testimonialsRaw.filter((t) =>
     portableTextHasBlocks(t.text, locale),
   )
   const hasTestimonials = testimonialEntries.length > 0
   const testimonialsTitle =
-    pickLocalizedString(hero?.testimonialsTitle ?? undefined, locale) ?? ""
+    pickLocalizedString(homePage?.testimonialsTitle ?? undefined, locale) ?? ""
   const testimonialsSubtitle =
-    pickLocalizedString(hero?.testimonialsSubtitle ?? undefined, locale) ?? ""
+    pickLocalizedString(homePage?.testimonialsSubtitle ?? undefined, locale) ??
+    ""
 
   // PARTNERS
-  const partnersRaw = hero?.partners ?? []
+  const partnersRaw = homePage?.partners ?? []
   const partnersWithImage = partnersRaw.filter((p) => Boolean(p.image?.asset))
   const hasPartners = partnersWithImage.length > 0
 
@@ -170,8 +184,8 @@ export default async function Page({ params }: PageProps) {
         <section className="py-24 md:py-32 lg:py-48">
           <IntroSection
             locale={locale}
-            text1={hero?.whoWeAreText1 ?? undefined}
-            text2={hero?.whoWeAreText2 ?? undefined}
+            text1={homePage?.whoWeAreText1 ?? undefined}
+            text2={homePage?.whoWeAreText2 ?? undefined}
             ctaLabel={showWhoCta ? whoCtaLabel : undefined}
             ctaHref={whoCtaHref}
           />
@@ -214,7 +228,9 @@ export default async function Page({ params }: PageProps) {
                 title={title}
                 description={description}
                 ctaLabel={showCta ? ctaLabel : undefined}
-                ctaHref={showCta ? ctaPath : undefined}
+                ctaHref={
+                  showCta ? normalizePathnameForIntlLink(ctaPath) : undefined
+                }
                 image={block.image ?? undefined}
                 locale={locale}
                 imageAlt={imageAlt}
