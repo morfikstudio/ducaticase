@@ -18,8 +18,6 @@ export const aboutHighlightCta = defineType({
       name: "path",
       title: "Pagina",
       type: "string",
-      description:
-        "Path interno senza prefisso lingua. Stesso valore per entrambe le lingue.",
       options: {
         list: [...INTERNAL_SITE_PATH_OPTIONS],
         layout: "dropdown",

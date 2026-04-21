@@ -88,5 +88,13 @@
   "teamGrid": {
     "openMemberDescription": "Open member description",
     "closeMemberDescription": "Close member description"
+  },
+  "homePage": {
+    "featuredListingsTitle": "Featured listings",
+    "featuredListingsFooter": "A selection of currently available properties, representing our residential, corporate, and lifestyle portfolio.",
+    "featuredListingsViewAll": "View all properties",
+    "partnersSectionTitle": "Our partners",
+    "contactSectionWord1": "A direct conversation",
+    "contactSectionWord2": "Contact us"
   }
 }

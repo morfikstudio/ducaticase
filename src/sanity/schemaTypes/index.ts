@@ -11,6 +11,12 @@ import { aboutTodaySection } from "./objects/aboutTodaySection"
 import { aboutTeamSection } from "./objects/aboutTeamSection"
 import { aboutResponsiveImage } from "./objects/aboutResponsiveImage"
 import { aboutSectorBlock } from "./objects/aboutSectorBlock"
+import { homeHeroResponsiveImage } from "./objects/homeHeroResponsiveImage"
+import { homeHighlightItem } from "./objects/homeHighlightItem"
+import { homePageSettings } from "./objects/homePageSettings"
+import { homePartnerItem } from "./objects/homePartnerItem"
+import { homePayoffResponsiveImage } from "./objects/homePayoffResponsiveImage"
+import { homeTestimonialItem } from "./objects/homeTestimonialItem"
 import { teamMemberType } from "./objects/teamMemberType"
 import { menuSettings } from "./objects/menuSettings"
 import { footerSettings } from "./objects/footerSettings"
@@ -26,6 +32,12 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     customSpecificationItem,
     aboutResponsiveImage,
     aboutHeroResponsiveImage,
+    homeHeroResponsiveImage,
+    homePayoffResponsiveImage,
+    homeHighlightItem,
+    homeTestimonialItem,
+    homePartnerItem,
+    homePageSettings,
     aboutHighlightCta,
     aboutHighlightBlock,
     aboutSectorBlock,

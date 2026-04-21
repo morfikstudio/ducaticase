@@ -122,15 +122,17 @@ export type SanityImageResponsiveProps = CommonSanityImageProps & {
   landscape?: SanityImageSource | null
   portrait?: SanityImageSource | null
 } & (
-  | { landscapeParams: SanityImageParams; portraitParams?: SanityImageParams }
-  | {
-      portraitParams: SanityImageParams
-      landscapeParams?: undefined
-      landscape?: undefined
-    }
-)
+    | { landscapeParams: SanityImageParams; portraitParams?: SanityImageParams }
+    | {
+        portraitParams: SanityImageParams
+        landscapeParams?: undefined
+        landscape?: undefined
+      }
+  )
 
-export type SanityImageProps = SanityImageSingleProps | SanityImageResponsiveProps
+export type SanityImageProps =
+  | SanityImageSingleProps
+  | SanityImageResponsiveProps
 
 const BREAKPOINT_CLASSES = {
   sm: { landscape: "hidden sm:block", portrait: "sm:hidden" },

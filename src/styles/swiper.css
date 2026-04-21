@@ -1,0 +1,5 @@
+@import "swiper/css";
+
+.swiper {
+  overflow: visible !important;
+}

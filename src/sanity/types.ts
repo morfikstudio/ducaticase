@@ -14,6 +14,12 @@
 
 export declare const internalGroqTypeReferenceTo: unique symbol
 
+type ArrayOf<T> = Array<
+  T & {
+    _key: string
+  }
+>
+
 // Source: src/sanity/schema.json
 export type SanityImageAssetReference = {
   _ref: string
@@ -1405,9 +1411,10 @@ export type SiteContent = {
   _updatedAt: string
   _rev: string
   title?: string
-  sectionType?: "footer" | "menu" | "aboutPage"
+  sectionType?: "footer" | "menu" | "homePage" | "aboutPage"
   footer?: FooterSettings
   menu?: MenuSettings
+  homePage?: HomePageSettings
   aboutPage?: AboutPageSettings
 }
 
@@ -1433,6 +1440,84 @@ export type AboutPageSettings = {
     } & AboutHighlightBlock
   >
   teamSection?: AboutTeamSection
+}
+
+export type ListingResidentialReference = {
+  _ref: string
+  _type: "reference"
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: "listingResidential"
+}
+
+export type ListingCountryHousesReference = {
+  _ref: string
+  _type: "reference"
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: "listingCountryHouses"
+}
+
+export type ListingShopsAndOfficesReference = {
+  _ref: string
+  _type: "reference"
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: "listingShopsAndOffices"
+}
+
+export type ListingIndustrialReference = {
+  _ref: string
+  _type: "reference"
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: "listingIndustrial"
+}
+
+export type ListingHospitalityReference = {
+  _ref: string
+  _type: "reference"
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: "listingHospitality"
+}
+
+export type ListingLandReference = {
+  _ref: string
+  _type: "reference"
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: "listingLand"
+}
+
+export type HomePageSettings = {
+  _type: "homePageSettings"
+  heroImage?: HomeHeroResponsiveImage
+  heroTitle?: LocalizedString
+  whoWeAreText1?: LocalizedPortableText
+  whoWeAreText2?: LocalizedPortableText
+  whoWeAreCta?: AboutHighlightCta
+  payoffImage?: HomePayoffResponsiveImage
+  payoffTitle?: LocalizedString
+  highlights?: Array<
+    {
+      _key: string
+    } & HomeHighlightItem
+  >
+  featuredListings?: ArrayOf<
+    | ListingResidentialReference
+    | ListingCountryHousesReference
+    | ListingShopsAndOfficesReference
+    | ListingIndustrialReference
+    | ListingHospitalityReference
+    | ListingLandReference
+  >
+  testimonialsTitle?: LocalizedString
+  testimonialsSubtitle?: LocalizedString
+  testimonials?: Array<
+    {
+      _key: string
+    } & HomeTestimonialItem
+  >
+  partners?: Array<
+    {
+      _key: string
+    } & HomePartnerItem
+  >
 }
 
 export type MenuSettings = {
@@ -1603,6 +1688,81 @@ export type AboutHighlightBlock = {
   cta?: AboutHighlightCta
 }
 
+export type HomePayoffResponsiveImage = {
+  _type: "homePayoffResponsiveImage"
+  imageLandscape?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: LocalizedString
+    _type: "image"
+  }
+  imagePortrait?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: LocalizedString
+    _type: "image"
+  }
+}
+
+export type HomeHeroResponsiveImage = {
+  _type: "homeHeroResponsiveImage"
+  imageLandscape?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: LocalizedString
+    _type: "image"
+  }
+  imagePortrait?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: LocalizedString
+    _type: "image"
+  }
+}
+
+export type HomePartnerItem = {
+  _type: "homePartnerItem"
+  name?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: LocalizedString
+    _type: "image"
+  }
+}
+
+export type HomeTestimonialItem = {
+  _type: "homeTestimonialItem"
+  text?: LocalizedPortableText
+  name?: string
+  provider: "google"
+}
+
+export type HomeHighlightItem = {
+  _type: "homeHighlightItem"
+  title?: LocalizedString
+  text?: LocalizedPortableText
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: LocalizedString
+    _type: "image"
+  }
+  cta?: AboutHighlightCta
+}
+
 export type CustomSpecificationItem = {
   _type: "customSpecificationItem"
   label: string
@@ -1732,6 +1892,13 @@ export type AllSanitySchemaTypes =
   | ListingResidential
   | SiteContent
   | AboutPageSettings
+  | ListingResidentialReference
+  | ListingCountryHousesReference
+  | ListingShopsAndOfficesReference
+  | ListingIndustrialReference
+  | ListingHospitalityReference
+  | ListingLandReference
+  | HomePageSettings
   | MenuSettings
   | FooterSettings
   | AboutTeamSection
@@ -1743,6 +1910,11 @@ export type AllSanitySchemaTypes =
   | AboutResponsiveImage
   | AboutSectorBlock
   | AboutHighlightBlock
+  | HomePayoffResponsiveImage
+  | HomeHeroResponsiveImage
+  | HomePartnerItem
+  | HomeTestimonialItem
+  | HomeHighlightItem
   | CustomSpecificationItem
   | GeopointRadius
   | SanityImagePaletteSwatch
@@ -2074,6 +2246,1182 @@ export type ABOUT_SITE_CONTENT_QUERY_RESULT = {
         > | null
       }> | null
     } | null
+  } | null
+} | null
+
+// Source: src/sanity/lib/queries.ts
+// Variable: HOME_SITE_CONTENT_QUERY
+// Query: *[_type == "siteContent" && sectionType == "homePage"]    | order(_updatedAt desc)    [0] {      _id,      homePage {        heroTitle,        heroImage {          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        whoWeAreText1,        whoWeAreText2,        whoWeAreCta {          label,          path        },        payoffTitle,        payoffImage {          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        highlights[] {          _key,          title,          text,          image {            ...,            asset->          },          cta {            label,            path          }        },        "featuredListings": featuredListings[]->{          _id,          _type,          title,          listingContractType,          price,          country,          city,          province,          address,          postalCode,          listingLabel,          "typology": select(            _type == "listingCountryHouses" => countryHouseTypology,            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,            _type == "listingIndustrial" => industrialTypology,            true => null          ),          "mainImage": mainImage {            ...,            asset->          }        },        testimonialsTitle,        testimonialsSubtitle,        testimonials[] {          _key,          text,          name,          provider        },        partners[] {          _key,          name,          image {            ...,            asset->          }        }      }    }
+export type HOME_SITE_CONTENT_QUERY_RESULT = {
+  _id: string
+  homePage: {
+    heroTitle: LocalizedString | null
+    heroImage: {
+      imageLandscape: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+      imagePortrait: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+    } | null
+    whoWeAreText1: LocalizedPortableText | null
+    whoWeAreText2: LocalizedPortableText | null
+    whoWeAreCta: {
+      label: LocalizedString | null
+      path:
+        | "/"
+        | "/about"
+        | "/affidaci-il-tuo-immobile"
+        | "/contact"
+        | "/ducati-per-le-aziende"
+        | "/immobili"
+        | "/ricerca-su-misura"
+        | null
+    } | null
+    payoffTitle: LocalizedString | null
+    payoffImage: {
+      imageLandscape: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+      imagePortrait: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+    } | null
+    highlights: Array<{
+      _key: string
+      title: LocalizedString | null
+      text: LocalizedPortableText | null
+      image: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+      cta: {
+        label: LocalizedString | null
+        path:
+          | "/"
+          | "/about"
+          | "/affidaci-il-tuo-immobile"
+          | "/contact"
+          | "/ducati-per-le-aziende"
+          | "/immobili"
+          | "/ricerca-su-misura"
+          | null
+      } | null
+    }> | null
+    featuredListings: Array<
+      | {
+          _id: string
+          _type: "listingCountryHouses"
+          title: LocalizedString | null
+          listingContractType: "rent" | "sale" | null
+          price: {
+            amount?: number
+            noPriceReason?: "priceOnRequest" | "privateNegotiation"
+          } | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          city: string | null
+          province:
+            | "AG"
+            | "AL"
+            | "AN"
+            | "AO"
+            | "AP"
+            | "AQ"
+            | "AR"
+            | "AT"
+            | "AV"
+            | "BA"
+            | "BG"
+            | "BI"
+            | "BL"
+            | "BN"
+            | "BO"
+            | "BR"
+            | "BS"
+            | "BT"
+            | "BZ"
+            | "CA"
+            | "CB"
+            | "CE"
+            | "CH"
+            | "CL"
+            | "CN"
+            | "CO"
+            | "CR"
+            | "CS"
+            | "CT"
+            | "CZ"
+            | "EN"
+            | "FC"
+            | "FE"
+            | "FG"
+            | "FI"
+            | "FM"
+            | "FR"
+            | "GE"
+            | "GO"
+            | "GR"
+            | "IM"
+            | "IS"
+            | "KR"
+            | "LC"
+            | "LE"
+            | "LI"
+            | "LO"
+            | "LT"
+            | "LU"
+            | "MB"
+            | "MC"
+            | "ME"
+            | "MI"
+            | "MN"
+            | "MO"
+            | "MS"
+            | "MT"
+            | "NA"
+            | "NO"
+            | "NU"
+            | "OR"
+            | "PA"
+            | "PC"
+            | "PD"
+            | "PE"
+            | "PG"
+            | "PI"
+            | "PN"
+            | "PO"
+            | "PR"
+            | "PT"
+            | "PU"
+            | "PV"
+            | "PZ"
+            | "RA"
+            | "RC"
+            | "RE"
+            | "RG"
+            | "RI"
+            | "RM"
+            | "RN"
+            | "RO"
+            | "SA"
+            | "SI"
+            | "SO"
+            | "SP"
+            | "SR"
+            | "SS"
+            | "SU"
+            | "SV"
+            | "TA"
+            | "TE"
+            | "TN"
+            | "TO"
+            | "TP"
+            | "TR"
+            | "TS"
+            | "TV"
+            | "UD"
+            | "VA"
+            | "VB"
+            | "VC"
+            | "VE"
+            | "VI"
+            | "VR"
+            | "VT"
+            | "VV"
+            | null
+          address: {
+            streetName?: string
+            streetNumber?: string
+          } | null
+          postalCode: string | null
+          listingLabel: null
+          typology: "lakesAndCountryside" | "mountain" | "sea" | null
+          mainImage: {
+            asset: {
+              _id: string
+              _type: "sanity.imageAsset"
+              _createdAt: string
+              _updatedAt: string
+              _rev: string
+              originalFilename?: string
+              label?: string
+              title?: string
+              description?: string
+              altText?: string
+              sha1hash: string
+              extension: string
+              mimeType: string
+              size: number
+              assetId: string
+              uploadId?: string
+              path: string
+              url: string
+              metadata?: SanityImageMetadata
+              source?: SanityAssetSourceData
+            } | null
+            media?: unknown
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: LocalizedString
+            _type: "image"
+          } | null
+        }
+      | {
+          _id: string
+          _type: "listingHospitality"
+          title: LocalizedString | null
+          listingContractType: "rent" | "sale" | null
+          price: {
+            amount?: number
+            noPriceReason?: "priceOnRequest" | "privateNegotiation"
+          } | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          city: string | null
+          province:
+            | "AG"
+            | "AL"
+            | "AN"
+            | "AO"
+            | "AP"
+            | "AQ"
+            | "AR"
+            | "AT"
+            | "AV"
+            | "BA"
+            | "BG"
+            | "BI"
+            | "BL"
+            | "BN"
+            | "BO"
+            | "BR"
+            | "BS"
+            | "BT"
+            | "BZ"
+            | "CA"
+            | "CB"
+            | "CE"
+            | "CH"
+            | "CL"
+            | "CN"
+            | "CO"
+            | "CR"
+            | "CS"
+            | "CT"
+            | "CZ"
+            | "EN"
+            | "FC"
+            | "FE"
+            | "FG"
+            | "FI"
+            | "FM"
+            | "FR"
+            | "GE"
+            | "GO"
+            | "GR"
+            | "IM"
+            | "IS"
+            | "KR"
+            | "LC"
+            | "LE"
+            | "LI"
+            | "LO"
+            | "LT"
+            | "LU"
+            | "MB"
+            | "MC"
+            | "ME"
+            | "MI"
+            | "MN"
+            | "MO"
+            | "MS"
+            | "MT"
+            | "NA"
+            | "NO"
+            | "NU"
+            | "OR"
+            | "PA"
+            | "PC"
+            | "PD"
+            | "PE"
+            | "PG"
+            | "PI"
+            | "PN"
+            | "PO"
+            | "PR"
+            | "PT"
+            | "PU"
+            | "PV"
+            | "PZ"
+            | "RA"
+            | "RC"
+            | "RE"
+            | "RG"
+            | "RI"
+            | "RM"
+            | "RN"
+            | "RO"
+            | "SA"
+            | "SI"
+            | "SO"
+            | "SP"
+            | "SR"
+            | "SS"
+            | "SU"
+            | "SV"
+            | "TA"
+            | "TE"
+            | "TN"
+            | "TO"
+            | "TP"
+            | "TR"
+            | "TS"
+            | "TV"
+            | "UD"
+            | "VA"
+            | "VB"
+            | "VC"
+            | "VE"
+            | "VI"
+            | "VR"
+            | "VT"
+            | "VV"
+            | null
+          address: {
+            streetName?: string
+            streetNumber?: string
+          } | null
+          postalCode: string | null
+          listingLabel: null
+          typology: null
+          mainImage: {
+            asset: {
+              _id: string
+              _type: "sanity.imageAsset"
+              _createdAt: string
+              _updatedAt: string
+              _rev: string
+              originalFilename?: string
+              label?: string
+              title?: string
+              description?: string
+              altText?: string
+              sha1hash: string
+              extension: string
+              mimeType: string
+              size: number
+              assetId: string
+              uploadId?: string
+              path: string
+              url: string
+              metadata?: SanityImageMetadata
+              source?: SanityAssetSourceData
+            } | null
+            media?: unknown
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: LocalizedString
+            _type: "image"
+          } | null
+        }
+      | {
+          _id: string
+          _type: "listingIndustrial"
+          title: LocalizedString | null
+          listingContractType: "rent" | "sale" | null
+          price: {
+            amount?: number
+            noPriceReason?: "priceOnRequest" | "privateNegotiation"
+          } | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          city: string | null
+          province:
+            | "AG"
+            | "AL"
+            | "AN"
+            | "AO"
+            | "AP"
+            | "AQ"
+            | "AR"
+            | "AT"
+            | "AV"
+            | "BA"
+            | "BG"
+            | "BI"
+            | "BL"
+            | "BN"
+            | "BO"
+            | "BR"
+            | "BS"
+            | "BT"
+            | "BZ"
+            | "CA"
+            | "CB"
+            | "CE"
+            | "CH"
+            | "CL"
+            | "CN"
+            | "CO"
+            | "CR"
+            | "CS"
+            | "CT"
+            | "CZ"
+            | "EN"
+            | "FC"
+            | "FE"
+            | "FG"
+            | "FI"
+            | "FM"
+            | "FR"
+            | "GE"
+            | "GO"
+            | "GR"
+            | "IM"
+            | "IS"
+            | "KR"
+            | "LC"
+            | "LE"
+            | "LI"
+            | "LO"
+            | "LT"
+            | "LU"
+            | "MB"
+            | "MC"
+            | "ME"
+            | "MI"
+            | "MN"
+            | "MO"
+            | "MS"
+            | "MT"
+            | "NA"
+            | "NO"
+            | "NU"
+            | "OR"
+            | "PA"
+            | "PC"
+            | "PD"
+            | "PE"
+            | "PG"
+            | "PI"
+            | "PN"
+            | "PO"
+            | "PR"
+            | "PT"
+            | "PU"
+            | "PV"
+            | "PZ"
+            | "RA"
+            | "RC"
+            | "RE"
+            | "RG"
+            | "RI"
+            | "RM"
+            | "RN"
+            | "RO"
+            | "SA"
+            | "SI"
+            | "SO"
+            | "SP"
+            | "SR"
+            | "SS"
+            | "SU"
+            | "SV"
+            | "TA"
+            | "TE"
+            | "TN"
+            | "TO"
+            | "TP"
+            | "TR"
+            | "TS"
+            | "TV"
+            | "UD"
+            | "VA"
+            | "VB"
+            | "VC"
+            | "VE"
+            | "VI"
+            | "VR"
+            | "VT"
+            | "VV"
+            | null
+          address: {
+            streetName?: string
+            streetNumber?: string
+          } | null
+          postalCode: string | null
+          listingLabel: null
+          typology: "sheds" | "warehouses" | null
+          mainImage: {
+            asset: {
+              _id: string
+              _type: "sanity.imageAsset"
+              _createdAt: string
+              _updatedAt: string
+              _rev: string
+              originalFilename?: string
+              label?: string
+              title?: string
+              description?: string
+              altText?: string
+              sha1hash: string
+              extension: string
+              mimeType: string
+              size: number
+              assetId: string
+              uploadId?: string
+              path: string
+              url: string
+              metadata?: SanityImageMetadata
+              source?: SanityAssetSourceData
+            } | null
+            media?: unknown
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: LocalizedString
+            _type: "image"
+          } | null
+        }
+      | {
+          _id: string
+          _type: "listingLand"
+          title: LocalizedString | null
+          listingContractType: "rent" | "sale" | null
+          price: {
+            amount?: number
+            noPriceReason?: "priceOnRequest" | "privateNegotiation"
+          } | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          city: string | null
+          province:
+            | "AG"
+            | "AL"
+            | "AN"
+            | "AO"
+            | "AP"
+            | "AQ"
+            | "AR"
+            | "AT"
+            | "AV"
+            | "BA"
+            | "BG"
+            | "BI"
+            | "BL"
+            | "BN"
+            | "BO"
+            | "BR"
+            | "BS"
+            | "BT"
+            | "BZ"
+            | "CA"
+            | "CB"
+            | "CE"
+            | "CH"
+            | "CL"
+            | "CN"
+            | "CO"
+            | "CR"
+            | "CS"
+            | "CT"
+            | "CZ"
+            | "EN"
+            | "FC"
+            | "FE"
+            | "FG"
+            | "FI"
+            | "FM"
+            | "FR"
+            | "GE"
+            | "GO"
+            | "GR"
+            | "IM"
+            | "IS"
+            | "KR"
+            | "LC"
+            | "LE"
+            | "LI"
+            | "LO"
+            | "LT"
+            | "LU"
+            | "MB"
+            | "MC"
+            | "ME"
+            | "MI"
+            | "MN"
+            | "MO"
+            | "MS"
+            | "MT"
+            | "NA"
+            | "NO"
+            | "NU"
+            | "OR"
+            | "PA"
+            | "PC"
+            | "PD"
+            | "PE"
+            | "PG"
+            | "PI"
+            | "PN"
+            | "PO"
+            | "PR"
+            | "PT"
+            | "PU"
+            | "PV"
+            | "PZ"
+            | "RA"
+            | "RC"
+            | "RE"
+            | "RG"
+            | "RI"
+            | "RM"
+            | "RN"
+            | "RO"
+            | "SA"
+            | "SI"
+            | "SO"
+            | "SP"
+            | "SR"
+            | "SS"
+            | "SU"
+            | "SV"
+            | "TA"
+            | "TE"
+            | "TN"
+            | "TO"
+            | "TP"
+            | "TR"
+            | "TS"
+            | "TV"
+            | "UD"
+            | "VA"
+            | "VB"
+            | "VC"
+            | "VE"
+            | "VI"
+            | "VR"
+            | "VT"
+            | "VV"
+            | null
+          address: {
+            streetName?: string
+            streetNumber?: string
+          } | null
+          postalCode: string | null
+          listingLabel: null
+          typology: null
+          mainImage: {
+            asset: {
+              _id: string
+              _type: "sanity.imageAsset"
+              _createdAt: string
+              _updatedAt: string
+              _rev: string
+              originalFilename?: string
+              label?: string
+              title?: string
+              description?: string
+              altText?: string
+              sha1hash: string
+              extension: string
+              mimeType: string
+              size: number
+              assetId: string
+              uploadId?: string
+              path: string
+              url: string
+              metadata?: SanityImageMetadata
+              source?: SanityAssetSourceData
+            } | null
+            media?: unknown
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: LocalizedString
+            _type: "image"
+          } | null
+        }
+      | {
+          _id: string
+          _type: "listingResidential"
+          title: LocalizedString | null
+          listingContractType: "rent" | "sale" | null
+          price: {
+            amount?: number
+            noPriceReason?: "priceOnRequest" | "privateNegotiation"
+          } | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          city: string | null
+          province:
+            | "AG"
+            | "AL"
+            | "AN"
+            | "AO"
+            | "AP"
+            | "AQ"
+            | "AR"
+            | "AT"
+            | "AV"
+            | "BA"
+            | "BG"
+            | "BI"
+            | "BL"
+            | "BN"
+            | "BO"
+            | "BR"
+            | "BS"
+            | "BT"
+            | "BZ"
+            | "CA"
+            | "CB"
+            | "CE"
+            | "CH"
+            | "CL"
+            | "CN"
+            | "CO"
+            | "CR"
+            | "CS"
+            | "CT"
+            | "CZ"
+            | "EN"
+            | "FC"
+            | "FE"
+            | "FG"
+            | "FI"
+            | "FM"
+            | "FR"
+            | "GE"
+            | "GO"
+            | "GR"
+            | "IM"
+            | "IS"
+            | "KR"
+            | "LC"
+            | "LE"
+            | "LI"
+            | "LO"
+            | "LT"
+            | "LU"
+            | "MB"
+            | "MC"
+            | "ME"
+            | "MI"
+            | "MN"
+            | "MO"
+            | "MS"
+            | "MT"
+            | "NA"
+            | "NO"
+            | "NU"
+            | "OR"
+            | "PA"
+            | "PC"
+            | "PD"
+            | "PE"
+            | "PG"
+            | "PI"
+            | "PN"
+            | "PO"
+            | "PR"
+            | "PT"
+            | "PU"
+            | "PV"
+            | "PZ"
+            | "RA"
+            | "RC"
+            | "RE"
+            | "RG"
+            | "RI"
+            | "RM"
+            | "RN"
+            | "RO"
+            | "SA"
+            | "SI"
+            | "SO"
+            | "SP"
+            | "SR"
+            | "SS"
+            | "SU"
+            | "SV"
+            | "TA"
+            | "TE"
+            | "TN"
+            | "TO"
+            | "TP"
+            | "TR"
+            | "TS"
+            | "TV"
+            | "UD"
+            | "VA"
+            | "VB"
+            | "VC"
+            | "VE"
+            | "VI"
+            | "VR"
+            | "VT"
+            | "VV"
+            | null
+          address: {
+            streetName?: string
+            streetNumber?: string
+          } | null
+          postalCode: string | null
+          listingLabel: null
+          typology: null
+          mainImage: {
+            asset: {
+              _id: string
+              _type: "sanity.imageAsset"
+              _createdAt: string
+              _updatedAt: string
+              _rev: string
+              originalFilename?: string
+              label?: string
+              title?: string
+              description?: string
+              altText?: string
+              sha1hash: string
+              extension: string
+              mimeType: string
+              size: number
+              assetId: string
+              uploadId?: string
+              path: string
+              url: string
+              metadata?: SanityImageMetadata
+              source?: SanityAssetSourceData
+            } | null
+            media?: unknown
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: LocalizedString
+            _type: "image"
+          } | null
+        }
+      | {
+          _id: string
+          _type: "listingShopsAndOffices"
+          title: LocalizedString | null
+          listingContractType: "rent" | "sale" | null
+          price: {
+            amount?: number
+            noPriceReason?: "priceOnRequest" | "privateNegotiation"
+          } | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          city: string | null
+          province:
+            | "AG"
+            | "AL"
+            | "AN"
+            | "AO"
+            | "AP"
+            | "AQ"
+            | "AR"
+            | "AT"
+            | "AV"
+            | "BA"
+            | "BG"
+            | "BI"
+            | "BL"
+            | "BN"
+            | "BO"
+            | "BR"
+            | "BS"
+            | "BT"
+            | "BZ"
+            | "CA"
+            | "CB"
+            | "CE"
+            | "CH"
+            | "CL"
+            | "CN"
+            | "CO"
+            | "CR"
+            | "CS"
+            | "CT"
+            | "CZ"
+            | "EN"
+            | "FC"
+            | "FE"
+            | "FG"
+            | "FI"
+            | "FM"
+            | "FR"
+            | "GE"
+            | "GO"
+            | "GR"
+            | "IM"
+            | "IS"
+            | "KR"
+            | "LC"
+            | "LE"
+            | "LI"
+            | "LO"
+            | "LT"
+            | "LU"
+            | "MB"
+            | "MC"
+            | "ME"
+            | "MI"
+            | "MN"
+            | "MO"
+            | "MS"
+            | "MT"
+            | "NA"
+            | "NO"
+            | "NU"
+            | "OR"
+            | "PA"
+            | "PC"
+            | "PD"
+            | "PE"
+            | "PG"
+            | "PI"
+            | "PN"
+            | "PO"
+            | "PR"
+            | "PT"
+            | "PU"
+            | "PV"
+            | "PZ"
+            | "RA"
+            | "RC"
+            | "RE"
+            | "RG"
+            | "RI"
+            | "RM"
+            | "RN"
+            | "RO"
+            | "SA"
+            | "SI"
+            | "SO"
+            | "SP"
+            | "SR"
+            | "SS"
+            | "SU"
+            | "SV"
+            | "TA"
+            | "TE"
+            | "TN"
+            | "TO"
+            | "TP"
+            | "TR"
+            | "TS"
+            | "TV"
+            | "UD"
+            | "VA"
+            | "VB"
+            | "VC"
+            | "VE"
+            | "VI"
+            | "VR"
+            | "VT"
+            | "VV"
+            | null
+          address: {
+            streetName?: string
+            streetNumber?: string
+          } | null
+          postalCode: string | null
+          listingLabel: null
+          typology: "offices" | "shops" | null
+          mainImage: {
+            asset: {
+              _id: string
+              _type: "sanity.imageAsset"
+              _createdAt: string
+              _updatedAt: string
+              _rev: string
+              originalFilename?: string
+              label?: string
+              title?: string
+              description?: string
+              altText?: string
+              sha1hash: string
+              extension: string
+              mimeType: string
+              size: number
+              assetId: string
+              uploadId?: string
+              path: string
+              url: string
+              metadata?: SanityImageMetadata
+              source?: SanityAssetSourceData
+            } | null
+            media?: unknown
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: LocalizedString
+            _type: "image"
+          } | null
+        }
+    > | null
+    testimonialsTitle: LocalizedString | null
+    testimonialsSubtitle: LocalizedString | null
+    testimonials: Array<{
+      _key: string
+      text: LocalizedPortableText | null
+      name: string | null
+      provider: "google"
+    }> | null
+    partners: Array<{
+      _key: string
+      name: string | null
+      image: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+    }> | null
   } | null
 } | null
 
@@ -5737,6 +7085,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "siteContent" && sectionType == "menu"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      menu {\n        headerTagline,\n        payoff,\n        navLinks[] { label, path },\n        socialLinks[] { label, href }\n      }\n    }\n': MENU_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "footer"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      footer {\n        payoff,\n        email,\n        phone,\n        addressLine1,\n        addressLine2,\n        vat,\n        navLinks[] { label, path },\n        privacyPolicyLabel,\n        privacyPolicyPath,\n        socialLinks[] { label, href }\n      }\n    }\n': FOOTER_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "aboutPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      aboutPage {\n        heroImages {\n          "imageDesktop": imageDesktop {\n            ...,\n            asset->\n          },\n          "imageMobile": imageMobile {\n            ...,\n            asset->\n          }\n        },\n        heroText,\n        historySection[] {\n          _key,\n          title,\n          subtitle,\n          body,\n          reverse,\n          images {\n            "imageDesktop": imageDesktop {\n              ...,\n              asset->\n            },\n            "imageMobile": imageMobile {\n              ...,\n              asset->\n            }\n          }\n        },\n        todaySection {\n          title,\n          subtitle,\n          text\n        },\n        highlightsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        sectorsHeading,\n        sectorsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          }\n        },\n        teamSection {\n          title,\n          subtitle,\n          text,\n          cta {\n            label,\n            path\n          },\n          teamMember[] {\n            _key,\n            title,\n            text,\n            image {\n              ...,\n              asset->\n            },\n            roles[]\n          }\n        }\n      }\n    }\n': ABOUT_SITE_CONTENT_QUERY_RESULT
+    '\n  *[_type == "siteContent" && sectionType == "homePage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      homePage {\n        heroTitle,\n        heroImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        whoWeAreText1,\n        whoWeAreText2,\n        whoWeAreCta {\n          label,\n          path\n        },\n        payoffTitle,\n        payoffImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        highlights[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        "featuredListings": featuredListings[]->{\n          _id,\n          _type,\n          title,\n          listingContractType,\n          price,\n          country,\n          city,\n          province,\n          address,\n          postalCode,\n          listingLabel,\n          "typology": select(\n            _type == "listingCountryHouses" => countryHouseTypology,\n            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n            _type == "listingIndustrial" => industrialTypology,\n            true => null\n          ),\n          "mainImage": mainImage {\n            ...,\n            asset->\n          }\n        },\n        testimonialsTitle,\n        testimonialsSubtitle,\n        testimonials[] {\n          _key,\n          text,\n          name,\n          provider\n        },\n        partners[] {\n          _key,\n          name,\n          image {\n            ...,\n            asset->\n          }\n        }\n      }\n    }\n': HOME_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) { // ... order(_createdAt desc) [0...10]{\n    _id,\n    _type,\n    title,\n    listingContractType,\n    price,\n    country,\n    city,\n    province,\n    address,\n    postalCode,\n    listingLabel,\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "mainImage": mainImage {\n      ...,\n      asset->\n    }\n  }\n': LISTINGS_PREVIEW_QUERY_RESULT
     '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true && _id == $id][0]{\n    "metadata": {\n      _id,\n      _type,\n      listingContractType,\n      _createdAt,\n      _updatedAt,\n      _rev\n    },\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "propertySheet": select(\n      _type == "listingResidential" => {\n        price,\n        commercialAreaSqm,\n        condoFees,\n        floor,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingCountryHouses" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingShopsAndOffices" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        displayWindows,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingIndustrial" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        heightMeters,\n        buildingYear,\n        energyClass\n      },\n      _type == "listingHospitality" => {\n        price,\n        commercialAreaSqm,\n        roomCount,\n        energyClass\n      },\n      _type == "listingLand" => {\n        price,\n        commercialAreaSqm,\n        landAccess,\n        hasFencedProperty\n      }\n    ),\n    "location": {\n      country,\n      province,\n      city,\n      address,\n      postalCode,\n      map,\n      positionInfo\n    },\n    "content": {\n      title,\n      listingLabel,\n      "mainImage": mainImage {\n        ...,\n        asset->\n      },\n      "gallery": gallery[] {\n        ...,\n        asset->\n      },\n      description,\n      excerpt\n    },\n    "floorPlans": select(\n      _type == "listingLand" => {\n        "items": null\n      },\n      {\n        "items": floorPlans[] {\n          ...,\n          asset->\n        }\n      }\n    ),\n    "additionalFields": select(\n      _type == "listingResidential" => {\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl\n      },\n      _type == "listingCountryHouses" => {\n        outdoorAreaSqm,\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl,\n        condoFees\n      },\n      _type == "listingShopsAndOffices" => {\n        furnishing,\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        conciergeServiceShops,\n        officeLayout,\n        condoFees\n      },\n      _type == "listingIndustrial" => {\n        hasLoadingDocks,\n        hasOverheadCranes,\n        shedAreaSqm,\n        officeAreaSqm,\n        landAreaSqm,\n        hasChangingRoom,\n        hasFencedProperty,\n        conciergeService,\n        hasAccessibleRestroom,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        hasDrivableAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        heating\n      },\n      _type == "listingHospitality" => {\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        outdoorAreaSqm,\n        heating,\n        pool,\n        hasTennisCourt,\n        customSpecifications\n      },\n      _type == "listingLand" => {\n        isBuildable,\n        isAgricultural\n      }\n    ),\n    "relatedListings": *[\n      _type in [\n        "listingResidential",\n        "listingCountryHouses",\n        "listingShopsAndOffices",\n        "listingIndustrial",\n        "listingHospitality",\n        "listingLand"\n      ] &&\n      coalesce(isArchived, false) != true &&\n      _id != ^._id &&\n      _type == ^._type &&\n      city == ^.city\n    ] | order(_createdAt desc)[0...2] {\n      _id,\n      _type,\n      title,\n      listingContractType,\n      price,\n      city,\n      province,\n      address,\n      postalCode,\n      listingLabel,\n      "typology": select(\n        _type == "listingCountryHouses" => countryHouseTypology,\n        _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n        _type == "listingIndustrial" => industrialTypology,\n        true => null\n      ),\n      "mainImage": mainImage {\n        ...,\n        asset->\n      }\n    }\n  }\n': LISTING_BY_ID_QUERY_RESULT
   }

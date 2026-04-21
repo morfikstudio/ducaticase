@@ -50,7 +50,7 @@ export function AboutSection({ title, subtitle, text }: AboutSectionProps) {
                 "gap-6 md:gap-8",
               )}
             >
-              <h3 className="type-heading-1 max-md:mt-24">{subtitle}</h3>
+              <h3 className="type-heading-2 max-md:mt-24">{subtitle}</h3>
               <p className="type-body-2">{text}</p>
             </div>
           </div>

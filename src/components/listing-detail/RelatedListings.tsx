@@ -1,8 +1,6 @@
 "use client"
 
-import { useEffect, useLayoutEffect } from "react"
 import { useTranslations } from "next-intl"
-import gsap from "gsap"
 import { Swiper, SwiperSlide } from "swiper/react"
 
 import type { AppLocale } from "@/i18n/routing"
@@ -13,11 +11,7 @@ import type {
 
 import { useGsapReveal } from "@/hooks/useGsapReveal"
 
-import { prefersReducedMotion } from "@/utils/reducedMotion"
-
 import { ListingCard } from "@/components/ListingCard"
-
-import "swiper/css"
 
 type ListingPreviewEntry = LISTINGS_PREVIEW_QUERY_RESULT[number]
 
@@ -38,7 +32,7 @@ export function RelatedListings({ locale, entries }: RelatedListingsProps) {
 
   return (
     <div ref={wrapRef} style={{ opacity: 0 }}>
-      <h2 className="type-heading-1 text-primary mb-8 md:mb-12">
+      <h2 className="type-heading-2 text-primary mb-8 md:mb-12">
         {t("relatedListingsTitle")}
       </h2>
 

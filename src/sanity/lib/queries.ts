@@ -119,6 +119,96 @@ export const ABOUT_SITE_CONTENT_QUERY = defineQuery(groq`
     }
 `)
 
+export const HOME_SITE_CONTENT_QUERY = defineQuery(groq`
+  *[_type == "siteContent" && sectionType == "homePage"]
+    | order(_updatedAt desc)
+    [0] {
+      _id,
+      homePage {
+        heroTitle,
+        heroImage {
+          "imageLandscape": imageLandscape {
+            ...,
+            asset->
+          },
+          "imagePortrait": imagePortrait {
+            ...,
+            asset->
+          }
+        },
+        whoWeAreText1,
+        whoWeAreText2,
+        whoWeAreCta {
+          label,
+          path
+        },
+        payoffTitle,
+        payoffImage {
+          "imageLandscape": imageLandscape {
+            ...,
+            asset->
+          },
+          "imagePortrait": imagePortrait {
+            ...,
+            asset->
+          }
+        },
+        highlights[] {
+          _key,
+          title,
+          text,
+          image {
+            ...,
+            asset->
+          },
+          cta {
+            label,
+            path
+          }
+        },
+        "featuredListings": featuredListings[]->{
+          _id,
+          _type,
+          title,
+          listingContractType,
+          price,
+          country,
+          city,
+          province,
+          address,
+          postalCode,
+          listingLabel,
+          "typology": select(
+            _type == "listingCountryHouses" => countryHouseTypology,
+            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,
+            _type == "listingIndustrial" => industrialTypology,
+            true => null
+          ),
+          "mainImage": mainImage {
+            ...,
+            asset->
+          }
+        },
+        testimonialsTitle,
+        testimonialsSubtitle,
+        testimonials[] {
+          _key,
+          text,
+          name,
+          provider
+        },
+        partners[] {
+          _key,
+          name,
+          image {
+            ...,
+            asset->
+          }
+        }
+      }
+    }
+`)
+
 export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`
   *[_type in [
     "listingResidential",

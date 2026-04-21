@@ -12,7 +12,6 @@ import { cn } from "@/utils/classNames"
 import { ButtonCta } from "@/components/ui/ButtonCta"
 import { SanityImage } from "@/components/ui/SanityImage"
 
-/** Converte `<br>`, `<br />` ecc. in newline per `whitespace-pre-line` (contenuto da CMS/HTML leggero). */
 function brTagsToNewlines(text: string): string {
   return text.replace(/<br\s*\/?>/gi, "\n")
 }
@@ -24,7 +23,6 @@ export type SplitBannerProps = {
   ctaHref?: string
   image?: SanityImageSource | null
   locale: AppLocale
-  /** Override dell’alt localizzato da CMS (come `imageAlt` in SplitSection). */
   imageAlt?: string
   reverse?: boolean
   className?: string
@@ -53,17 +51,19 @@ export function SplitBanner({
   const { ref: wrapRef } = useGsapReveal({ ready: imageReady })
 
   return (
-    <section className={cn("bg-bg", className)}>
+    <div className={cn("bg-bg", className)}>
       <div ref={wrapRef} className="w-full" style={{ opacity: 0 }}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 lg:min-h-[min(100vh,686px)]">
+        <div className="grid grid-cols-1 md:grid-cols-2 md:min-h-[min(100vh,686px)]">
           <div
             className={cn(
-              "flex flex-col justify-center gap-11 px-6 py-16 lg:px-12 lg:py-20 xl:pl-24",
-              reverse ? "lg:order-2" : "lg:order-1",
+              "flex flex-col justify-center gap-11 py-16 md:py-20",
+              "px-4 md:px-8",
+              reverse ? "md:order-2" : "md:order-1",
+              reverse ? "lg:pl-28" : "lg:pr-28",
             )}
           >
-            <div className="flex max-w-[500px] flex-col gap-7">
-              <div className="type-heading-1 text-primary">{title}</div>
+            <div className="flex flex-col gap-7">
+              <div className="type-heading-2 text-primary">{title}</div>
               <p className="type-body-2 whitespace-pre-line text-gray">
                 {brTagsToNewlines(description)}
               </p>
@@ -79,8 +79,8 @@ export function SplitBanner({
           {hasImage ? (
             <div
               className={cn(
-                "relative aspect-720/686 w-full min-h-0 overflow-hidden lg:aspect-auto lg:h-full",
-                reverse ? "lg:order-1" : "lg:order-2",
+                "relative aspect-720/686 w-full min-h-0 overflow-hidden md:aspect-auto md:h-full",
+                reverse ? "md:order-1" : "md:order-2",
               )}
             >
               <SanityImage
@@ -89,8 +89,8 @@ export function SplitBanner({
                 alt={imageAlt}
                 altFallback={title}
                 params={{
-                  width: 1440,
-                  height: 1372,
+                  width: 720,
+                  height: 686,
                   quality: 80,
                   sizes: "(max-width: 1023px) 100vw, 50vw",
                 }}
@@ -108,6 +108,6 @@ export function SplitBanner({
           ) : null}
         </div>
       </div>
-    </section>
+    </div>
   )
 }

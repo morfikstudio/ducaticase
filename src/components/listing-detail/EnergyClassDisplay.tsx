@@ -96,7 +96,7 @@ export function EnergyClassDisplay({ energyClass }: EnergyClassDisplayProps) {
 
   return (
     <div ref={wrapRef} className="w-full" style={{ opacity: 0 }}>
-      <h2 className="type-heading-1 text-primary">
+      <h2 className="type-heading-2 text-primary">
         {t("energyEfficiency")}
         {valueLabel && `: ${valueLabel}`}
       </h2>

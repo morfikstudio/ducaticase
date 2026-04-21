@@ -15,8 +15,6 @@ import { useBreakpoint } from "@/stores/breakpointStore"
 import { useLenis } from "@/components/providers/LenisProvider"
 import { cn } from "@/utils/classNames"
 
-import "swiper/css"
-
 const FOCUSABLE_SELECTOR =
   'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
 

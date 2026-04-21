@@ -62,7 +62,7 @@ export function ListingDetailHeader({
           {title ? (
             <h1
               className={cn(
-                "type-listing-card-title md:type-heading-1",
+                "type-listing-card-title md:type-heading-2",
                 "text-primary",
                 "w-full md:w-1/2",
               )}
@@ -74,7 +74,7 @@ export function ListingDetailHeader({
           {price ? (
             <p
               className={cn(
-                "type-body-1 md:type-heading-1",
+                "type-body-1 md:type-heading-2",
                 "text-primary",
                 "w-full md:w-1/2 md:text-right",
               )}
