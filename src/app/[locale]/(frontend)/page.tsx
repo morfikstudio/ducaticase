@@ -20,6 +20,7 @@ import { MainHero } from "@/components/MainHero"
 import { PartnersSection } from "@/components/PartnersSection"
 import { QuoteCarousel } from "@/components/QuoteCarousel"
 import { SplitBanner } from "@/components/SplitBanner"
+import { StatementHero } from "@/components/StatementHero"
 import { WaveText } from "@/components/WaveText"
 
 function portableTextHasBlocks(
@@ -111,6 +112,16 @@ export default async function Page({ params }: PageProps) {
     portableTextHasBlocks(hero?.whoWeAreText2, locale) ||
     showWhoCta
 
+  // PAYOFF
+  const payoffTitle =
+    pickLocalizedString(hero?.payoffTitle ?? undefined, locale) ?? ""
+  const payoffImage = hero?.payoffImage
+  const payoffLandscape = payoffImage?.imageLandscape
+  const payoffPortrait = payoffImage?.imagePortrait
+  const hasPayoff =
+    payoffTitle.trim() !== "" ||
+    Boolean(payoffLandscape?.asset ?? payoffPortrait?.asset)
+
   // HIGHLIGHTS
   const highlightsRaw = hero?.highlights ?? []
   const highlightsWithImage = highlightsRaw.filter((block) =>
@@ -168,9 +179,16 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {/* PAYOFF */}
-      <section className="bg-dark-gray py-52 flex items-center justify-center">
-        <span>PAYOFF HERE</span>
-      </section>
+      {hasPayoff ? (
+        <section className="lg:pb-58">
+          <StatementHero
+            locale={locale}
+            title={payoffTitle}
+            imageLandscape={payoffLandscape}
+            imagePortrait={payoffPortrait}
+          />
+        </section>
+      ) : null}
 
       {/* HIGHLIGHTS */}
       {hasHighlights ? (

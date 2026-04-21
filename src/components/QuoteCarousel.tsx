@@ -77,7 +77,8 @@ function applyQuoteCardTransforms(
 
   const snapTransitionMs = opts?.snapTransitionMs ?? 0
   const isDragging = opts?.isDragging ?? false
-  const useSmoothSnap = !isDragging && snapTransitionMs > 0 && shouldApplyDepthEffects
+  const useSmoothSnap =
+    !isDragging && snapTransitionMs > 0 && shouldApplyDepthEffects
 
   for (const slide of swiper.slides) {
     const card = slide.querySelector<HTMLElement>("[data-quote-card]")

@@ -142,6 +142,17 @@ export const HOME_SITE_CONTENT_QUERY = defineQuery(groq`
           label,
           path
         },
+        payoffTitle,
+        payoffImage {
+          "imageLandscape": imageLandscape {
+            ...,
+            asset->
+          },
+          "imagePortrait": imagePortrait {
+            ...,
+            asset->
+          }
+        },
         highlights[] {
           _key,
           title,
