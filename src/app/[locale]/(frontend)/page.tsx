@@ -12,11 +12,14 @@ import type {
   LISTINGS_PREVIEW_QUERY_RESULT,
 } from "@/sanity/types"
 
+import { cn } from "@/utils/classNames"
+
 import { IntroSection } from "@/components/IntroSection"
 import { ListingsCarousel } from "@/components/ListingsCarousel"
 import { MainHero } from "@/components/MainHero"
 import { PartnersSection } from "@/components/PartnersSection"
 import { SplitBanner } from "@/components/SplitBanner"
+import { WaveText } from "@/components/WaveText"
 
 function portableTextHasBlocks(
   text: Parameters<typeof pickLocalizedPortableText>[0],
@@ -141,7 +144,7 @@ export default async function Page({ params }: PageProps) {
 
       {/* INTRO */}
       {hasIntro ? (
-        <section>
+        <section className="py-24 md:py-32 lg:py-48">
           <IntroSection
             locale={locale}
             text1={hero?.whoWeAreText1 ?? undefined}
@@ -153,6 +156,9 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {/* PAYOFF */}
+      <section className="bg-dark-gray py-52 flex items-center justify-center">
+        <span>PAYOFF HERE</span>
+      </section>
 
       {/* HIGHLIGHTS */}
       {hasHighlights ? (
@@ -191,7 +197,7 @@ export default async function Page({ params }: PageProps) {
 
       {/* FEATURED LISTINGS */}
       {hasFeaturedListings ? (
-        <section>
+        <section className="py-32 md:py-48 lg:py-56">
           <ListingsCarousel
             locale={locale}
             entries={featuredEntries}
@@ -201,10 +207,24 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {/* TESTIMONIALS */}
+      <section className="bg-dark-gray py-52 flex items-center justify-center">
+        <span>TESTIMONIALS HERE</span>
+      </section>
+
+      {/* CONTACT US */}
+      <section className="py-56 lg:py-64">
+        <WaveText
+          word1={tHome("contactSectionWord1")}
+          word2={tHome("contactSectionWord2")}
+          href="/contact"
+        />
+      </section>
 
       {/* PARTNERS */}
       {hasPartners ? (
-        <section>
+        <section
+          className={cn("py-32 md:py-40 lg:py-52", "bg-white text-accent")}
+        >
           <PartnersSection
             title={tHome("partnersSectionTitle")}
             partners={partnersWithImage}

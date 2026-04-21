@@ -76,68 +76,66 @@ export function PartnersSection({ title, partners }: PartnersSectionProps) {
   }
 
   return (
-    <div className="w-full bg-white py-32 lg:py-52 text-accent">
-      <Container>
-        <div
-          ref={wrapRef}
-          className="flex w-full flex-col items-center text-center"
-          style={{ opacity: 0 }}
-        >
-          <h2 className="type-body-1 w-full max-w-prose text-center">
-            {title}
-          </h2>
+    <Container>
+      <div
+        ref={wrapRef}
+        className="flex w-full flex-col items-center gap-8"
+        style={{ opacity: 0 }}
+      >
+        <h2 className="type-body-1 w-full max-w-prose text-center text-current">
+          {title}
+        </h2>
 
-          <div className="mt-10 w-full md:mt-12 lg:mt-14">
-            <Swiper
-              slidesPerView="auto"
-              spaceBetween={64}
-              watchOverflow
-              centeredSlides
-              centerInsufficientSlides
-              breakpoints={{
-                768: {
-                  spaceBetween: 128,
-                  centeredSlides: false,
-                },
-              }}
-              className="partners-swiper w-full [&_.swiper-slide]:h-auto! [&_.swiper-slide]:w-auto!"
-            >
-              {withImage.map((partner) => {
-                const partnerName = partner.name?.trim() ?? ""
-                const alt = partnerName !== "" ? partnerName : "Partner"
-                const src = partnerLogoSrc(partner)
-                if (!src) return null
+        <div className="mt-10 w-full md:mt-12 lg:mt-14">
+          <Swiper
+            slidesPerView="auto"
+            spaceBetween={64}
+            watchOverflow
+            centeredSlides
+            centerInsufficientSlides
+            breakpoints={{
+              768: {
+                spaceBetween: 128,
+                centeredSlides: false,
+              },
+            }}
+            className="partners-swiper w-full [&_.swiper-slide]:h-auto! [&_.swiper-slide]:w-auto!"
+          >
+            {withImage.map((partner) => {
+              const partnerName = partner.name?.trim() ?? ""
+              const alt = partnerName !== "" ? partnerName : "Partner"
+              const src = partnerLogoSrc(partner)
+              if (!src) return null
 
-                const intrinsic =
-                  partnerLogoIntrinsic(partner) ??
-                  ({ width: 240, height: 80 } as const)
-                const { width: dispW, height: dispH } =
-                  partnerLogoDisplaySize(intrinsic)
+              const intrinsic =
+                partnerLogoIntrinsic(partner) ??
+                ({ width: 240, height: 80 } as const)
+              const { width: dispW, height: dispH } =
+                partnerLogoDisplaySize(intrinsic)
 
-                return (
-                  <SwiperSlide
-                    key={partner._key}
-                    className="box-border flex! shrink-0 items-center justify-center"
+              return (
+                <SwiperSlide
+                  key={partner._key}
+                  className="box-border flex! shrink-0 items-center justify-center"
+                  style={{ width: dispW, height: dispH }}
+                >
+                  <img
+                    src={src}
+                    alt={alt}
+                    width={intrinsic.width}
+                    height={intrinsic.height}
+                    loading="lazy"
+                    decoding="async"
+                    draggable={false}
+                    className="block object-contain"
                     style={{ width: dispW, height: dispH }}
-                  >
-                    <img
-                      src={src}
-                      alt={alt}
-                      width={intrinsic.width}
-                      height={intrinsic.height}
-                      loading="lazy"
-                      decoding="async"
-                      draggable={false}
-                      className="block object-contain"
-                      style={{ width: dispW, height: dispH }}
-                    />
-                  </SwiperSlide>
-                )
-              })}
-            </Swiper>
-          </div>
+                  />
+                </SwiperSlide>
+              )
+            })}
+          </Swiper>
         </div>
-      </Container>
-    </div>
+      </div>
+    </Container>
   )
 }

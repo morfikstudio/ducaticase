@@ -86,7 +86,7 @@ export function MainHero({
           >
             <h1
               className={cn(
-                "type-display-1 max-w-[min(100%,42rem)] text-balance text-left text-primary",
+                "type-display-1 max-w-[min(100%,42rem)] text-balance text-left",
                 "drop-shadow-[0_1px_2px_rgb(0_0_0/0.35)]",
               )}
             >

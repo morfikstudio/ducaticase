@@ -12,7 +12,6 @@ import { Container } from "@/components/ui/Container"
 import { PortableTextComponent } from "@/components/ui/PortableText"
 
 const text1ClassName = cn(
-  "text-primary",
   "[&_p]:type-body-1",
   "[&_p+p]:mt-4",
   "[&_ul]:type-body-1 [&_ul]:mt-4 [&_ul]:list-disc [&_ul]:pl-5",
@@ -76,11 +75,11 @@ export function IntroSection({
   const showRightColumn = show2 || ctaOnRight
 
   return (
-    <Container className="py-20 md:py-32 lg:py-48">
+    <Container>
       <div
         ref={wrapRef}
         className={cn(
-          "grid w-full grid-cols-1 gap-8",
+          "grid w-full grid-cols-1 gap-12",
           "lg:grid-cols-12 lg:gap-x-0 lg:gap-y-20",
         )}
         style={{ opacity: 0 }}
@@ -103,7 +102,7 @@ export function IntroSection({
         {showRightColumn ? (
           <div
             className={cn(
-              "flex min-w-0 flex-col gap-8",
+              "flex min-w-0 flex-col gap-12 lg:gap-24",
               "lg:col-span-7 lg:col-start-6",
               rightColumnRowStart,
             )}

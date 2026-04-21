@@ -1,11 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useLayoutEffect, useState } from "react"
 
 export function useIsTouch() {
   const [isTouch, setIsTouch] = useState(false)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const check = () => {
       setIsTouch(
         typeof window !== "undefined" &&

@@ -1,6 +1,8 @@
 "use client"
 
+import { useCallback, useRef, type FocusEvent } from "react"
 import { useTranslations } from "next-intl"
+import type { Swiper as SwiperType } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 
 import type { AppLocale } from "@/i18n/routing"
@@ -31,64 +33,88 @@ export function ListingsCarousel({
 }: ListingsCarouselProps) {
   const t = useTranslations("homePage")
   const { ref: wrapRef } = useGsapReveal()
+  const swiperRef = useRef<SwiperType | null>(null)
+
+  const onCarouselFocusIn = useCallback((e: FocusEvent<HTMLDivElement>) => {
+    if (
+      !swiperRef.current ||
+      !(e.target instanceof HTMLElement) ||
+      e.target === e.currentTarget
+    )
+      return
+
+    const swiper = swiperRef.current
+    const slide = e.target.closest(".swiper-slide")
+    if (!slide || !swiper.el.contains(slide)) return
+
+    const slides = Array.from(swiper.slides)
+    const index = slides.indexOf(slide as HTMLElement)
+
+    if (index < 0) return
+
+    if (swiper.activeIndex !== index) {
+      swiper.slideTo(index, 300)
+    }
+  }, [])
 
   if (entries.length === 0) {
     return null
   }
 
   return (
-    <div className="w-full py-24 md:py-32 lg:py-48 text-primary">
-      <Container>
-        <div ref={wrapRef} style={{ opacity: 0 }}>
-          {title ? <h2 className="type-heading-1">{title}</h2> : null}
+    <Container>
+      <div ref={wrapRef} style={{ opacity: 0 }}>
+        {title ? <h2 className="type-heading-1">{title}</h2> : null}
 
-          <div className="mt-12 lg:mt-16">
-            <Swiper
-              slidesPerView={1.15}
-              spaceBetween={16}
-              watchOverflow
-              breakpoints={{
-                768: {
-                  slidesPerView: 1.75,
-                  spaceBetween: 24,
-                },
-                1024: {
-                  slidesPerView: 2.25,
-                  spaceBetween: 32,
-                },
-                1280: {
-                  slidesPerView: 2.5,
-                },
-              }}
-            >
-              {entries.map((entry) => (
-                <SwiperSlide key={entry._id}>
-                  <ListingCard entry={entry} locale={locale} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-
-          <div
-            className={cn(
-              "mt-12 lg:mt-16 flex flex-col gap-8",
-              "md:flex-row md:items-center md:justify-between md:gap-8",
-            )}
+        <div className="mt-12 lg:mt-16" onFocusCapture={onCarouselFocusIn}>
+          <Swiper
+            onSwiper={(instance) => {
+              swiperRef.current = instance
+            }}
+            slidesPerView={1.15}
+            spaceBetween={16}
+            watchOverflow
+            breakpoints={{
+              768: {
+                slidesPerView: 1.75,
+                spaceBetween: 24,
+              },
+              1024: {
+                slidesPerView: 2.25,
+                spaceBetween: 32,
+              },
+              1280: {
+                slidesPerView: 2.5,
+              },
+            }}
           >
-            <p className="type-body-2 max-w-prose md:max-w-[450px] text-gray">
-              {t("featuredListingsFooter")}
-            </p>
-
-            <Button
-              href={`/${locale}/immobili`}
-              variant="primary"
-              className="shrink-0 self-start"
-            >
-              {t("featuredListingsViewAll")}
-            </Button>
-          </div>
+            {entries.map((entry) => (
+              <SwiperSlide key={entry._id}>
+                <ListingCard entry={entry} locale={locale} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
-      </Container>
-    </div>
+
+        <div
+          className={cn(
+            "mt-12 lg:mt-16 flex flex-col gap-8",
+            "md:flex-row md:items-center md:justify-between md:gap-8",
+          )}
+        >
+          <p className="type-body-2 max-w-prose md:max-w-[450px] text-gray">
+            {t("featuredListingsFooter")}
+          </p>
+
+          <Button
+            href={`/${locale}/immobili`}
+            variant="primary"
+            className="shrink-0 self-start"
+          >
+            {t("featuredListingsViewAll")}
+          </Button>
+        </div>
+      </div>
+    </Container>
   )
 }

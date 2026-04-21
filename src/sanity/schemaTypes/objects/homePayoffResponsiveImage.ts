@@ -68,17 +68,7 @@ export const homePayoffResponsiveImage = defineType({
   title: "Immagini Landscape / Portrait",
   type: "object",
   fields: [
-    payoffImageField(
-      "imageLandscape",
-      "Landscape",
-      5 / 4,
-      "Landscape 5:4",
-    ),
-    payoffImageField(
-      "imagePortrait",
-      "Portrait",
-      4 / 5,
-      "Portrait 4:5",
-    ),
+    payoffImageField("imageLandscape", "Landscape", 5 / 4, "Landscape 5:4"),
+    payoffImageField("imagePortrait", "Portrait", 4 / 5, "Portrait 4:5"),
   ],
 })

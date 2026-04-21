@@ -66,7 +66,10 @@ export const homeTestimonialItem = defineType({
       provider: "provider",
     },
     prepare({ name, provider }) {
-      const n = typeof name === "string" && name.trim() !== "" ? name.trim() : "Testimonianza"
+      const n =
+        typeof name === "string" && name.trim() !== ""
+          ? name.trim()
+          : "Testimonianza"
       const p = provider === "google" ? "Google" : provider
       return { title: n, subtitle: p }
     },

@@ -68,17 +68,7 @@ export const homeHeroResponsiveImage = defineType({
   title: "Immagini Landscape / Portrait",
   type: "object",
   fields: [
-    homeHeroImageField(
-      "imageLandscape",
-      "Landscape",
-      16 / 9,
-      "Landscape 16:9",
-    ),
-    homeHeroImageField(
-      "imagePortrait",
-      "Portrait",
-      9 / 16,
-      "Portrait 9:16",
-    ),
+    homeHeroImageField("imageLandscape", "Landscape", 16 / 9, "Landscape 16:9"),
+    homeHeroImageField("imagePortrait", "Portrait", 9 / 16, "Portrait 9:16"),
   ],
 })
