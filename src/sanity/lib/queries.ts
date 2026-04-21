@@ -7,9 +7,7 @@ export const MENU_SITE_CONTENT_QUERY = defineQuery(groq`
       _id,
       menu {
         headerTagline,
-        payoff,
-        navLinks[] { label, path },
-        socialLinks[] { label, href }
+        payoff
       }
     }
 `)
@@ -26,10 +24,8 @@ export const FOOTER_SITE_CONTENT_QUERY = defineQuery(groq`
         addressLine1,
         addressLine2,
         vat,
-        navLinks[] { label, path },
         privacyPolicyLabel,
-        privacyPolicyPath,
-        socialLinks[] { label, href }
+        privacyPolicyPath
       }
     }
 `)

@@ -1524,16 +1524,6 @@ export type MenuSettings = {
   _type: "menuSettings"
   headerTagline?: LocalizedText
   payoff?: LocalizedText
-  navLinks?: Array<{
-    label?: LocalizedString
-    path?: string
-    _key: string
-  }>
-  socialLinks?: Array<{
-    label?: string
-    href?: string
-    _key: string
-  }>
 }
 
 export type FooterSettings = {
@@ -1544,18 +1534,8 @@ export type FooterSettings = {
   addressLine1?: string
   addressLine2?: string
   vat?: LocalizedString
-  navLinks?: Array<{
-    label?: LocalizedString
-    path?: string
-    _key: string
-  }>
   privacyPolicyLabel?: LocalizedString
   privacyPolicyPath?: string
-  socialLinks?: Array<{
-    label?: string
-    href?: string
-    _key: string
-  }>
 }
 
 export type AboutTeamSection = {
@@ -1928,26 +1908,18 @@ export type AllSanitySchemaTypes =
 
 // Source: src/sanity/lib/queries.ts
 // Variable: MENU_SITE_CONTENT_QUERY
-// Query: *[_type == "siteContent" && sectionType == "menu"]    | order(_updatedAt desc)    [0] {      _id,      menu {        headerTagline,        payoff,        navLinks[] { label, path },        socialLinks[] { label, href }      }    }
+// Query: *[_type == "siteContent" && sectionType == "menu"]    | order(_updatedAt desc)    [0] {      _id,      menu {        headerTagline,        payoff      }    }
 export type MENU_SITE_CONTENT_QUERY_RESULT = {
   _id: string
   menu: {
     headerTagline: LocalizedText | null
     payoff: LocalizedText | null
-    navLinks: Array<{
-      label: LocalizedString | null
-      path: string | null
-    }> | null
-    socialLinks: Array<{
-      label: string | null
-      href: string | null
-    }> | null
   } | null
 } | null
 
 // Source: src/sanity/lib/queries.ts
 // Variable: FOOTER_SITE_CONTENT_QUERY
-// Query: *[_type == "siteContent" && sectionType == "footer"]    | order(_updatedAt desc)    [0] {      _id,      footer {        payoff,        email,        phone,        addressLine1,        addressLine2,        vat,        navLinks[] { label, path },        privacyPolicyLabel,        privacyPolicyPath,        socialLinks[] { label, href }      }    }
+// Query: *[_type == "siteContent" && sectionType == "footer"]    | order(_updatedAt desc)    [0] {      _id,      footer {        payoff,        email,        phone,        addressLine1,        addressLine2,        vat,        privacyPolicyLabel,        privacyPolicyPath      }    }
 export type FOOTER_SITE_CONTENT_QUERY_RESULT = {
   _id: string
   footer: {
@@ -1957,16 +1929,8 @@ export type FOOTER_SITE_CONTENT_QUERY_RESULT = {
     addressLine1: string | null
     addressLine2: string | null
     vat: LocalizedString | null
-    navLinks: Array<{
-      label: LocalizedString | null
-      path: string | null
-    }> | null
     privacyPolicyLabel: LocalizedString | null
     privacyPolicyPath: string | null
-    socialLinks: Array<{
-      label: string | null
-      href: string | null
-    }> | null
   } | null
 } | null
 
@@ -7082,8 +7046,8 @@ export type LISTING_BY_ID_QUERY_RESULT =
 import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "siteContent" && sectionType == "menu"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      menu {\n        headerTagline,\n        payoff,\n        navLinks[] { label, path },\n        socialLinks[] { label, href }\n      }\n    }\n': MENU_SITE_CONTENT_QUERY_RESULT
-    '\n  *[_type == "siteContent" && sectionType == "footer"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      footer {\n        payoff,\n        email,\n        phone,\n        addressLine1,\n        addressLine2,\n        vat,\n        navLinks[] { label, path },\n        privacyPolicyLabel,\n        privacyPolicyPath,\n        socialLinks[] { label, href }\n      }\n    }\n': FOOTER_SITE_CONTENT_QUERY_RESULT
+    '\n  *[_type == "siteContent" && sectionType == "menu"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      menu {\n        headerTagline,\n        payoff\n      }\n    }\n': MENU_SITE_CONTENT_QUERY_RESULT
+    '\n  *[_type == "siteContent" && sectionType == "footer"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      footer {\n        payoff,\n        email,\n        phone,\n        addressLine1,\n        addressLine2,\n        vat,\n        privacyPolicyLabel,\n        privacyPolicyPath\n      }\n    }\n': FOOTER_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "aboutPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      aboutPage {\n        heroImages {\n          "imageDesktop": imageDesktop {\n            ...,\n            asset->\n          },\n          "imageMobile": imageMobile {\n            ...,\n            asset->\n          }\n        },\n        heroText,\n        historySection[] {\n          _key,\n          title,\n          subtitle,\n          body,\n          reverse,\n          images {\n            "imageDesktop": imageDesktop {\n              ...,\n              asset->\n            },\n            "imageMobile": imageMobile {\n              ...,\n              asset->\n            }\n          }\n        },\n        todaySection {\n          title,\n          subtitle,\n          text\n        },\n        highlightsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        sectorsHeading,\n        sectorsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          }\n        },\n        teamSection {\n          title,\n          subtitle,\n          text,\n          cta {\n            label,\n            path\n          },\n          teamMember[] {\n            _key,\n            title,\n            text,\n            image {\n              ...,\n              asset->\n            },\n            roles[]\n          }\n        }\n      }\n    }\n': ABOUT_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "homePage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      homePage {\n        heroTitle,\n        heroImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        whoWeAreText1,\n        whoWeAreText2,\n        whoWeAreCta {\n          label,\n          path\n        },\n        payoffTitle,\n        payoffImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        highlights[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        "featuredListings": featuredListings[]->{\n          _id,\n          _type,\n          title,\n          listingContractType,\n          price,\n          country,\n          city,\n          province,\n          address,\n          postalCode,\n          listingLabel,\n          "typology": select(\n            _type == "listingCountryHouses" => countryHouseTypology,\n            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n            _type == "listingIndustrial" => industrialTypology,\n            true => null\n          ),\n          "mainImage": mainImage {\n            ...,\n            asset->\n          }\n        },\n        testimonialsTitle,\n        testimonialsSubtitle,\n        testimonials[] {\n          _key,\n          text,\n          name,\n          provider\n        },\n        partners[] {\n          _key,\n          name,\n          image {\n            ...,\n            asset->\n          }\n        }\n      }\n    }\n': HOME_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) { // ... order(_createdAt desc) [0...10]{\n    _id,\n    _type,\n    title,\n    listingContractType,\n    price,\n    country,\n    city,\n    province,\n    address,\n    postalCode,\n    listingLabel,\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "mainImage": mainImage {\n      ...,\n      asset->\n    }\n  }\n': LISTINGS_PREVIEW_QUERY_RESULT
