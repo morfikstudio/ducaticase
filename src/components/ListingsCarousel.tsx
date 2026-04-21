@@ -16,8 +16,6 @@ import { ListingCard } from "@/components/ListingCard"
 import { Button } from "@/components/ui/Button"
 import { Container } from "@/components/ui/Container"
 
-import "swiper/css"
-
 type ListingsEntry = LISTINGS_PREVIEW_QUERY_RESULT[number]
 
 export type ListingsCarouselProps = {

@@ -9,8 +9,6 @@ import { useGsapReveal } from "@/hooks/useGsapReveal"
 
 import { Container } from "@/components/ui/Container"
 
-import "swiper/css"
-
 /** Altezza massima in px (carousel); larghezza slide deriva dal rapporto d’aspetto originale. */
 const MAX_LOGO_H = 88
 const MAX_LOGO_W = 320

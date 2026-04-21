@@ -18,6 +18,7 @@ import { IntroSection } from "@/components/IntroSection"
 import { ListingsCarousel } from "@/components/ListingsCarousel"
 import { MainHero } from "@/components/MainHero"
 import { PartnersSection } from "@/components/PartnersSection"
+import { QuoteCarousel } from "@/components/QuoteCarousel"
 import { SplitBanner } from "@/components/SplitBanner"
 import { WaveText } from "@/components/WaveText"
 
@@ -123,6 +124,17 @@ export default async function Page({ params }: PageProps) {
   const featuredEntries = featuredRaw.filter(isListingPreviewWithImage)
   const hasFeaturedListings = featuredEntries.length > 0
 
+  // TESTIMONIALS
+  const testimonialsRaw = hero?.testimonials ?? []
+  const testimonialEntries = testimonialsRaw.filter((t) =>
+    portableTextHasBlocks(t.text, locale),
+  )
+  const hasTestimonials = testimonialEntries.length > 0
+  const testimonialsTitle =
+    pickLocalizedString(hero?.testimonialsTitle ?? undefined, locale) ?? ""
+  const testimonialsSubtitle =
+    pickLocalizedString(hero?.testimonialsSubtitle ?? undefined, locale) ?? ""
+
   // PARTNERS
   const partnersRaw = hero?.partners ?? []
   const partnersWithImage = partnersRaw.filter((p) => Boolean(p.image?.asset))
@@ -207,9 +219,16 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {/* TESTIMONIALS */}
-      <section className="bg-dark-gray py-52 flex items-center justify-center">
-        <span>TESTIMONIALS HERE</span>
-      </section>
+      {hasTestimonials ? (
+        <section>
+          <QuoteCarousel
+            locale={locale}
+            subtitle={testimonialsSubtitle}
+            title={testimonialsTitle}
+            items={testimonialEntries}
+          />
+        </section>
+      ) : null}
 
       {/* CONTACT US */}
       <section className="py-56 lg:py-64">

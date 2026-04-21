@@ -13,8 +13,6 @@ import { useGsapReveal } from "@/hooks/useGsapReveal"
 
 import { ListingCard } from "@/components/ListingCard"
 
-import "swiper/css"
-
 type ListingPreviewEntry = LISTINGS_PREVIEW_QUERY_RESULT[number]
 
 type RelatedListingsProps = {

@@ -178,6 +178,14 @@ export const HOME_SITE_CONTENT_QUERY = defineQuery(groq`
             asset->
           }
         },
+        testimonialsTitle,
+        testimonialsSubtitle,
+        testimonials[] {
+          _key,
+          text,
+          name,
+          provider
+        },
         partners[] {
           _key,
           name,
