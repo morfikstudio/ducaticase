@@ -180,7 +180,7 @@ export default async function Page({ params }: PageProps) {
 
       {/* PAYOFF */}
       {hasPayoff ? (
-        <section className="lg:pb-58">
+        <section>
           <StatementHero
             locale={locale}
             title={payoffTitle}
@@ -192,7 +192,7 @@ export default async function Page({ params }: PageProps) {
 
       {/* HIGHLIGHTS */}
       {hasHighlights ? (
-        <section>
+        <section className="mt-16 md:mt-32 lg:mt-58">
           {highlightsWithImage.map((block, index) => {
             const title =
               pickLocalizedString(block.title ?? undefined, locale) ?? ""

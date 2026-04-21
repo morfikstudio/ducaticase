@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
 import type { AppLocale } from "@/i18n/routing"
@@ -49,13 +49,46 @@ export function StatementHero({
     })
   }, [])
 
-  const { ref: wrapRef } = useGsapReveal({ ready: imageReady })
+  const titleRef = useRef<HTMLDivElement>(null)
+  const [titleOverflow, setTitleOverflow] = useState(0)
+
+  useEffect(() => {
+    const el = titleRef.current
+    if (!el) return
+
+    const lgQuery = window.matchMedia("(min-width: 1024px)")
+
+    const update = () => {
+      console.log(
+        "update",
+        el.offsetHeight / 2,
+        lgQuery.matches ? 0 : el.offsetHeight / 2,
+      )
+
+      setTitleOverflow(lgQuery.matches ? 0 : el.offsetHeight / 2)
+    }
+
+    const ro = new ResizeObserver(update)
+    ro.observe(el)
+    lgQuery.addEventListener("change", update)
+    update()
+
+    return () => {
+      ro.disconnect()
+      lgQuery.removeEventListener("change", update)
+    }
+  }, [])
+
+  const { ref: wrapRef } = useGsapReveal({
+    ready: imageReady,
+    clearProps: "opacity,y",
+  })
 
   return (
-    <section
+    <div
       ref={wrapRef}
-      style={{ opacity: 0 }}
-      className={cn("relative bg-bg", className)}
+      style={{ opacity: 0, marginBottom: -titleOverflow }}
+      className={cn("relative", className)}
     >
       <div className="relative isolate w-full lg:min-h-svh">
         <div
@@ -109,6 +142,7 @@ export function StatementHero({
           )}
         >
           <div
+            ref={titleRef}
             className={cn(
               "type-display-1 w-full -translate-y-1/2 text-left whitespace-pre-line text-primary",
               "lg:col-span-10 lg:col-start-3 lg:max-w-none lg:translate-y-0 lg:px-0",
@@ -118,6 +152,6 @@ export function StatementHero({
           </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
