@@ -80,17 +80,23 @@ export function ListingCard({ entry, locale }: ListingCardProps) {
         <div className="absolute inset-0">
           {entry.mainImage ? (
             <SanityImage
-              image={entry.mainImage}
+              landscape={entry.mainImage}
+              portrait={entry.mainImage}
               locale={locale}
-              alt={title}
-              params={{
-                width: 1200,
-                height: 1500,
-                quality: 30,
-                sizes: "(min-width: 768px) 50vw, 100vw",
+              landscapeParams={{
+                width: 720,
+                height: 960,
+                sizes: "100vw",
+                quality: 50,
+              }}
+              portraitParams={{
+                width: 720,
+                height: 960,
+                sizes: "100vw",
+                quality: 50,
               }}
               fill
-              className="object-cover transition duration-500 group-hover:scale-[1.03]"
+              className="object-cover object-center transition duration-500 group-hover:scale-[1.03]"
             />
           ) : (
             <div className="h-full w-full bg-linear-to-br from-neutral-700 to-neutral-900" />

@@ -37,11 +37,11 @@ export const aboutSectorBlock = defineType({
     defineField({
       name: "image",
       title: "Immagine",
-      description: `Massimo ${maxMb} MB. Ritaglio consigliato 9:4.`,
+      description: `Massimo ${maxMb} MB. Ritaglio consigliato 16:9.`,
       type: "image",
       options: {
         hotspot: {
-          previews: [{ title: "Anteprima 9:4", aspectRatio: 9 / 4 }],
+          previews: [{ title: "Anteprima 16:9", aspectRatio: 16 / 9 }],
         },
       },
       initialValue: {

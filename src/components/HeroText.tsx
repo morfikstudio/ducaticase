@@ -1,5 +1,6 @@
 "use client"
 
+import { useCallback, useState } from "react"
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
 import type { AppLocale } from "@/i18n/routing"
@@ -24,9 +25,16 @@ export function HeroText({
   heroLandscape,
   heroPortrait,
 }: HeroTextProps) {
-  const { ref: wrapRef } = useGsapReveal()
+  const [imageReady, setImageReady] = useState(false)
+  const { ref: wrapRef } = useGsapReveal({ ready: imageReady })
 
   const hasBg = Boolean(heroLandscape ?? heroPortrait)
+
+  const onImageSettled = useCallback(() => {
+    requestAnimationFrame(() => {
+      setImageReady(true)
+    })
+  }, [])
 
   return (
     <div
@@ -41,22 +49,28 @@ export function HeroText({
             portrait={heroPortrait}
             locale={locale}
             landscapeParams={{
-              width: 2400,
-              height: 1350,
+              width: 1920,
+              height: 1080,
               sizes: "100vw",
             }}
             portraitParams={{
-              width: 1080,
-              height: 1920,
+              width: 720,
+              height: 1280,
               sizes: "100vw",
             }}
             fill
             priority
             className="pointer-events-none -z-20 object-cover object-center"
+            onLoad={onImageSettled}
+            onError={onImageSettled}
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 -z-10 bg-black/40"
+            className="pointer-events-none absolute inset-0 -z-10"
+            style={{
+              background:
+                "radial-gradient(ellipse at center, rgba(0,0,0,0.75) 0%, rgba(0,0,0,1) 100%)",
+            }}
           />
         </>
       ) : null}

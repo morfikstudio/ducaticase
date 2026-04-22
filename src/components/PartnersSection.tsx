@@ -9,10 +9,6 @@ import { useGsapReveal } from "@/hooks/useGsapReveal"
 
 import { Container } from "@/components/ui/Container"
 
-/** Altezza massima in px (carousel); larghezza slide deriva dal rapporto d’aspetto originale. */
-const MAX_LOGO_H = 88
-const MAX_LOGO_W = 320
-
 export type PartnersSectionPartner = NonNullable<
   NonNullable<
     NonNullable<HOME_SITE_CONTENT_QUERY_RESULT>["homePage"]
@@ -48,21 +44,6 @@ function partnerLogoIntrinsic(partner: PartnersSectionPartner): {
     return { width: w, height: h }
   }
   return null
-}
-
-function partnerLogoDisplaySize(intrinsic: { width: number; height: number }): {
-  width: number
-  height: number
-} {
-  const scale = Math.min(
-    1,
-    MAX_LOGO_H / intrinsic.height,
-    MAX_LOGO_W / intrinsic.width,
-  )
-  return {
-    width: Math.max(1, Math.round(intrinsic.width * scale)),
-    height: Math.max(1, Math.round(intrinsic.height * scale)),
-  }
 }
 
 export function PartnersSection({ title, partners }: PartnersSectionProps) {
@@ -103,19 +84,29 @@ export function PartnersSection({ title, partners }: PartnersSectionProps) {
               const partnerName = partner.name?.trim() ?? ""
               const alt = partnerName !== "" ? partnerName : "Partner"
               const src = partnerLogoSrc(partner)
+
               if (!src) return null
 
               const intrinsic =
                 partnerLogoIntrinsic(partner) ??
                 ({ width: 240, height: 80 } as const)
-              const { width: dispW, height: dispH } =
-                partnerLogoDisplaySize(intrinsic)
+
+              if (!intrinsic) return null
+
+              const scale = Math.min(
+                1,
+                88 / intrinsic.height,
+                320 / intrinsic.width,
+              )
+
+              const width = Math.max(1, Math.round(intrinsic.width * scale))
+              const height = Math.max(1, Math.round(intrinsic.height * scale))
 
               return (
                 <SwiperSlide
                   key={partner._key}
                   className="box-border flex! shrink-0 items-center justify-center"
-                  style={{ width: dispW, height: dispH }}
+                  style={{ width, height }}
                 >
                   <img
                     src={src}
@@ -126,7 +117,7 @@ export function PartnersSection({ title, partners }: PartnersSectionProps) {
                     decoding="async"
                     draggable={false}
                     className="block object-contain"
-                    style={{ width: dispW, height: dispH }}
+                    style={{ width, height }}
                   />
                 </SwiperSlide>
               )

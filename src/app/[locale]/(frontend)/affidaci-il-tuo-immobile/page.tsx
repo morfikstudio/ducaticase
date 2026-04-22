@@ -113,7 +113,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <main className={cn("w-full overflow-x-clip", "pt-32 md:pt-54")}>
       {hasHero ? (
-        <section aria-label="Hero">
+        <section>
           <HeroContent
             locale={locale}
             title={title}
@@ -129,7 +129,7 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {hasCover1 ? (
-        <section aria-label="Cover">
+        <section>
           <Cover
             locale={locale}
             imageLandscape={cover1Landscape}
@@ -139,13 +139,13 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       <section>
-        <div className="h-screen flex items-center justify-center">
+        <div className="h-[200svh] flex items-center justify-center bg-white text-black">
           <span>PLACEHOLDER</span>
         </div>
       </section>
 
       {hasCover2 ? (
-        <section aria-label="Cover">
+        <section>
           <Cover
             locale={locale}
             imageLandscape={cover2Landscape}
@@ -155,7 +155,7 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {hasValues ? (
-        <section aria-label="Values">
+        <section>
           <ImageFeatureList
             locale={locale}
             title={valuesTitle}
@@ -169,7 +169,7 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {hasBanner ? (
-        <section aria-label="Banner">
+        <section>
           <BannerText
             locale={locale}
             title={bannerTitle}
