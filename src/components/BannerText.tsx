@@ -1,7 +1,11 @@
+"use client"
+
 import type { AppLocale } from "@/i18n/routing"
 
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import type { LocalizedPortableText, LocalizedString } from "@/sanity/types"
+
+import { useGsapReveal } from "@/hooks/useGsapReveal"
 
 import { cn } from "@/utils/classNames"
 
@@ -26,6 +30,8 @@ export function BannerText({
   ctaHref,
   className,
 }: BannerTextProps) {
+  const { ref: wrapRef } = useGsapReveal()
+
   const resolvedTitle = pickLocalizedString(title ?? undefined, locale) ?? ""
   const resolvedCtaLabel =
     pickLocalizedString(ctaLabel ?? undefined, locale) ?? ""
@@ -45,43 +51,45 @@ export function BannerText({
         className,
       )}
     >
-      <Container
-        className={cn(
-          "flex flex-col gap-8",
-          "md:gap-12 md:flex-row md:justify-center md:items-start",
-          "lg:gap-32",
-        )}
-      >
-        {resolvedTitle.trim() !== "" ? (
-          <h2
-            className={cn(
-              "type-heading-2 lg:type-heading-1",
-              "md:flex-1",
-              "lg:max-w-[470px]",
-            )}
-          >
-            {resolvedTitle}
-          </h2>
-        ) : null}
-
-        <div className={cn("md:flex-1", "lg:max-w-[600px]")}>
-          <PortableTextComponent
-            text={text}
-            locale={locale}
-            className="type-body-3 lg:type-body-1"
-          />
-
-          {showCta ? (
-            <Button
-              href={ctaHref!}
-              variant="dark"
-              className="self-start mt-8 lg:mt-10"
+      <div ref={wrapRef} style={{ opacity: 0 }}>
+        <Container
+          className={cn(
+            "flex flex-col gap-8",
+            "md:gap-12 md:flex-row md:justify-center md:items-start",
+            "lg:gap-32",
+          )}
+        >
+          {resolvedTitle.trim() !== "" ? (
+            <h2
+              className={cn(
+                "type-heading-2 lg:type-heading-1",
+                "md:flex-1",
+                "lg:max-w-[470px]",
+              )}
             >
-              {resolvedCtaLabel}
-            </Button>
+              {resolvedTitle}
+            </h2>
           ) : null}
-        </div>
-      </Container>
+
+          <div className={cn("md:flex-1", "lg:max-w-[600px]")}>
+            <PortableTextComponent
+              text={text}
+              locale={locale}
+              className="type-body-3 lg:type-body-1"
+            />
+
+            {showCta ? (
+              <Button
+                href={ctaHref!}
+                variant="dark"
+                className="self-start mt-8 lg:mt-10"
+              >
+                {resolvedCtaLabel}
+              </Button>
+            ) : null}
+          </div>
+        </Container>
+      </div>
     </div>
   )
 }

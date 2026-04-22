@@ -1,6 +1,10 @@
+"use client"
+
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
 import type { AppLocale } from "@/i18n/routing"
+
+import { useGsapReveal } from "@/hooks/useGsapReveal"
 
 import { listYourPropertyCoverRecommendedCrop } from "@/lib/listYourPropertyCoverImage"
 
@@ -28,13 +32,19 @@ export function Cover({
   priority = false,
   className,
 }: CoverProps) {
+  const { ref: wrapRef } = useGsapReveal()
+
   const hasMedia = Boolean(imageLandscape ?? imagePortrait)
   if (!hasMedia) {
     return null
   }
 
   return (
-    <div className={cn("relative isolate w-full", className)}>
+    <div
+      ref={wrapRef}
+      style={{ opacity: 0 }}
+      className={cn("relative isolate w-full", className)}
+    >
       <div
         className={cn(
           "relative w-full overflow-hidden",

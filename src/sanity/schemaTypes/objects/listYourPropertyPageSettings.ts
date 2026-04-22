@@ -75,7 +75,7 @@ export const listYourPropertyPageSettings = defineType({
     { name: "cover1", title: "Cover 1" },
     { name: "servizi", title: "Servizi" },
     { name: "cover2", title: "Cover 2" },
-    { name: "valori", title: "Valori" },
+    { name: "values", title: "Values" },
     { name: "banner", title: "Banner" },
   ],
   fields: [
@@ -181,39 +181,39 @@ export const listYourPropertyPageSettings = defineType({
       group: "cover2",
     }),
     defineField({
-      name: "valoriTitle",
+      name: "valuesTitle",
       title: "Titolo",
       type: "localizedString",
-      group: "valori",
+      group: "values",
       validation: (Rule) =>
         Rule.custom((value: LocalizedStringValue) =>
           validatePairedLocalizedString(value),
         ),
     }),
     defineField({
-      name: "valoriSubtitle",
+      name: "valuesSubtitle",
       title: "Sottotitolo",
       type: "localizedString",
-      group: "valori",
+      group: "values",
       validation: (Rule) =>
         Rule.custom((value: LocalizedStringValue) =>
           validatePairedLocalizedString(value),
         ),
     }),
     defineField({
-      name: "valoriCta",
+      name: "valuesCta",
       title: "Call to action",
       type: "aboutHighlightCta",
-      group: "valori",
+      group: "values",
       validation: (Rule) =>
         Rule.custom((value: HighlightCtaValue) => validateHighlightCta(value)),
     }),
     defineField({
-      name: "valoriImage",
+      name: "valuesImage",
       title: "Immagine",
       description: `Massimo ${maxMb} MB.`,
       type: "image",
-      group: "valori",
+      group: "values",
       options: {
         hotspot: {
           previews: [{ title: "Anteprima", aspectRatio: 4 / 3 }],
@@ -259,10 +259,10 @@ export const listYourPropertyPageSettings = defineType({
         }),
     }),
     defineField({
-      name: "valoriItems",
-      title: "Valori",
+      name: "valuesItems",
+      title: "Values",
       type: "array",
-      group: "valori",
+      group: "values",
       of: [defineArrayMember({ type: "listYourPropertyValueItem" })],
     }),
     defineField({

@@ -8244,7 +8244,7 @@
           },
           "optional": true
         },
-        "valoriTitle": {
+        "valuesTitle": {
           "type": "objectAttribute",
           "value": {
             "type": "inline",
@@ -8252,7 +8252,7 @@
           },
           "optional": true
         },
-        "valoriSubtitle": {
+        "valuesSubtitle": {
           "type": "objectAttribute",
           "value": {
             "type": "inline",
@@ -8260,7 +8260,7 @@
           },
           "optional": true
         },
-        "valoriCta": {
+        "valuesCta": {
           "type": "objectAttribute",
           "value": {
             "type": "inline",
@@ -8268,7 +8268,7 @@
           },
           "optional": true
         },
-        "valoriImage": {
+        "valuesImage": {
           "type": "objectAttribute",
           "value": {
             "type": "object",
@@ -8323,7 +8323,7 @@
           },
           "optional": true
         },
-        "valoriItems": {
+        "valuesItems": {
           "type": "objectAttribute",
           "value": {
             "type": "array",

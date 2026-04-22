@@ -5,9 +5,9 @@ import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
 import type { AppLocale } from "@/i18n/routing"
 
-import { listYourPropertyHeroRecommendedCrop } from "@/lib/listYourPropertyHeroImage"
 import { useGsapReveal } from "@/hooks/useGsapReveal"
 
+import { listYourPropertyHeroRecommendedCrop } from "@/lib/listYourPropertyHeroImage"
 import { cn } from "@/utils/classNames"
 
 import { Button } from "@/components/ui/Button"
@@ -150,24 +150,29 @@ export function HeroContent({
           "flex flex-col gap-8",
           "md:flex-row md:justify-between md:gap-12",
           "py-16 md:py-24 lg:py-48",
+
+          "lg:grid lg:grid-cols-12 lg:items-center lg:gap-4",
         )}
       >
-        <div className="md:flex-1">
+        <div
+          className={cn(
+            "md:flex-1 lg:flex-auto",
+            "lg:col-start-1 lg:col-span-5",
+          )}
+        >
           {hasPayoff1 ? (
-            <p className="type-body-1 lg:type-heading-2 lg:max-w-[500px]">
-              {payoff1}
-            </p>
+            <p className="type-body-1 lg:type-heading-2">{payoff1}</p>
           ) : null}
         </div>
 
-        <div className="md:flex-1">
+        <div
+          className={cn(
+            "md:flex-1",
+            "lg:flex-auto lg:col-start-8 lg:col-span-4",
+          )}
+        >
           {hasPayoff2 ? (
-            <p
-              className={cn(
-                "type-body-3 text-gray",
-                "lg:max-w-[400px] lg:type-body-2",
-              )}
-            >
+            <p className={cn("type-body-3 text-gray", "lg:type-body-2")}>
               {payoff2}
             </p>
           ) : null}

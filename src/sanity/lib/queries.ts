@@ -290,6 +290,20 @@ export const LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY = defineQuery(groq`
         bannerCta {
           label,
           path
+        },
+        valuesTitle,
+        valuesSubtitle,
+        valuesCta {
+          label,
+          path
+        },
+        valuesImage {
+          ...,
+          asset->
+        },
+        valuesItems[] {
+          _key,
+          title
         }
       }
     }

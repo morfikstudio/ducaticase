@@ -10,6 +10,7 @@ import { cn } from "@/utils/classNames"
 import { BannerText } from "@/components/BannerText"
 import { Cover } from "@/components/Cover"
 import { HeroContent } from "@/components/HeroContent"
+import { ImageFeatureList } from "@/components/ImageFeatureList"
 
 function normalizePathnameForIntlLink(path: string): string {
   const trimmed = path.trim()
@@ -82,6 +83,21 @@ export default async function Page({ params }: PageProps) {
   const cover2Portrait = cover2?.imagePortrait
   const hasCover2 = Boolean(cover2Landscape?.asset ?? cover2Portrait?.asset)
 
+  /* VALUES */
+  const valuesTitle = page?.valuesTitle
+  const valuesSubtitle = page?.valuesSubtitle
+  const valuesItems = page?.valuesItems
+  const valuesCta = page?.valuesCta
+  const valuesCtaPath = valuesCta?.path?.trim() ?? ""
+  const valuesCtaHref =
+    valuesCtaPath !== ""
+      ? normalizePathnameForIntlLink(valuesCtaPath)
+      : undefined
+  const valuesImage = page?.valuesImage
+  const hasValues = Boolean(
+    valuesTitle ?? valuesSubtitle ?? valuesItems ?? valuesCta,
+  )
+
   /* BANNER */
   const bannerTitle = page?.bannerTitle
   const bannerText = page?.bannerText
@@ -113,7 +129,7 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {hasCover1 ? (
-        <section aria-label="Cover 1">
+        <section aria-label="Cover">
           <Cover
             locale={locale}
             imageLandscape={cover1Landscape}
@@ -122,12 +138,32 @@ export default async function Page({ params }: PageProps) {
         </section>
       ) : null}
 
+      <section>
+        <div className="h-screen flex items-center justify-center">
+          <span>PLACEHOLDER</span>
+        </div>
+      </section>
+
       {hasCover2 ? (
-        <section aria-label="Cover 2">
+        <section aria-label="Cover">
           <Cover
             locale={locale}
             imageLandscape={cover2Landscape}
             imagePortrait={cover2Portrait}
+          />
+        </section>
+      ) : null}
+
+      {hasValues ? (
+        <section aria-label="Values">
+          <ImageFeatureList
+            locale={locale}
+            title={valuesTitle}
+            subtitle={valuesSubtitle}
+            items={valuesItems}
+            ctaLabel={valuesCta?.label}
+            ctaHref={valuesCtaHref}
+            image={valuesImage}
           />
         </section>
       ) : null}
