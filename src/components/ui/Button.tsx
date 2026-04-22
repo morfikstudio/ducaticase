@@ -6,7 +6,7 @@ import { Link } from "@/i18n/navigation"
 import { cn } from "@/utils/classNames"
 
 type ButtonIcon = "externalLink" | "filters" | "detailsArrow" | "download"
-type ButtonVariant = "primary" | "secondary" | "reverse"
+type ButtonVariant = "primary" | "secondary" | "reverse" | "dark"
 
 type ButtonSharedProps = {
   variant?: ButtonVariant
@@ -157,6 +157,19 @@ function getButtonClasses({
         : isActive || highlight
           ? "bg-black text-primary hover:bg-black hover:text-primary"
           : "bg-transparent text-black hover:bg-black hover:text-primary",
+      className,
+    )
+  }
+
+  if (variant === "dark") {
+    return cn(
+      "inline-flex items-center justify-center gap-3",
+      "px-8 py-3",
+      "type-button rounded-[4px] border border-black",
+      "cursor-pointer transition-all duration-200",
+      disabled
+        ? "cursor-not-allowed bg-black text-white opacity-50"
+        : "bg-black text-white hover:border-black hover:bg-transparent hover:text-black",
       className,
     )
   }

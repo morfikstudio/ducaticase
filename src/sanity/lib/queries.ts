@@ -284,6 +284,12 @@ export const LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY = defineQuery(groq`
             ...,
             asset->
           }
+        },
+        bannerTitle,
+        bannerText,
+        bannerCta {
+          label,
+          path
         }
       }
     }

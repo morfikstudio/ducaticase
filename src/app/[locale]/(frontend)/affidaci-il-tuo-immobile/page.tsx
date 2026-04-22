@@ -7,6 +7,7 @@ import type { LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT } from "@/sanity/type
 
 import { cn } from "@/utils/classNames"
 
+import { BannerText } from "@/components/BannerText"
 import { Cover } from "@/components/Cover"
 import { HeroContent } from "@/components/HeroContent"
 
@@ -81,10 +82,22 @@ export default async function Page({ params }: PageProps) {
   const cover2Portrait = cover2?.imagePortrait
   const hasCover2 = Boolean(cover2Landscape?.asset ?? cover2Portrait?.asset)
 
+  /* BANNER */
+  const bannerTitle = page?.bannerTitle
+  const bannerText = page?.bannerText
+  const bannerCta = page?.bannerCta
+  const bannerCtaPath = bannerCta?.path?.trim() ?? ""
+  const bannerCtaHref =
+    bannerCtaPath !== ""
+      ? normalizePathnameForIntlLink(bannerCtaPath)
+      : undefined
+  const bannerCtaLabel = bannerCta?.label
+  const hasBanner = Boolean(bannerTitle ?? bannerText ?? bannerCta)
+
   return (
     <main className={cn("w-full overflow-x-clip", "pt-32 md:pt-54")}>
       {hasHero ? (
-        <section>
+        <section aria-label="Hero">
           <HeroContent
             locale={locale}
             title={title}
@@ -115,6 +128,18 @@ export default async function Page({ params }: PageProps) {
             locale={locale}
             imageLandscape={cover2Landscape}
             imagePortrait={cover2Portrait}
+          />
+        </section>
+      ) : null}
+
+      {hasBanner ? (
+        <section aria-label="Banner">
+          <BannerText
+            locale={locale}
+            title={bannerTitle}
+            text={bannerText}
+            ctaLabel={bannerCtaLabel}
+            ctaHref={bannerCtaHref}
           />
         </section>
       ) : null}
