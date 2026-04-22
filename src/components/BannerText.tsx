@@ -48,7 +48,8 @@ export function BannerText({
       <Container
         className={cn(
           "flex flex-col gap-8",
-          "gap-12 md:flex-row md:justify-center md:items-start",
+          "md:gap-12 md:flex-row md:justify-center md:items-start",
+          "lg:gap-32",
         )}
       >
         {resolvedTitle.trim() !== "" ? (
@@ -56,7 +57,7 @@ export function BannerText({
             className={cn(
               "type-heading-2 lg:type-heading-1",
               "md:flex-1",
-              "lg:max-w-[500px]",
+              "lg:max-w-[470px]",
             )}
           >
             {resolvedTitle}
