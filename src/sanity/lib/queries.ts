@@ -7,9 +7,7 @@ export const MENU_SITE_CONTENT_QUERY = defineQuery(groq`
       _id,
       menu {
         headerTagline,
-        payoff,
-        navLinks[] { label, path },
-        socialLinks[] { label, href }
+        payoff
       }
     }
 `)
@@ -26,10 +24,8 @@ export const FOOTER_SITE_CONTENT_QUERY = defineQuery(groq`
         addressLine1,
         addressLine2,
         vat,
-        navLinks[] { label, path },
         privacyPolicyLabel,
-        privacyPolicyPath,
-        socialLinks[] { label, href }
+        privacyPolicyPath
       }
     }
 `)
@@ -204,6 +200,110 @@ export const HOME_SITE_CONTENT_QUERY = defineQuery(groq`
             ...,
             asset->
           }
+        }
+      }
+    }
+`)
+
+export const LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY = defineQuery(groq`
+  *[_type == "siteContent" && sectionType == "listYourPropertyPage"]
+    | order(_updatedAt desc)
+    [0] {
+      _id,
+      listYourPropertyPage {
+        heroTitle,
+        heroSubtitle,
+        heroPayoff1,
+        heroPayoff2,
+        heroCta {
+          label,
+          path
+        },
+        heroImage {
+          "recommendedCrop": {
+            "landscape": {
+              "aspectRatio": "20:9",
+              "width": 1920,
+              "height": 810
+            },
+            "portrait": {
+              "aspectRatio": "4:5",
+              "width": 720,
+              "height": 960
+            }
+          },
+          "imageLandscape": imageLandscape {
+            ...,
+            asset->
+          },
+          "imagePortrait": imagePortrait {
+            ...,
+            asset->
+          }
+        },
+        cover1Image {
+          "recommendedCrop": {
+            "landscape": {
+              "aspectRatio": "16:9",
+              "width": 1920,
+              "height": 1080
+            },
+            "portrait": {
+              "aspectRatio": "4:5",
+              "width": 720,
+              "height": 960
+            }
+          },
+          "imageLandscape": imageLandscape {
+            ...,
+            asset->
+          },
+          "imagePortrait": imagePortrait {
+            ...,
+            asset->
+          }
+        },
+        cover2Image {
+          "recommendedCrop": {
+            "landscape": {
+              "aspectRatio": "16:9",
+              "width": 1920,
+              "height": 1080
+            },
+            "portrait": {
+              "aspectRatio": "4:5",
+              "width": 720,
+              "height": 960
+            }
+          },
+          "imageLandscape": imageLandscape {
+            ...,
+            asset->
+          },
+          "imagePortrait": imagePortrait {
+            ...,
+            asset->
+          }
+        },
+        bannerTitle,
+        bannerText,
+        bannerCta {
+          label,
+          path
+        },
+        valuesTitle,
+        valuesSubtitle,
+        valuesCta {
+          label,
+          path
+        },
+        valuesImage {
+          ...,
+          asset->
+        },
+        valuesItems[] {
+          _key,
+          title
         }
       }
     }

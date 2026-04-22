@@ -170,18 +170,21 @@ export function SanityImage(props: SanityImageProps) {
 
   if ("image" in props && "params" in props) {
     const { image, params } = props as SanityImageSingleProps
+
     const resolvedAlt = resolveSanityImageAlt({
       alt,
       locale,
       image,
       altFallback,
     })
+
     const url = getSanityImageUrl(
       image,
       params.width,
       params.height,
       params.quality,
     )
+
     if (!url) return null
 
     const sharedProps = {

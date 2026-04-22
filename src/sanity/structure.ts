@@ -77,6 +77,26 @@ export const structure: StructureResolver = (S) =>
                       { field: "_updatedAt", direction: "desc" },
                     ]),
                 ),
+              S.listItem()
+                .title("Affidaci il tuo immobile")
+                .icon(DesktopIcon)
+                .id("siteContentListYourPropertyPage")
+                .child(
+                  S.documentList()
+                    .title("Affidaci il tuo immobile")
+                    .schemaType("siteContent")
+                    .filter(
+                      '_type == "siteContent" && sectionType == "listYourPropertyPage"',
+                    )
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem(
+                        "siteContent-listYourPropertyPage",
+                      ),
+                    ])
+                    .defaultOrdering([
+                      { field: "_updatedAt", direction: "desc" },
+                    ]),
+                ),
             ]),
         ),
       S.divider(),

@@ -268,7 +268,7 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
 
   return (
     <div>
-      <Container className="pt-30 md:pt-20 pb-24">
+      <Container>
         <div ref={headerEntranceRef}>
           <ListingsHeader
             activeCountry={selectedCountry}

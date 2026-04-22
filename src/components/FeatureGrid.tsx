@@ -104,9 +104,7 @@ function FeatureCard({ title, text, image, locale }: FeatureCardProps) {
           <div
             className={cn(
               "relative w-full min-h-0 overflow-hidden",
-              "aspect-327/146",
               "max-md:mt-auto",
-              "md:aspect-244/146",
             )}
           >
             <SanityImage
@@ -115,18 +113,15 @@ function FeatureCard({ title, text, image, locale }: FeatureCardProps) {
               locale={locale}
               altFallback={title}
               landscapeParams={{
-                width: 244,
-                height: 146,
-                quality: 82,
+                width: 720,
+                height: 375,
                 sizes: "(max-width: 767px) 100vw, min(42%, 244px)",
               }}
               portraitParams={{
-                width: 327,
-                height: 146,
-                quality: 82,
+                width: 720,
+                height: 375,
                 sizes: "(max-width: 767px) 100vw",
               }}
-              fill
               className="object-cover object-center"
             />
           </div>

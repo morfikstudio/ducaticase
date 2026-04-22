@@ -279,7 +279,7 @@ export function GalleryLightbox({
                   image={image}
                   locale={locale}
                   params={{
-                    width: 1200,
+                    width: 720,
                     sizes: "100vw",
                   }}
                   priority={i === initialIndex}
@@ -291,8 +291,8 @@ export function GalleryLightbox({
                     image={image}
                     locale={locale}
                     params={{
-                      width: 1800,
-                      sizes: "(min-width: 768px) calc(100vw - 100px), 100vw",
+                      width: 1280,
+                      sizes: "100vw",
                     }}
                     fill
                     priority={i === initialIndex}

@@ -90,7 +90,6 @@ export function SplitBanner({
                 params={{
                   width: 720,
                   height: 686,
-                  quality: 80,
                   sizes: "(max-width: 1023px) 100vw, 50vw",
                 }}
                 fill

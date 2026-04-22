@@ -1,5 +1,9 @@
 import type { AppLocale } from "@/i18n/routing"
 import { pickLocalizedString } from "@/sanity/lib/locale"
+import {
+  SITE_MENU_SOCIAL_LINKS,
+  SITE_MENU_NAV_ITEMS,
+} from "@/sanity/lib/internalSitePaths"
 import type { FOOTER_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
 
 export type FooterContent = {
@@ -30,27 +34,15 @@ export function footerContentFromSanity(
         )}`
       : "#"
 
-  const socialLinks =
-    f?.socialLinks
-      ?.map((item) => ({
-        label: item.label?.trim() ?? "",
-        href: item.href?.trim() ?? "",
-      }))
-      .filter(
-        (item): item is { label: string; href: string } =>
-          item.label !== "" && item.href !== "",
-      ) ?? []
+  const navLinks = SITE_MENU_NAV_ITEMS.map((row) => ({
+    label: row.label[locale],
+    href: row.path,
+  }))
 
-  const navLinks =
-    f?.navLinks
-      ?.map((row) => ({
-        label: pickLocalizedString(row?.label ?? undefined, locale) ?? "",
-        href: row?.path?.trim() ?? "",
-      }))
-      .filter(
-        (item): item is { label: string; href: string } =>
-          item.label !== "" && item.href !== "",
-      ) ?? []
+  const socialLinks = SITE_MENU_SOCIAL_LINKS.map((item) => ({
+    label: item.label[locale],
+    href: item.href,
+  }))
 
   return {
     payoff: pickLocalizedString(f?.payoff ?? undefined, locale) ?? "",

@@ -170,10 +170,9 @@ function MemberCardDesktop({ member, locale }: MemberCardProps) {
             locale={locale}
             altFallback={title}
             params={{
-              width: 788,
-              height: 1106,
-              quality: 85,
-              sizes: "(max-width: 767px) 100vw, 50vw",
+              width: 400,
+              height: 560,
+              sizes: "30vw",
             }}
             fill
             className="object-cover object-center"
@@ -217,10 +216,9 @@ function MemberCardMobile({ member, locale }: MemberCardProps) {
             locale={locale}
             altFallback={title}
             params={{
-              width: 788,
-              height: 1106,
-              quality: 85,
-              sizes: "(max-width: 767px) 100vw, 50vw",
+              width: 720,
+              height: 1008,
+              sizes: "100vw",
             }}
             fill
             className="object-cover object-center"

@@ -8,18 +8,20 @@ const SECTION_OPTIONS = [
   { title: "Menu", value: "menu" },
   { title: "Home", value: "homePage" },
   { title: "Chi siamo", value: "aboutPage" },
+  { title: "Affidaci il tuo immobile", value: "listYourPropertyPage" },
 ] as const
 
 type SectionType = (typeof SECTION_OPTIONS)[number]["value"]
 
 const SITE_CONTENT_LIST_PREVIEW_TITLE: Record<
-  "footer" | "menu" | "homePage" | "aboutPage",
+  "footer" | "menu" | "homePage" | "aboutPage" | "listYourPropertyPage",
   string
 > = {
   footer: "Footer",
   menu: "Menu",
   homePage: "Home",
   aboutPage: "Chi siamo",
+  listYourPropertyPage: "Affidaci il tuo immobile",
 }
 
 type SiteContentDoc = {
@@ -38,6 +40,12 @@ function titleAndSectionForNewDocument(document: SiteContentDoc | undefined): {
   }
   if (document?.sectionType === "aboutPage") {
     return { title: "Chi siamo", sectionType: "aboutPage" }
+  }
+  if (document?.sectionType === "listYourPropertyPage") {
+    return {
+      title: "Affidaci il tuo immobile",
+      sectionType: "listYourPropertyPage",
+    }
   }
   return { title: "Footer", sectionType: "footer" }
 }
@@ -66,7 +74,8 @@ export const siteContent = defineType({
         doc.sectionType !== "footer" &&
         doc.sectionType !== "menu" &&
         doc.sectionType !== "homePage" &&
-        doc.sectionType !== "aboutPage"
+        doc.sectionType !== "aboutPage" &&
+        doc.sectionType !== "listYourPropertyPage"
       ) {
         return true
       }
@@ -93,7 +102,9 @@ export const siteContent = defineType({
                 ? "Home"
                 : section === "aboutPage"
                   ? "Chi siamo"
-                  : section
+                  : section === "listYourPropertyPage"
+                    ? "Affidaci il tuo immobile"
+                    : section
         return `Esiste già un documento ${label}. Elimina quello esistente prima di crearne un altro.`
       }
       return true
@@ -149,6 +160,13 @@ export const siteContent = defineType({
       hidden: ({ document }) =>
         (document as SiteContentDoc)?.sectionType !== "aboutPage",
     }),
+    defineField({
+      name: "listYourPropertyPage",
+      title: "Contenuto",
+      type: "listYourPropertyPageSettings",
+      hidden: ({ document }) =>
+        (document as SiteContentDoc)?.sectionType !== "listYourPropertyPage",
+    }),
   ],
   preview: {
     select: {
@@ -160,7 +178,8 @@ export const siteContent = defineType({
         sectionType === "footer" ||
         sectionType === "menu" ||
         sectionType === "homePage" ||
-        sectionType === "aboutPage"
+        sectionType === "aboutPage" ||
+        sectionType === "listYourPropertyPage"
       ) {
         const key = sectionType as keyof typeof SITE_CONTENT_LIST_PREVIEW_TITLE
         return {

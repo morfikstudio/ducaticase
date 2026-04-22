@@ -44,6 +44,15 @@ export default defineConfig({
         sectionType: "aboutPage",
       }),
     },
+    {
+      id: "siteContent-listYourPropertyPage",
+      title: "Affidaci il tuo immobile",
+      schemaType: "siteContent",
+      value: () => ({
+        title: "Affidaci il tuo immobile",
+        sectionType: "listYourPropertyPage",
+      }),
+    },
   ],
   document: {
     newDocumentOptions: (prev) =>

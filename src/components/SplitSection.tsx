@@ -93,12 +93,14 @@ export function SplitSection({
                 altFallback={title}
                 breakpoint="lg"
                 landscapeParams={{
-                  width: 1400,
-                  sizes: "(max-width: 1023px) 0px, (min-width: 1024px) 75vw",
+                  width: 900,
+                  height: 900,
+                  sizes: "50vw",
                 }}
                 portraitParams={{
-                  width: 900,
-                  sizes: "(max-width: 1023px) 100vw, 0px",
+                  width: 720,
+                  height: 375,
+                  sizes: "100vw",
                 }}
                 className="h-auto w-full"
                 onLoad={handleImageSettled}

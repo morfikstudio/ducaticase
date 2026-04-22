@@ -43,6 +43,7 @@ export function StatementHero({
     sanityImageHasAsset(imageLandscape) || sanityImageHasAsset(imagePortrait)
 
   const [imageReady, setImageReady] = useState(!hasImage)
+
   const handleImageSettled = useCallback(() => {
     requestAnimationFrame(() => {
       setImageReady(true)
@@ -98,16 +99,14 @@ export function StatementHero({
               portrait={imagePortrait}
               locale={locale}
               landscapeParams={{
-                width: 2000,
-                height: 1600,
-                quality: 82,
-                sizes: "(max-width: 1023px) 1px, 50vw",
+                width: 1280,
+                height: 1024,
+                sizes: "75vw",
               }}
               portraitParams={{
-                width: 1600,
-                height: 2000,
-                quality: 82,
-                sizes: "(max-width: 1023px) 100vw, 1px",
+                width: 720,
+                height: 900,
+                sizes: "100vw",
               }}
               breakpoint="lg"
               fill

@@ -1411,11 +1411,56 @@ export type SiteContent = {
   _updatedAt: string
   _rev: string
   title?: string
-  sectionType?: "footer" | "menu" | "homePage" | "aboutPage"
+  sectionType?:
+    | "footer"
+    | "menu"
+    | "homePage"
+    | "aboutPage"
+    | "listYourPropertyPage"
   footer?: FooterSettings
   menu?: MenuSettings
   homePage?: HomePageSettings
   aboutPage?: AboutPageSettings
+  listYourPropertyPage?: ListYourPropertyPageSettings
+}
+
+export type ListYourPropertyPageSettings = {
+  _type: "listYourPropertyPageSettings"
+  heroTitle?: LocalizedString
+  heroSubtitle?: LocalizedString
+  heroImage?: ListYourPropertyHeroResponsiveImage
+  heroPayoff1?: LocalizedText
+  heroPayoff2?: LocalizedText
+  heroCta?: AboutHighlightCta
+  cover1Image?: ListYourPropertyCoverResponsiveImage
+  serviziTitle?: LocalizedText
+  serviziSubtitle?: LocalizedText
+  serviziCta?: AboutHighlightCta
+  serviziItems?: Array<
+    {
+      _key: string
+    } & ListYourPropertyServiceItem
+  >
+  cover2Image?: ListYourPropertyCoverResponsiveImage
+  valuesTitle?: LocalizedString
+  valuesSubtitle?: LocalizedString
+  valuesCta?: AboutHighlightCta
+  valuesImage?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: LocalizedString
+    _type: "image"
+  }
+  valuesItems?: Array<
+    {
+      _key: string
+    } & ListYourPropertyValueItem
+  >
+  bannerTitle?: LocalizedString
+  bannerText?: LocalizedPortableText
+  bannerCta?: AboutHighlightCta
 }
 
 export type AboutPageSettings = {
@@ -1524,16 +1569,6 @@ export type MenuSettings = {
   _type: "menuSettings"
   headerTagline?: LocalizedText
   payoff?: LocalizedText
-  navLinks?: Array<{
-    label?: LocalizedString
-    path?: string
-    _key: string
-  }>
-  socialLinks?: Array<{
-    label?: string
-    href?: string
-    _key: string
-  }>
 }
 
 export type FooterSettings = {
@@ -1544,18 +1579,72 @@ export type FooterSettings = {
   addressLine1?: string
   addressLine2?: string
   vat?: LocalizedString
-  navLinks?: Array<{
-    label?: LocalizedString
-    path?: string
-    _key: string
-  }>
   privacyPolicyLabel?: LocalizedString
   privacyPolicyPath?: string
-  socialLinks?: Array<{
-    label?: string
-    href?: string
-    _key: string
-  }>
+}
+
+export type AboutHighlightCta = {
+  _type: "aboutHighlightCta"
+  label?: LocalizedString
+  path?:
+    | "/"
+    | "/affidaci-il-tuo-immobile"
+    | "/immobili"
+    | "/ricerca-su-misura"
+    | "/ducati-per-le-aziende"
+    | "/about"
+    | "/contact"
+}
+
+export type ListYourPropertyCoverResponsiveImage = {
+  _type: "listYourPropertyCoverResponsiveImage"
+  imageLandscape?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: LocalizedString
+    _type: "image"
+  }
+  imagePortrait?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: LocalizedString
+    _type: "image"
+  }
+}
+
+export type ListYourPropertyHeroResponsiveImage = {
+  _type: "listYourPropertyHeroResponsiveImage"
+  imageLandscape?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: LocalizedString
+    _type: "image"
+  }
+  imagePortrait?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: LocalizedString
+    _type: "image"
+  }
+}
+
+export type ListYourPropertyValueItem = {
+  _type: "listYourPropertyValueItem"
+  title?: LocalizedText
+}
+
+export type ListYourPropertyServiceItem = {
+  _type: "listYourPropertyServiceItem"
+  title?: LocalizedString
+  text?: LocalizedPortableText
 }
 
 export type AboutTeamSection = {
@@ -1596,19 +1685,6 @@ export type AboutHeroResponsiveImage = {
     alt?: LocalizedString
     _type: "image"
   }
-}
-
-export type AboutHighlightCta = {
-  _type: "aboutHighlightCta"
-  label?: LocalizedString
-  path?:
-    | "/"
-    | "/affidaci-il-tuo-immobile"
-    | "/about"
-    | "/immobili"
-    | "/ducati-per-le-aziende"
-    | "/contact"
-    | "/ricerca-su-misura"
 }
 
 export type TeamMemberType = {
@@ -1891,6 +1967,7 @@ export type AllSanitySchemaTypes =
   | ListingCountryHouses
   | ListingResidential
   | SiteContent
+  | ListYourPropertyPageSettings
   | AboutPageSettings
   | ListingResidentialReference
   | ListingCountryHousesReference
@@ -1901,10 +1978,14 @@ export type AllSanitySchemaTypes =
   | HomePageSettings
   | MenuSettings
   | FooterSettings
+  | AboutHighlightCta
+  | ListYourPropertyCoverResponsiveImage
+  | ListYourPropertyHeroResponsiveImage
+  | ListYourPropertyValueItem
+  | ListYourPropertyServiceItem
   | AboutTeamSection
   | AboutTodaySection
   | AboutHeroResponsiveImage
-  | AboutHighlightCta
   | TeamMemberType
   | AboutHistoryBlock
   | AboutResponsiveImage
@@ -1928,26 +2009,18 @@ export type AllSanitySchemaTypes =
 
 // Source: src/sanity/lib/queries.ts
 // Variable: MENU_SITE_CONTENT_QUERY
-// Query: *[_type == "siteContent" && sectionType == "menu"]    | order(_updatedAt desc)    [0] {      _id,      menu {        headerTagline,        payoff,        navLinks[] { label, path },        socialLinks[] { label, href }      }    }
+// Query: *[_type == "siteContent" && sectionType == "menu"]    | order(_updatedAt desc)    [0] {      _id,      menu {        headerTagline,        payoff      }    }
 export type MENU_SITE_CONTENT_QUERY_RESULT = {
   _id: string
   menu: {
     headerTagline: LocalizedText | null
     payoff: LocalizedText | null
-    navLinks: Array<{
-      label: LocalizedString | null
-      path: string | null
-    }> | null
-    socialLinks: Array<{
-      label: string | null
-      href: string | null
-    }> | null
   } | null
 } | null
 
 // Source: src/sanity/lib/queries.ts
 // Variable: FOOTER_SITE_CONTENT_QUERY
-// Query: *[_type == "siteContent" && sectionType == "footer"]    | order(_updatedAt desc)    [0] {      _id,      footer {        payoff,        email,        phone,        addressLine1,        addressLine2,        vat,        navLinks[] { label, path },        privacyPolicyLabel,        privacyPolicyPath,        socialLinks[] { label, href }      }    }
+// Query: *[_type == "siteContent" && sectionType == "footer"]    | order(_updatedAt desc)    [0] {      _id,      footer {        payoff,        email,        phone,        addressLine1,        addressLine2,        vat,        privacyPolicyLabel,        privacyPolicyPath      }    }
 export type FOOTER_SITE_CONTENT_QUERY_RESULT = {
   _id: string
   footer: {
@@ -1957,16 +2030,8 @@ export type FOOTER_SITE_CONTENT_QUERY_RESULT = {
     addressLine1: string | null
     addressLine2: string | null
     vat: LocalizedString | null
-    navLinks: Array<{
-      label: LocalizedString | null
-      path: string | null
-    }> | null
     privacyPolicyLabel: LocalizedString | null
     privacyPolicyPath: string | null
-    socialLinks: Array<{
-      label: string | null
-      href: string | null
-    }> | null
   } | null
 } | null
 
@@ -3421,6 +3486,308 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
         alt?: LocalizedString
         _type: "image"
       } | null
+    }> | null
+  } | null
+} | null
+
+// Source: src/sanity/lib/queries.ts
+// Variable: LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY
+// Query: *[_type == "siteContent" && sectionType == "listYourPropertyPage"]    | order(_updatedAt desc)    [0] {      _id,      listYourPropertyPage {        heroTitle,        heroSubtitle,        heroPayoff1,        heroPayoff2,        heroCta {          label,          path        },        heroImage {          "recommendedCrop": {            "landscape": {              "aspectRatio": "20:9",              "width": 1920,              "height": 810            },            "portrait": {              "aspectRatio": "4:5",              "width": 720,              "height": 960            }          },          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        cover1Image {          "recommendedCrop": {            "landscape": {              "aspectRatio": "16:9",              "width": 1920,              "height": 1080            },            "portrait": {              "aspectRatio": "4:5",              "width": 720,              "height": 960            }          },          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        cover2Image {          "recommendedCrop": {            "landscape": {              "aspectRatio": "16:9",              "width": 1920,              "height": 1080            },            "portrait": {              "aspectRatio": "4:5",              "width": 720,              "height": 960            }          },          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        bannerTitle,        bannerText,        bannerCta {          label,          path        },        valuesTitle,        valuesSubtitle,        valuesCta {          label,          path        },        valuesImage {          ...,          asset->        },        valuesItems[] {          _key,          title        }      }    }
+export type LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT = {
+  _id: string
+  listYourPropertyPage: {
+    heroTitle: LocalizedString | null
+    heroSubtitle: LocalizedString | null
+    heroPayoff1: LocalizedText | null
+    heroPayoff2: LocalizedText | null
+    heroCta: {
+      label: LocalizedString | null
+      path:
+        | "/"
+        | "/about"
+        | "/affidaci-il-tuo-immobile"
+        | "/contact"
+        | "/ducati-per-le-aziende"
+        | "/immobili"
+        | "/ricerca-su-misura"
+        | null
+    } | null
+    heroImage: {
+      recommendedCrop: {
+        landscape: {
+          aspectRatio: "20:9"
+          width: 1920
+          height: 810
+        }
+        portrait: {
+          aspectRatio: "4:5"
+          width: 720
+          height: 960
+        }
+      }
+      imageLandscape: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+      imagePortrait: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+    } | null
+    cover1Image: {
+      recommendedCrop: {
+        landscape: {
+          aspectRatio: "16:9"
+          width: 1920
+          height: 1080
+        }
+        portrait: {
+          aspectRatio: "4:5"
+          width: 720
+          height: 960
+        }
+      }
+      imageLandscape: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+      imagePortrait: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+    } | null
+    cover2Image: {
+      recommendedCrop: {
+        landscape: {
+          aspectRatio: "16:9"
+          width: 1920
+          height: 1080
+        }
+        portrait: {
+          aspectRatio: "4:5"
+          width: 720
+          height: 960
+        }
+      }
+      imageLandscape: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+      imagePortrait: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+    } | null
+    bannerTitle: LocalizedString | null
+    bannerText: LocalizedPortableText | null
+    bannerCta: {
+      label: LocalizedString | null
+      path:
+        | "/"
+        | "/about"
+        | "/affidaci-il-tuo-immobile"
+        | "/contact"
+        | "/ducati-per-le-aziende"
+        | "/immobili"
+        | "/ricerca-su-misura"
+        | null
+    } | null
+    valuesTitle: LocalizedString | null
+    valuesSubtitle: LocalizedString | null
+    valuesCta: {
+      label: LocalizedString | null
+      path:
+        | "/"
+        | "/about"
+        | "/affidaci-il-tuo-immobile"
+        | "/contact"
+        | "/ducati-per-le-aziende"
+        | "/immobili"
+        | "/ricerca-su-misura"
+        | null
+    } | null
+    valuesImage: {
+      asset: {
+        _id: string
+        _type: "sanity.imageAsset"
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash: string
+        extension: string
+        mimeType: string
+        size: number
+        assetId: string
+        uploadId?: string
+        path: string
+        url: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: LocalizedString
+      _type: "image"
+    } | null
+    valuesItems: Array<{
+      _key: string
+      title: LocalizedText | null
     }> | null
   } | null
 } | null
@@ -7082,10 +7449,11 @@ export type LISTING_BY_ID_QUERY_RESULT =
 import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "siteContent" && sectionType == "menu"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      menu {\n        headerTagline,\n        payoff,\n        navLinks[] { label, path },\n        socialLinks[] { label, href }\n      }\n    }\n': MENU_SITE_CONTENT_QUERY_RESULT
-    '\n  *[_type == "siteContent" && sectionType == "footer"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      footer {\n        payoff,\n        email,\n        phone,\n        addressLine1,\n        addressLine2,\n        vat,\n        navLinks[] { label, path },\n        privacyPolicyLabel,\n        privacyPolicyPath,\n        socialLinks[] { label, href }\n      }\n    }\n': FOOTER_SITE_CONTENT_QUERY_RESULT
+    '\n  *[_type == "siteContent" && sectionType == "menu"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      menu {\n        headerTagline,\n        payoff\n      }\n    }\n': MENU_SITE_CONTENT_QUERY_RESULT
+    '\n  *[_type == "siteContent" && sectionType == "footer"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      footer {\n        payoff,\n        email,\n        phone,\n        addressLine1,\n        addressLine2,\n        vat,\n        privacyPolicyLabel,\n        privacyPolicyPath\n      }\n    }\n': FOOTER_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "aboutPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      aboutPage {\n        heroImages {\n          "imageDesktop": imageDesktop {\n            ...,\n            asset->\n          },\n          "imageMobile": imageMobile {\n            ...,\n            asset->\n          }\n        },\n        heroText,\n        historySection[] {\n          _key,\n          title,\n          subtitle,\n          body,\n          reverse,\n          images {\n            "imageDesktop": imageDesktop {\n              ...,\n              asset->\n            },\n            "imageMobile": imageMobile {\n              ...,\n              asset->\n            }\n          }\n        },\n        todaySection {\n          title,\n          subtitle,\n          text\n        },\n        highlightsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        sectorsHeading,\n        sectorsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          }\n        },\n        teamSection {\n          title,\n          subtitle,\n          text,\n          cta {\n            label,\n            path\n          },\n          teamMember[] {\n            _key,\n            title,\n            text,\n            image {\n              ...,\n              asset->\n            },\n            roles[]\n          }\n        }\n      }\n    }\n': ABOUT_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "homePage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      homePage {\n        heroTitle,\n        heroImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        whoWeAreText1,\n        whoWeAreText2,\n        whoWeAreCta {\n          label,\n          path\n        },\n        payoffTitle,\n        payoffImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        highlights[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        "featuredListings": featuredListings[]->{\n          _id,\n          _type,\n          title,\n          listingContractType,\n          price,\n          country,\n          city,\n          province,\n          address,\n          postalCode,\n          listingLabel,\n          "typology": select(\n            _type == "listingCountryHouses" => countryHouseTypology,\n            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n            _type == "listingIndustrial" => industrialTypology,\n            true => null\n          ),\n          "mainImage": mainImage {\n            ...,\n            asset->\n          }\n        },\n        testimonialsTitle,\n        testimonialsSubtitle,\n        testimonials[] {\n          _key,\n          text,\n          name,\n          provider\n        },\n        partners[] {\n          _key,\n          name,\n          image {\n            ...,\n            asset->\n          }\n        }\n      }\n    }\n': HOME_SITE_CONTENT_QUERY_RESULT
+    '\n  *[_type == "siteContent" && sectionType == "listYourPropertyPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      listYourPropertyPage {\n        heroTitle,\n        heroSubtitle,\n        heroPayoff1,\n        heroPayoff2,\n        heroCta {\n          label,\n          path\n        },\n        heroImage {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "20:9",\n              "width": 1920,\n              "height": 810\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover1Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover2Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        bannerTitle,\n        bannerText,\n        bannerCta {\n          label,\n          path\n        },\n        valuesTitle,\n        valuesSubtitle,\n        valuesCta {\n          label,\n          path\n        },\n        valuesImage {\n          ...,\n          asset->\n        },\n        valuesItems[] {\n          _key,\n          title\n        }\n      }\n    }\n': LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) { // ... order(_createdAt desc) [0...10]{\n    _id,\n    _type,\n    title,\n    listingContractType,\n    price,\n    country,\n    city,\n    province,\n    address,\n    postalCode,\n    listingLabel,\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "mainImage": mainImage {\n      ...,\n      asset->\n    }\n  }\n': LISTINGS_PREVIEW_QUERY_RESULT
     '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true && _id == $id][0]{\n    "metadata": {\n      _id,\n      _type,\n      listingContractType,\n      _createdAt,\n      _updatedAt,\n      _rev\n    },\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "propertySheet": select(\n      _type == "listingResidential" => {\n        price,\n        commercialAreaSqm,\n        condoFees,\n        floor,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingCountryHouses" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingShopsAndOffices" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        displayWindows,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingIndustrial" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        heightMeters,\n        buildingYear,\n        energyClass\n      },\n      _type == "listingHospitality" => {\n        price,\n        commercialAreaSqm,\n        roomCount,\n        energyClass\n      },\n      _type == "listingLand" => {\n        price,\n        commercialAreaSqm,\n        landAccess,\n        hasFencedProperty\n      }\n    ),\n    "location": {\n      country,\n      province,\n      city,\n      address,\n      postalCode,\n      map,\n      positionInfo\n    },\n    "content": {\n      title,\n      listingLabel,\n      "mainImage": mainImage {\n        ...,\n        asset->\n      },\n      "gallery": gallery[] {\n        ...,\n        asset->\n      },\n      description,\n      excerpt\n    },\n    "floorPlans": select(\n      _type == "listingLand" => {\n        "items": null\n      },\n      {\n        "items": floorPlans[] {\n          ...,\n          asset->\n        }\n      }\n    ),\n    "additionalFields": select(\n      _type == "listingResidential" => {\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl\n      },\n      _type == "listingCountryHouses" => {\n        outdoorAreaSqm,\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl,\n        condoFees\n      },\n      _type == "listingShopsAndOffices" => {\n        furnishing,\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        conciergeServiceShops,\n        officeLayout,\n        condoFees\n      },\n      _type == "listingIndustrial" => {\n        hasLoadingDocks,\n        hasOverheadCranes,\n        shedAreaSqm,\n        officeAreaSqm,\n        landAreaSqm,\n        hasChangingRoom,\n        hasFencedProperty,\n        conciergeService,\n        hasAccessibleRestroom,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        hasDrivableAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        heating\n      },\n      _type == "listingHospitality" => {\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        outdoorAreaSqm,\n        heating,\n        pool,\n        hasTennisCourt,\n        customSpecifications\n      },\n      _type == "listingLand" => {\n        isBuildable,\n        isAgricultural\n      }\n    ),\n    "relatedListings": *[\n      _type in [\n        "listingResidential",\n        "listingCountryHouses",\n        "listingShopsAndOffices",\n        "listingIndustrial",\n        "listingHospitality",\n        "listingLand"\n      ] &&\n      coalesce(isArchived, false) != true &&\n      _id != ^._id &&\n      _type == ^._type &&\n      city == ^.city\n    ] | order(_createdAt desc)[0...2] {\n      _id,\n      _type,\n      title,\n      listingContractType,\n      price,\n      city,\n      province,\n      address,\n      postalCode,\n      listingLabel,\n      "typology": select(\n        _type == "listingCountryHouses" => countryHouseTypology,\n        _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n        _type == "listingIndustrial" => industrialTypology,\n        true => null\n      ),\n      "mainImage": mainImage {\n        ...,\n        asset->\n      }\n    }\n  }\n': LISTING_BY_ID_QUERY_RESULT
   }

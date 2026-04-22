@@ -5,6 +5,8 @@ import { sanityFetch } from "@/sanity/lib/client"
 import { LISTINGS_PREVIEW_QUERY } from "@/sanity/lib/queries"
 import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
 
+import { cn } from "@/utils/classNames"
+
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner"
 import { ListingsResults } from "@/components/listings-results"
 import { ListingsStoreHydrator } from "@/components/listings-results/providers/ListingsStoreHydrator"
@@ -23,10 +25,12 @@ export default async function ListingsPage({ params }: ListingsPageProps) {
   })) as LISTINGS_PREVIEW_QUERY_RESULT
 
   return (
-    <main className="w-full overflow-x-clip md:pt-32">
+    <main className={cn("w-full overflow-x-clip", "pt-32 md:pt-54", "pb-24")}>
       <ListingsStoreHydrator listings={listings} />
       <Suspense fallback={<LoadingSpinner className="min-h-[40vh]" />}>
-        <ListingsResults locale={locale} />
+        <section>
+          <ListingsResults locale={locale} />
+        </section>
       </Suspense>
     </main>
   )

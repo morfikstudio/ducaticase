@@ -69,16 +69,20 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
             )}
           >
             <SanityImage
-              image={mainImage}
+              landscape={mainImage}
+              portrait={mainImage}
               locale={locale}
-              params={{
-                width: 950,
-                height: 530,
-                sizes: "(min-width: 768px) 64vw, 100vw",
-                quality: 50,
+              landscapeParams={{
+                width: 900,
+                height: 560,
+                sizes: "80vw",
+              }}
+              portraitParams={{
+                width: 720,
+                height: 450,
+                sizes: "100vw",
               }}
               fill
-              priority
               className="object-cover"
               onLoad={bumpGateProgress}
               onError={bumpGateProgress}
@@ -108,9 +112,9 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                     image={thumb}
                     locale={locale}
                     params={{
-                      width: 300,
-                      height: 300,
-                      sizes: "(min-width: 768px) 18vw, 50vw",
+                      width: 500,
+                      height: 500,
+                      sizes: "50vw",
                       quality: 50,
                     }}
                     fill
@@ -142,9 +146,10 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                   image={thumb}
                   locale={locale}
                   params={{
-                    width: 300,
-                    height: 300,
-                    sizes: "(min-width: 768px) 18vw, 50vw",
+                    width: 500,
+                    height: 500,
+                    sizes: "50vw",
+                    quality: 50,
                   }}
                   fill
                   className="object-cover"
