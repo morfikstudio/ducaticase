@@ -205,6 +205,46 @@ export const HOME_SITE_CONTENT_QUERY = defineQuery(groq`
     }
 `)
 
+export const LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY = defineQuery(groq`
+  *[_type == "siteContent" && sectionType == "listYourPropertyPage"]
+    | order(_updatedAt desc)
+    [0] {
+      _id,
+      listYourPropertyPage {
+        heroTitle,
+        heroSubtitle,
+        heroPayoff1,
+        heroPayoff2,
+        heroCta {
+          label,
+          path
+        },
+        heroImage {
+          "recommendedCrop": {
+            "landscape": {
+              "aspectRatio": "20:9",
+              "width": 1920,
+              "height": 810
+            },
+            "portrait": {
+              "aspectRatio": "4:5",
+              "width": 800,
+              "height": 1000
+            }
+          },
+          "imageLandscape": imageLandscape {
+            ...,
+            asset->
+          },
+          "imagePortrait": imagePortrait {
+            ...,
+            asset->
+          }
+        }
+      }
+    }
+`)
+
 export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`
   *[_type in [
     "listingResidential",

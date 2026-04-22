@@ -12,11 +12,16 @@ import { aboutTeamSection } from "./objects/aboutTeamSection"
 import { aboutResponsiveImage } from "./objects/aboutResponsiveImage"
 import { aboutSectorBlock } from "./objects/aboutSectorBlock"
 import { homeHeroResponsiveImage } from "./objects/homeHeroResponsiveImage"
+import { listYourPropertyCoverResponsiveImage } from "./objects/listYourPropertyCoverResponsiveImage"
+import { listYourPropertyHeroResponsiveImage } from "./objects/listYourPropertyHeroResponsiveImage"
 import { homeHighlightItem } from "./objects/homeHighlightItem"
 import { homePageSettings } from "./objects/homePageSettings"
 import { homePartnerItem } from "./objects/homePartnerItem"
 import { homePayoffResponsiveImage } from "./objects/homePayoffResponsiveImage"
 import { homeTestimonialItem } from "./objects/homeTestimonialItem"
+import { listYourPropertyPageSettings } from "./objects/listYourPropertyPageSettings"
+import { listYourPropertyServiceItem } from "./objects/listYourPropertyServiceItem"
+import { listYourPropertyValueItem } from "./objects/listYourPropertyValueItem"
 import { teamMemberType } from "./objects/teamMemberType"
 import { menuSettings } from "./objects/menuSettings"
 import { footerSettings } from "./objects/footerSettings"
@@ -33,6 +38,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     aboutResponsiveImage,
     aboutHeroResponsiveImage,
     homeHeroResponsiveImage,
+    listYourPropertyHeroResponsiveImage,
+    listYourPropertyCoverResponsiveImage,
     homePayoffResponsiveImage,
     homeHighlightItem,
     homeTestimonialItem,
@@ -46,6 +53,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     teamMemberType,
     aboutTeamSection,
     aboutPageSettings,
+    listYourPropertyServiceItem,
+    listYourPropertyValueItem,
+    listYourPropertyPageSettings,
     menuSettings,
     footerSettings,
     localizedStringObject,
