@@ -43,13 +43,11 @@ export function HeroText({
             landscapeParams={{
               width: 2400,
               height: 1350,
-              quality: 82,
               sizes: "100vw",
             }}
             portraitParams={{
               width: 1080,
               height: 1920,
-              quality: 82,
               sizes: "100vw",
             }}
             fill

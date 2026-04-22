@@ -172,7 +172,6 @@ function MemberCardDesktop({ member, locale }: MemberCardProps) {
             params={{
               width: 788,
               height: 1106,
-              quality: 85,
               sizes: "(max-width: 767px) 100vw, 50vw",
             }}
             fill
@@ -219,7 +218,6 @@ function MemberCardMobile({ member, locale }: MemberCardProps) {
             params={{
               width: 788,
               height: 1106,
-              quality: 85,
               sizes: "(max-width: 767px) 100vw, 50vw",
             }}
             fill

@@ -98,6 +98,7 @@ export function HeroContent({
             {title}
           </h1>
         ) : null}
+
         {hasSubtitle ? (
           <p
             className={cn(
@@ -125,13 +126,11 @@ export function HeroContent({
               landscapeParams={{
                 width: heroLandscapeCrop.width,
                 height: heroLandscapeCrop.height,
-                quality: 82,
                 sizes: "(min-width: 768px) min(1331px, 90vw), 100vw",
               }}
               portraitParams={{
                 width: heroPortraitCrop.width,
                 height: heroPortraitCrop.height,
-                quality: 82,
                 sizes: "100vw",
               }}
               fill

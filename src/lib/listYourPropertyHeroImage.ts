@@ -1,10 +1,5 @@
-/**
- * Ritaglio hero «Affidaci»: desktop **20:9**, mobile **4:5**.
- * `listYourPropertyHeroRecommendedCrop` usa px **2×** per il CDN; la GROQ
- * `recommendedCrop` documenta i px design **1×** (stessi rapporti).
- */
 export const listYourPropertyHeroDesignDimensions = {
-  mobile: { width: 800, height: 1000 },
+  mobile: { width: 720, height: 960 },
   desktop: { width: 1920, height: 810 },
 } as const
 

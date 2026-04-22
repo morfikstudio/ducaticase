@@ -7,6 +7,7 @@ import type { LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT } from "@/sanity/type
 
 import { cn } from "@/utils/classNames"
 
+import { Cover } from "@/components/Cover"
 import { HeroContent } from "@/components/HeroContent"
 
 function normalizePathnameForIntlLink(path: string): string {
@@ -68,14 +69,20 @@ export default async function Page({ params }: PageProps) {
     showCta ||
     Boolean(heroLandscape?.asset ?? heroPortrait?.asset)
 
+  /* COVER 1 */
+  const cover1 = page?.cover1Image
+  const cover1Landscape = cover1?.imageLandscape
+  const cover1Portrait = cover1?.imagePortrait
+  const hasCover1 = Boolean(cover1Landscape?.asset ?? cover1Portrait?.asset)
+
+  /* COVER 2 */
+  const cover2 = page?.cover2Image
+  const cover2Landscape = cover2?.imageLandscape
+  const cover2Portrait = cover2?.imagePortrait
+  const hasCover2 = Boolean(cover2Landscape?.asset ?? cover2Portrait?.asset)
+
   return (
-    <main
-      className={cn(
-        "w-full overflow-x-clip",
-        "pt-32 md:pt-54",
-        // "pb-24",
-      )}
-    >
+    <main className={cn("w-full overflow-x-clip", "pt-32 md:pt-54")}>
       {hasHero ? (
         <section>
           <HeroContent
@@ -88,6 +95,26 @@ export default async function Page({ params }: PageProps) {
             imagePortrait={heroPortrait}
             ctaLabel={showCta ? ctaLabel : undefined}
             ctaHref={ctaHref}
+          />
+        </section>
+      ) : null}
+
+      {hasCover1 ? (
+        <section aria-label="Cover 1">
+          <Cover
+            locale={locale}
+            imageLandscape={cover1Landscape}
+            imagePortrait={cover1Portrait}
+          />
+        </section>
+      ) : null}
+
+      {hasCover2 ? (
+        <section aria-label="Cover 2">
+          <Cover
+            locale={locale}
+            imageLandscape={cover2Landscape}
+            imagePortrait={cover2Portrait}
           />
         </section>
       ) : null}

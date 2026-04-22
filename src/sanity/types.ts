@@ -3492,7 +3492,7 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY
-// Query: *[_type == "siteContent" && sectionType == "listYourPropertyPage"]    | order(_updatedAt desc)    [0] {      _id,      listYourPropertyPage {        heroTitle,        heroSubtitle,        heroPayoff1,        heroPayoff2,        heroCta {          label,          path        },        heroImage {          "recommendedCrop": {            "landscape": {              "aspectRatio": "20:9",              "width": 1920,              "height": 810            },            "portrait": {              "aspectRatio": "4:5",              "width": 800,              "height": 1000            }          },          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        }      }    }
+// Query: *[_type == "siteContent" && sectionType == "listYourPropertyPage"]    | order(_updatedAt desc)    [0] {      _id,      listYourPropertyPage {        heroTitle,        heroSubtitle,        heroPayoff1,        heroPayoff2,        heroCta {          label,          path        },        heroImage {          "recommendedCrop": {            "landscape": {              "aspectRatio": "20:9",              "width": 1920,              "height": 810            },            "portrait": {              "aspectRatio": "4:5",              "width": 800,              "height": 1000            }          },          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        cover1Image {          "recommendedCrop": {            "landscape": {              "aspectRatio": "16:9",              "width": 1920,              "height": 1080            },            "portrait": {              "aspectRatio": "4:5",              "width": 800,              "height": 1000            }          },          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        cover2Image {          "recommendedCrop": {            "landscape": {              "aspectRatio": "16:9",              "width": 1920,              "height": 1080            },            "portrait": {              "aspectRatio": "4:5",              "width": 800,              "height": 1000            }          },          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        }      }    }
 export type LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT = {
   _id: string
   listYourPropertyPage: {
@@ -3518,6 +3518,150 @@ export type LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT = {
           aspectRatio: "20:9"
           width: 1920
           height: 810
+        }
+        portrait: {
+          aspectRatio: "4:5"
+          width: 800
+          height: 1000
+        }
+      }
+      imageLandscape: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+      imagePortrait: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+    } | null
+    cover1Image: {
+      recommendedCrop: {
+        landscape: {
+          aspectRatio: "16:9"
+          width: 1920
+          height: 1080
+        }
+        portrait: {
+          aspectRatio: "4:5"
+          width: 800
+          height: 1000
+        }
+      }
+      imageLandscape: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+      imagePortrait: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+    } | null
+    cover2Image: {
+      recommendedCrop: {
+        landscape: {
+          aspectRatio: "16:9"
+          width: 1920
+          height: 1080
         }
         portrait: {
           aspectRatio: "4:5"
@@ -7248,7 +7392,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "siteContent" && sectionType == "footer"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      footer {\n        payoff,\n        email,\n        phone,\n        addressLine1,\n        addressLine2,\n        vat,\n        privacyPolicyLabel,\n        privacyPolicyPath\n      }\n    }\n': FOOTER_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "aboutPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      aboutPage {\n        heroImages {\n          "imageDesktop": imageDesktop {\n            ...,\n            asset->\n          },\n          "imageMobile": imageMobile {\n            ...,\n            asset->\n          }\n        },\n        heroText,\n        historySection[] {\n          _key,\n          title,\n          subtitle,\n          body,\n          reverse,\n          images {\n            "imageDesktop": imageDesktop {\n              ...,\n              asset->\n            },\n            "imageMobile": imageMobile {\n              ...,\n              asset->\n            }\n          }\n        },\n        todaySection {\n          title,\n          subtitle,\n          text\n        },\n        highlightsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        sectorsHeading,\n        sectorsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          }\n        },\n        teamSection {\n          title,\n          subtitle,\n          text,\n          cta {\n            label,\n            path\n          },\n          teamMember[] {\n            _key,\n            title,\n            text,\n            image {\n              ...,\n              asset->\n            },\n            roles[]\n          }\n        }\n      }\n    }\n': ABOUT_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "homePage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      homePage {\n        heroTitle,\n        heroImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        whoWeAreText1,\n        whoWeAreText2,\n        whoWeAreCta {\n          label,\n          path\n        },\n        payoffTitle,\n        payoffImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        highlights[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        "featuredListings": featuredListings[]->{\n          _id,\n          _type,\n          title,\n          listingContractType,\n          price,\n          country,\n          city,\n          province,\n          address,\n          postalCode,\n          listingLabel,\n          "typology": select(\n            _type == "listingCountryHouses" => countryHouseTypology,\n            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n            _type == "listingIndustrial" => industrialTypology,\n            true => null\n          ),\n          "mainImage": mainImage {\n            ...,\n            asset->\n          }\n        },\n        testimonialsTitle,\n        testimonialsSubtitle,\n        testimonials[] {\n          _key,\n          text,\n          name,\n          provider\n        },\n        partners[] {\n          _key,\n          name,\n          image {\n            ...,\n            asset->\n          }\n        }\n      }\n    }\n': HOME_SITE_CONTENT_QUERY_RESULT
-    '\n  *[_type == "siteContent" && sectionType == "listYourPropertyPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      listYourPropertyPage {\n        heroTitle,\n        heroSubtitle,\n        heroPayoff1,\n        heroPayoff2,\n        heroCta {\n          label,\n          path\n        },\n        heroImage {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "20:9",\n              "width": 1920,\n              "height": 810\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 800,\n              "height": 1000\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        }\n      }\n    }\n': LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT
+    '\n  *[_type == "siteContent" && sectionType == "listYourPropertyPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      listYourPropertyPage {\n        heroTitle,\n        heroSubtitle,\n        heroPayoff1,\n        heroPayoff2,\n        heroCta {\n          label,\n          path\n        },\n        heroImage {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "20:9",\n              "width": 1920,\n              "height": 810\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 800,\n              "height": 1000\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover1Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 800,\n              "height": 1000\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover2Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 800,\n              "height": 1000\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        }\n      }\n    }\n': LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) { // ... order(_createdAt desc) [0...10]{\n    _id,\n    _type,\n    title,\n    listingContractType,\n    price,\n    country,\n    city,\n    province,\n    address,\n    postalCode,\n    listingLabel,\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "mainImage": mainImage {\n      ...,\n      asset->\n    }\n  }\n': LISTINGS_PREVIEW_QUERY_RESULT
     '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true && _id == $id][0]{\n    "metadata": {\n      _id,\n      _type,\n      listingContractType,\n      _createdAt,\n      _updatedAt,\n      _rev\n    },\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "propertySheet": select(\n      _type == "listingResidential" => {\n        price,\n        commercialAreaSqm,\n        condoFees,\n        floor,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingCountryHouses" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingShopsAndOffices" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        displayWindows,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingIndustrial" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        heightMeters,\n        buildingYear,\n        energyClass\n      },\n      _type == "listingHospitality" => {\n        price,\n        commercialAreaSqm,\n        roomCount,\n        energyClass\n      },\n      _type == "listingLand" => {\n        price,\n        commercialAreaSqm,\n        landAccess,\n        hasFencedProperty\n      }\n    ),\n    "location": {\n      country,\n      province,\n      city,\n      address,\n      postalCode,\n      map,\n      positionInfo\n    },\n    "content": {\n      title,\n      listingLabel,\n      "mainImage": mainImage {\n        ...,\n        asset->\n      },\n      "gallery": gallery[] {\n        ...,\n        asset->\n      },\n      description,\n      excerpt\n    },\n    "floorPlans": select(\n      _type == "listingLand" => {\n        "items": null\n      },\n      {\n        "items": floorPlans[] {\n          ...,\n          asset->\n        }\n      }\n    ),\n    "additionalFields": select(\n      _type == "listingResidential" => {\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl\n      },\n      _type == "listingCountryHouses" => {\n        outdoorAreaSqm,\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl,\n        condoFees\n      },\n      _type == "listingShopsAndOffices" => {\n        furnishing,\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        conciergeServiceShops,\n        officeLayout,\n        condoFees\n      },\n      _type == "listingIndustrial" => {\n        hasLoadingDocks,\n        hasOverheadCranes,\n        shedAreaSqm,\n        officeAreaSqm,\n        landAreaSqm,\n        hasChangingRoom,\n        hasFencedProperty,\n        conciergeService,\n        hasAccessibleRestroom,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        hasDrivableAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        heating\n      },\n      _type == "listingHospitality" => {\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        outdoorAreaSqm,\n        heating,\n        pool,\n        hasTennisCourt,\n        customSpecifications\n      },\n      _type == "listingLand" => {\n        isBuildable,\n        isAgricultural\n      }\n    ),\n    "relatedListings": *[\n      _type in [\n        "listingResidential",\n        "listingCountryHouses",\n        "listingShopsAndOffices",\n        "listingIndustrial",\n        "listingHospitality",\n        "listingLand"\n      ] &&\n      coalesce(isArchived, false) != true &&\n      _id != ^._id &&\n      _type == ^._type &&\n      city == ^.city\n    ] | order(_createdAt desc)[0...2] {\n      _id,\n      _type,\n      title,\n      listingContractType,\n      price,\n      city,\n      province,\n      address,\n      postalCode,\n      listingLabel,\n      "typology": select(\n        _type == "listingCountryHouses" => countryHouseTypology,\n        _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n        _type == "listingIndustrial" => industrialTypology,\n        true => null\n      ),\n      "mainImage": mainImage {\n        ...,\n        asset->\n      }\n    }\n  }\n': LISTING_BY_ID_QUERY_RESULT
   }

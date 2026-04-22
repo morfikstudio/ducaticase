@@ -228,8 +228,52 @@ export const LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY = defineQuery(groq`
             },
             "portrait": {
               "aspectRatio": "4:5",
-              "width": 800,
-              "height": 1000
+              "width": 720,
+              "height": 960
+            }
+          },
+          "imageLandscape": imageLandscape {
+            ...,
+            asset->
+          },
+          "imagePortrait": imagePortrait {
+            ...,
+            asset->
+          }
+        },
+        cover1Image {
+          "recommendedCrop": {
+            "landscape": {
+              "aspectRatio": "16:9",
+              "width": 1920,
+              "height": 1080
+            },
+            "portrait": {
+              "aspectRatio": "4:5",
+              "width": 720,
+              "height": 960
+            }
+          },
+          "imageLandscape": imageLandscape {
+            ...,
+            asset->
+          },
+          "imagePortrait": imagePortrait {
+            ...,
+            asset->
+          }
+        },
+        cover2Image {
+          "recommendedCrop": {
+            "landscape": {
+              "aspectRatio": "16:9",
+              "width": 1920,
+              "height": 1080
+            },
+            "portrait": {
+              "aspectRatio": "4:5",
+              "width": 720,
+              "height": 960
             }
           },
           "imageLandscape": imageLandscape {

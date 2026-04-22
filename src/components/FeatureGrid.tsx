@@ -117,13 +117,11 @@ function FeatureCard({ title, text, image, locale }: FeatureCardProps) {
               landscapeParams={{
                 width: 244,
                 height: 146,
-                quality: 82,
                 sizes: "(max-width: 767px) 100vw, min(42%, 244px)",
               }}
               portraitParams={{
                 width: 327,
                 height: 146,
-                quality: 82,
                 sizes: "(max-width: 767px) 100vw",
               }}
               fill
