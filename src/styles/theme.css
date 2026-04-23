@@ -146,7 +146,7 @@ body {
 }
 
 main {
-  overflow: hidden;
+  overflow: clip;
 }
 
 ::selection {

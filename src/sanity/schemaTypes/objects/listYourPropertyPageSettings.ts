@@ -73,7 +73,7 @@ export const listYourPropertyPageSettings = defineType({
     { ...ALL_FIELDS_GROUP, hidden: true },
     { name: "hero", title: "Hero", default: true },
     { name: "cover1", title: "Cover 1" },
-    { name: "servizi", title: "Servizi" },
+    { name: "services", title: "Services" },
     { name: "cover2", title: "Cover 2" },
     { name: "values", title: "Values" },
     { name: "banner", title: "Banner" },
@@ -140,38 +140,38 @@ export const listYourPropertyPageSettings = defineType({
       group: "cover1",
     }),
     defineField({
-      name: "serviziTitle",
+      name: "servicesTitle",
       title: "Titolo",
       type: "localizedText",
-      group: "servizi",
+      group: "services",
       validation: (Rule) =>
         Rule.custom((value: LocalizedTextValue) =>
           validatePairedLocalizedText(value),
         ),
     }),
     defineField({
-      name: "serviziSubtitle",
+      name: "servicesSubtitle",
       title: "Sottotitolo",
       type: "localizedText",
-      group: "servizi",
+      group: "services",
       validation: (Rule) =>
         Rule.custom((value: LocalizedTextValue) =>
           validatePairedLocalizedText(value),
         ),
     }),
     defineField({
-      name: "serviziCta",
+      name: "servicesCta",
       title: "Call to action",
       type: "aboutHighlightCta",
-      group: "servizi",
+      group: "services",
       validation: (Rule) =>
         Rule.custom((value: HighlightCtaValue) => validateHighlightCta(value)),
     }),
     defineField({
-      name: "serviziItems",
-      title: "Servizi",
+      name: "servicesItems",
+      title: "Services",
       type: "array",
-      group: "servizi",
+      group: "services",
       of: [defineArrayMember({ type: "listYourPropertyServiceItem" })],
     }),
     defineField({

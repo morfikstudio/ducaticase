@@ -96,7 +96,13 @@ export function ImageFeatureList({
           >
             <p className="type-body-2 text-gray">{resolvedSubtitle}</p>
             {showCta ? (
-              <Link href={ctaHref!} className="type-body-2 uppercase underline">
+              <Link
+                href={ctaHref!}
+                className={cn(
+                  "type-body-2 uppercase underline",
+                  "underline-offset-[0.35em] hover:no-underline",
+                )}
+              >
                 {resolvedCtaLabel}
               </Link>
             ) : null}

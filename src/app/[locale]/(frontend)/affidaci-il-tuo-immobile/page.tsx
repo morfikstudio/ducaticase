@@ -11,6 +11,7 @@ import { BannerText } from "@/components/BannerText"
 import { Cover } from "@/components/Cover"
 import { HeroContent } from "@/components/HeroContent"
 import { ImageFeatureList } from "@/components/ImageFeatureList"
+import { StickyTextBlocks } from "@/components/StickyTextBlocks"
 
 function normalizePathnameForIntlLink(path: string): string {
   const trimmed = path.trim()
@@ -77,6 +78,31 @@ export default async function Page({ params }: PageProps) {
   const cover1Portrait = cover1?.imagePortrait
   const hasCover1 = Boolean(cover1Landscape?.asset ?? cover1Portrait?.asset)
 
+  /* SERVICES */
+  const servicesTitle =
+    pickLocalizedString(page?.servicesTitle ?? undefined, locale) ?? ""
+  const servicesSubtitle =
+    pickLocalizedString(page?.servicesSubtitle ?? undefined, locale) ?? ""
+  const servicesItems =
+    page?.servicesItems?.map((item, index) => ({
+      key: item._key ?? String(index),
+      title: pickLocalizedString(item.title ?? undefined, locale) ?? "",
+      text: item.text,
+    })) ?? []
+
+  const servicesCta = page?.servicesCta
+  const servicesCtaPath = servicesCta?.path?.trim() ?? ""
+
+  const servicesCtaHref =
+    servicesCtaPath !== ""
+      ? normalizePathnameForIntlLink(servicesCtaPath)
+      : undefined
+  const servicesCtaLabel =
+    pickLocalizedString(servicesCta?.label ?? undefined, locale) ?? ""
+  const hasServices = Boolean(
+    servicesTitle ?? servicesSubtitle ?? servicesItems?.length,
+  )
+
   /* COVER 2 */
   const cover2 = page?.cover2Image
   const cover2Landscape = cover2?.imageLandscape
@@ -111,7 +137,7 @@ export default async function Page({ params }: PageProps) {
   const hasBanner = Boolean(bannerTitle ?? bannerText ?? bannerCta)
 
   return (
-    <main className={cn("w-full overflow-x-clip", "pt-32 md:pt-54")}>
+    <main className={cn("w-full", "overflow-x-clip", "pt-32 md:pt-54")}>
       {hasHero ? (
         <section>
           <HeroContent
@@ -138,11 +164,18 @@ export default async function Page({ params }: PageProps) {
         </section>
       ) : null}
 
-      <section>
-        <div className="h-[200svh] flex items-center justify-center bg-white text-black">
-          <span>PLACEHOLDER</span>
-        </div>
-      </section>
+      {hasServices ? (
+        <section>
+          <StickyTextBlocks
+            locale={locale}
+            title={servicesTitle}
+            subtitle={servicesSubtitle}
+            ctaLabel={servicesCtaLabel}
+            ctaHref={servicesCtaHref}
+            items={servicesItems}
+          />
+        </section>
+      ) : null}
 
       {hasCover2 ? (
         <section>

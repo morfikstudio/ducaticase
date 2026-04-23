@@ -25,8 +25,24 @@ export function PortableTextComponent({ text, locale, className }: Props) {
   }
 
   return (
-    <div className={cn(className)}>
-      <PortableText value={descriptionBlocks} />
+    <div
+      className={cn(
+        "[&_ul]:my-3 [&_ul]:list-disc [&_ul]:ps-6",
+        "[&_ol]:my-3 [&_ol]:list-decimal [&_ol]:ps-6",
+        "[&_li]:my-1",
+        className,
+      )}
+    >
+      <PortableText
+        value={descriptionBlocks}
+        components={{
+          marks: {
+            strong: ({ children }) => (
+              <strong className="font-medium text-inherit">{children}</strong>
+            ),
+          },
+        }}
+      />
     </div>
   )
 }

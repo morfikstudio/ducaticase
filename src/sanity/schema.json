@@ -8190,7 +8190,7 @@
           },
           "optional": true
         },
-        "serviziTitle": {
+        "servicesTitle": {
           "type": "objectAttribute",
           "value": {
             "type": "inline",
@@ -8198,7 +8198,7 @@
           },
           "optional": true
         },
-        "serviziSubtitle": {
+        "servicesSubtitle": {
           "type": "objectAttribute",
           "value": {
             "type": "inline",
@@ -8206,7 +8206,7 @@
           },
           "optional": true
         },
-        "serviziCta": {
+        "servicesCta": {
           "type": "objectAttribute",
           "value": {
             "type": "inline",
@@ -8214,7 +8214,7 @@
           },
           "optional": true
         },
-        "serviziItems": {
+        "servicesItems": {
           "type": "objectAttribute",
           "value": {
             "type": "array",

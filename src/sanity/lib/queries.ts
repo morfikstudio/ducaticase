@@ -304,6 +304,17 @@ export const LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY = defineQuery(groq`
         valuesItems[] {
           _key,
           title
+        },
+        servicesTitle,
+        servicesSubtitle,
+        servicesCta {
+          label,
+          path
+        },
+        servicesItems[] {
+          _key,
+          title,
+          text
         }
       }
     }
