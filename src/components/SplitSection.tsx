@@ -65,9 +65,7 @@ export function SplitSection({
           <div
             className={cn(
               "flex-1 min-w-0 lg:flex-none lg:shrink-0",
-              "lg:max-w-[550px]",
-              "lg:py-8",
-              reverse ? "lg:pl-4 lg:pr-12" : "lg:pl-16",
+              "lg:max-w-[550px] lg:py-8",
             )}
           >
             {title ? <h2 className="type-display-1">{title}</h2> : null}

@@ -10,6 +10,7 @@ import { useGsapReveal } from "@/hooks/useGsapReveal"
 import { cn } from "@/utils/classNames"
 
 import { Button } from "@/components/ui/Button"
+import { CONTAINER_LAYOUT_CLASSNAME } from "@/components/ui/Container"
 import { SanityImage } from "@/components/ui/SanityImage"
 
 function brTagsToNewlines(text: string): string {
@@ -55,24 +56,40 @@ export function SplitBanner({
         <div className="grid grid-cols-1 md:grid-cols-2 md:min-h-[min(100vh,686px)]">
           <div
             className={cn(
-              "flex flex-col justify-center gap-11 py-16 md:py-20",
-              "px-4 md:px-8",
+              "flex flex-col justify-center py-16 md:py-20",
               reverse ? "md:order-2" : "md:order-1",
-              reverse ? "lg:pl-28" : "lg:pr-28",
             )}
           >
-            <div className="flex flex-col gap-7">
-              <div className="type-heading-2 text-primary">{title}</div>
-              <p className="type-body-2 whitespace-pre-line text-gray">
-                {brTagsToNewlines(description)}
-              </p>
-            </div>
+            <div
+              className={cn(
+                CONTAINER_LAYOUT_CLASSNAME,
+                "flex w-full flex-col gap-11 md:mx-0 md:max-w-none",
+              )}
+            >
+              <div
+                className={cn(
+                  "flex flex-col gap-7",
+                  reverse ? "lg:pl-16" : "lg:pr-16",
+                )}
+              >
+                <div className="type-heading-2 text-primary">{title}</div>
+                <p className="type-body-2 whitespace-pre-line text-gray">
+                  {brTagsToNewlines(description)}
+                </p>
+              </div>
 
-            {ctaLabel && ctaHref ? (
-              <Button className="self-start" href={ctaHref}>
-                {ctaLabel}
-              </Button>
-            ) : null}
+              {ctaLabel && ctaHref ? (
+                <Button
+                  className={cn(
+                    "self-start",
+                    reverse ? "lg:ml-28" : "lg:mr-28",
+                  )}
+                  href={ctaHref}
+                >
+                  {ctaLabel}
+                </Button>
+              ) : null}
+            </div>
           </div>
 
           {hasImage ? (

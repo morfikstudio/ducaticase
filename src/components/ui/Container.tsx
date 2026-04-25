@@ -23,5 +23,9 @@ export function Container({
       ? CONTAINER_NARROW_LAYOUT_CLASSNAME
       : CONTAINER_LAYOUT_CLASSNAME
 
-  return <div className={cn(layoutClassName, className)}>{children}</div>
+  return (
+    <div data-container-type={type} className={cn(layoutClassName, className)}>
+      {children}
+    </div>
+  )
 }

@@ -69,7 +69,7 @@ export function HeroText({
             className="pointer-events-none absolute inset-0 -z-10"
             style={{
               background:
-                "radial-gradient(ellipse at center, rgba(0,0,0,0.75) 0%, rgba(0,0,0,1) 100%)",
+                "radial-gradient(ellipse at center, rgba(15,16,17,0.75) 0%, rgba(15,16,17,1) 100%)",
             }}
           />
         </>

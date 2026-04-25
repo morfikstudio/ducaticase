@@ -28,18 +28,126 @@ type StickyTextBlocksProps = {
   className?: string
 }
 
-export function StickyTextBlocks({
-  locale,
+type StickyTextItem = {
+  key: string
+  title: string
+  text: LocalizedPortableText | null
+}
+
+type StickyTextSharedProps = {
+  locale: AppLocale
+  title: string
+  subtitle?: string
+  ctaLabel?: string
+  ctaHref?: string
+  items: StickyTextItem[]
+}
+
+function StickyTextBlocksHeader({
   title,
   subtitle,
-  items,
   ctaLabel,
   ctaHref,
   className,
-}: StickyTextBlocksProps) {
-  const { ref: wrapRef } = useGsapReveal()
+}: {
+  title: string
+  subtitle?: string
+  ctaLabel?: string
+  ctaHref?: string
+  className?: string
+}) {
+  return (
+    <div className={className}>
+      <h2
+        className={cn(
+          "type-heading-3 text-[24px] text-dark-gray",
+          // "",
+          "",
+        )}
+      >
+        {title}
+      </h2>
 
-  const [tops, setTops] = useState<number[]>([]) // top position of each item
+      <p
+        className={cn(
+          "mt-6",
+          "type-body-1 text-[16px] tracking-[0.08em] font-medium uppercase text-dark-gray",
+          // "",
+          "",
+        )}
+      >
+        {subtitle}
+      </p>
+
+      <Button
+        href={ctaHref}
+        variant="reverse"
+        className="self-start mt-8 lg:mt-10"
+      >
+        {ctaLabel}
+      </Button>
+    </div>
+  )
+}
+
+function StickyTextBlocksDesktop({
+  locale,
+  title,
+  subtitle,
+  ctaLabel,
+  ctaHref,
+  items,
+}: StickyTextSharedProps) {
+  return (
+    <div className="hidden lg:grid lg:grid-cols-12 lg:gap-x-4">
+      <StickyTextBlocksHeader
+        title={title}
+        subtitle={subtitle}
+        ctaLabel={ctaLabel}
+        ctaHref={ctaHref}
+        className="lg:col-span-4 lg:sticky lg:top-32 lg:self-start"
+      />
+
+      <div className="lg:col-start-7 lg:col-span-6">
+        {items.map(({ key, title: itemTitle, text }, index) => (
+          <React.Fragment key={key}>
+            <div
+              className={cn(
+                "flex pb-6",
+                "bg-primary border-b border-gray/50",
+                index > 0 ? "mt-48" : "",
+              )}
+            >
+              <h3 className="type-heading-1">{itemTitle}</h3>
+            </div>
+
+            <div className="flex items-baseline gap-16 pt-8">
+              <span className="type-body-3 lg:type-body-2">
+                ({String(index + 1).padStart(2, "0")})
+              </span>
+
+              <PortableTextComponent
+                text={text}
+                locale={locale}
+                className="type-body-3"
+              />
+            </div>
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function StickyTextBlocksMobile({
+  locale,
+  title,
+  subtitle,
+  ctaLabel,
+  ctaHref,
+  items,
+}: StickyTextSharedProps) {
+  const [tops, setTops] = useState<number[]>([])
   const barRefs = useRef(new Map<string, HTMLDivElement>())
 
   const setBarRef = useCallback(
@@ -54,29 +162,25 @@ export function StickyTextBlocks({
   )
 
   useLayoutEffect(() => {
-    if (items?.length === 0) {
+    if (items.length === 0) {
       setTops([])
       return
     }
 
     const recompute = () => {
-      if (!items) return
-
       let sum = 0
       const next: number[] = []
 
-      // calculate the top position of each item
       for (let i = 0; i < items.length; i++) {
         next.push(sum)
         const el = barRefs.current.get(items[i].key)
         sum += el?.offsetHeight ?? 0
       }
 
-      // update the top position of each item
       setTops((prev) => {
         if (
           prev.length === next.length &&
-          prev.every((v, j) => v === next[j])
+          prev.every((value, currentIndex) => value === next[currentIndex])
         ) {
           return prev
         }
@@ -88,8 +192,7 @@ export function StickyTextBlocks({
     recompute()
 
     const ro = new ResizeObserver(recompute)
-
-    for (const { key } of items ?? []) {
+    for (const { key } of items) {
       const el = barRefs.current.get(key)
       if (el) ro.observe(el)
     }
@@ -97,91 +200,96 @@ export function StickyTextBlocks({
     return () => ro.disconnect()
   }, [items, locale])
 
-  if (items?.length === 0) return null
+  return (
+    <div className="flex flex-col gap-20 lg:hidden">
+      <StickyTextBlocksHeader
+        title={title}
+        subtitle={subtitle}
+        ctaLabel={ctaLabel}
+        ctaHref={ctaHref}
+        className="md:max-w-[500px]"
+      />
+
+      <div>
+        {items.map(({ key, title: itemTitle, text }, index) => (
+          <React.Fragment key={key}>
+            <div
+              ref={setBarRef(key)}
+              className={cn(
+                "sticky py-4 md:py-6",
+                "flex items-baseline gap-3",
+                "bg-primary border-b border-gray/50",
+              )}
+              style={{
+                top: `${tops[index] ?? 0}px`,
+                zIndex: items.length - index + 10,
+              }}
+            >
+              <span className="type-body-3">
+                ({String(index + 1).padStart(2, "0")})
+              </span>
+
+              <h3 className="type-body-1 max-md:text-[24px]">{itemTitle}</h3>
+            </div>
+
+            <div className="pt-6 pb-8">
+              <PortableTextComponent
+                text={text}
+                locale={locale}
+                className="type-body-3"
+              />
+            </div>
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export function StickyTextBlocks({
+  locale,
+  title,
+  subtitle,
+  items,
+  ctaLabel,
+  ctaHref,
+  className,
+}: StickyTextBlocksProps) {
+  const { ref: wrapRef } = useGsapReveal()
+
+  if (!items || items.length === 0) return null
 
   return (
     <div
       className={cn(
         "w-full bg-primary text-accent",
-        "py-20 lg:py-32",
+        "py-20 lg:py-48",
         className,
       )}
     >
       <Container>
         <div
-          className={cn(
-            "relative",
-            "flex flex-col gap-20",
-            "lg:grid lg:grid-cols-12 lg:gap-x-4",
-          )}
+          className={cn("relative", "min-h-full")}
           ref={wrapRef}
           style={{ opacity: 0 }}
         >
-          <div className="md:max-w-[500px] lg:max-w-none lg:col-span-4">
-            <h2
-              className={cn(
-                "type-heading-3 text-[24px] text-dark-gray",
-                // "",
-                "",
-              )}
-            >
-              {title}
-            </h2>
+          <StickyTextBlocksMobile
+            locale={locale}
+            title={title}
+            subtitle={subtitle}
+            ctaLabel={ctaLabel}
+            ctaHref={ctaHref}
+            items={items}
+          />
 
-            <p
-              className={cn(
-                "mt-6",
-                "type-body-1 text-[16px] tracking-[0.08em] font-medium uppercase text-dark-gray",
-                // "",
-                "",
-              )}
-            >
-              {subtitle}
-            </p>
-
-            <Button
-              href={ctaHref}
-              variant="reverse"
-              className="self-start mt-8 lg:mt-10"
-            >
-              {ctaLabel}
-            </Button>
-          </div>
-
-          <div className="lg:col-start-7 lg:col-span-6">
-            {items?.map(({ key, title: itemTitle, text }, index) => (
-              <React.Fragment key={key}>
-                <div
-                  ref={setBarRef(key)}
-                  className={cn(
-                    "sticky py-4 md:py-6 lg:py-8",
-                    "flex items-baseline gap-3",
-                    "bg-primary border-b border-gray/50",
-                  )}
-                  style={{
-                    top: `${tops[index] ?? 0}px`,
-                    zIndex: items.length - index + 10,
-                  }}
-                >
-                  <span className="type-body-3 lg:type-body-2">
-                    ({String(index + 1).padStart(2, "0")})
-                  </span>
-
-                  <h3 className="type-body-1 max-md:text-[24px]">
-                    {itemTitle}
-                  </h3>
-                </div>
-
-                <div className="pt-6 pb-8">
-                  <PortableTextComponent
-                    text={text}
-                    locale={locale}
-                    className="type-body-3"
-                  />
-                </div>
-              </React.Fragment>
-            ))}
-          </div>
+          <StickyTextBlocksDesktop
+            locale={locale}
+            title={title}
+            subtitle={subtitle}
+            ctaLabel={ctaLabel}
+            ctaHref={ctaHref}
+            items={items}
+          />
         </div>
       </Container>
     </div>

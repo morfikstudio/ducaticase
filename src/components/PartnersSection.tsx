@@ -1,6 +1,9 @@
 "use client"
 
+import { useCallback, useMemo, useRef, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
+import { Autoplay } from "swiper/modules"
+import type { Swiper as SwiperType } from "swiper"
 
 import { getSanityImageUrl } from "@/lib/sanity"
 import type { HOME_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
@@ -49,10 +52,61 @@ function partnerLogoIntrinsic(partner: PartnersSectionPartner): {
 export function PartnersSection({ title, partners }: PartnersSectionProps) {
   const { ref: wrapRef } = useGsapReveal()
 
+  const [isOverflow, setIsOverflow] = useState<boolean | null>(null)
+  const swiperKey = useRef<string | null>("")
+
   const withImage = partners.filter((p) => Boolean(p.image?.asset))
+
   if (withImage.length === 0) {
     return null
   }
+
+  /*
+  Duplicate slides only when overflow is confirmed, so Swiper always has
+  enough DOM content for a seamless loop (avoids the loop warning).
+  */
+
+  const repeatCount = Math.max(4, Math.ceil(16 / withImage.length))
+  const loopedPartners = Array.from({ length: repeatCount }, (_, i) =>
+    withImage.map((p) => ({ ...p, _loopKey: `${p._key}-${i}` })),
+  ).flat()
+
+  /*
+  Measure the intrinsic width of the slides to determine if they overflow.
+  */
+  const baseSlideWidths = useMemo(
+    () =>
+      withImage.map((partner) => {
+        const intrinsic = partnerLogoIntrinsic(partner)
+        if (!intrinsic) return 0
+
+        const scale = Math.min(1, 88 / intrinsic.height, 320 / intrinsic.width)
+        return Math.max(1, Math.round(intrinsic.width * scale))
+      }),
+    [withImage],
+  )
+
+  if (isOverflow === null) {
+    swiperKey.current = "measuring"
+  } else if (isOverflow === true) {
+    swiperKey.current = "animated"
+  } else {
+    swiperKey.current = "static"
+  }
+
+  const swiperUpdate = useCallback(
+    (swiper: SwiperType) => {
+      if (!swiper) return
+      const spaceBetween = Number(swiper.params.spaceBetween ?? 0)
+      const baseTrackWidth =
+        baseSlideWidths.reduce((sum, width) => sum + width, 0) +
+        Math.max(0, baseSlideWidths.length - 1) * spaceBetween
+
+      setIsOverflow(baseTrackWidth > swiper.width)
+      requestAnimationFrame(() => swiper.update())
+    },
+    [baseSlideWidths],
+  )
 
   return (
     <Container>
@@ -67,61 +121,82 @@ export function PartnersSection({ title, partners }: PartnersSectionProps) {
 
         <div className="mt-10 w-full md:mt-12 lg:mt-14">
           <Swiper
+            key={swiperKey.current}
+            modules={[Autoplay]}
             slidesPerView="auto"
             spaceBetween={64}
             watchOverflow
-            centeredSlides
-            centerInsufficientSlides
+            centeredSlides={Boolean(isOverflow)}
+            centerInsufficientSlides={!Boolean(isOverflow)}
+            loop={Boolean(isOverflow)}
+            autoplay={
+              Boolean(isOverflow)
+                ? {
+                    delay: 0,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: false,
+                  }
+                : false
+            }
+            speed={4000}
+            allowTouchMove={false}
             breakpoints={{
               768: {
                 spaceBetween: 128,
-                centeredSlides: false,
               },
             }}
+            onInit={(swiper) => swiperUpdate(swiper)}
+            onResize={(swiper) => swiperUpdate(swiper)}
             className="partners-swiper w-full [&_.swiper-slide]:h-auto! [&_.swiper-slide]:w-auto!"
           >
-            {withImage.map((partner) => {
-              const partnerName = partner.name?.trim() ?? ""
-              const alt = partnerName !== "" ? partnerName : "Partner"
-              const src = partnerLogoSrc(partner)
+            {(Boolean(isOverflow) ? loopedPartners : withImage).map(
+              (partner) => {
+                const partnerName = partner.name?.trim() ?? ""
+                const alt = partnerName !== "" ? partnerName : "Partner"
+                const src = partnerLogoSrc(partner)
 
-              if (!src) return null
+                if (!src) return null
 
-              const intrinsic =
-                partnerLogoIntrinsic(partner) ??
-                ({ width: 240, height: 80 } as const)
+                const intrinsic =
+                  partnerLogoIntrinsic(partner) ??
+                  ({ width: 240, height: 80 } as const)
 
-              if (!intrinsic) return null
+                if (!intrinsic) return null
 
-              const scale = Math.min(
-                1,
-                88 / intrinsic.height,
-                320 / intrinsic.width,
-              )
+                const scale = Math.min(
+                  1,
+                  88 / intrinsic.height,
+                  320 / intrinsic.width,
+                )
 
-              const width = Math.max(1, Math.round(intrinsic.width * scale))
-              const height = Math.max(1, Math.round(intrinsic.height * scale))
+                const width = Math.max(1, Math.round(intrinsic.width * scale))
+                const height = Math.max(1, Math.round(intrinsic.height * scale))
 
-              return (
-                <SwiperSlide
-                  key={partner._key}
-                  className="box-border flex! shrink-0 items-center justify-center"
-                  style={{ width, height }}
-                >
-                  <img
-                    src={src}
-                    alt={alt}
-                    width={intrinsic.width}
-                    height={intrinsic.height}
-                    loading="lazy"
-                    decoding="async"
-                    draggable={false}
-                    className="block object-contain"
+                const slideKey = Boolean(isOverflow)
+                  ? (partner as (typeof loopedPartners)[number])._loopKey
+                  : partner._key
+
+                return (
+                  <SwiperSlide
+                    key={slideKey}
+                    className="box-border flex! shrink-0 items-center justify-center"
                     style={{ width, height }}
-                  />
-                </SwiperSlide>
-              )
-            })}
+                  >
+                    <img
+                      src={src}
+                      alt={alt}
+                      width={intrinsic.width}
+                      height={intrinsic.height}
+                      loading="lazy"
+                      decoding="async"
+                      draggable={false}
+                      className="block object-contain"
+                      style={{ width, height }}
+                    />
+                  </SwiperSlide>
+                )
+              },
+            )}
           </Swiper>
         </div>
       </div>

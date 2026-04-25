@@ -138,7 +138,7 @@ export function TeamGrid({
           >
             {text && <div className="type-body-1">{text}</div>}
             {ctaLabel && ctaHref && (
-              <Button href={ctaHref} variant="reverse">
+              <Button href={ctaHref} variant="dark">
                 {ctaLabel}
               </Button>
             )}

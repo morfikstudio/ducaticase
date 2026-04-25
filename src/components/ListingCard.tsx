@@ -73,7 +73,7 @@ export function ListingCard({ entry, locale }: ListingCardProps) {
   return (
     <li className="min-w-0">
       <Link
-        className="group relative block aspect-4/5 overflow-hidden rounded-md bg-neutral-900"
+        className="group relative block aspect-2/3 lg:aspect-4/5 overflow-hidden rounded-md bg-neutral-900"
         href={`/immobili/${entry._id}`}
         target="_self"
       >
@@ -86,7 +86,7 @@ export function ListingCard({ entry, locale }: ListingCardProps) {
               landscapeParams={{
                 width: 720,
                 height: 960,
-                sizes: "100vw",
+                sizes: "50vw",
                 quality: 50,
               }}
               portraitParams={{
@@ -106,8 +106,9 @@ export function ListingCard({ entry, locale }: ListingCardProps) {
 
         <div
           className={cn(
-            "absolute inset-x-0 bottom-0 p-8",
+            "absolute inset-x-0 bottom-0",
             "flex flex-col gap-3",
+            "py-6 px-4 md:py-8 md:px-8",
             "bg-black/25 backdrop-blur-md",
           )}
         >
