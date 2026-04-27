@@ -18,10 +18,9 @@ export function AboutSection({ title, subtitle, text }: AboutSectionProps) {
   return (
     <div
       className={cn(
-        "relative isolate w-full",
+        "relative isolate w-full h-full",
         "bg-light-gray text-accent",
         "flex flex-col py-16 md:py-24 lg:py-32",
-        "lg:min-h-svh",
       )}
     >
       <div className="flex w-full flex-1 md:items-center">

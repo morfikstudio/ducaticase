@@ -5,11 +5,11 @@ import { pickLocalizedString } from "@/sanity/lib/locale"
 import { ABOUT_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
 import type { ABOUT_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
 
-import { HeroText } from "@/components/HeroText"
-import { SplitSection } from "@/components/SplitSection"
 import { AboutSection } from "@/components/AboutSection"
 import { FeatureGrid } from "@/components/FeatureGrid"
+import { HeroText } from "@/components/HeroText"
 import { SplitBanner } from "@/components/SplitBanner"
+import { SplitSectionDisplay } from "@/components/SplitSectionDisplay"
 import { TeamGrid } from "@/components/TeamGrid"
 
 type AboutPageProps = {
@@ -35,6 +35,17 @@ export default async function AboutPage({ params }: AboutPageProps) {
   // HISTORY BLOCKS SECTION
   const blocks = data?.aboutPage?.historySection ?? []
   const hasHistorySection = blocks.length > 0
+
+  const historyItems = blocks.map((block) => ({
+    key: block._key,
+    title: pickLocalizedString(block.title ?? undefined, locale) ?? "",
+    subtitle: pickLocalizedString(block.subtitle ?? undefined, locale) ?? "",
+    body: block.body ?? undefined,
+    locale,
+    imageLandscape: block.images?.imageDesktop,
+    imagePortrait: block.images?.imageMobile,
+    reverse: block.reverse === true,
+  }))
 
   // TODAY SECTION
   const today = data?.aboutPage?.todaySection
@@ -110,44 +121,23 @@ export default async function AboutPage({ params }: AboutPageProps) {
         </section>
       ) : null}
 
-      {/* history blocks */}
+      {/* history blocks + today section as last panel */}
       {hasHistorySection ? (
         <section>
-          {blocks.map((block) => {
-            const title =
-              pickLocalizedString(block.title ?? undefined, locale) ?? ""
-            const subtitle =
-              pickLocalizedString(block.subtitle ?? undefined, locale) ?? ""
-            const desktop = block.images?.imageDesktop
-            const mobile = block.images?.imageMobile
-
-            return (
-              <div className="w-full" key={block._key}>
-                <SplitSection
-                  title={title}
-                  subtitle={subtitle}
-                  body={block.body ?? undefined}
-                  locale={locale}
-                  imageLandscape={desktop}
-                  imagePortrait={mobile}
-                  reverse={block.reverse === true}
+          <SplitSectionDisplay
+            items={historyItems}
+            lastSection={
+              hasTodaySection ? (
+                <AboutSection
+                  title={todayTitle}
+                  subtitle={todaySubtitle}
+                  text={todayText}
                 />
-              </div>
-            )
-          })}
-        </section>
-      ) : null}
-
-      {/* today section */}
-      {hasTodaySection && (
-        <section>
-          <AboutSection
-            title={todayTitle}
-            subtitle={todaySubtitle}
-            text={todayText}
+              ) : undefined
+            }
           />
         </section>
-      )}
+      ) : null}
 
       {/* sectors section */}
       {hasSectorsSection ? (
