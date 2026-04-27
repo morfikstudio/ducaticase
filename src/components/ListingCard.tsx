@@ -109,7 +109,11 @@ export function ListingCard({
           )}
         </div>
 
-        <div className={cn("relative overflow-hidden flex-1 flex flex-col justify-end")}>
+        <div
+          className={cn(
+            "relative overflow-hidden flex-1 flex flex-col justify-end",
+          )}
+        >
           <div className="absolute inset-0">
             {entry.mainImage ? (
               <SanityImage
@@ -139,29 +143,31 @@ export function ListingCard({
 
           <div
             className={cn(
-              "relative z-10",
-              "flex flex-col gap-3",
+              "relative z-10 min-h-full",
+              "flex flex-col gap-3 justify-between",
               "py-6 px-4 md:py-8 md:px-8",
               "bg-black/25 backdrop-blur-xl",
             )}
           >
-            <p
-              className={cn(
-                "font-sans text-[12px] font-medium uppercase",
-                "truncate text-primary",
-              )}
-            >
-              {locationText}
-            </p>
+            <div>
+              <p
+                className={cn(
+                  "font-sans text-[12px] font-medium uppercase",
+                  "truncate text-primary",
+                )}
+              >
+                {locationText}
+              </p>
 
-            <h3
-              className={cn(
-                "type-listing-card-title text-primary",
-                "line-clamp-2",
-              )}
-            >
-              {title}
-            </h3>
+              <h3
+                className={cn(
+                  "type-listing-card-title text-primary mt-1",
+                  "line-clamp-2",
+                )}
+              >
+                {title}
+              </h3>
+            </div>
 
             <div className="flex items-end justify-between gap-4">
               <p className="truncate type-body-2 text-primary">{infoMeta}</p>
