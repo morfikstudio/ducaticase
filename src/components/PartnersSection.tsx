@@ -126,6 +126,7 @@ export function PartnersSection({ title, partners }: PartnersSectionProps) {
             slidesPerView="auto"
             spaceBetween={64}
             watchOverflow
+            lazyPreloadPrevNext={5}
             centeredSlides={Boolean(isOverflow)}
             centerInsufficientSlides={!Boolean(isOverflow)}
             loop={Boolean(isOverflow)}
@@ -138,7 +139,7 @@ export function PartnersSection({ title, partners }: PartnersSectionProps) {
                   }
                 : false
             }
-            speed={4000}
+            speed={2000}
             allowTouchMove={false}
             breakpoints={{
               768: {

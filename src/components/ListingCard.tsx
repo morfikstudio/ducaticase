@@ -21,9 +21,14 @@ type ListingsEntry = LISTINGS_PREVIEW_QUERY_RESULT[number]
 type ListingCardProps = {
   entry: ListingsEntry
   locale: AppLocale
+  priority?: boolean
 }
 
-export function ListingCard({ entry, locale }: ListingCardProps) {
+export function ListingCard({
+  entry,
+  locale,
+  priority = false,
+}: ListingCardProps) {
   const t = useTranslations("listingsResults")
   const typology = listingTypologyLabel(entry._type, entry.typology, locale)
   const listingTitle = pickLocalizedString(entry.title, locale)
@@ -73,11 +78,11 @@ export function ListingCard({ entry, locale }: ListingCardProps) {
   return (
     <li className="min-w-0">
       <Link
-        className="group relative block aspect-2/3 lg:aspect-4/5 overflow-hidden rounded-md bg-neutral-900"
+        className="group block overflow-hidden rounded-md bg-neutral-900"
         href={`/immobili/${entry._id}`}
         target="_self"
       >
-        <div className="absolute inset-0">
+        <div className="relative aspect-square overflow-hidden">
           {entry.mainImage ? (
             <SanityImage
               landscape={entry.mainImage}
@@ -96,45 +101,74 @@ export function ListingCard({ entry, locale }: ListingCardProps) {
                 quality: 50,
               }}
               fill
+              loading={priority ? "eager" : undefined}
               className="object-cover object-center transition duration-500 group-hover:scale-[1.03]"
             />
           ) : (
             <div className="h-full w-full bg-linear-to-br from-neutral-700 to-neutral-900" />
           )}
-          <div className="absolute inset-0 bg-linear-to-t from-black/45 via-black/20 to-transparent" />
         </div>
 
-        <div
-          className={cn(
-            "absolute inset-x-0 bottom-0",
-            "flex flex-col gap-3",
-            "py-6 px-4 md:py-8 md:px-8",
-            "bg-black/25 backdrop-blur-md",
-          )}
-        >
-          <p
+        <div className={cn("relative overflow-hidden")}>
+          <div className="absolute inset-0">
+            {entry.mainImage ? (
+              <SanityImage
+                landscape={entry.mainImage}
+                portrait={entry.mainImage}
+                locale={locale}
+                landscapeParams={{
+                  width: 720,
+                  height: 960,
+                  sizes: "50vw",
+                  quality: 10,
+                }}
+                portraitParams={{
+                  width: 720,
+                  height: 960,
+                  sizes: "100vw",
+                  quality: 10,
+                }}
+                fill
+                loading={priority ? "eager" : undefined}
+                className="object-cover object-bottom transition duration-500 group-hover:scale-[1.03]"
+              />
+            ) : (
+              <div className="h-full w-full bg-linear-to-br from-neutral-700 to-neutral-900" />
+            )}
+          </div>
+
+          <div
             className={cn(
-              "font-sans text-[12px] font-medium uppercase",
-              "truncate text-primary",
+              "relative z-10",
+              "flex flex-col gap-3",
+              "py-6 px-4 md:py-8 md:px-8",
+              "bg-black/25 backdrop-blur-xl",
             )}
           >
-            {locationText}
-          </p>
-
-          <h3
-            className={cn(
-              "type-listing-card-title text-primary",
-              "line-clamp-2",
-            )}
-          >
-            {title}
-          </h3>
-
-          <div className="flex items-end justify-between gap-4">
-            <p className="truncate type-body-2 text-primary">{infoMeta}</p>
-            <p className="shrink-0 truncate type-body-2 text-primary">
-              {price}
+            <p
+              className={cn(
+                "font-sans text-[12px] font-medium uppercase",
+                "truncate text-primary",
+              )}
+            >
+              {locationText}
             </p>
+
+            <h3
+              className={cn(
+                "type-listing-card-title text-primary",
+                "line-clamp-2",
+              )}
+            >
+              {title}
+            </h3>
+
+            <div className="flex items-end justify-between gap-4">
+              <p className="truncate type-body-2 text-primary">{infoMeta}</p>
+              <p className="shrink-0 truncate type-body-2 text-primary">
+                {price}
+              </p>
+            </div>
           </div>
         </div>
       </Link>

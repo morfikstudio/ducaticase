@@ -7,6 +7,7 @@ import type { AppLocale } from "@/i18n/routing"
 import type { LocalizedPortableText } from "@/sanity/types"
 
 import { useGsapReveal } from "@/hooks/useGsapReveal"
+import { useAnimationKey } from "@/components/providers/LenisProvider"
 
 import { cn } from "@/utils/classNames"
 
@@ -41,6 +42,7 @@ type StickyTextSharedProps = {
   ctaLabel?: string
   ctaHref?: string
   items: StickyTextItem[]
+  animationKey?: number
 }
 
 function StickyTextBlocksHeader({
@@ -146,9 +148,11 @@ function StickyTextBlocksMobile({
   ctaLabel,
   ctaHref,
   items,
+  animationKey,
 }: StickyTextSharedProps) {
   const [tops, setTops] = useState<number[]>([])
   const barRefs = useRef(new Map<string, HTMLDivElement>())
+  const recomputeRef = useRef<(() => void) | null>(null)
 
   const setBarRef = useCallback(
     (key: string) => (el: HTMLDivElement | null) => {
@@ -164,6 +168,7 @@ function StickyTextBlocksMobile({
   useLayoutEffect(() => {
     if (items.length === 0) {
       setTops([])
+      recomputeRef.current = null
       return
     }
 
@@ -187,9 +192,24 @@ function StickyTextBlocksMobile({
 
         return next
       })
+
+      if (process.env.NODE_ENV !== "production") {
+        const firstBar = barRefs.current.get(items[0]?.key ?? "")
+        console.debug("[StickyTextBlocksMobile] recompute", {
+          locale,
+          animationKey,
+          scrollY: window.scrollY,
+          firstBarOffsetHeight: firstBar?.offsetHeight ?? 0,
+          tops: next,
+        })
+      }
     }
 
+    recomputeRef.current = recompute
     recompute()
+    const raf1 = requestAnimationFrame(() => {
+      requestAnimationFrame(recompute)
+    })
 
     const ro = new ResizeObserver(recompute)
     for (const { key } of items) {
@@ -197,8 +217,19 @@ function StickyTextBlocksMobile({
       if (el) ro.observe(el)
     }
 
-    return () => ro.disconnect()
-  }, [items, locale])
+    return () => {
+      cancelAnimationFrame(raf1)
+      ro.disconnect()
+    }
+  }, [items, locale, animationKey])
+
+  useLayoutEffect(() => {
+    if (!recomputeRef.current) return
+    const raf = requestAnimationFrame(() => {
+      recomputeRef.current?.()
+    })
+    return () => cancelAnimationFrame(raf)
+  }, [animationKey])
 
   return (
     <div className="flex flex-col gap-20 lg:hidden">
@@ -256,6 +287,7 @@ export function StickyTextBlocks({
   className,
 }: StickyTextBlocksProps) {
   const { ref: wrapRef } = useGsapReveal()
+  const animationKey = useAnimationKey()
 
   if (!items || items.length === 0) return null
 
@@ -280,6 +312,7 @@ export function StickyTextBlocks({
             ctaLabel={ctaLabel}
             ctaHref={ctaHref}
             items={items}
+            animationKey={animationKey}
           />
 
           <StickyTextBlocksDesktop

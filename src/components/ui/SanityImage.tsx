@@ -90,6 +90,15 @@ type CommonSanityImageProps = {
 
   priority?: boolean
 
+  /**
+   * Forwarded to next/image. Use `"eager"` to opt out of `next/image`'s
+   * IntersectionObserver-based lazy loading without adding the aggressive
+   * `<link rel="preload">` that `priority` would. Useful for images that are
+   * about to be revealed by horizontal scroll/swipe (e.g. carousel slides
+   * sitting just outside the viewport). Ignored when `priority` is true.
+   */
+  loading?: "lazy" | "eager"
+
   /** Applied to every <Image> rendered by this component. */
   className?: string
 
@@ -163,6 +172,7 @@ export function SanityImage(props: SanityImageProps) {
     breakpoint = "md",
     fill = false,
     priority = false,
+    loading,
     className,
     onLoad,
     onError,
@@ -190,6 +200,7 @@ export function SanityImage(props: SanityImageProps) {
     const sharedProps = {
       alt: resolvedAlt,
       priority,
+      ...(priority ? {} : loading ? { loading } : {}),
       onLoad,
       onError,
     } as const
@@ -242,6 +253,7 @@ export function SanityImage(props: SanityImageProps) {
   const sharedProps = {
     alt: resolvedAlt,
     priority,
+    ...(priority ? {} : loading ? { loading } : {}),
     onLoad,
     onError,
   } as const

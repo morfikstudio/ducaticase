@@ -44,9 +44,9 @@ export function RelatedListings({ locale, entries }: RelatedListingsProps) {
           slidesOffsetBefore={24}
           slidesOffsetAfter={24}
         >
-          {cards.map((entry) => (
+          {cards.map((entry, index) => (
             <SwiperSlide key={entry._id}>
-              <ListingCard entry={entry} locale={locale} />
+              <ListingCard entry={entry} locale={locale} priority={index < 5} />
             </SwiperSlide>
           ))}
         </Swiper>

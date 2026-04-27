@@ -69,12 +69,12 @@ export function ListingsCarousel({
             onSwiper={(instance) => {
               swiperRef.current = instance
             }}
-            slidesPerView={1.15}
+            slidesPerView={1.1}
             spaceBetween={16}
             watchOverflow
             breakpoints={{
               768: {
-                slidesPerView: 1.75,
+                slidesPerView: 1.5,
                 spaceBetween: 24,
               },
               1024: {
@@ -86,9 +86,13 @@ export function ListingsCarousel({
               },
             }}
           >
-            {entries.map((entry) => (
+            {entries.map((entry, index) => (
               <SwiperSlide key={entry._id}>
-                <ListingCard entry={entry} locale={locale} />
+                <ListingCard
+                  entry={entry}
+                  locale={locale}
+                  priority={index < 5}
+                />
               </SwiperSlide>
             ))}
           </Swiper>

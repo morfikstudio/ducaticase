@@ -107,6 +107,16 @@ export function GalleryLightbox({
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null)
   const [mounted, setMounted] = useState(false)
 
+  const syncCurrentIndex = useCallback(
+    (swiper: SwiperType) => {
+      const lastIndex = Math.max(images.length - 1, 0)
+      const nextIndex = isMobile && swiper.isEnd ? lastIndex : swiper.activeIndex
+      const clampedIndex = Math.min(Math.max(nextIndex, 0), lastIndex)
+      setCurrentIndex(clampedIndex)
+    },
+    [images.length, isMobile],
+  )
+
   const dialogRef = useRef<HTMLDivElement>(null)
   const prevNavButtonRef = useRef<HTMLButtonElement>(null)
   const nextNavButtonRef = useRef<HTMLButtonElement>(null)
@@ -262,46 +272,54 @@ export function GalleryLightbox({
           spaceBetween={isMobile ? 8 : 0}
           initialSlide={initialIndex}
           onSwiper={setSwiperInstance}
-          onSlideChange={(swiper) => setCurrentIndex(swiper.activeIndex)}
+          onSlideChange={syncCurrentIndex}
+          onReachEnd={syncCurrentIndex}
           className="h-full w-full"
           data-lenis-prevent
         >
-          {images.map((image, i) => (
-            <SwiperSlide
-              key={i}
-              className={cn(
-                "box-border flex items-center justify-center",
-                isMobile ? "h-auto! w-full" : "relative h-full! w-full",
-              )}
-            >
-              {isMobile ? (
-                <SanityImage
-                  image={image}
-                  locale={locale}
-                  params={{
-                    width: 720,
-                    sizes: "100vw",
-                  }}
-                  priority={i === initialIndex}
-                  className="block h-auto w-full"
-                />
-              ) : (
-                <div className="relative h-full w-full">
+          {images.map((image, i) => {
+            const isAdjacent = Math.abs(i - currentIndex) <= 1
+            const eagerLoading = isAdjacent ? "eager" : undefined
+
+            return (
+              <SwiperSlide
+                key={i}
+                className={cn(
+                  "box-border flex items-center justify-center",
+                  isMobile ? "h-auto! w-full" : "relative h-full! w-full",
+                )}
+              >
+                {isMobile ? (
                   <SanityImage
                     image={image}
                     locale={locale}
                     params={{
-                      width: 1280,
+                      width: 720,
                       sizes: "100vw",
                     }}
-                    fill
                     priority={i === initialIndex}
-                    className="object-contain"
+                    loading={eagerLoading}
+                    className="block h-auto w-full"
                   />
-                </div>
-              )}
-            </SwiperSlide>
-          ))}
+                ) : (
+                  <div className="relative h-full w-full">
+                    <SanityImage
+                      image={image}
+                      locale={locale}
+                      params={{
+                        width: 1280,
+                        sizes: "100vw",
+                      }}
+                      fill
+                      priority={i === initialIndex}
+                      loading={eagerLoading}
+                      className="object-contain"
+                    />
+                  </div>
+                )}
+              </SwiperSlide>
+            )
+          })}
         </Swiper>
       </div>
 

@@ -88,7 +88,15 @@ export function LenisProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!lenis) return
 
-    lenis.scrollTo(0, { immediate: true, force: true })
+    const resetToTop = () => lenis.scrollTo(0, { immediate: true, force: true })
+    resetToTop()
+
+    // A second reset on next frames avoids occasional stale scroll position
+    // during client-side transitions before sticky sections mount.
+    const raf1 = requestAnimationFrame(() => {
+      resetToTop()
+      requestAnimationFrame(resetToTop)
+    })
 
     let cancelled = false
 
@@ -108,6 +116,7 @@ export function LenisProvider({ children }: { children: ReactNode }) {
 
     return () => {
       cancelled = true
+      cancelAnimationFrame(raf1)
     }
   }, [lenis, pathname])
 
