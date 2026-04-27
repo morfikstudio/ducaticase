@@ -87,7 +87,7 @@ export function ListingsCarousel({
             }}
           >
             {entries.map((entry, index) => (
-              <SwiperSlide key={entry._id}>
+              <SwiperSlide key={entry._id} className="h-auto!">
                 <ListingCard
                   entry={entry}
                   locale={locale}

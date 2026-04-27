@@ -76,9 +76,9 @@ export function ListingCard({
       .join(" · ") || t("reservedLocation")
 
   return (
-    <li className="min-w-0">
+    <li className="min-w-0 h-full">
       <Link
-        className="group block overflow-hidden rounded-md bg-neutral-900"
+        className="group flex flex-col overflow-hidden rounded-md bg-neutral-900 h-full"
         href={`/immobili/${entry._id}`}
         target="_self"
       >
@@ -109,7 +109,7 @@ export function ListingCard({
           )}
         </div>
 
-        <div className={cn("relative overflow-hidden")}>
+        <div className={cn("relative overflow-hidden flex-1 flex flex-col justify-end")}>
           <div className="absolute inset-0">
             {entry.mainImage ? (
               <SanityImage
