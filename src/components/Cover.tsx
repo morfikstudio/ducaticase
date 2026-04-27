@@ -32,7 +32,7 @@ export function Cover({
   priority = false,
   className,
 }: CoverProps) {
-  const { ref: wrapRef } = useGsapReveal()
+  const { ref: wrapRef } = useGsapReveal({ fromY: 0 })
 
   const hasMedia = Boolean(imageLandscape ?? imagePortrait)
   if (!hasMedia) {

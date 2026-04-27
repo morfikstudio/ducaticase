@@ -1,7 +1,9 @@
 "use client"
 
+import { useEffect, useRef } from "react"
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 import { Link } from "@/i18n/navigation"
+import gsap from "gsap"
 
 import type { AppLocale } from "@/i18n/routing"
 
@@ -43,7 +45,10 @@ export function ImageFeatureList({
   items,
   className,
 }: ImageFeatureListProps) {
-  const { ref: wrapRef } = useGsapReveal()
+  const { ref: wrapRef, show: showWrap } = useGsapReveal()
+  const valuesRef = useRef<Record<number, HTMLLIElement | null>>({
+    0: null,
+  })
 
   const resolvedTitle = pickLocalizedString(title ?? undefined, locale) ?? ""
   const resolvedSubtitle =
@@ -57,6 +62,42 @@ export function ImageFeatureList({
   const valuesItems = (items ?? [])
     .map((item) => pickLocalizedString(item?.title ?? undefined, locale) ?? "")
     .filter((item) => item.trim() !== "")
+
+  useEffect(() => {
+    if (!showWrap) return
+
+    const elements = Object.values(valuesRef.current).filter(
+      (el): el is HTMLLIElement => el !== null,
+    )
+
+    if (elements.length === 0) return
+
+    const ctx = gsap.context(() => {
+      elements.forEach((element) => {
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: element,
+              start: "top 85%",
+              end: "top 85%",
+              invalidateOnRefresh: true,
+            },
+          })
+          .fromTo(
+            element,
+            { opacity: 0, y: 12 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              ease: "power2.out",
+            },
+          )
+      })
+    })
+
+    return () => ctx?.revert?.()
+  }, [showWrap])
 
   return (
     <Container
@@ -140,6 +181,11 @@ export function ImageFeatureList({
               {valuesItems.map((item, index) => (
                 <li
                   key={item}
+                  ref={(el) => {
+                    if (valuesRef.current) {
+                      valuesRef.current[index] = el
+                    }
+                  }}
                   className={cn(
                     "rounded-md bg-[#282828]/30 backdrop-blur-lg",
                     "px-4 py-8",
