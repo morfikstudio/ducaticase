@@ -228,15 +228,15 @@ function MemberCardMobile({ member, locale }: MemberCardProps) {
         {description.trim() !== "" ? (
           <div
             className={cn(
-              "absolute inset-x-4 bottom-2",
+              "absolute inset-x-4 bottom-4",
               "flex flex-col-reverse gap-2 items-end",
             )}
           >
             <div
               className={cn(
                 "w-full overflow-hidden rounded-[4px] bg-light-gray",
-                "transition-all duration-500 ease-in-out",
-                isOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0",
+                isOpen ? "max-h-80" : "max-h-0",
+                "transition-[max-height] duration-500 ease-in-out",
               )}
             >
               <p className="type-body-2 whitespace-pre-line p-6 text-accent">
@@ -253,34 +253,29 @@ function MemberCardMobile({ member, locale }: MemberCardProps) {
                   : t("openMemberDescription")
               }
               className={cn(
-                "relative z-10",
-                "grid h-14 w-14 shrink-0 place-items-center rounded-[4px]",
-                "bg-light-gray text-accent",
-                "transition-colors",
+                "relative h-14 w-14 shrink-0 z-10",
+                "grid place-items-center rounded-[4px] bg-light-gray",
+                isOpen ? "mb-0 duration-250" : "-mb-[8px] duration-500",
+                "transition-margin ease-in-out",
               )}
               onClick={() => setIsOpen((prev) => !prev)}
             >
               <span
                 className={cn(
                   "relative block h-6 w-6",
-                  "transition-transform duration-400 ease-in-out",
-                  isOpen ? "rotate-180" : "rotate-0",
+                  isOpen ? "rotate-45" : "rotate-0",
+                  "transition-transform duration-250 ease-in-out",
                 )}
               >
                 <span
                   className={cn(
-                    "absolute top-1/2 left-0 h-[2px] w-6 -translate-y-1/2",
-                    "transition-transform duration-300 ease-in-out",
+                    "absolute top-1/2 left-0 h-[2px] w-6 -translate-y-1/2 bg-black",
                   )}
-                  style={{ backgroundColor: "var(--color-black)" }}
                 />
                 <span
                   className={cn(
-                    "absolute top-0 left-1/2 h-6 w-[2px] -translate-x-1/2 origin-center",
-                    "transition-transform duration-300 ease-in-out",
-                    isOpen ? "scale-y-0 opacity-0" : "scale-y-100 opacity-100",
+                    "absolute top-0 left-1/2 h-6 w-[2px] -translate-x-1/2 origin-center bg-black",
                   )}
-                  style={{ backgroundColor: "var(--color-black)" }}
                 />
               </span>
             </button>
@@ -290,11 +285,13 @@ function MemberCardMobile({ member, locale }: MemberCardProps) {
 
       <div className="mt-5">
         {title.trim() !== "" ? <h3 className="type-body-1">{title}</h3> : null}
+
         {roles !== "" ? (
           <p className="type-body-2 text-dark-gray uppercase font-medium mt-2">
             {roles}
           </p>
         ) : null}
+
         {lastRole !== "" ? (
           <p className="type-body-2 text-dark-gray uppercase font-medium">
             {lastRole}
