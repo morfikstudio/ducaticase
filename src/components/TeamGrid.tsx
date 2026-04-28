@@ -255,8 +255,8 @@ function MemberCardMobile({ member, locale }: MemberCardProps) {
               className={cn(
                 "relative h-14 w-14 shrink-0 z-10",
                 "grid place-items-center rounded-[4px] bg-light-gray",
-                isOpen ? "mb-0 duration-250" : "-mb-[8px] duration-500",
-                "transition-margin ease-in-out",
+                isOpen ? "mb-0" : "-mb-[8px] delay-400",
+                "transition-margin duration-250 ease-in-out",
               )}
               onClick={() => setIsOpen((prev) => !prev)}
             >
