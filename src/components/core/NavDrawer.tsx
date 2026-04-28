@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import gsap from "gsap"
 
 import { Link } from "@/i18n/navigation"
 
@@ -12,6 +13,8 @@ import { useLenis } from "@/components/providers/LenisProvider"
 const FOCUSABLE_SELECTOR =
   'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
+const CLOSE_ANIMATION_MS = 520
+
 function getFocusableElements(container: HTMLElement) {
   return Array.from(
     container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
@@ -21,6 +24,7 @@ function getFocusableElements(container: HTMLElement) {
 type NavDrawerProps = {
   isOpen: boolean
   onClose: () => void
+  onExited?: () => void
   navLinks: MenuNavLink[]
   socialLinks: MenuSocialLink[]
   payoff: string
@@ -51,30 +55,40 @@ function ExternalLinkIcon() {
 export function NavDrawer({
   isOpen,
   onClose,
+  onExited,
   navLinks,
   socialLinks,
   payoff,
 }: NavDrawerProps) {
-  const [shouldRender, setShouldRender] = useState(isOpen)
   const [isVisible, setIsVisible] = useState(false)
+
   const dialogContainerRef = useRef<HTMLDivElement>(null)
+  const drawerContentRef = useRef<HTMLDivElement>(null)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const animationCtxRef = useRef<gsap.Context | null>(null)
+
   const lenis = useLenis()
 
+  // Toggle visibility and keep the drawer mounted until close animation ends.
   useEffect(() => {
     if (isOpen) {
-      setShouldRender(true)
       const raf = requestAnimationFrame(() => {
         requestAnimationFrame(() => setIsVisible(true))
       })
+
       return () => cancelAnimationFrame(raf)
     } else {
       setIsVisible(false)
-      const timer = setTimeout(() => setShouldRender(false), 320)
+
+      const timer = setTimeout(() => {
+        onExited?.()
+      }, CLOSE_ANIMATION_MS)
+
       return () => clearTimeout(timer)
     }
-  }, [isOpen])
+  }, [isOpen, onExited])
 
+  // Pause Lenis scrolling while the drawer is open.
   useEffect(() => {
     if (!lenis || !isOpen) return
     lenis.stop()
@@ -83,18 +97,20 @@ export function NavDrawer({
     }
   }, [lenis, isOpen])
 
-  // Move focus to close control when the drawer is visible
+  // Move focus to the close button once the drawer is visible.
   useEffect(() => {
     if (!isOpen || !isVisible) return
+
     const raf = requestAnimationFrame(() => {
       closeButtonRef.current?.focus()
     })
+
     return () => cancelAnimationFrame(raf)
   }, [isOpen, isVisible])
 
-  // Keep Tab / Shift+Tab inside the modal layer (overlay + panel)
+  // Keep keyboard focus trapped inside the drawer layer.
   useEffect(() => {
-    if (!isOpen || !shouldRender) return
+    if (!isOpen) return
     const container = dialogContainerRef.current
     if (!container) return
 
@@ -127,19 +143,83 @@ export function NavDrawer({
 
     container.addEventListener("keydown", onKeyDown)
     return () => container.removeEventListener("keydown", onKeyDown)
-  }, [isOpen, shouldRender])
+  }, [isOpen])
 
-  // Escape closes the drawer (parent restores focus)
+  // Close the drawer when pressing Escape.
   useEffect(() => {
     if (!isOpen) return
+
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose()
     }
+
     document.addEventListener("keydown", onKeyDown)
     return () => document.removeEventListener("keydown", onKeyDown)
   }, [isOpen, onClose])
 
-  if (!shouldRender) return null
+  // Animate drawer content items on open with responsive direction.
+  useEffect(() => {
+    if (!isOpen || !isVisible) return
+
+    const scope = drawerContentRef.current
+    if (!scope) return
+
+    animationCtxRef.current?.revert()
+    animationCtxRef.current = null
+
+    const ctx = gsap.context(() => {
+      const navItems = gsap.utils.toArray<HTMLElement>("[data-drawer-nav-item]")
+      const socialItems = gsap.utils.toArray<HTMLElement>(
+        "[data-drawer-social-item]",
+      )
+      const payoff = gsap.utils.toArray<HTMLElement>("[data-drawer-payoff]")
+
+      const targets = [...navItems, ...socialItems, ...payoff].filter(Boolean)
+      if (targets.length === 0) return
+
+      const mm = gsap.matchMedia()
+
+      mm.add(
+        {
+          desktop: "(min-width: 768px)",
+          mobile: "(max-width: 767px)",
+        },
+        (context) => {
+          const fromX = context.conditions?.desktop ? 32 : -32
+
+          gsap.set(targets, {
+            opacity: 0,
+            x: fromX,
+          })
+
+          const tl = gsap.timeline({
+            defaults: { overwrite: "auto" },
+            delay: 0.25,
+          })
+
+          tl.to(targets, {
+            opacity: 1,
+            x: 0,
+            duration: 0.9,
+            stagger: 0.035,
+            ease: "power2.out",
+          })
+        },
+      )
+
+      return () => mm.revert()
+    }, scope)
+
+    animationCtxRef.current = ctx
+  }, [isOpen, isVisible])
+
+  // revert GSAP context only on unmount
+  useEffect(() => {
+    return () => {
+      animationCtxRef.current?.revert()
+      animationCtxRef.current = null
+    }
+  }, [])
 
   return (
     <div
@@ -202,6 +282,7 @@ export function NavDrawer({
 
         {/* Scrollable content */}
         <div
+          ref={drawerContentRef}
           data-lenis-prevent
           className={cn(
             "relative px-8 md:px-14 py-16",
@@ -215,19 +296,21 @@ export function NavDrawer({
             <ul className="flex flex-col gap-1">
               {navLinks.map(({ label, href }) => (
                 <li key={href}>
-                  <Link
-                    href={href}
-                    onClick={onClose}
-                    className={cn(
-                      "relative block w-fit py-2",
-                      "font-sans text-[32px] md:text-[36px] text-primary transition-opacity duration-200 hover:opacity-75",
-                      "after:absolute after:bottom-[0.1em] after:left-0 after:h-px after:w-full after:bg-current after:content-['']",
-                      "after:origin-right after:scale-x-0 after:transition-transform after:duration-500 after:ease-in-out",
-                      "hover:after:origin-left hover:after:scale-x-100",
-                    )}
-                  >
-                    {label}
-                  </Link>
+                  <span data-drawer-nav-item className="block w-fit">
+                    <Link
+                      href={href}
+                      onClick={onClose}
+                      className={cn(
+                        "relative block w-fit py-2",
+                        "font-sans text-[32px] md:text-[36px] text-primary transition-opacity duration-200 hover:opacity-75",
+                        "after:absolute after:bottom-[0.1em] after:left-0 after:h-px after:w-full after:bg-current after:content-['']",
+                        "after:origin-right after:scale-x-0 after:transition-transform after:duration-500 after:ease-in-out",
+                        "hover:after:origin-left hover:after:scale-x-100",
+                      )}
+                    >
+                      {label}
+                    </Link>
+                  </span>
                 </li>
               ))}
             </ul>
@@ -240,41 +323,45 @@ export function NavDrawer({
               <ul className="flex flex-col gap-1.5">
                 {socialLinks.map(({ label, href }, index) => (
                   <li key={`${href}-${index}`}>
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={cn(
-                        "group inline-flex items-center gap-1.5",
-                        "type-body-3 text-primary",
-                        "hover:underline underline-offset-4",
-                      )}
-                    >
-                      <span>{label}</span>
-                      <span
+                    <span data-drawer-social-item className="inline-block">
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className={cn(
-                          "inline-block origin-center",
-                          "transition-transform duration-300 ease-out",
-                          "group-hover:rotate-45",
+                          "group inline-flex items-center gap-1.5",
+                          "type-body-3 text-primary",
+                          "hover:underline underline-offset-4",
                         )}
-                        aria-hidden
                       >
-                        <ExternalLinkIcon />
-                      </span>
-                    </a>
+                        <span>{label}</span>
+                        <span
+                          className={cn(
+                            "inline-block origin-center",
+                            "transition-transform duration-300 ease-out",
+                            "group-hover:rotate-45",
+                          )}
+                          aria-hidden
+                        >
+                          <ExternalLinkIcon />
+                        </span>
+                      </a>
+                    </span>
                   </li>
                 ))}
               </ul>
             </nav>
 
             {/* Payoff */}
-            <p className="mt-6 type-body-3 text-dark-gray">
-              {payoff.split("\n").map((line, i) => (
-                <span key={i} className="block">
-                  {line}
-                </span>
-              ))}
-            </p>
+            <div data-drawer-payoff>
+              <p className="mt-6 type-body-3 text-dark-gray">
+                {payoff.split("\n").map((line, i) => (
+                  <span key={i} className="block">
+                    {line}
+                  </span>
+                ))}
+              </p>
+            </div>
           </div>
         </div>
       </aside>

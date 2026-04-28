@@ -25,15 +25,19 @@ type NavBarProps = {
 
 export function NavBar({ locale, menuContent }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isDrawerMounted, setIsDrawerMounted] = useState(false)
+
   const isMenuOpenRef = useRef(isMenuOpen)
   const headerRef = useRef<HTMLElement>(null)
   const previousFocusBeforeMenuRef = useRef<HTMLElement | null>(null)
-  const lenis = useLenis()
 
-  isMenuOpenRef.current = isMenuOpen
+  const lenis = useLenis()
   const pathname = usePathname()
   const router = useRouter()
 
+  isMenuOpenRef.current = isMenuOpen
+
+  // Hide/show based on scroll
   useEffect(() => {
     if (!lenis) return
 
@@ -84,6 +88,7 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
   const openMenu = useCallback(() => {
     previousFocusBeforeMenuRef.current =
       document.activeElement as HTMLElement | null
+    setIsDrawerMounted(true)
     setIsMenuOpen(true)
   }, [])
 
@@ -94,7 +99,11 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
     })
   }, [restoreFocusAfterMenu])
 
-  // Close menu on route change (restore focus if it was open)
+  const handleDrawerExited = useCallback(() => {
+    setIsDrawerMounted(false)
+  }, [])
+
+  // Close the menu when the route changes.
   useEffect(() => {
     if (!isMenuOpenRef.current) return
     closeMenu()
@@ -218,13 +227,16 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
         </Container>
       </header>
 
-      <NavDrawer
-        isOpen={isMenuOpen}
-        onClose={closeMenu}
-        navLinks={menuContent.navLinks}
-        socialLinks={menuContent.socialLinks}
-        payoff={menuContent.payoff}
-      />
+      {isDrawerMounted ? (
+        <NavDrawer
+          isOpen={isMenuOpen}
+          onClose={closeMenu}
+          onExited={handleDrawerExited}
+          navLinks={menuContent.navLinks}
+          socialLinks={menuContent.socialLinks}
+          payoff={menuContent.payoff}
+        />
+      ) : null}
     </>
   )
 }
