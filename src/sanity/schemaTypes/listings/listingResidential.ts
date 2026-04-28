@@ -63,7 +63,7 @@ export const listingResidential = defineType({
     listingSearchTokensField({ group: "propertySheet" }),
     priceField({ group: "propertySheet" }),
     commercialAreaSqmField({ required: true, group: "propertySheet" }),
-    condoFeesField({ required: true, group: "propertySheet" }),
+    condoFeesField({ group: "propertySheet" }),
     floorField({ required: true, group: "propertySheet" }),
     conciergeServiceField({ required: true, group: "propertySheet" }),
     buildingYearField({ required: true, group: "propertySheet" }),

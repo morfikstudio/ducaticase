@@ -49,6 +49,8 @@
         "none": "No",
         "openSpace": "Open space",
         "individualOffices": "Uffici singoli",
+        "asphalt": "Strada asfaltata",
+        "dirt": "Strada sterrata",
         "unknown": "—"
       }
     }
@@ -68,7 +70,7 @@
     "location": "Località",
     "noTypologyAvailable": "Nessuna tipologia disponibile",
     "clearFilters": "Azzera",
-    "applyFilters": "Chiudi",
+    "applyFilters": "Vedi risultati",
     "sortBy": "Ordina per",
     "sortPriceDesc": "Prezzo decrescente",
     "sortPriceAsc": "Prezzo crescente",

@@ -49,6 +49,8 @@
         "none": "None",
         "openSpace": "Open space",
         "individualOffices": "Individual offices",
+        "asphalt": "Asphalt road",
+        "dirt": "Dirt road",
         "unknown": "—"
       }
     }
@@ -68,7 +70,7 @@
     "location": "Location",
     "noTypologyAvailable": "No typology available",
     "clearFilters": "Clear",
-    "applyFilters": "Close",
+    "applyFilters": "View results",
     "sortBy": "Sort by",
     "sortPriceDesc": "Price descending",
     "sortPriceAsc": "Price ascending",

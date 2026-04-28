@@ -1,18 +1,10 @@
 import type { PreviewValue } from "@sanity/types"
-import { defineField } from "sanity"
 
 import {
   CATEGORY_OPTIONS,
   LISTING_CONTRACT_TYPE_OPTIONS,
   type LocalizedTypologyOption,
 } from "../../lib/constants"
-
-export const listingLabelField = defineField({
-  name: "listingLabel",
-  title: "Etichetta",
-  type: "localizedString",
-  description: "Opzionale. Se compilata, è il titolo principale in elenco.",
-})
 
 type LocationPreviewSelect = {
   streetName?: string | null
@@ -104,8 +96,8 @@ export function listingPreview(options?: ListingPreviewOptions) {
 
   return {
     select: {
-      listingLabelIt: "listingLabel.it",
-      listingLabelEn: "listingLabel.en",
+      titleIt: "title.it",
+      titleEn: "title.en",
       media: "mainImage",
       _type: "_type",
       listingContractType: "listingContractType",
@@ -117,8 +109,8 @@ export function listingPreview(options?: ListingPreviewOptions) {
       country: "country",
     },
     prepare({
-      listingLabelIt,
-      listingLabelEn,
+      titleIt,
+      titleEn,
       media,
       _type,
       listingContractType,
@@ -129,8 +121,8 @@ export function listingPreview(options?: ListingPreviewOptions) {
       province,
       country,
     }: {
-      listingLabelIt?: string | null
-      listingLabelEn?: string | null
+      titleIt?: string | null
+      titleEn?: string | null
       media?: unknown
       _type?: string | null
       listingContractType?: string | null
@@ -155,10 +147,8 @@ export function listingPreview(options?: ListingPreviewOptions) {
       const categoryTitle = listingCategoryTitle(_type)
       const contractLabel = listingContractTypeLabel(listingContractType)
 
-      const labelIt =
-        typeof listingLabelIt === "string" ? listingLabelIt.trim() : ""
-      const labelEn =
-        typeof listingLabelEn === "string" ? listingLabelEn.trim() : ""
+      const labelIt = typeof titleIt === "string" ? titleIt.trim() : ""
+      const labelEn = typeof titleEn === "string" ? titleEn.trim() : ""
       const label = labelIt || labelEn || undefined
 
       const mediaMaybe = isPreviewImageMedia(media) ? { media } : {}

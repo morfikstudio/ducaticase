@@ -132,6 +132,12 @@ export const OPTIONAL_FIELD_LABELS: Record<string, LocalizedLabel> = {
   },
   isBuildable: { it: "Edificabile", en: "Buildable" },
   isAgricultural: { it: "Agricolo", en: "Agricultural" },
+  floor: { it: "Piano", en: "Floor" },
+  buildingYear: { it: "Anno di costruzione", en: "Construction year" },
+  heightMeters: { it: "Altezza", en: "Height" },
+  roomCount: { it: "Numero camere", en: "Room count" },
+  landAccess: { it: "Accesso", en: "Access" },
+  typology: { it: "Tipologia", en: "Typology" },
 }
 
 export function typologyOptionsForStudio(
@@ -236,6 +242,30 @@ export const FLOOR_OPTIONS = [
   { title: "Mansarda", value: "attic" },
   { title: "Intero stabile", value: "entireBuilding" },
 ] as const
+
+/** English labels for floor option values (Studio list is Italian-only). */
+export const FLOOR_OPTION_LABELS_EN: Record<string, string> = {
+  "1": "1",
+  "2": "2",
+  "3": "3",
+  "4": "4",
+  "5": "5",
+  "6": "6",
+  "7": "7",
+  "8": "8",
+  "9": "9",
+  "10": "10",
+  other: "Other",
+  underground: "Basement",
+  semiUnderground: "Semi-basement",
+  groundFloor: "Ground floor",
+  raisedGroundFloor: "Raised ground floor",
+  multiLevel: "Multi-level",
+  penthouse: "Penthouse",
+  topFloor: "Top floor",
+  attic: "Attic",
+  entireBuilding: "Entire building",
+}
 
 export const CONDO_FEE_CURRENCY_OPTIONS = [
   { title: "Euro (€)", value: "EUR" },

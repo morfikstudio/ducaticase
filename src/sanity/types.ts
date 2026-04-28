@@ -2316,7 +2316,7 @@ export type ABOUT_SITE_CONTENT_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: HOME_SITE_CONTENT_QUERY
-// Query: *[_type == "siteContent" && sectionType == "homePage"]    | order(_updatedAt desc)    [0] {      _id,      homePage {        heroTitle,        heroImage {          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        whoWeAreText1,        whoWeAreText2,        whoWeAreCta {          label,          path        },        payoffTitle,        payoffImage {          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        highlights[] {          _key,          title,          text,          image {            ...,            asset->          },          cta {            label,            path          }        },        "featuredListings": featuredListings[]->{          _id,          _type,          title,          listingContractType,          price,          country,          city,          province,          address,          postalCode,          listingLabel,          "typology": select(            _type == "listingCountryHouses" => countryHouseTypology,            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,            _type == "listingIndustrial" => industrialTypology,            true => null          ),          "mainImage": mainImage {            ...,            asset->          }        },        testimonialsTitle,        testimonialsSubtitle,        testimonials[] {          _key,          text,          name,          provider        },        partners[] {          _key,          name,          image {            ...,            asset->          }        }      }    }
+// Query: *[_type == "siteContent" && sectionType == "homePage"]    | order(_updatedAt desc)    [0] {      _id,      homePage {        heroTitle,        heroImage {          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        whoWeAreText1,        whoWeAreText2,        whoWeAreCta {          label,          path        },        payoffTitle,        payoffImage {          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        highlights[] {          _key,          title,          text,          image {            ...,            asset->          },          cta {            label,            path          }        },        "featuredListings": featuredListings[]->{          _id,          _type,          title,          listingContractType,          price,          country,          city,          province,          address,          postalCode,          "typology": select(            _type == "listingCountryHouses" => countryHouseTypology,            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,            _type == "listingIndustrial" => industrialTypology,            true => null          ),          "mainImage": mainImage {            ...,            asset->          }        },        testimonialsTitle,        testimonialsSubtitle,        testimonials[] {          _key,          text,          name,          provider        },        partners[] {          _key,          name,          image {            ...,            asset->          }        }      }    }
 export type HOME_SITE_CONTENT_QUERY_RESULT = {
   _id: string
   homePage: {
@@ -2628,7 +2628,6 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
             streetNumber?: string
           } | null
           postalCode: string | null
-          listingLabel: null
           typology: "lakesAndCountryside" | "mountain" | "sea" | null
           mainImage: {
             asset: {
@@ -2785,7 +2784,6 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
             streetNumber?: string
           } | null
           postalCode: string | null
-          listingLabel: null
           typology: null
           mainImage: {
             asset: {
@@ -2942,7 +2940,6 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
             streetNumber?: string
           } | null
           postalCode: string | null
-          listingLabel: null
           typology: "sheds" | "warehouses" | null
           mainImage: {
             asset: {
@@ -3099,7 +3096,6 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
             streetNumber?: string
           } | null
           postalCode: string | null
-          listingLabel: null
           typology: null
           mainImage: {
             asset: {
@@ -3256,7 +3252,6 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
             streetNumber?: string
           } | null
           postalCode: string | null
-          listingLabel: null
           typology: null
           mainImage: {
             asset: {
@@ -3413,7 +3408,6 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
             streetNumber?: string
           } | null
           postalCode: string | null
-          listingLabel: null
           typology: "offices" | "shops" | null
           mainImage: {
             asset: {
@@ -3813,7 +3807,7 @@ export type LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: LISTINGS_PREVIEW_QUERY
-// Query: *[_type in [    "listingResidential",    "listingCountryHouses",    "listingShopsAndOffices",    "listingIndustrial",    "listingHospitality",    "listingLand"  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) { // ... order(_createdAt desc) [0...10]{    _id,    _type,    title,    listingContractType,    price,    country,    city,    province,    address,    postalCode,    listingLabel,    "typology": select(      _type == "listingCountryHouses" => countryHouseTypology,      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,      _type == "listingIndustrial" => industrialTypology,      true => null    ),    "mainImage": mainImage {      ...,      asset->    }  }
+// Query: *[_type in [    "listingResidential",    "listingCountryHouses",    "listingShopsAndOffices",    "listingIndustrial",    "listingHospitality",    "listingLand"  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) { // ... order(_createdAt desc) [0...10]{    _id,    _type,    title,    listingContractType,    price,    country,    city,    province,    address,    postalCode,    "typology": select(      _type == "listingCountryHouses" => countryHouseTypology,      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,      _type == "listingIndustrial" => industrialTypology,      true => null    ),    "mainImage": mainImage {      ...,      asset->    }  }
 export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
   | {
       _id: string
@@ -3940,7 +3934,6 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
         streetNumber?: string
       } | null
       postalCode: string | null
-      listingLabel: null
       typology: "lakesAndCountryside" | "mountain" | "sea" | null
       mainImage: {
         asset: {
@@ -4097,7 +4090,6 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
         streetNumber?: string
       } | null
       postalCode: string | null
-      listingLabel: null
       typology: null
       mainImage: {
         asset: {
@@ -4254,7 +4246,6 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
         streetNumber?: string
       } | null
       postalCode: string | null
-      listingLabel: null
       typology: "sheds" | "warehouses" | null
       mainImage: {
         asset: {
@@ -4411,7 +4402,6 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
         streetNumber?: string
       } | null
       postalCode: string | null
-      listingLabel: null
       typology: null
       mainImage: {
         asset: {
@@ -4568,7 +4558,6 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
         streetNumber?: string
       } | null
       postalCode: string | null
-      listingLabel: null
       typology: null
       mainImage: {
         asset: {
@@ -4725,7 +4714,6 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
         streetNumber?: string
       } | null
       postalCode: string | null
-      listingLabel: null
       typology: "offices" | "shops" | null
       mainImage: {
         asset: {
@@ -4761,7 +4749,7 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
 
 // Source: src/sanity/lib/queries.ts
 // Variable: LISTING_BY_ID_QUERY
-// Query: *[_type in [    "listingResidential",    "listingCountryHouses",    "listingShopsAndOffices",    "listingIndustrial",    "listingHospitality",    "listingLand"  ] && coalesce(isArchived, false) != true && _id == $id][0]{    "metadata": {      _id,      _type,      listingContractType,      _createdAt,      _updatedAt,      _rev    },    "typology": select(      _type == "listingCountryHouses" => countryHouseTypology,      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,      _type == "listingIndustrial" => industrialTypology,      true => null    ),    "propertySheet": select(      _type == "listingResidential" => {        price,        commercialAreaSqm,        condoFees,        floor,        conciergeService,        buildingYear,        heating,        energyClass      },      _type == "listingCountryHouses" => {        price,        commercialAreaSqm,        floor,        buildingYear,        heating,        energyClass      },      _type == "listingShopsAndOffices" => {        price,        commercialAreaSqm,        floor,        displayWindows,        conciergeService,        buildingYear,        heating,        energyClass      },      _type == "listingIndustrial" => {        price,        commercialAreaSqm,        floor,        heightMeters,        buildingYear,        energyClass      },      _type == "listingHospitality" => {        price,        commercialAreaSqm,        roomCount,        energyClass      },      _type == "listingLand" => {        price,        commercialAreaSqm,        landAccess,        hasFencedProperty      }    ),    "location": {      country,      province,      city,      address,      postalCode,      map,      positionInfo    },    "content": {      title,      listingLabel,      "mainImage": mainImage {        ...,        asset->      },      "gallery": gallery[] {        ...,        asset->      },      description,      excerpt    },    "floorPlans": select(      _type == "listingLand" => {        "items": null      },      {        "items": floorPlans[] {          ...,          asset->        }      }    ),    "additionalFields": select(      _type == "listingResidential" => {        furnishing,        garden,        carBox,        parkingSpaces,        hasBalcony,        hasTerrace,        hasCellar,        hasAtticRoom,        hasTavern,        hasAlarmSystem,        pool,        hasTennisCourt,        hasAccessibleAccess,        climateControl      },      _type == "listingCountryHouses" => {        outdoorAreaSqm,        furnishing,        garden,        carBox,        parkingSpaces,        hasBalcony,        hasTerrace,        hasCellar,        hasAtticRoom,        hasTavern,        hasAlarmSystem,        pool,        hasTennisCourt,        hasAccessibleAccess,        climateControl,        condoFees      },      _type == "listingShopsAndOffices" => {        furnishing,        hasAccessibleRestroom,        hasFlue,        hasFireProtectionSystem,        hasLoadingUnloading,        hasDrivewayAccess,        parkingSpaces,        hasAlarmSystem,        hasAccessibleAccess,        climateControl,        conciergeServiceShops,        officeLayout,        condoFees      },      _type == "listingIndustrial" => {        hasLoadingDocks,        hasOverheadCranes,        shedAreaSqm,        officeAreaSqm,        landAreaSqm,        hasChangingRoom,        hasFencedProperty,        conciergeService,        hasAccessibleRestroom,        hasLoadingUnloading,        hasDrivewayAccess,        hasDrivableAccess,        parkingSpaces,        hasAlarmSystem,        hasAccessibleAccess,        climateControl,        heating      },      _type == "listingHospitality" => {        hasAccessibleRestroom,        hasFlue,        hasFireProtectionSystem,        hasLoadingUnloading,        hasDrivewayAccess,        parkingSpaces,        hasAlarmSystem,        hasAccessibleAccess,        climateControl,        outdoorAreaSqm,        heating,        pool,        hasTennisCourt,        customSpecifications      },      _type == "listingLand" => {        isBuildable,        isAgricultural      }    ),    "relatedListings": *[      _type in [        "listingResidential",        "listingCountryHouses",        "listingShopsAndOffices",        "listingIndustrial",        "listingHospitality",        "listingLand"      ] &&      coalesce(isArchived, false) != true &&      _id != ^._id &&      _type == ^._type &&      city == ^.city    ] | order(_createdAt desc)[0...2] {      _id,      _type,      title,      listingContractType,      price,      city,      province,      address,      postalCode,      listingLabel,      "typology": select(        _type == "listingCountryHouses" => countryHouseTypology,        _type == "listingShopsAndOffices" => shopsAndOfficesTypology,        _type == "listingIndustrial" => industrialTypology,        true => null      ),      "mainImage": mainImage {        ...,        asset->      }    }  }
+// Query: *[_type in [    "listingResidential",    "listingCountryHouses",    "listingShopsAndOffices",    "listingIndustrial",    "listingHospitality",    "listingLand"  ] && coalesce(isArchived, false) != true && _id == $id][0]{    "metadata": {      _id,      _type,      listingContractType,      _createdAt,      _updatedAt,      _rev    },    "typology": select(      _type == "listingCountryHouses" => countryHouseTypology,      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,      _type == "listingIndustrial" => industrialTypology,      true => null    ),    "propertySheet": select(      _type == "listingResidential" => {        price,        commercialAreaSqm,        condoFees,        floor,        conciergeService,        buildingYear,        heating,        energyClass      },      _type == "listingCountryHouses" => {        price,        commercialAreaSqm,        floor,        buildingYear,        heating,        energyClass      },      _type == "listingShopsAndOffices" => {        price,        commercialAreaSqm,        floor,        displayWindows,        conciergeService,        buildingYear,        heating,        energyClass      },      _type == "listingIndustrial" => {        price,        commercialAreaSqm,        floor,        heightMeters,        buildingYear,        energyClass      },      _type == "listingHospitality" => {        price,        commercialAreaSqm,        roomCount,        energyClass      },      _type == "listingLand" => {        price,        commercialAreaSqm,        landAccess,        hasFencedProperty      }    ),    "location": {      country,      province,      city,      address,      postalCode,      map,      positionInfo    },    "content": {      title,      "mainImage": mainImage {        ...,        asset->      },      "gallery": gallery[] {        ...,        asset->      },      description,      excerpt    },    "floorPlans": select(      _type == "listingLand" => {        "items": null      },      {        "items": floorPlans[] {          ...,          asset->        }      }    ),    "additionalFields": select(      _type == "listingResidential" => {        furnishing,        garden,        carBox,        parkingSpaces,        hasBalcony,        hasTerrace,        hasCellar,        hasAtticRoom,        hasTavern,        hasAlarmSystem,        pool,        hasTennisCourt,        hasAccessibleAccess,        climateControl      },      _type == "listingCountryHouses" => {        outdoorAreaSqm,        furnishing,        garden,        carBox,        parkingSpaces,        hasBalcony,        hasTerrace,        hasCellar,        hasAtticRoom,        hasTavern,        hasAlarmSystem,        pool,        hasTennisCourt,        hasAccessibleAccess,        climateControl,        condoFees      },      _type == "listingShopsAndOffices" => {        furnishing,        hasAccessibleRestroom,        hasFlue,        hasFireProtectionSystem,        hasLoadingUnloading,        hasDrivewayAccess,        parkingSpaces,        hasAlarmSystem,        hasAccessibleAccess,        climateControl,        conciergeServiceShops,        officeLayout,        condoFees      },      _type == "listingIndustrial" => {        hasLoadingDocks,        hasOverheadCranes,        shedAreaSqm,        officeAreaSqm,        landAreaSqm,        hasChangingRoom,        hasFencedProperty,        conciergeService,        hasAccessibleRestroom,        hasLoadingUnloading,        hasDrivewayAccess,        hasDrivableAccess,        parkingSpaces,        hasAlarmSystem,        hasAccessibleAccess,        climateControl,        heating      },      _type == "listingHospitality" => {        hasAccessibleRestroom,        hasFlue,        hasFireProtectionSystem,        hasLoadingUnloading,        hasDrivewayAccess,        parkingSpaces,        hasAlarmSystem,        hasAccessibleAccess,        climateControl,        outdoorAreaSqm,        heating,        pool,        hasTennisCourt,        customSpecifications      },      _type == "listingLand" => {        isBuildable,        isAgricultural      }    ),    "relatedListings": *[      _type in [        "listingResidential",        "listingCountryHouses",        "listingShopsAndOffices",        "listingIndustrial",        "listingHospitality",        "listingLand"      ] &&      coalesce(isArchived, false) != true &&      _id != ^._id &&      _type == ^._type &&      city == ^.city    ] | order(_createdAt desc)[0...2] {      _id,      _type,      title,      listingContractType,      price,      city,      province,      address,      postalCode,      "typology": select(        _type == "listingCountryHouses" => countryHouseTypology,        _type == "listingShopsAndOffices" => shopsAndOfficesTypology,        _type == "listingIndustrial" => industrialTypology,        true => null      ),      "mainImage": mainImage {        ...,        asset->      }    }  }
 export type LISTING_BY_ID_QUERY_RESULT =
   | {
       metadata: {
@@ -4956,7 +4944,6 @@ export type LISTING_BY_ID_QUERY_RESULT =
       }
       content: {
         title: LocalizedString | null
-        listingLabel: null
         mainImage: {
           asset: {
             _id: string
@@ -5204,7 +5191,6 @@ export type LISTING_BY_ID_QUERY_RESULT =
           streetNumber?: string
         } | null
         postalCode: string | null
-        listingLabel: null
         typology: "lakesAndCountryside" | "mountain" | "sea" | null
         mainImage: {
           asset: {
@@ -5435,7 +5421,6 @@ export type LISTING_BY_ID_QUERY_RESULT =
       }
       content: {
         title: LocalizedString | null
-        listingLabel: null
         mainImage: {
           asset: {
             _id: string
@@ -5678,7 +5663,6 @@ export type LISTING_BY_ID_QUERY_RESULT =
           streetNumber?: string
         } | null
         postalCode: string | null
-        listingLabel: null
         typology: null
         mainImage: {
           asset: {
@@ -5901,7 +5885,6 @@ export type LISTING_BY_ID_QUERY_RESULT =
       }
       content: {
         title: LocalizedString | null
-        listingLabel: null
         mainImage: {
           asset: {
             _id: string
@@ -6142,7 +6125,6 @@ export type LISTING_BY_ID_QUERY_RESULT =
           streetNumber?: string
         } | null
         postalCode: string | null
-        listingLabel: null
         typology: "sheds" | "warehouses" | null
         mainImage: {
           asset: {
@@ -6370,7 +6352,6 @@ export type LISTING_BY_ID_QUERY_RESULT =
       }
       content: {
         title: LocalizedString | null
-        listingLabel: null
         mainImage: {
           asset: {
             _id: string
@@ -6615,7 +6596,6 @@ export type LISTING_BY_ID_QUERY_RESULT =
           streetNumber?: string
         } | null
         postalCode: string | null
-        listingLabel: null
         typology: "offices" | "shops" | null
         mainImage: {
           asset: {
@@ -6815,7 +6795,6 @@ export type LISTING_BY_ID_QUERY_RESULT =
       }
       content: {
         title: LocalizedString | null
-        listingLabel: null
         mainImage: {
           asset: {
             _id: string
@@ -7057,7 +7036,6 @@ export type LISTING_BY_ID_QUERY_RESULT =
           streetNumber?: string
         } | null
         postalCode: string | null
-        listingLabel: null
         typology: null
         mainImage: {
           asset: {
@@ -7234,7 +7212,6 @@ export type LISTING_BY_ID_QUERY_RESULT =
       }
       content: {
         title: LocalizedString | null
-        listingLabel: null
         mainImage: {
           asset: {
             _id: string
@@ -7429,7 +7406,6 @@ export type LISTING_BY_ID_QUERY_RESULT =
           streetNumber?: string
         } | null
         postalCode: string | null
-        listingLabel: null
         typology: null
         mainImage: {
           asset: {
@@ -7471,9 +7447,9 @@ declare module "@sanity/client" {
     '\n  *[_type == "siteContent" && sectionType == "menu"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      menu {\n        headerTagline,\n        payoff\n      }\n    }\n': MENU_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "footer"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      footer {\n        payoff,\n        email,\n        phone,\n        addressLine1,\n        addressLine2,\n        vat,\n        privacyPolicyLabel,\n        privacyPolicyPath\n      }\n    }\n': FOOTER_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "aboutPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      aboutPage {\n        heroImages {\n          "imageDesktop": imageDesktop {\n            ...,\n            asset->\n          },\n          "imageMobile": imageMobile {\n            ...,\n            asset->\n          }\n        },\n        heroText,\n        historySection[] {\n          _key,\n          title,\n          subtitle,\n          body,\n          reverse,\n          images {\n            "imageDesktop": imageDesktop {\n              ...,\n              asset->\n            },\n            "imageMobile": imageMobile {\n              ...,\n              asset->\n            }\n          }\n        },\n        todaySection {\n          title,\n          subtitle,\n          text\n        },\n        highlightsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        sectorsHeading,\n        sectorsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          }\n        },\n        teamSection {\n          title,\n          subtitle,\n          text,\n          cta {\n            label,\n            path\n          },\n          teamMember[] {\n            _key,\n            title,\n            text,\n            image {\n              ...,\n              asset->\n            },\n            roles[]\n          }\n        }\n      }\n    }\n': ABOUT_SITE_CONTENT_QUERY_RESULT
-    '\n  *[_type == "siteContent" && sectionType == "homePage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      homePage {\n        heroTitle,\n        heroImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        whoWeAreText1,\n        whoWeAreText2,\n        whoWeAreCta {\n          label,\n          path\n        },\n        payoffTitle,\n        payoffImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        highlights[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        "featuredListings": featuredListings[]->{\n          _id,\n          _type,\n          title,\n          listingContractType,\n          price,\n          country,\n          city,\n          province,\n          address,\n          postalCode,\n          listingLabel,\n          "typology": select(\n            _type == "listingCountryHouses" => countryHouseTypology,\n            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n            _type == "listingIndustrial" => industrialTypology,\n            true => null\n          ),\n          "mainImage": mainImage {\n            ...,\n            asset->\n          }\n        },\n        testimonialsTitle,\n        testimonialsSubtitle,\n        testimonials[] {\n          _key,\n          text,\n          name,\n          provider\n        },\n        partners[] {\n          _key,\n          name,\n          image {\n            ...,\n            asset->\n          }\n        }\n      }\n    }\n': HOME_SITE_CONTENT_QUERY_RESULT
+    '\n  *[_type == "siteContent" && sectionType == "homePage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      homePage {\n        heroTitle,\n        heroImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        whoWeAreText1,\n        whoWeAreText2,\n        whoWeAreCta {\n          label,\n          path\n        },\n        payoffTitle,\n        payoffImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        highlights[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        "featuredListings": featuredListings[]->{\n          _id,\n          _type,\n          title,\n          listingContractType,\n          price,\n          country,\n          city,\n          province,\n          address,\n          postalCode,\n          "typology": select(\n            _type == "listingCountryHouses" => countryHouseTypology,\n            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n            _type == "listingIndustrial" => industrialTypology,\n            true => null\n          ),\n          "mainImage": mainImage {\n            ...,\n            asset->\n          }\n        },\n        testimonialsTitle,\n        testimonialsSubtitle,\n        testimonials[] {\n          _key,\n          text,\n          name,\n          provider\n        },\n        partners[] {\n          _key,\n          name,\n          image {\n            ...,\n            asset->\n          }\n        }\n      }\n    }\n': HOME_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "listYourPropertyPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      listYourPropertyPage {\n        heroTitle,\n        heroSubtitle,\n        heroPayoff1,\n        heroPayoff2,\n        heroCta {\n          label,\n          path\n        },\n        heroImage {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "20:9",\n              "width": 1920,\n              "height": 810\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover1Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover2Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        bannerTitle,\n        bannerText,\n        bannerCta {\n          label,\n          path\n        },\n        valuesTitle,\n        valuesSubtitle,\n        valuesCta {\n          label,\n          path\n        },\n        valuesImage {\n          ...,\n          asset->\n        },\n        valuesItems[] {\n          _key,\n          title\n        },\n        servicesTitle,\n        servicesSubtitle,\n        servicesCta {\n          label,\n          path\n        },\n        servicesItems[] {\n          _key,\n          title,\n          text\n        }\n      }\n    }\n': LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT
-    '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) { // ... order(_createdAt desc) [0...10]{\n    _id,\n    _type,\n    title,\n    listingContractType,\n    price,\n    country,\n    city,\n    province,\n    address,\n    postalCode,\n    listingLabel,\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "mainImage": mainImage {\n      ...,\n      asset->\n    }\n  }\n': LISTINGS_PREVIEW_QUERY_RESULT
-    '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true && _id == $id][0]{\n    "metadata": {\n      _id,\n      _type,\n      listingContractType,\n      _createdAt,\n      _updatedAt,\n      _rev\n    },\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "propertySheet": select(\n      _type == "listingResidential" => {\n        price,\n        commercialAreaSqm,\n        condoFees,\n        floor,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingCountryHouses" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingShopsAndOffices" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        displayWindows,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingIndustrial" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        heightMeters,\n        buildingYear,\n        energyClass\n      },\n      _type == "listingHospitality" => {\n        price,\n        commercialAreaSqm,\n        roomCount,\n        energyClass\n      },\n      _type == "listingLand" => {\n        price,\n        commercialAreaSqm,\n        landAccess,\n        hasFencedProperty\n      }\n    ),\n    "location": {\n      country,\n      province,\n      city,\n      address,\n      postalCode,\n      map,\n      positionInfo\n    },\n    "content": {\n      title,\n      listingLabel,\n      "mainImage": mainImage {\n        ...,\n        asset->\n      },\n      "gallery": gallery[] {\n        ...,\n        asset->\n      },\n      description,\n      excerpt\n    },\n    "floorPlans": select(\n      _type == "listingLand" => {\n        "items": null\n      },\n      {\n        "items": floorPlans[] {\n          ...,\n          asset->\n        }\n      }\n    ),\n    "additionalFields": select(\n      _type == "listingResidential" => {\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl\n      },\n      _type == "listingCountryHouses" => {\n        outdoorAreaSqm,\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl,\n        condoFees\n      },\n      _type == "listingShopsAndOffices" => {\n        furnishing,\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        conciergeServiceShops,\n        officeLayout,\n        condoFees\n      },\n      _type == "listingIndustrial" => {\n        hasLoadingDocks,\n        hasOverheadCranes,\n        shedAreaSqm,\n        officeAreaSqm,\n        landAreaSqm,\n        hasChangingRoom,\n        hasFencedProperty,\n        conciergeService,\n        hasAccessibleRestroom,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        hasDrivableAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        heating\n      },\n      _type == "listingHospitality" => {\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        outdoorAreaSqm,\n        heating,\n        pool,\n        hasTennisCourt,\n        customSpecifications\n      },\n      _type == "listingLand" => {\n        isBuildable,\n        isAgricultural\n      }\n    ),\n    "relatedListings": *[\n      _type in [\n        "listingResidential",\n        "listingCountryHouses",\n        "listingShopsAndOffices",\n        "listingIndustrial",\n        "listingHospitality",\n        "listingLand"\n      ] &&\n      coalesce(isArchived, false) != true &&\n      _id != ^._id &&\n      _type == ^._type &&\n      city == ^.city\n    ] | order(_createdAt desc)[0...2] {\n      _id,\n      _type,\n      title,\n      listingContractType,\n      price,\n      city,\n      province,\n      address,\n      postalCode,\n      listingLabel,\n      "typology": select(\n        _type == "listingCountryHouses" => countryHouseTypology,\n        _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n        _type == "listingIndustrial" => industrialTypology,\n        true => null\n      ),\n      "mainImage": mainImage {\n        ...,\n        asset->\n      }\n    }\n  }\n': LISTING_BY_ID_QUERY_RESULT
+    '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) { // ... order(_createdAt desc) [0...10]{\n    _id,\n    _type,\n    title,\n    listingContractType,\n    price,\n    country,\n    city,\n    province,\n    address,\n    postalCode,\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "mainImage": mainImage {\n      ...,\n      asset->\n    }\n  }\n': LISTINGS_PREVIEW_QUERY_RESULT
+    '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true && _id == $id][0]{\n    "metadata": {\n      _id,\n      _type,\n      listingContractType,\n      _createdAt,\n      _updatedAt,\n      _rev\n    },\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "propertySheet": select(\n      _type == "listingResidential" => {\n        price,\n        commercialAreaSqm,\n        condoFees,\n        floor,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingCountryHouses" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingShopsAndOffices" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        displayWindows,\n        conciergeService,\n        buildingYear,\n        heating,\n        energyClass\n      },\n      _type == "listingIndustrial" => {\n        price,\n        commercialAreaSqm,\n        floor,\n        heightMeters,\n        buildingYear,\n        energyClass\n      },\n      _type == "listingHospitality" => {\n        price,\n        commercialAreaSqm,\n        roomCount,\n        energyClass\n      },\n      _type == "listingLand" => {\n        price,\n        commercialAreaSqm,\n        landAccess,\n        hasFencedProperty\n      }\n    ),\n    "location": {\n      country,\n      province,\n      city,\n      address,\n      postalCode,\n      map,\n      positionInfo\n    },\n    "content": {\n      title,\n      "mainImage": mainImage {\n        ...,\n        asset->\n      },\n      "gallery": gallery[] {\n        ...,\n        asset->\n      },\n      description,\n      excerpt\n    },\n    "floorPlans": select(\n      _type == "listingLand" => {\n        "items": null\n      },\n      {\n        "items": floorPlans[] {\n          ...,\n          asset->\n        }\n      }\n    ),\n    "additionalFields": select(\n      _type == "listingResidential" => {\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl\n      },\n      _type == "listingCountryHouses" => {\n        outdoorAreaSqm,\n        furnishing,\n        garden,\n        carBox,\n        parkingSpaces,\n        hasBalcony,\n        hasTerrace,\n        hasCellar,\n        hasAtticRoom,\n        hasTavern,\n        hasAlarmSystem,\n        pool,\n        hasTennisCourt,\n        hasAccessibleAccess,\n        climateControl,\n        condoFees\n      },\n      _type == "listingShopsAndOffices" => {\n        furnishing,\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        conciergeServiceShops,\n        officeLayout,\n        condoFees\n      },\n      _type == "listingIndustrial" => {\n        hasLoadingDocks,\n        hasOverheadCranes,\n        shedAreaSqm,\n        officeAreaSqm,\n        landAreaSqm,\n        hasChangingRoom,\n        hasFencedProperty,\n        conciergeService,\n        hasAccessibleRestroom,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        hasDrivableAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        heating\n      },\n      _type == "listingHospitality" => {\n        hasAccessibleRestroom,\n        hasFlue,\n        hasFireProtectionSystem,\n        hasLoadingUnloading,\n        hasDrivewayAccess,\n        parkingSpaces,\n        hasAlarmSystem,\n        hasAccessibleAccess,\n        climateControl,\n        outdoorAreaSqm,\n        heating,\n        pool,\n        hasTennisCourt,\n        customSpecifications\n      },\n      _type == "listingLand" => {\n        isBuildable,\n        isAgricultural\n      }\n    ),\n    "relatedListings": *[\n      _type in [\n        "listingResidential",\n        "listingCountryHouses",\n        "listingShopsAndOffices",\n        "listingIndustrial",\n        "listingHospitality",\n        "listingLand"\n      ] &&\n      coalesce(isArchived, false) != true &&\n      _id != ^._id &&\n      _type == ^._type &&\n      city == ^.city\n    ] | order(_createdAt desc)[0...2] {\n      _id,\n      _type,\n      title,\n      listingContractType,\n      price,\n      city,\n      province,\n      address,\n      postalCode,\n      "typology": select(\n        _type == "listingCountryHouses" => countryHouseTypology,\n        _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n        _type == "listingIndustrial" => industrialTypology,\n        true => null\n      ),\n      "mainImage": mainImage {\n        ...,\n        asset->\n      }\n    }\n  }\n': LISTING_BY_ID_QUERY_RESULT
   }
 }

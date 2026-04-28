@@ -6,10 +6,7 @@ import type { AppLocale } from "@/i18n/routing"
 import { CATEGORY_OPTIONS } from "@/sanity/lib/constants"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import { listingTypologyLabel } from "@/sanity/lib/listingTypologyLabel"
-import type {
-  LISTINGS_PREVIEW_QUERY_RESULT,
-  LocalizedString,
-} from "@/sanity/types"
+import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
 
 import { formatListingPrice } from "@/lib/formatListingPrice"
 import { cn } from "@/utils/classNames"
@@ -32,16 +29,12 @@ export function ListingCard({
   const t = useTranslations("listingsResults")
   const typology = listingTypologyLabel(entry._type, entry.typology, locale)
   const listingTitle = pickLocalizedString(entry.title, locale)
-  const label = pickLocalizedString(
-    entry.listingLabel as LocalizedString | null | undefined,
-    locale,
-  )
   const categoryRow = CATEGORY_OPTIONS.find(
     (row) => row.documentType === entry._type,
   )
   const categorySectionTitle =
     categoryRow?.title[locale] ?? t("genericListingCategory")
-  const title = listingTitle || label || typology || categorySectionTitle
+  const title = listingTitle || typology || categorySectionTitle
   const contractType = (entry as { listingContractType?: string | null })
     .listingContractType
   const price = formatListingPrice(

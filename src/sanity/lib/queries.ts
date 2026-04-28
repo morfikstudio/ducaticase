@@ -173,7 +173,6 @@ export const HOME_SITE_CONTENT_QUERY = defineQuery(groq`
           province,
           address,
           postalCode,
-          listingLabel,
           "typology": select(
             _type == "listingCountryHouses" => countryHouseTypology,
             _type == "listingShopsAndOffices" => shopsAndOfficesTypology,
@@ -339,7 +338,6 @@ export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`
     province,
     address,
     postalCode,
-    listingLabel,
     "typology": select(
       _type == "listingCountryHouses" => countryHouseTypology,
       _type == "listingShopsAndOffices" => shopsAndOfficesTypology,
@@ -437,7 +435,6 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
     },
     "content": {
       title,
-      listingLabel,
       "mainImage": mainImage {
         ...,
         asset->
@@ -573,7 +570,6 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
       province,
       address,
       postalCode,
-      listingLabel,
       "typology": select(
         _type == "listingCountryHouses" => countryHouseTypology,
         _type == "listingShopsAndOffices" => shopsAndOfficesTypology,

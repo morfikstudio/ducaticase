@@ -14,7 +14,10 @@ import { EnergyClassDisplay } from "@/components/listing-detail/EnergyClassDispl
 import { ListingLocationMap } from "@/components/listing-detail/ListingLocationMap"
 import { RelatedListings } from "@/components/listing-detail/RelatedListings"
 
-import { buildOptionalSpecRows } from "@/lib/listingOptionalSpecs"
+import {
+  buildOptionalSpecRows,
+  buildPropertySheetSpecRows,
+} from "@/lib/listingOptionalSpecs"
 
 type Props = {
   params: Promise<{ locale: string; id: string }>
@@ -63,12 +66,20 @@ export default async function ListingDetailPage({ params }: Props) {
 
   const hasValidRelatedListings = listing.relatedListings.length > 0
 
+  const propertySheetRows = buildPropertySheetSpecRows(
+    listing.metadata._type,
+    listing.propertySheet,
+    listing.typology,
+    locale,
+  )
+
   const optionalSpecRows = buildOptionalSpecRows(
     listing.metadata._type,
     listing.additionalFields,
     locale,
   )
-  const hasOptionalSpecs = optionalSpecRows.length > 0
+  const specRows = [...propertySheetRows, ...optionalSpecRows]
+  const hasValidSpecs = specRows.length > 0
 
   return (
     <main className="w-full overflow-x-clip md:pt-32">
@@ -106,9 +117,9 @@ export default async function ListingDetailPage({ params }: Props) {
           </section>
         ) : null}
 
-        {hasOptionalSpecs ? (
+        {hasValidSpecs ? (
           <section className="my-16 md:my-32">
-            <ListingSpecs rows={optionalSpecRows} />
+            <ListingSpecs rows={specRows} />
           </section>
         ) : null}
 
