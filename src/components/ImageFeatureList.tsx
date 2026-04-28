@@ -85,7 +85,7 @@ export function ImageFeatureList({
           })
           .fromTo(
             element,
-            { opacity: 0, y: 12 },
+            { opacity: 0, y: 24 },
             {
               opacity: 1,
               y: 0,

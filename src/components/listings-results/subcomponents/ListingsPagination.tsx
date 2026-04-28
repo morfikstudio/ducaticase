@@ -139,7 +139,7 @@ export function ListingsPagination({
             className={cn(
               pageButtonClass,
               item === currentPage
-                ? "bg-primary text-accent border-transparent"
+                ? "bg-primary text-accent border-transparent cursor-not-allowed"
                 : cn(
                     "bg-dark text-primary",
                     "hover:border-primary focus-visible:border-primary",
@@ -148,6 +148,7 @@ export function ListingsPagination({
             aria-current={item === currentPage ? "page" : undefined}
             aria-label={t("paginationPageAriaLabel", { page: item })}
             onClick={() => onUserPageChange(item)}
+            disabled={item === currentPage}
           >
             {item}
           </button>
