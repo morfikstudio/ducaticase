@@ -101,12 +101,12 @@ export function StatementHero({
               landscapeParams={{
                 width: 1280,
                 height: 1024,
-                sizes: "75vw",
+                sizes: "(min-width: 1px) 75vw",
               }}
               portraitParams={{
                 width: 720,
                 height: 900,
-                sizes: "100vw",
+                sizes: "(min-width: 1px) 100vw",
               }}
               breakpoint="lg"
               fill
