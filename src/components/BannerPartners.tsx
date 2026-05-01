@@ -173,11 +173,7 @@ export function BannerPartners({
             </div>
 
             {showCta ? (
-              <Button
-                href={ctaHref!}
-                className="self-start mt-8 md:mt-0"
-                variant="dark"
-              >
+              <Button href={ctaHref!} className="self-start" variant="dark">
                 {resolvedCtaLabel}
               </Button>
             ) : null}
