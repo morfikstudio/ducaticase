@@ -56,7 +56,6 @@ function IconClose() {
   )
 }
 
-
 export function GalleryLightbox({
   images,
   initialIndex,
@@ -133,8 +132,10 @@ export function GalleryLightbox({
       const nextBtn = nextNavButtonRef.current
       const prevBtn = prevNavButtonRef.current
       const closeBtn = closeButtonRef.current
-      if (nextBtn && !nextBtn.classList.contains("swiper-button-disabled")) nextBtn.focus()
-      else if (prevBtn && !prevBtn.classList.contains("swiper-button-disabled")) prevBtn.focus()
+      if (nextBtn && !nextBtn.classList.contains("swiper-button-disabled"))
+        nextBtn.focus()
+      else if (prevBtn && !prevBtn.classList.contains("swiper-button-disabled"))
+        prevBtn.focus()
       else closeBtn?.focus()
     })
 
@@ -275,7 +276,7 @@ export function GalleryLightbox({
                     locale={locale}
                     params={{
                       width: 720,
-                      sizes: "100vw",
+                      sizes: "(min-width: 1px) 100vw",
                     }}
                     priority={i === initialIndex}
                     loading={eagerLoading}
@@ -288,7 +289,7 @@ export function GalleryLightbox({
                       locale={locale}
                       params={{
                         width: 1280,
-                        sizes: "100vw",
+                        sizes: "(min-width: 1px) 100vw",
                       }}
                       fill
                       priority={i === initialIndex}

@@ -172,7 +172,7 @@ export function ImageFeatureList({
                 width: 1280,
                 height: 720,
                 quality: 50,
-                sizes: "100vw",
+                sizes: "(min-width: 1px) 100vw",
               }}
               fill
               className="pointer-events-none -z-20 object-cover object-center"

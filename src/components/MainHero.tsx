@@ -59,12 +59,12 @@ export function MainHero({
             landscapeParams={{
               width: 1920,
               height: 1080,
-              sizes: "100vw",
+              sizes: "(min-width: 1px) 100vw",
             }}
             portraitParams={{
               width: 720,
               height: 1280,
-              sizes: "100vw",
+              sizes: "(min-width: 1px) 100vw",
             }}
             fill
             priority

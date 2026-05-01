@@ -5,6 +5,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import gsap from "gsap"
 
 import { prefersReducedMotion } from "@/utils/reducedMotion"
+import { useSplashContext } from "@/components/providers/SplashProvider"
 
 export type UseGsapRevealOptions<T extends HTMLElement = HTMLDivElement> = {
   /**
@@ -62,6 +63,8 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
     delay = 0,
     fallbackRevealMs,
   } = options ?? {}
+
+  const { splashDone } = useSplashContext()
 
   const internalRef = useRef<T | null>(null)
   const targetRef = elementRefOption ?? internalRef
@@ -138,7 +141,7 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
   useEffect(() => {
     if (!animate) return
 
-    const shouldFire = (inViewShow && ready) || deadlineReveal
+    const shouldFire = ((inViewShow && ready) || deadlineReveal) && splashDone
     if (!targetRef.current || !shouldFire) return
 
     if (prefersReducedMotion()) {
@@ -165,6 +168,7 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
     inViewShow,
     ready,
     deadlineReveal,
+    splashDone,
     duration,
     ease,
     clearProps,
@@ -173,5 +177,5 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
     targetRef,
   ])
 
-  return { ref: targetRef, load, show: inViewShow }
+  return { ref: targetRef, load, show: inViewShow && splashDone }
 }
