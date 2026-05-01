@@ -295,6 +295,8 @@ export function StickyTextBlocks({
 
   return (
     <div
+      ref={wrapRef}
+      style={{ opacity: 0 }}
       className={cn(
         "w-full bg-primary text-accent",
         "py-20 lg:py-48",
@@ -302,11 +304,7 @@ export function StickyTextBlocks({
       )}
     >
       <Container>
-        <div
-          className={cn("relative", "min-h-full")}
-          ref={wrapRef}
-          style={{ opacity: 0 }}
-        >
+        <div className={cn("relative", "min-h-full")}>
           <StickyTextBlocksMobile
             locale={locale}
             title={title}
