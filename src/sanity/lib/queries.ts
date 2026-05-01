@@ -319,6 +319,214 @@ export const LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY = defineQuery(groq`
     }
 `)
 
+export const BUSINESS_PAGE_SITE_CONTENT_QUERY = defineQuery(groq`
+  *[_type == "siteContent" && sectionType == "businessPage"]
+    | order(_updatedAt desc)
+    [0] {
+      _id,
+      businessPage {
+        heroTitle,
+        heroSubtitle,
+        heroPayoff1,
+        heroPayoff2,
+        heroCta {
+          label,
+          path
+        },
+        heroImage {
+          "recommendedCrop": {
+            "landscape": {
+              "aspectRatio": "20:9",
+              "width": 1920,
+              "height": 810
+            },
+            "portrait": {
+              "aspectRatio": "4:5",
+              "width": 720,
+              "height": 960
+            }
+          },
+          "imageLandscape": imageLandscape {
+            ...,
+            asset->
+          },
+          "imagePortrait": imagePortrait {
+            ...,
+            asset->
+          }
+        },
+        cover1Image {
+          "recommendedCrop": {
+            "landscape": {
+              "aspectRatio": "16:9",
+              "width": 1920,
+              "height": 1080
+            },
+            "portrait": {
+              "aspectRatio": "4:5",
+              "width": 720,
+              "height": 960
+            }
+          },
+          "imageLandscape": imageLandscape {
+            ...,
+            asset->
+          },
+          "imagePortrait": imagePortrait {
+            ...,
+            asset->
+          }
+        },
+        cover2Image {
+          "recommendedCrop": {
+            "landscape": {
+              "aspectRatio": "16:9",
+              "width": 1920,
+              "height": 1080
+            },
+            "portrait": {
+              "aspectRatio": "4:5",
+              "width": 720,
+              "height": 960
+            }
+          },
+          "imageLandscape": imageLandscape {
+            ...,
+            asset->
+          },
+          "imagePortrait": imagePortrait {
+            ...,
+            asset->
+          }
+        },
+        valuesTitle,
+        valuesSubtitle,
+        valuesCta {
+          label,
+          path
+        },
+        valuesImage {
+          ...,
+          asset->
+        },
+        valuesItems[] {
+          _key,
+          title
+        },
+        servicesTitle,
+        servicesSubtitle,
+        servicesCta {
+          label,
+          path
+        },
+        servicesItems[] {
+          _key,
+          title,
+          text
+        },
+        bannerPartnersTitle,
+        bannerPartnersText,
+        bannerPartnersCta {
+          label,
+          path
+        },
+        bannerPartnersItems[] {
+          _key,
+          name,
+          image {
+            ...,
+            asset->
+          }
+        }
+      }
+    }
+`)
+
+export const TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY = defineQuery(groq`
+  *[_type == "siteContent" && sectionType == "tailoredSearchPage"]
+    | order(_updatedAt desc)
+    [0] {
+      _id,
+      tailoredSearchPage {
+        heroTitle,
+        heroSubtitle,
+        heroPayoff1,
+        heroPayoff2,
+        heroCta {
+          label,
+          path
+        },
+        heroImage {
+          "recommendedCrop": {
+            "landscape": {
+              "aspectRatio": "20:9",
+              "width": 1920,
+              "height": 810
+            },
+            "portrait": {
+              "aspectRatio": "4:5",
+              "width": 720,
+              "height": 960
+            }
+          },
+          "imageLandscape": imageLandscape {
+            ...,
+            asset->
+          },
+          "imagePortrait": imagePortrait {
+            ...,
+            asset->
+          }
+        },
+        cover1Image {
+          "recommendedCrop": {
+            "landscape": {
+              "aspectRatio": "16:9",
+              "width": 1920,
+              "height": 1080
+            },
+            "portrait": {
+              "aspectRatio": "4:5",
+              "width": 720,
+              "height": 960
+            }
+          },
+          "imageLandscape": imageLandscape {
+            ...,
+            asset->
+          },
+          "imagePortrait": imagePortrait {
+            ...,
+            asset->
+          }
+        },
+        bannerFormTitle,
+        bannerFormText,
+        bannerFormCtaLabel,
+        valuesTitle,
+        valuesSubtitle,
+        valuesCta {
+          label,
+          path
+        },
+        valuesImage {
+          ...,
+          asset->
+        },
+        valuesItems[] {
+          _key,
+          title
+        },
+        banner2Title,
+        banner2Text,
+        banner2Cta {
+          label,
+          path
+        }
+      }
+    }
+`)
+
 export const LISTINGS_PREVIEW_QUERY = defineQuery(groq`
   *[_type in [
     "listingResidential",

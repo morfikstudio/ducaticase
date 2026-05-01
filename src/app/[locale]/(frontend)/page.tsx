@@ -1,4 +1,4 @@
-import { routing, type AppLocale } from "@/i18n/routing"
+import { type AppLocale } from "@/i18n/routing"
 import { getTranslations } from "next-intl/server"
 
 import { sanityFetch } from "@/sanity/lib/client"
@@ -13,6 +13,7 @@ import type {
 } from "@/sanity/types"
 
 import { cn } from "@/utils/classNames"
+import { normalizePathnameForIntlLink } from "@/utils/navigation"
 
 import { IntroSection } from "@/components/IntroSection"
 import { ListingsCarousel } from "@/components/ListingsCarousel"
@@ -22,26 +23,6 @@ import { QuoteCarousel } from "@/components/QuoteCarousel"
 import { SplitBanner } from "@/components/SplitBanner"
 import { StatementHero } from "@/components/StatementHero"
 import { WaveText } from "@/components/WaveText"
-
-function normalizePathnameForIntlLink(path: string): string {
-  const trimmed = path.trim()
-  const withSlash =
-    trimmed === "" || trimmed === "/"
-      ? "/"
-      : trimmed.startsWith("/")
-        ? trimmed
-        : `/${trimmed}`
-
-  for (const loc of routing.locales) {
-    const localeRoot = `/${loc}`
-    if (withSlash === localeRoot) return "/"
-    if (withSlash.startsWith(`${localeRoot}/`)) {
-      return withSlash.slice(localeRoot.length) || "/"
-    }
-  }
-
-  return withSlash
-}
 
 function portableTextHasBlocks(
   text: Parameters<typeof pickLocalizedPortableText>[0],

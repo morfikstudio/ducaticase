@@ -120,8 +120,7 @@ export function ImageFeatureList({
             className={cn(
               "type-heading-2",
               "md:flex-1",
-              "lg:col-start-2 lg:col-span-3",
-              "lg:col-start-1 lg:col-span-4 lg:pl-16",
+              "lg:col-start-1 lg:col-span-5 lg:pl-16",
             )}
           >
             {resolvedTitle}

@@ -2,13 +2,13 @@ import { type AppLocale } from "@/i18n/routing"
 
 import { sanityFetch } from "@/sanity/lib/client"
 import { pickLocalizedString } from "@/sanity/lib/locale"
-import { LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
-import type { LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
+import { BUSINESS_PAGE_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
+import type { BUSINESS_PAGE_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
 
 import { cn } from "@/utils/classNames"
 import { normalizePathnameForIntlLink } from "@/utils/navigation"
 
-import { BannerText } from "@/components/BannerText"
+import { BannerPartners } from "@/components/BannerPartners"
 import { Cover } from "@/components/Cover"
 import { HeroContent } from "@/components/HeroContent"
 import { ImageFeatureList } from "@/components/ImageFeatureList"
@@ -23,11 +23,11 @@ export default async function Page({ params }: PageProps) {
   const locale = localeParam as AppLocale
 
   const data = (await sanityFetch({
-    query: LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY,
+    query: BUSINESS_PAGE_SITE_CONTENT_QUERY,
     revalidate: 60,
-  })) as LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT
+  })) as BUSINESS_PAGE_SITE_CONTENT_QUERY_RESULT
 
-  const page = data?.listYourPropertyPage
+  const page = data?.businessPage
 
   /* HERO */
   const hero = page?.heroImage
@@ -100,17 +100,19 @@ export default async function Page({ params }: PageProps) {
     valuesTitle ?? valuesSubtitle ?? valuesItems ?? valuesCta,
   )
 
-  /* BANNER */
-  const bannerTitle = page?.bannerTitle
-  const bannerText = page?.bannerText
-  const bannerCta = page?.bannerCta
-  const bannerCtaPath = bannerCta?.path?.trim() ?? ""
-  const bannerCtaHref =
-    bannerCtaPath !== ""
-      ? normalizePathnameForIntlLink(bannerCtaPath)
+  /* BANNER PARTNERS */
+  const bannerPartnersTitle = page?.bannerPartnersTitle
+  const bannerPartnersText = page?.bannerPartnersText ?? null
+  const bannerPartnersCta = page?.bannerPartnersCta
+  const bannerPartnersCtaPath = bannerPartnersCta?.path?.trim() ?? ""
+  const bannerPartnersCtaHref =
+    bannerPartnersCtaPath !== ""
+      ? normalizePathnameForIntlLink(bannerPartnersCtaPath)
       : undefined
-  const bannerCtaLabel = bannerCta?.label
-  const hasBanner = Boolean(bannerTitle ?? bannerText ?? bannerCta)
+  const bannerPartnersItems = page?.bannerPartnersItems ?? []
+  const hasBannerPartners = Boolean(
+    bannerPartnersTitle || bannerPartnersText || bannerPartnersItems.length,
+  )
 
   return (
     <main className={cn("w-full", "overflow-x-clip", "pt-32 md:pt-54")}>
@@ -177,14 +179,15 @@ export default async function Page({ params }: PageProps) {
         </section>
       ) : null}
 
-      {hasBanner ? (
+      {hasBannerPartners ? (
         <section>
-          <BannerText
+          <BannerPartners
             locale={locale}
-            title={bannerTitle}
-            text={bannerText}
-            ctaLabel={bannerCtaLabel}
-            ctaHref={bannerCtaHref}
+            title={bannerPartnersTitle}
+            text={bannerPartnersText}
+            ctaLabel={bannerPartnersCta?.label}
+            ctaHref={bannerPartnersCtaHref}
+            partners={bannerPartnersItems}
           />
         </section>
       ) : null}

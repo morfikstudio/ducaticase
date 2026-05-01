@@ -1,3 +1,5 @@
+"use client"
+
 import { Fragment } from "react"
 
 import { Link } from "@/i18n/navigation"

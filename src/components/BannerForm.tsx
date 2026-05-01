@@ -1,5 +1,7 @@
 "use client"
 
+import { useCallback, useEffect } from "react"
+
 import type { AppLocale } from "@/i18n/routing"
 
 import { pickLocalizedString } from "@/sanity/lib/locale"
@@ -13,7 +15,7 @@ import { Button } from "@/components/ui/Button"
 import { Container } from "@/components/ui/Container"
 import { PortableTextComponent } from "@/components/ui/PortableText"
 
-export type BannerTextProps = {
+export type BannerFormProps = {
   locale: AppLocale
   title?: LocalizedString | null
   text?: LocalizedPortableText | null
@@ -22,26 +24,38 @@ export type BannerTextProps = {
   className?: string
 }
 
-export function BannerText({
+export function BannerForm({
   locale,
   title,
   text,
   ctaLabel,
   ctaHref,
   className,
-}: BannerTextProps) {
+}: BannerFormProps) {
   const { ref: wrapRef } = useGsapReveal()
 
   const resolvedTitle = pickLocalizedString(title ?? undefined, locale) ?? ""
   const resolvedCtaLabel =
     pickLocalizedString(ctaLabel ?? undefined, locale) ?? ""
   const showCta =
-    resolvedCtaLabel.trim() !== "" && (ctaHref?.trim() ?? "") !== ""
+    resolvedCtaLabel.trim() !== "" && (ctaHref?.trim() ?? "").startsWith("#")
 
   const hasContent = resolvedTitle.trim() !== "" || Boolean(text) || showCta
   if (!hasContent) {
     return null
   }
+
+  const onClick = useCallback(() => {
+    const id = (ctaHref ?? "").replace(/^#/, "")
+
+    document
+      .getElementById(id)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" })
+
+    setTimeout(() => {
+      window.history.pushState({}, "", `${window.location.pathname}#${id}`)
+    }, 200)
+  }, [ctaHref])
 
   return (
     <div
@@ -59,34 +73,36 @@ export function BannerText({
             "lg:gap-32",
           )}
         >
-          {resolvedTitle.trim() !== "" ? (
-            <h2
-              className={cn(
-                "type-heading-2 lg:type-heading-1",
-                "md:flex-1",
-                "lg:max-w-[470px]",
-              )}
-            >
-              {resolvedTitle}
-            </h2>
-          ) : null}
+          <div>
+            {resolvedTitle.trim() !== "" ? (
+              <h2
+                className={cn(
+                  "type-heading-2",
+                  "md:flex-1",
+                  "lg:max-w-[470px]",
+                )}
+              >
+                {resolvedTitle}
+              </h2>
+            ) : null}
+
+            {showCta ? (
+              <Button
+                onClick={onClick}
+                variant="reverse"
+                className="self-start mt-8"
+              >
+                {resolvedCtaLabel}
+              </Button>
+            ) : null}
+          </div>
 
           <div className={cn("md:flex-1", "lg:max-w-[600px]")}>
             <PortableTextComponent
               text={text}
               locale={locale}
-              className="type-body-3 lg:type-body-1"
+              className="type-body-2"
             />
-
-            {showCta ? (
-              <Button
-                href={ctaHref!}
-                className="self-start mt-8"
-                variant="dark"
-              >
-                {resolvedCtaLabel}
-              </Button>
-            ) : null}
           </div>
         </Container>
       </div>

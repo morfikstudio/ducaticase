@@ -25,10 +25,10 @@ function validatePairedLocalizedString(
   const en = value?.en?.trim() ?? ""
   if (it === "" && en === "") return true
   if (it === "") {
-    return "Inserisci il testo in italiano (o svuota anche l’inglese)."
+    return "Inserisci il testo in italiano (o svuota anche l'inglese)."
   }
   if (en === "") {
-    return "Inserisci il testo in inglese (o svuota anche l’italiano)."
+    return "Inserisci il testo in inglese (o svuota anche l'italiano)."
   }
   return true
 }
@@ -38,10 +38,10 @@ function validatePairedLocalizedText(value: LocalizedTextValue): true | string {
   const en = value?.en?.trim() ?? ""
   if (it === "" && en === "") return true
   if (it === "") {
-    return "Inserisci il testo in italiano (o svuota anche l’inglese)."
+    return "Inserisci il testo in italiano (o svuota anche l'inglese)."
   }
   if (en === "") {
-    return "Inserisci il testo in inglese (o svuota anche l’italiano)."
+    return "Inserisci il testo in inglese (o svuota anche l'italiano)."
   }
   return true
 }
@@ -69,7 +69,7 @@ function validateHighlightCta(value: HighlightCtaValue): true | string {
     return true
   }
   if (path !== "" && !hasLabel) {
-    return "Inserisci l’etichetta se hai selezionato una pagina."
+    return "Inserisci l'etichetta se hai selezionato una pagina."
   }
   if (hasLabel && path === "") {
     return "Seleziona una pagina per la call to action."
@@ -77,9 +77,9 @@ function validateHighlightCta(value: HighlightCtaValue): true | string {
   return true
 }
 
-export const listYourPropertyPageSettings = defineType({
-  name: "listYourPropertyPageSettings",
-  title: "Affidaci il tuo immobile",
+export const businessPageSettings = defineType({
+  name: "businessPageSettings",
+  title: "Ducati per le aziende",
   type: "object",
   groups: [
     { ...ALL_FIELDS_GROUP, hidden: true },
@@ -88,7 +88,7 @@ export const listYourPropertyPageSettings = defineType({
     { name: "services", title: "Services" },
     { name: "cover2", title: "Cover 2" },
     { name: "values", title: "Values" },
-    { name: "banner", title: "Banner" },
+    { name: "bannerPartners", title: "Banner Partners" },
   ],
   fields: [
     defineField({
@@ -237,7 +237,7 @@ export const listYourPropertyPageSettings = defineType({
           name: "alt",
           title: "Testo alternativo",
           description:
-            "Per accessibilità e SEO. Descrivi il contenuto visivo dell’immagine.",
+            "Per accessibilità e SEO. Descrivi il contenuto visivo dell'immagine.",
           type: "localizedString",
         }),
       ],
@@ -270,28 +270,39 @@ export const listYourPropertyPageSettings = defineType({
       of: [defineArrayMember({ type: "listYourPropertyValueItem" })],
     }),
     defineField({
-      name: "bannerTitle",
+      name: "bannerPartnersTitle",
       title: "Titolo",
       type: "localizedString",
-      group: "banner",
+      group: "bannerPartners",
       validation: (Rule) =>
         Rule.custom((value: LocalizedStringValue) =>
           validatePairedLocalizedString(value),
         ),
     }),
     defineField({
-      name: "bannerText",
+      name: "bannerPartnersText",
       title: "Testo",
       type: "localizedPortableText",
-      group: "banner",
+      group: "bannerPartners",
+      validation: (Rule) =>
+        Rule.custom((value: LocalizedPortableTextValue) =>
+          validatePairedLocalizedPortableText(value),
+        ),
     }),
     defineField({
-      name: "bannerCta",
+      name: "bannerPartnersCta",
       title: "Call to action",
       type: "aboutHighlightCta",
-      group: "banner",
+      group: "bannerPartners",
       validation: (Rule) =>
         Rule.custom((value: HighlightCtaValue) => validateHighlightCta(value)),
+    }),
+    defineField({
+      name: "bannerPartnersItems",
+      title: "Loghi aziende",
+      type: "array",
+      group: "bannerPartners",
+      of: [defineArrayMember({ type: "homePartnerItem" })],
     }),
   ],
 })

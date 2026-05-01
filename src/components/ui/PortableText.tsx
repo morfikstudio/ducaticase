@@ -30,12 +30,18 @@ export function PortableTextComponent({ text, locale, className }: Props) {
         "[&_ul]:my-3 [&_ul]:list-disc [&_ul]:ps-6",
         "[&_ol]:my-3 [&_ol]:list-decimal [&_ol]:ps-6",
         "[&_li]:my-1",
+        "[&_p]:min-h-6",
         className,
       )}
     >
       <PortableText
         value={descriptionBlocks}
         components={{
+          block: {
+            caption: ({ children }) => (
+              <p className="type-body-3">{children}</p>
+            ),
+          },
           marks: {
             strong: ({ children }) => (
               <strong className="font-medium text-inherit">{children}</strong>

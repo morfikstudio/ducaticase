@@ -2,6 +2,9 @@
   "plugins": {
     "gsap-skills": {
       "enabled": true
+    },
+    "sanity": {
+      "enabled": true
     }
   }
 }

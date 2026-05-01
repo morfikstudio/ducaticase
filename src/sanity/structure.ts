@@ -97,6 +97,44 @@ export const structure: StructureResolver = (S) =>
                       { field: "_updatedAt", direction: "desc" },
                     ]),
                 ),
+              S.listItem()
+                .title("Ducati per le aziende")
+                .icon(DesktopIcon)
+                .id("siteContentBusinessPage")
+                .child(
+                  S.documentList()
+                    .title("Ducati per le aziende")
+                    .schemaType("siteContent")
+                    .filter(
+                      '_type == "siteContent" && sectionType == "businessPage"',
+                    )
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem("siteContent-businessPage"),
+                    ])
+                    .defaultOrdering([
+                      { field: "_updatedAt", direction: "desc" },
+                    ]),
+                ),
+              S.listItem()
+                .title("Ricerca su misura")
+                .icon(DesktopIcon)
+                .id("siteContentTailoredSearchPage")
+                .child(
+                  S.documentList()
+                    .title("Ricerca su misura")
+                    .schemaType("siteContent")
+                    .filter(
+                      '_type == "siteContent" && sectionType == "tailoredSearchPage"',
+                    )
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem(
+                        "siteContent-tailoredSearchPage",
+                      ),
+                    ])
+                    .defaultOrdering([
+                      { field: "_updatedAt", direction: "desc" },
+                    ]),
+                ),
             ]),
         ),
       S.divider(),

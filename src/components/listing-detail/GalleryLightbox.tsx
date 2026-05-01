@@ -110,7 +110,8 @@ export function GalleryLightbox({
   const syncCurrentIndex = useCallback(
     (swiper: SwiperType) => {
       const lastIndex = Math.max(images.length - 1, 0)
-      const nextIndex = isMobile && swiper.isEnd ? lastIndex : swiper.activeIndex
+      const nextIndex =
+        isMobile && swiper.isEnd ? lastIndex : swiper.activeIndex
       const clampedIndex = Math.min(Math.max(nextIndex, 0), lastIndex)
       setCurrentIndex(clampedIndex)
     },

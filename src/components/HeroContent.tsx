@@ -5,6 +5,9 @@ import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
 import type { AppLocale } from "@/i18n/routing"
 
+import { pickLocalizedPortableText } from "@/sanity/lib/locale"
+import type { LocalizedPortableText } from "@/sanity/types"
+
 import { useGsapReveal } from "@/hooks/useGsapReveal"
 
 import { listYourPropertyHeroRecommendedCrop } from "@/lib/listYourPropertyHeroImage"
@@ -12,6 +15,7 @@ import { cn } from "@/utils/classNames"
 
 import { Button } from "@/components/ui/Button"
 import { Container } from "@/components/ui/Container"
+import { PortableTextComponent } from "@/components/ui/PortableText"
 import { SanityImage } from "@/components/ui/SanityImage"
 
 const { landscape: heroLandscapeCrop, portrait: heroPortraitCrop } =
@@ -21,8 +25,8 @@ export type HeroContentProps = {
   locale: AppLocale
   title: string
   subtitle: string
-  payoff1: string
-  payoff2: string
+  payoff1?: LocalizedPortableText | null
+  payoff2?: LocalizedPortableText | null
   imageLandscape?: SanityImageSource | null
   imagePortrait?: SanityImageSource | null
   ctaLabel?: string
@@ -52,8 +56,8 @@ export function HeroContent({
 
   const hasTitle = title.trim() !== ""
   const hasSubtitle = subtitle.trim() !== ""
-  const hasPayoff1 = payoff1.trim() !== ""
-  const hasPayoff2 = payoff2.trim() !== ""
+  const hasPayoff1 = Boolean(pickLocalizedPortableText(payoff1, locale))
+  const hasPayoff2 = Boolean(pickLocalizedPortableText(payoff2, locale))
   const showCta =
     (ctaLabel?.trim() ?? "") !== "" && (ctaHref?.trim() ?? "") !== ""
 
@@ -150,8 +154,7 @@ export function HeroContent({
           "flex flex-col gap-8",
           "md:flex-row md:justify-between md:gap-12",
           "py-16 md:py-24 lg:py-48",
-
-          "lg:grid lg:grid-cols-12 lg:items-center lg:gap-4",
+          "lg:grid lg:grid-cols-12 lg:items-start lg:gap-4",
         )}
       >
         <div
@@ -161,7 +164,11 @@ export function HeroContent({
           )}
         >
           {hasPayoff1 ? (
-            <p className="type-body-1 lg:type-heading-2">{payoff1}</p>
+            <PortableTextComponent
+              text={payoff1}
+              locale={locale}
+              className="type-body-1 lg:type-heading-2"
+            />
           ) : null}
         </div>
 
@@ -172,9 +179,11 @@ export function HeroContent({
           )}
         >
           {hasPayoff2 ? (
-            <p className={cn("type-body-3 text-gray", "lg:type-body-2")}>
-              {payoff2}
-            </p>
+            <PortableTextComponent
+              text={payoff2}
+              locale={locale}
+              className={cn("type-body-3 text-gray", "lg:type-body-2")}
+            />
           ) : null}
 
           {showCta ? (

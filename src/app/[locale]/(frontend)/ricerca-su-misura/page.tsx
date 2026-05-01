@@ -2,17 +2,18 @@ import { type AppLocale } from "@/i18n/routing"
 
 import { sanityFetch } from "@/sanity/lib/client"
 import { pickLocalizedString } from "@/sanity/lib/locale"
-import { LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
-import type { LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
+import { TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
+import type { TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
 
 import { cn } from "@/utils/classNames"
 import { normalizePathnameForIntlLink } from "@/utils/navigation"
 
 import { BannerText } from "@/components/BannerText"
+import { BannerForm } from "@/components/BannerForm"
+import { ContactForm } from "@/components/ContactForm"
 import { Cover } from "@/components/Cover"
 import { HeroContent } from "@/components/HeroContent"
 import { ImageFeatureList } from "@/components/ImageFeatureList"
-import { StickyTextBlocks } from "@/components/StickyTextBlocks"
 
 type PageProps = {
   params: Promise<{ locale: string }>
@@ -23,11 +24,11 @@ export default async function Page({ params }: PageProps) {
   const locale = localeParam as AppLocale
 
   const data = (await sanityFetch({
-    query: LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY,
+    query: TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY,
     revalidate: 60,
-  })) as LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT
+  })) as TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY_RESULT
 
-  const page = data?.listYourPropertyPage
+  const page = data?.tailoredSearchPage
 
   /* HERO */
   const hero = page?.heroImage
@@ -55,35 +56,13 @@ export default async function Page({ params }: PageProps) {
   const cover1Portrait = cover1?.imagePortrait
   const hasCover1 = Boolean(cover1Landscape?.asset ?? cover1Portrait?.asset)
 
-  /* SERVICES */
-  const servicesTitle =
-    pickLocalizedString(page?.servicesTitle ?? undefined, locale) ?? ""
-  const servicesSubtitle = page?.servicesSubtitle ?? null
-  const servicesItems =
-    page?.servicesItems?.map((item, index) => ({
-      key: item._key ?? String(index),
-      title: pickLocalizedString(item.title ?? undefined, locale) ?? "",
-      text: item.text,
-    })) ?? []
-
-  const servicesCta = page?.servicesCta
-  const servicesCtaPath = servicesCta?.path?.trim() ?? ""
-
-  const servicesCtaHref =
-    servicesCtaPath !== ""
-      ? normalizePathnameForIntlLink(servicesCtaPath)
-      : undefined
-  const servicesCtaLabel =
-    pickLocalizedString(servicesCta?.label ?? undefined, locale) ?? ""
-  const hasServices = Boolean(
-    servicesTitle ?? servicesSubtitle ?? servicesItems?.length,
+  /* BANNER FORM */
+  const bannerFormTitle = page?.bannerFormTitle
+  const bannerFormText = page?.bannerFormText
+  const bannerFormCtaLabel = page?.bannerFormCtaLabel
+  const hasBannerForm = Boolean(
+    bannerFormTitle ?? bannerFormText ?? bannerFormCtaLabel,
   )
-
-  /* COVER 2 */
-  const cover2 = page?.cover2Image
-  const cover2Landscape = cover2?.imageLandscape
-  const cover2Portrait = cover2?.imagePortrait
-  const hasCover2 = Boolean(cover2Landscape?.asset ?? cover2Portrait?.asset)
 
   /* VALUES */
   const valuesTitle = page?.valuesTitle
@@ -100,17 +79,17 @@ export default async function Page({ params }: PageProps) {
     valuesTitle ?? valuesSubtitle ?? valuesItems ?? valuesCta,
   )
 
-  /* BANNER */
-  const bannerTitle = page?.bannerTitle
-  const bannerText = page?.bannerText
-  const bannerCta = page?.bannerCta
-  const bannerCtaPath = bannerCta?.path?.trim() ?? ""
-  const bannerCtaHref =
-    bannerCtaPath !== ""
-      ? normalizePathnameForIntlLink(bannerCtaPath)
+  /* BANNER 2 */
+  const banner2Title = page?.banner2Title
+  const banner2Text = page?.banner2Text
+  const banner2Cta = page?.banner2Cta
+  const banner2CtaPath = banner2Cta?.path?.trim() ?? ""
+  const banner2CtaHref =
+    banner2CtaPath !== ""
+      ? normalizePathnameForIntlLink(banner2CtaPath)
       : undefined
-  const bannerCtaLabel = bannerCta?.label
-  const hasBanner = Boolean(bannerTitle ?? bannerText ?? bannerCta)
+  const banner2CtaLabel = banner2Cta?.label
+  const hasBanner2 = Boolean(banner2Title ?? banner2Text ?? banner2Cta)
 
   return (
     <main className={cn("w-full", "overflow-x-clip", "pt-32 md:pt-54")}>
@@ -140,25 +119,14 @@ export default async function Page({ params }: PageProps) {
         </section>
       ) : null}
 
-      {hasServices ? (
+      {hasBannerForm ? (
         <section>
-          <StickyTextBlocks
+          <BannerForm
             locale={locale}
-            title={servicesTitle}
-            subtitle={servicesSubtitle}
-            ctaLabel={servicesCtaLabel}
-            ctaHref={servicesCtaHref}
-            items={servicesItems}
-          />
-        </section>
-      ) : null}
-
-      {hasCover2 ? (
-        <section>
-          <Cover
-            locale={locale}
-            imageLandscape={cover2Landscape}
-            imagePortrait={cover2Portrait}
+            title={bannerFormTitle}
+            text={bannerFormText}
+            ctaLabel={bannerFormCtaLabel}
+            ctaHref="#dc-contact-form"
           />
         </section>
       ) : null}
@@ -177,14 +145,18 @@ export default async function Page({ params }: PageProps) {
         </section>
       ) : null}
 
-      {hasBanner ? (
+      <section>
+        <ContactForm id="dc-contact-form" />
+      </section>
+
+      {hasBanner2 ? (
         <section>
           <BannerText
             locale={locale}
-            title={bannerTitle}
-            text={bannerText}
-            ctaLabel={bannerCtaLabel}
-            ctaHref={bannerCtaHref}
+            title={banner2Title}
+            text={banner2Text}
+            ctaLabel={banner2CtaLabel}
+            ctaHref={banner2CtaHref}
           />
         </section>
       ) : null}

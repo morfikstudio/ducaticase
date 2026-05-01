@@ -12,7 +12,6 @@ const maxMb = MAX_IMAGES_BYTES / (1024 * 1024)
 
 type LocalizedStringValue = { it?: string; en?: string } | undefined
 type LocalizedTextValue = { it?: string; en?: string } | undefined
-type LocalizedPortableTextValue = { it?: unknown[]; en?: unknown[] } | undefined
 
 type HighlightCtaValue =
   | { label?: LocalizedStringValue; path?: string }
@@ -25,10 +24,10 @@ function validatePairedLocalizedString(
   const en = value?.en?.trim() ?? ""
   if (it === "" && en === "") return true
   if (it === "") {
-    return "Inserisci il testo in italiano (o svuota anche l’inglese)."
+    return "Inserisci il testo in italiano (o svuota anche l'inglese)."
   }
   if (en === "") {
-    return "Inserisci il testo in inglese (o svuota anche l’italiano)."
+    return "Inserisci il testo in inglese (o svuota anche l'italiano)."
   }
   return true
 }
@@ -38,22 +37,11 @@ function validatePairedLocalizedText(value: LocalizedTextValue): true | string {
   const en = value?.en?.trim() ?? ""
   if (it === "" && en === "") return true
   if (it === "") {
-    return "Inserisci il testo in italiano (o svuota anche l’inglese)."
+    return "Inserisci il testo in italiano (o svuota anche l'inglese)."
   }
   if (en === "") {
-    return "Inserisci il testo in inglese (o svuota anche l’italiano)."
+    return "Inserisci il testo in inglese (o svuota anche l'italiano)."
   }
-  return true
-}
-
-function validatePairedLocalizedPortableText(
-  value: LocalizedPortableTextValue,
-): true | string {
-  const it = Array.isArray(value?.it) && value.it.length > 0
-  const en = Array.isArray(value?.en) && value.en.length > 0
-  if (!it && !en) return true
-  if (!it) return "Inserisci il testo in italiano (o svuota anche l'inglese)."
-  if (!en) return "Inserisci il testo in inglese (o svuota anche l'italiano)."
   return true
 }
 
@@ -69,7 +57,7 @@ function validateHighlightCta(value: HighlightCtaValue): true | string {
     return true
   }
   if (path !== "" && !hasLabel) {
-    return "Inserisci l’etichetta se hai selezionato una pagina."
+    return "Inserisci l'etichetta se hai selezionato una pagina."
   }
   if (hasLabel && path === "") {
     return "Seleziona una pagina per la call to action."
@@ -77,18 +65,17 @@ function validateHighlightCta(value: HighlightCtaValue): true | string {
   return true
 }
 
-export const listYourPropertyPageSettings = defineType({
-  name: "listYourPropertyPageSettings",
-  title: "Affidaci il tuo immobile",
+export const tailoredSearchPageSettings = defineType({
+  name: "tailoredSearchPageSettings",
+  title: "Ricerca su misura",
   type: "object",
   groups: [
     { ...ALL_FIELDS_GROUP, hidden: true },
     { name: "hero", title: "Hero", default: true },
     { name: "cover1", title: "Cover 1" },
-    { name: "services", title: "Services" },
-    { name: "cover2", title: "Cover 2" },
+    { name: "bannerForm", title: "Banner Form Contatti" },
     { name: "values", title: "Values" },
-    { name: "banner", title: "Banner" },
+    { name: "banner2", title: "Banner" },
   ],
   fields: [
     defineField({
@@ -144,45 +131,30 @@ export const listYourPropertyPageSettings = defineType({
       group: "cover1",
     }),
     defineField({
-      name: "servicesTitle",
+      name: "bannerFormTitle",
       title: "Titolo",
-      type: "localizedText",
-      group: "services",
+      type: "localizedString",
+      group: "bannerForm",
       validation: (Rule) =>
-        Rule.custom((value: LocalizedTextValue) =>
-          validatePairedLocalizedText(value),
+        Rule.custom((value: LocalizedStringValue) =>
+          validatePairedLocalizedString(value),
         ),
     }),
     defineField({
-      name: "servicesSubtitle",
-      title: "Sottotitolo",
+      name: "bannerFormText",
+      title: "Testo",
       type: "localizedPortableText",
-      group: "services",
+      group: "bannerForm",
+    }),
+    defineField({
+      name: "bannerFormCtaLabel",
+      title: "Etichetta call to action",
+      type: "localizedString",
+      group: "bannerForm",
       validation: (Rule) =>
-        Rule.custom((value: LocalizedPortableTextValue) =>
-          validatePairedLocalizedPortableText(value),
+        Rule.custom((value: LocalizedStringValue) =>
+          validatePairedLocalizedString(value),
         ),
-    }),
-    defineField({
-      name: "servicesCta",
-      title: "Call to action",
-      type: "aboutHighlightCta",
-      group: "services",
-      validation: (Rule) =>
-        Rule.custom((value: HighlightCtaValue) => validateHighlightCta(value)),
-    }),
-    defineField({
-      name: "servicesItems",
-      title: "Services",
-      type: "array",
-      group: "services",
-      of: [defineArrayMember({ type: "listYourPropertyServiceItem" })],
-    }),
-    defineField({
-      name: "cover2Image",
-      title: "Immagine",
-      type: "listYourPropertyCoverResponsiveImage",
-      group: "cover2",
     }),
     defineField({
       name: "valuesTitle",
@@ -237,7 +209,7 @@ export const listYourPropertyPageSettings = defineType({
           name: "alt",
           title: "Testo alternativo",
           description:
-            "Per accessibilità e SEO. Descrivi il contenuto visivo dell’immagine.",
+            "Per accessibilità e SEO. Descrivi il contenuto visivo dell'immagine.",
           type: "localizedString",
         }),
       ],
@@ -270,26 +242,26 @@ export const listYourPropertyPageSettings = defineType({
       of: [defineArrayMember({ type: "listYourPropertyValueItem" })],
     }),
     defineField({
-      name: "bannerTitle",
+      name: "banner2Title",
       title: "Titolo",
       type: "localizedString",
-      group: "banner",
+      group: "banner2",
       validation: (Rule) =>
         Rule.custom((value: LocalizedStringValue) =>
           validatePairedLocalizedString(value),
         ),
     }),
     defineField({
-      name: "bannerText",
+      name: "banner2Text",
       title: "Testo",
       type: "localizedPortableText",
-      group: "banner",
+      group: "banner2",
     }),
     defineField({
-      name: "bannerCta",
+      name: "banner2Cta",
       title: "Call to action",
       type: "aboutHighlightCta",
-      group: "banner",
+      group: "banner2",
       validation: (Rule) =>
         Rule.custom((value: HighlightCtaValue) => validateHighlightCta(value)),
     }),

@@ -18,7 +18,7 @@ import { PortableTextComponent } from "@/components/ui/PortableText"
 type StickyTextBlocksProps = {
   locale: AppLocale
   title: string
-  subtitle?: string
+  subtitle?: LocalizedPortableText | null
   ctaLabel?: string
   ctaHref?: string
   items: Array<{
@@ -38,7 +38,7 @@ type StickyTextItem = {
 type StickyTextSharedProps = {
   locale: AppLocale
   title: string
-  subtitle?: string
+  subtitle?: LocalizedPortableText | null
   ctaLabel?: string
   ctaHref?: string
   items: StickyTextItem[]
@@ -46,14 +46,16 @@ type StickyTextSharedProps = {
 }
 
 function StickyTextBlocksHeader({
+  locale,
   title,
   subtitle,
   ctaLabel,
   ctaHref,
   className,
 }: {
+  locale: AppLocale
   title: string
-  subtitle?: string
+  subtitle?: LocalizedPortableText | null
   ctaLabel?: string
   ctaHref?: string
   className?: string
@@ -70,16 +72,14 @@ function StickyTextBlocksHeader({
         {title}
       </h2>
 
-      <p
+      <PortableTextComponent
+        text={subtitle}
+        locale={locale}
         className={cn(
           "mt-6",
           "type-body-1 text-[16px] tracking-[0.08em] font-medium uppercase text-dark-gray",
-          // "",
-          "",
         )}
-      >
-        {subtitle}
-      </p>
+      />
 
       <Button
         href={ctaHref}
@@ -103,6 +103,7 @@ function StickyTextBlocksDesktop({
   return (
     <div className="hidden lg:grid lg:grid-cols-12 lg:gap-x-4">
       <StickyTextBlocksHeader
+        locale={locale}
         title={title}
         subtitle={subtitle}
         ctaLabel={ctaLabel}
@@ -234,6 +235,7 @@ function StickyTextBlocksMobile({
   return (
     <div className="flex flex-col gap-20 lg:hidden">
       <StickyTextBlocksHeader
+        locale={locale}
         title={title}
         subtitle={subtitle}
         ctaLabel={ctaLabel}

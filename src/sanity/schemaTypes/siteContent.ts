@@ -9,12 +9,20 @@ const SECTION_OPTIONS = [
   { title: "Home", value: "homePage" },
   { title: "Chi siamo", value: "aboutPage" },
   { title: "Affidaci il tuo immobile", value: "listYourPropertyPage" },
+  { title: "Ducati per le aziende", value: "businessPage" },
+  { title: "Ricerca su misura", value: "tailoredSearchPage" },
 ] as const
 
 type SectionType = (typeof SECTION_OPTIONS)[number]["value"]
 
 const SITE_CONTENT_LIST_PREVIEW_TITLE: Record<
-  "footer" | "menu" | "homePage" | "aboutPage" | "listYourPropertyPage",
+  | "footer"
+  | "menu"
+  | "homePage"
+  | "aboutPage"
+  | "listYourPropertyPage"
+  | "businessPage"
+  | "tailoredSearchPage",
   string
 > = {
   footer: "Footer",
@@ -22,6 +30,8 @@ const SITE_CONTENT_LIST_PREVIEW_TITLE: Record<
   homePage: "Home",
   aboutPage: "Chi siamo",
   listYourPropertyPage: "Affidaci il tuo immobile",
+  businessPage: "Ducati per le aziende",
+  tailoredSearchPage: "Ricerca su misura",
 }
 
 type SiteContentDoc = {
@@ -46,6 +56,12 @@ function titleAndSectionForNewDocument(document: SiteContentDoc | undefined): {
       title: "Affidaci il tuo immobile",
       sectionType: "listYourPropertyPage",
     }
+  }
+  if (document?.sectionType === "businessPage") {
+    return { title: "Ducati per le aziende", sectionType: "businessPage" }
+  }
+  if (document?.sectionType === "tailoredSearchPage") {
+    return { title: "Ricerca su misura", sectionType: "tailoredSearchPage" }
   }
   return { title: "Footer", sectionType: "footer" }
 }
@@ -75,7 +91,9 @@ export const siteContent = defineType({
         doc.sectionType !== "menu" &&
         doc.sectionType !== "homePage" &&
         doc.sectionType !== "aboutPage" &&
-        doc.sectionType !== "listYourPropertyPage"
+        doc.sectionType !== "listYourPropertyPage" &&
+        doc.sectionType !== "businessPage" &&
+        doc.sectionType !== "tailoredSearchPage"
       ) {
         return true
       }
@@ -104,7 +122,11 @@ export const siteContent = defineType({
                   ? "Chi siamo"
                   : section === "listYourPropertyPage"
                     ? "Affidaci il tuo immobile"
-                    : section
+                    : section === "businessPage"
+                      ? "Ducati per le aziende"
+                      : section === "tailoredSearchPage"
+                        ? "Ricerca su misura"
+                        : section
         return `Esiste già un documento ${label}. Elimina quello esistente prima di crearne un altro.`
       }
       return true
@@ -167,6 +189,20 @@ export const siteContent = defineType({
       hidden: ({ document }) =>
         (document as SiteContentDoc)?.sectionType !== "listYourPropertyPage",
     }),
+    defineField({
+      name: "businessPage",
+      title: "Contenuto",
+      type: "businessPageSettings",
+      hidden: ({ document }) =>
+        (document as SiteContentDoc)?.sectionType !== "businessPage",
+    }),
+    defineField({
+      name: "tailoredSearchPage",
+      title: "Contenuto",
+      type: "tailoredSearchPageSettings",
+      hidden: ({ document }) =>
+        (document as SiteContentDoc)?.sectionType !== "tailoredSearchPage",
+    }),
   ],
   preview: {
     select: {
@@ -179,7 +215,9 @@ export const siteContent = defineType({
         sectionType === "menu" ||
         sectionType === "homePage" ||
         sectionType === "aboutPage" ||
-        sectionType === "listYourPropertyPage"
+        sectionType === "listYourPropertyPage" ||
+        sectionType === "businessPage" ||
+        sectionType === "tailoredSearchPage"
       ) {
         const key = sectionType as keyof typeof SITE_CONTENT_LIST_PREVIEW_TITLE
         return {

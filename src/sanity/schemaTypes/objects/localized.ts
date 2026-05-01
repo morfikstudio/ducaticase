@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity"
+import { CaptionBlockStyle } from "./captionBlockStyle"
 
 /**
  * Oggetti it/en per annunci. Dopo il deploy: nei documenti esistenti va migrato
@@ -55,13 +56,37 @@ export const localizedPortableTextObject = defineType({
       name: "it",
       title: "Italiano",
       type: "array",
-      of: [{ type: "block" }],
+      of: [
+        {
+          type: "block",
+          styles: [
+            { title: "Normale", value: "normal" },
+            {
+              title: "Didascalia",
+              value: "caption",
+              component: CaptionBlockStyle,
+            },
+          ],
+        },
+      ],
     }),
     defineField({
       name: "en",
       title: "English",
       type: "array",
-      of: [{ type: "block" }],
+      of: [
+        {
+          type: "block",
+          styles: [
+            { title: "Normal", value: "normal" },
+            {
+              title: "Caption",
+              value: "caption",
+              component: CaptionBlockStyle,
+            },
+          ],
+        },
+      ],
     }),
   ],
 })
