@@ -6,10 +6,13 @@ import gsap from "gsap"
 
 import { cn } from "@/utils/classNames"
 import { prefersReducedMotion } from "@/utils/reducedMotion"
+import { useSplashContext } from "@/components/providers/SplashProvider"
 
 import animationData from "@/lottie/splash.json"
 
 export function SplashScreen() {
+  const { onSplashDone } = useSplashContext()
+
   const [loaded, setLoaded] = useState(false)
   const [lottieStarted, setLottieStarted] = useState(false)
   const [dismissed, setDismissed] = useState(false)
@@ -33,10 +36,11 @@ export function SplashScreen() {
 
   useEffect(() => {
     if (prefersReducedMotion()) {
+      onSplashDone()
       setDismissed(true)
       return
     }
-  }, [])
+  }, [onSplashDone])
 
   /* Handle animation */
   useEffect(() => {
@@ -58,6 +62,7 @@ export function SplashScreen() {
             setDismissed(true)
           },
         })
+        // .call(onSplashDone, [], 0.5)
         .to(
           lottieWrapRef.current,
           {
@@ -87,6 +92,9 @@ export function SplashScreen() {
           0,
         )
     })
+
+    /* on timeline onComplete it's a little bit too late, so we need to set a timeout */
+    setTimeout(onSplashDone, delay * 1000)
 
     return () => {
       ctx.revert()

@@ -17,6 +17,7 @@ import { NavBar } from "@/components/core/NavBar"
 import { Footer } from "@/components/core/Footer"
 import { Breadcrumbs } from "@/components/core/Breadcrumbs"
 import { SplashScreen } from "@/components/core/SplashScreen"
+import { SplashProvider } from "@/components/providers/SplashProvider"
 
 import { footerContentFromSanity } from "@/lib/formatFooterContent"
 import { menuContentFromSanity } from "@/lib/formatMenuContent"
@@ -49,15 +50,17 @@ export default async function FrontendLayout({
 
   return (
     <LenisProvider>
-      <NavBar locale={locale} menuContent={menuContent} />
-      <div className="absolute top-0 left-0 w-full z-10">
-        <Breadcrumbs />
-      </div>
-      <div className="flex min-h-screen flex-col">
-        <div className="flex-1">{children}</div>
-      </div>
-      <Footer content={footerContent} />
-      <SplashScreen />
+      <SplashProvider>
+        <NavBar locale={locale} menuContent={menuContent} />
+        <div className="absolute top-0 left-0 w-full z-10">
+          <Breadcrumbs />
+        </div>
+        <div className="flex min-h-screen flex-col">
+          <div className="flex-1">{children}</div>
+        </div>
+        <Footer content={footerContent} />
+        <SplashScreen />
+      </SplashProvider>
       <BreakpointProvider />
       <FocusVisibleModality />
     </LenisProvider>
