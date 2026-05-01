@@ -6,11 +6,24 @@ import gsap from "gsap"
 
 import { prefersReducedMotion } from "@/utils/reducedMotion"
 
-export type UseGsapRevealOptions = {
+export type UseGsapRevealOptions<T extends HTMLElement = HTMLDivElement> = {
+  /**
+   * When `false`, no GSAP styles or tweens run on the observed element; only
+   * `load` / `show` (viewport) update. `ready` and `fallbackRevealMs` apply only
+   * to the reveal animation, not to `show`.
+   */
+  animate?: boolean
+  /**
+   * Element to observe and optionally animate. Defaults to an internal ref
+   * returned as `ref`. If the ref’s `.current` is still `null` on the first
+   * effect run (e.g. conditional child), observers are not attached until you
+   * remount the hook or point the ref at a mounted node.
+   */
+  elementRef?: RefObject<T | null>
   /**
    * External readiness gate. Animation fires only when both the element is in
    * view AND `ready` is true. Defaults to `true` so components that have no
-   * async dependency can omit it entirely.
+   * async dependency can omit it entirely. Ignored when `animate` is `false`.
    */
   ready?: boolean
   duration?: number
@@ -29,15 +42,18 @@ export type UseGsapRevealResult<T extends HTMLElement = HTMLDivElement> = {
   /**
    * True once the reveal should run: at load, if the element intersects the
    * full viewport; after load, when it intersects the scroll reveal zone
-   * (root margin −25% bottom). Never resets.
+   * (root margin −25% bottom). Never resets. Same semantics when `animate` is
+   * `false` (viewport-only).
    */
   show: boolean
 }
 
 export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
-  options?: UseGsapRevealOptions,
+  options?: UseGsapRevealOptions<T>,
 ): UseGsapRevealResult<T> {
   const {
+    animate = true,
+    elementRef: elementRefOption,
     ready = true,
     duration = 1,
     ease = "power2.out",
@@ -47,14 +63,15 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
     fallbackRevealMs,
   } = options ?? {}
 
-  const ref = useRef<T | null>(null)
+  const internalRef = useRef<T | null>(null)
+  const targetRef = elementRefOption ?? internalRef
 
   // --- IntersectionObserver state (merged from useInView) ---
   const [load, setLoad] = useState(false)
   const [inViewShow, setInViewShow] = useState(false)
 
   useEffect(() => {
-    const el = ref.current
+    const el = targetRef.current
     if (!el) return
 
     const vh = window.innerHeight
@@ -97,39 +114,41 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
       loadObserver.disconnect()
       showObserver.disconnect()
     }
-  }, [])
+  }, [targetRef])
 
-  // --- Fallback deadline ---
+  // --- Fallback deadline (animation only) ---
   const [deadlineReveal, setDeadlineReveal] = useState(false)
 
   useEffect(() => {
-    if (fallbackRevealMs == null) return
+    if (!animate || fallbackRevealMs == null) return
     const id = window.setTimeout(
       () => setDeadlineReveal(true),
       fallbackRevealMs,
     )
-    return () => clearTimeout(id)
-  }, [fallbackRevealMs])
+    return () => window.clearTimeout(id)
+  }, [animate, fallbackRevealMs])
 
   // --- Initial hidden state ---
   useLayoutEffect(() => {
-    if (!ref.current) return
-    gsap.set(ref.current, { opacity: 0, y: fromY })
-  }, [fromY])
+    if (!animate || !targetRef.current) return
+    gsap.set(targetRef.current, { opacity: 0, y: fromY })
+  }, [animate, fromY, targetRef])
 
   // --- Entry animation ---
   useEffect(() => {
+    if (!animate) return
+
     const shouldFire = (inViewShow && ready) || deadlineReveal
-    if (!ref.current || !shouldFire) return
+    if (!targetRef.current || !shouldFire) return
 
     if (prefersReducedMotion()) {
-      gsap.set(ref.current, { opacity: 1, y: 0 })
+      gsap.set(targetRef.current, { opacity: 1, y: 0 })
       return () => {
-        gsap.killTweensOf(ref.current)
+        gsap.killTweensOf(targetRef.current)
       }
     }
 
-    gsap.to(ref.current, {
+    gsap.to(targetRef.current, {
       opacity: 1,
       y: 0,
       duration,
@@ -139,9 +158,10 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
     })
 
     return () => {
-      gsap.killTweensOf(ref.current)
+      gsap.killTweensOf(targetRef.current)
     }
   }, [
+    animate,
     inViewShow,
     ready,
     deadlineReveal,
@@ -150,7 +170,8 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
     clearProps,
     fromY,
     delay,
+    targetRef,
   ])
 
-  return { ref, load, show: inViewShow }
+  return { ref: targetRef, load, show: inViewShow }
 }
