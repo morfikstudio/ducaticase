@@ -4,12 +4,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { useTranslations } from "next-intl"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { Keyboard } from "swiper/modules"
+import { Keyboard, Navigation } from "swiper/modules"
 import type { Swiper as SwiperType } from "swiper"
 
 import type { AppLocale } from "@/i18n/routing"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
 
+import { Icon } from "@/components/ui/Icon"
 import { SanityImage } from "@/components/ui/SanityImage"
 import { useBreakpoint } from "@/stores/breakpointStore"
 import { useLenis } from "@/components/providers/LenisProvider"
@@ -55,37 +56,6 @@ function IconClose() {
   )
 }
 
-type ChevronDirection = "up" | "down" | "left" | "right"
-
-const chevronRotateClass: Record<ChevronDirection, string> = {
-  right: "rotate-0",
-  down: "rotate-90",
-  left: "rotate-180",
-  up: "-rotate-90",
-}
-
-function IconChevron({ direction }: { direction: ChevronDirection }) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 26 26"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={cn(
-        "size-[18px] shrink-0 md:size-[26px]",
-        chevronRotateClass[direction],
-      )}
-    >
-      <path
-        d="M9 5L17 13L9 21"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
 
 export function GalleryLightbox({
   images,
@@ -104,7 +74,6 @@ export function GalleryLightbox({
 
   const [isVisible, setIsVisible] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
-  const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null)
   const [mounted, setMounted] = useState(false)
 
   const syncCurrentIndex = useCallback(
@@ -164,8 +133,8 @@ export function GalleryLightbox({
       const nextBtn = nextNavButtonRef.current
       const prevBtn = prevNavButtonRef.current
       const closeBtn = closeButtonRef.current
-      if (nextBtn && !nextBtn.disabled) nextBtn.focus()
-      else if (prevBtn && !prevBtn.disabled) prevBtn.focus()
+      if (nextBtn && !nextBtn.classList.contains("swiper-button-disabled")) nextBtn.focus()
+      else if (prevBtn && !prevBtn.classList.contains("swiper-button-disabled")) prevBtn.focus()
       else closeBtn?.focus()
     })
 
@@ -266,13 +235,23 @@ export function GalleryLightbox({
       >
         <Swiper
           key={isMobile ? "lightbox-vertical" : "lightbox-horizontal"}
-          modules={[Keyboard]}
+          modules={[Keyboard, Navigation]}
           keyboard={{ enabled: true }}
+          navigation={{
+            prevEl: prevNavButtonRef.current,
+            nextEl: nextNavButtonRef.current,
+          }}
+          onBeforeInit={(swiper) => {
+            const nav = swiper.params.navigation
+            if (nav && nav !== true) {
+              nav.prevEl = prevNavButtonRef.current
+              nav.nextEl = nextNavButtonRef.current
+            }
+          }}
           direction={isMobile ? "vertical" : "horizontal"}
           slidesPerView={isMobile ? "auto" : 1}
           spaceBetween={isMobile ? 8 : 0}
           initialSlide={initialIndex}
-          onSwiper={setSwiperInstance}
           onSlideChange={syncCurrentIndex}
           onReachEnd={syncCurrentIndex}
           className="h-full w-full"
@@ -380,38 +359,36 @@ export function GalleryLightbox({
             ref={nextNavButtonRef}
             type="button"
             aria-label={t("nextImage")}
-            disabled={currentIndex === images.length - 1}
-            onClick={() => swiperInstance?.slideNext()}
             className={cn(
               "flex items-center justify-center",
               "size-[75px] md:size-[100px] shrink-0 border-0 p-0",
               "text-primary bg-transparent",
               "transition-colors duration-200",
-              "cursor-pointer disabled:cursor-not-allowed",
+              "cursor-pointer",
               "hover:bg-dark focus-visible:bg-dark",
-              "disabled:opacity-25 disabled:hover:bg-transparent",
+              "[&.swiper-button-disabled]:opacity-25",
+              "[&.swiper-button-disabled]:pointer-events-none",
             )}
           >
-            <IconChevron direction={isMobile ? "down" : "right"} />
+            <Icon type="chevron" direction={isMobile ? "down" : "right"} />
           </button>
 
           <button
             ref={prevNavButtonRef}
             type="button"
             aria-label={t("previousImage")}
-            disabled={currentIndex === 0}
-            onClick={() => swiperInstance?.slidePrev()}
             className={cn(
               "flex items-center justify-center",
               "size-[75px] md:size-[100px] shrink-0 border-0 p-0",
               "text-primary bg-transparent",
               "transition-colors duration-200",
+              "cursor-pointer",
               "hover:bg-dark focus-visible:bg-dark",
-              "cursor-pointer disabled:cursor-not-allowed",
-              "disabled:opacity-25 disabled:hover:bg-transparent",
+              "[&.swiper-button-disabled]:opacity-25",
+              "[&.swiper-button-disabled]:pointer-events-none",
             )}
           >
-            <IconChevron direction={isMobile ? "up" : "left"} />
+            <Icon type="chevron" direction={isMobile ? "up" : "left"} />
           </button>
         </div>
       </aside>

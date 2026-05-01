@@ -3,6 +3,7 @@
 import { useCallback, useRef, type FocusEvent } from "react"
 import { useTranslations } from "next-intl"
 import type { Swiper as SwiperType } from "swiper"
+import { Navigation } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 
 import type { AppLocale } from "@/i18n/routing"
@@ -12,6 +13,7 @@ import { useGsapReveal } from "@/hooks/useGsapReveal"
 
 import { cn } from "@/utils/classNames"
 
+import { Icon } from "@/components/ui/Icon"
 import { ListingCard } from "@/components/ListingCard"
 import { Button } from "@/components/ui/Button"
 import { Container } from "@/components/ui/Container"
@@ -32,6 +34,8 @@ export function ListingsCarousel({
   const t = useTranslations("homePage")
   const { ref: wrapRef } = useGsapReveal()
   const swiperRef = useRef<SwiperType | null>(null)
+  const prevRef = useRef<HTMLButtonElement>(null)
+  const nextRef = useRef<HTMLButtonElement>(null)
 
   const onCarouselFocusIn = useCallback((e: FocusEvent<HTMLDivElement>) => {
     if (
@@ -62,10 +66,64 @@ export function ListingsCarousel({
   return (
     <Container>
       <div ref={wrapRef} style={{ opacity: 0 }}>
-        {title ? <h2 className="type-heading-1">{title}</h2> : null}
+        {title ? (
+          <div className="flex items-center justify-between">
+            <h2 className="type-heading-1">{title}</h2>
+            <div className="hidden shrink-0 items-center lg:flex gap-2">
+              <button
+                ref={prevRef}
+                type="button"
+                aria-label="Previous"
+                className={cn(
+                  "flex items-center justify-center",
+                  "size-[75px] shrink-0 p-0",
+                  "border border-dark rounded-md",
+                  "text-primary",
+                  "transition-colors duration-200",
+                  "cursor-pointer",
+                  "bg-black hover:bg-dark focus-visible:bg-dark",
+                  "[&.swiper-button-disabled]:opacity-40",
+                  "[&.swiper-button-disabled]:pointer-events-none",
+                )}
+              >
+                <Icon type="chevron" direction="left" />
+              </button>
+              <button
+                ref={nextRef}
+                type="button"
+                aria-label="Next"
+                className={cn(
+                  "flex items-center justify-center",
+                  "size-[75px] shrink-0 p-0",
+                  "border border-dark rounded-md",
+                  "text-primary",
+                  "transition-colors duration-200",
+                  "cursor-pointer",
+                  "bg-black hover:bg-dark focus-visible:bg-dark",
+                  "[&.swiper-button-disabled]:opacity-40",
+                  "[&.swiper-button-disabled]:pointer-events-none",
+                )}
+              >
+                <Icon type="chevron" direction="right" />
+              </button>
+            </div>
+          </div>
+        ) : null}
 
         <div className="mt-12 lg:mt-16" onFocusCapture={onCarouselFocusIn}>
           <Swiper
+            modules={[Navigation]}
+            navigation={{
+              prevEl: prevRef.current,
+              nextEl: nextRef.current,
+            }}
+            onBeforeInit={(swiper) => {
+              const nav = swiper.params.navigation
+              if (nav && nav !== true) {
+                nav.prevEl = prevRef.current
+                nav.nextEl = nextRef.current
+              }
+            }}
             onSwiper={(instance) => {
               swiperRef.current = instance
             }}
