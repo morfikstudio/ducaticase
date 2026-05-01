@@ -72,14 +72,18 @@ export function ImageFeatureList({
 
     if (elements.length === 0) return
 
+    const isMobile = window.innerWidth < 768
+    const start = isMobile ? "top 90%" : "top 85%"
+    const end = isMobile ? "top 90%" : "top 85%"
+
     const ctx = gsap.context(() => {
       elements.forEach((element) => {
         gsap
           .timeline({
             scrollTrigger: {
               trigger: element,
-              start: "top 85%",
-              end: "top 85%",
+              start,
+              end,
               invalidateOnRefresh: true,
             },
           })

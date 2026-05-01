@@ -143,8 +143,8 @@ export function BannerPartners({
         className,
       )}
     >
-      {resolvedTitle.trim() !== "" || Boolean(text) || showCta ? (
-        <div ref={wrapRef} style={{ opacity: 0 }}>
+      <div ref={wrapRef} style={{ opacity: 0 }}>
+        {resolvedTitle.trim() !== "" || Boolean(text) || showCta ? (
           <Container
             className={cn(
               "flex flex-col gap-8",
@@ -178,98 +178,101 @@ export function BannerPartners({
               </Button>
             ) : null}
           </Container>
-        </div>
-      ) : null}
+        ) : null}
 
-      {/* Partners carousel */}
-      {withImage.length > 0 ? (
-        <div className={cn("mt-16 md:mt-20 lg:mt-32", "w-full")}>
-          <Container>
-            <Swiper
-              key={swiperKey.current}
-              modules={[Autoplay]}
-              slidesPerView="auto"
-              spaceBetween={64}
-              watchOverflow
-              lazyPreloadPrevNext={5}
-              centeredSlides={Boolean(isOverflow)}
-              centerInsufficientSlides={!Boolean(isOverflow)}
-              loop={Boolean(isOverflow)}
-              autoplay={
-                Boolean(isOverflow)
-                  ? {
-                      delay: 0,
-                      disableOnInteraction: false,
-                      pauseOnMouseEnter: false,
-                    }
-                  : false
-              }
-              speed={2000}
-              allowTouchMove={false}
-              breakpoints={{
-                768: {
-                  spaceBetween: 128,
-                },
-              }}
-              onInit={(swiper) => swiperUpdate(swiper)}
-              onResize={(swiper) => swiperUpdate(swiper)}
-              className="partners-swiper w-full [&_.swiper-slide]:h-auto! [&_.swiper-slide]:w-auto!"
-            >
-              {(Boolean(isOverflow) ? loopedPartners : withImage).map(
-                (partner) => {
-                  const partnerName = partner.name?.trim() ?? ""
-                  const alt = partnerName !== "" ? partnerName : "Partner"
-                  const src = partnerLogoSrc(partner)
+        {/* Partners carousel */}
+        {withImage.length > 0 ? (
+          <div className={cn("mt-16 md:mt-20 lg:mt-32", "w-full")}>
+            <Container>
+              <Swiper
+                key={swiperKey.current}
+                modules={[Autoplay]}
+                slidesPerView="auto"
+                spaceBetween={64}
+                watchOverflow
+                lazyPreloadPrevNext={5}
+                centeredSlides={Boolean(isOverflow)}
+                centerInsufficientSlides={!Boolean(isOverflow)}
+                loop={Boolean(isOverflow)}
+                autoplay={
+                  Boolean(isOverflow)
+                    ? {
+                        delay: 0,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: false,
+                      }
+                    : false
+                }
+                speed={2000}
+                allowTouchMove={false}
+                breakpoints={{
+                  768: {
+                    spaceBetween: 128,
+                  },
+                }}
+                onInit={(swiper) => swiperUpdate(swiper)}
+                onResize={(swiper) => swiperUpdate(swiper)}
+                className="partners-swiper w-full [&_.swiper-slide]:h-auto! [&_.swiper-slide]:w-auto!"
+              >
+                {(Boolean(isOverflow) ? loopedPartners : withImage).map(
+                  (partner) => {
+                    const partnerName = partner.name?.trim() ?? ""
+                    const alt = partnerName !== "" ? partnerName : "Partner"
+                    const src = partnerLogoSrc(partner)
 
-                  if (!src) return null
+                    if (!src) return null
 
-                  const intrinsic =
-                    partnerLogoIntrinsic(partner) ??
-                    ({ width: 240, height: 80 } as const)
+                    const intrinsic =
+                      partnerLogoIntrinsic(partner) ??
+                      ({ width: 240, height: 80 } as const)
 
-                  if (!intrinsic) return null
+                    if (!intrinsic) return null
 
-                  const scale = Math.min(
-                    1,
-                    88 / intrinsic.height,
-                    320 / intrinsic.width,
-                  )
+                    const scale = Math.min(
+                      1,
+                      88 / intrinsic.height,
+                      320 / intrinsic.width,
+                    )
 
-                  const width = Math.max(1, Math.round(intrinsic.width * scale))
-                  const height = Math.max(
-                    1,
-                    Math.round(intrinsic.height * scale),
-                  )
+                    const width = Math.max(
+                      1,
+                      Math.round(intrinsic.width * scale),
+                    )
+                    const height = Math.max(
+                      1,
+                      Math.round(intrinsic.height * scale),
+                    )
 
-                  const slideKey = Boolean(isOverflow)
-                    ? (partner as (typeof loopedPartners)[number])._loopKey
-                    : partner._key
+                    const slideKey = Boolean(isOverflow)
+                      ? (partner as (typeof loopedPartners)[number])._loopKey
+                      : partner._key
 
-                  return (
-                    <SwiperSlide
-                      key={slideKey}
-                      className="box-border flex! shrink-0 items-center justify-center"
-                      style={{ width, height }}
-                    >
-                      <img
-                        src={src}
-                        alt={alt}
-                        width={intrinsic.width}
-                        height={intrinsic.height}
-                        loading="lazy"
-                        decoding="async"
-                        draggable={false}
-                        className="block object-contain"
+                    return (
+                      <SwiperSlide
+                        key={slideKey}
+                        className="box-border flex! shrink-0 items-center justify-center"
                         style={{ width, height }}
-                      />
-                    </SwiperSlide>
-                  )
-                },
-              )}
-            </Swiper>
-          </Container>
-        </div>
-      ) : null}
+                      >
+                        <img
+                          src={src}
+                          alt={alt}
+                          width={intrinsic.width}
+                          height={intrinsic.height}
+                          loading="lazy"
+                          decoding="async"
+                          draggable={false}
+                          className="block object-contain"
+                          style={{ width, height }}
+                        />
+                      </SwiperSlide>
+                    )
+                  },
+                )}
+              </Swiper>
+            </Container>
+          </div>
+        ) : null}
+      </div>
     </div>
   )
 }
