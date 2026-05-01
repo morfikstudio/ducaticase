@@ -16,6 +16,7 @@ import { FocusVisibleModality } from "@/components/providers/FocusVisibleProvide
 import { NavBar } from "@/components/core/NavBar"
 import { Footer } from "@/components/core/Footer"
 import { Breadcrumbs } from "@/components/core/Breadcrumbs"
+import { SplashScreen } from "@/components/core/SplashScreen"
 
 import { footerContentFromSanity } from "@/lib/formatFooterContent"
 import { menuContentFromSanity } from "@/lib/formatMenuContent"
@@ -56,6 +57,7 @@ export default async function FrontendLayout({
         <div className="flex-1">{children}</div>
       </div>
       <Footer content={footerContent} />
+      <SplashScreen />
       <BreakpointProvider />
       <FocusVisibleModality />
     </LenisProvider>
