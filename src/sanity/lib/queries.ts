@@ -162,7 +162,9 @@ export const HOME_SITE_CONTENT_QUERY = defineQuery(groq`
             path
           }
         },
-        "featuredListings": featuredListings[]->{
+        "featuredListings": featuredListings[
+          coalesce(@->isArchived, false) != true
+        ]->{
           _id,
           _type,
           title,

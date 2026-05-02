@@ -5,6 +5,7 @@ import {
   defineType,
 } from "sanity"
 
+import { FeaturedListingArrayItem } from "../../components/FeaturedListingArrayItem"
 import { LISTING_DOCUMENT_SPECS } from "../../lib/constants"
 
 export const homePageSettings = defineType({
@@ -134,6 +135,9 @@ export const homePageSettings = defineType({
           to: LISTING_DOCUMENT_SPECS.map((spec) => ({ type: spec.name })),
           options: {
             disableNew: true,
+          },
+          components: {
+            item: FeaturedListingArrayItem,
           },
         }),
       ],
