@@ -1,4 +1,14 @@
-import { ArchiveIcon, DesktopIcon, HomeIcon } from "@sanity/icons"
+import {
+  AddDocumentIcon,
+  ArchiveIcon,
+  CaseIcon,
+  HomeIcon,
+  LaunchIcon,
+  LinkIcon,
+  MenuIcon,
+  SearchIcon,
+  UsersIcon,
+} from "@sanity/icons"
 import type { StructureResolver } from "sanity/structure"
 
 import { LISTING_DOCUMENT_SPECS } from "./schemaTypes/listingTypes"
@@ -9,28 +19,15 @@ export const structure: StructureResolver = (S) =>
     .items([
       S.listItem()
         .title("Contenuti Sito")
-        .icon(DesktopIcon)
+        .icon(LaunchIcon)
         .id("siteContentRoot")
         .child(
           S.list()
             .title("Contenuti Sito")
             .items([
               S.listItem()
-                .title("Footer")
-                .icon(DesktopIcon)
-                .id("siteContentFooter")
-                .child(
-                  S.documentList()
-                    .title("Footer")
-                    .schemaType("siteContent")
-                    .filter('_type == "siteContent" && sectionType == "footer"')
-                    .defaultOrdering([
-                      { field: "_updatedAt", direction: "desc" },
-                    ]),
-                ),
-              S.listItem()
                 .title("Menu")
-                .icon(DesktopIcon)
+                .icon(MenuIcon)
                 .id("siteContentMenu")
                 .child(
                   S.documentList()
@@ -42,8 +39,21 @@ export const structure: StructureResolver = (S) =>
                     ]),
                 ),
               S.listItem()
+                .title("Footer")
+                .icon(LinkIcon)
+                .id("siteContentFooter")
+                .child(
+                  S.documentList()
+                    .title("Footer")
+                    .schemaType("siteContent")
+                    .filter('_type == "siteContent" && sectionType == "footer"')
+                    .defaultOrdering([
+                      { field: "_updatedAt", direction: "desc" },
+                    ]),
+                ),
+              S.listItem()
                 .title("Home")
-                .icon(DesktopIcon)
+                .icon(HomeIcon)
                 .id("siteContentHomePage")
                 .child(
                   S.documentList()
@@ -60,26 +70,8 @@ export const structure: StructureResolver = (S) =>
                     ]),
                 ),
               S.listItem()
-                .title("Chi siamo")
-                .icon(DesktopIcon)
-                .id("siteContentAboutPage")
-                .child(
-                  S.documentList()
-                    .title("Chi siamo")
-                    .schemaType("siteContent")
-                    .filter(
-                      '_type == "siteContent" && sectionType == "aboutPage"',
-                    )
-                    .initialValueTemplates([
-                      S.initialValueTemplateItem("siteContent-aboutPage"),
-                    ])
-                    .defaultOrdering([
-                      { field: "_updatedAt", direction: "desc" },
-                    ]),
-                ),
-              S.listItem()
                 .title("Affidaci il tuo immobile")
-                .icon(DesktopIcon)
+                .icon(AddDocumentIcon)
                 .id("siteContentListYourPropertyPage")
                 .child(
                   S.documentList()
@@ -98,8 +90,28 @@ export const structure: StructureResolver = (S) =>
                     ]),
                 ),
               S.listItem()
+                .title("Ricerca su misura")
+                .icon(SearchIcon)
+                .id("siteContentTailoredSearchPage")
+                .child(
+                  S.documentList()
+                    .title("Ricerca su misura")
+                    .schemaType("siteContent")
+                    .filter(
+                      '_type == "siteContent" && sectionType == "tailoredSearchPage"',
+                    )
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem(
+                        "siteContent-tailoredSearchPage",
+                      ),
+                    ])
+                    .defaultOrdering([
+                      { field: "_updatedAt", direction: "desc" },
+                    ]),
+                ),
+              S.listItem()
                 .title("Ducati per le aziende")
-                .icon(DesktopIcon)
+                .icon(CaseIcon)
                 .id("siteContentBusinessPage")
                 .child(
                   S.documentList()
@@ -116,20 +128,18 @@ export const structure: StructureResolver = (S) =>
                     ]),
                 ),
               S.listItem()
-                .title("Ricerca su misura")
-                .icon(DesktopIcon)
-                .id("siteContentTailoredSearchPage")
+                .title("Chi siamo")
+                .icon(UsersIcon)
+                .id("siteContentAboutPage")
                 .child(
                   S.documentList()
-                    .title("Ricerca su misura")
+                    .title("Chi siamo")
                     .schemaType("siteContent")
                     .filter(
-                      '_type == "siteContent" && sectionType == "tailoredSearchPage"',
+                      '_type == "siteContent" && sectionType == "aboutPage"',
                     )
                     .initialValueTemplates([
-                      S.initialValueTemplateItem(
-                        "siteContent-tailoredSearchPage",
-                      ),
+                      S.initialValueTemplateItem("siteContent-aboutPage"),
                     ])
                     .defaultOrdering([
                       { field: "_updatedAt", direction: "desc" },
