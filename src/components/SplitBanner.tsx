@@ -48,7 +48,7 @@ export function SplitBanner({
       setImageReady(true)
     })
   }, [])
-  const { ref: wrapRef } = useGsapReveal({ ready: imageReady })
+  const { ref: wrapRef } = useGsapReveal({ ready: imageReady, fromY: 0 })
 
   return (
     <div className={cn("bg-bg", className)}>
