@@ -162,18 +162,19 @@ export function buildListingDetailMetadata(args: {
     titleSegment === brand ? titleSegment : `${titleSegment} | ${brand}`
 
   const description =
-    args.descriptionPlain?.trim() ||
-    site.defaultDescription.trim() ||
-    undefined
+    args.descriptionPlain?.trim() || site.defaultDescription.trim() || undefined
 
   const listingPath = `/immobili/${args.listingId}`
   const pathname = buildLocalizedPathname(args.locale, listingPath)
   const canonical = absoluteUrl(origin, pathname)
 
   const fallbackOg = fullConfig.listings[args.locale].openGraph.image
-  const ogFromListing = getSanityImageUrl(args.mainImage ?? undefined, 1200, 630)
-  const ogImageUrl =
-    ogFromListing ?? absoluteUrl(origin, fallbackOg.url.trim())
+  const ogFromListing = getSanityImageUrl(
+    args.mainImage ?? undefined,
+    1200,
+    630,
+  )
+  const ogImageUrl = ogFromListing ?? absoluteUrl(origin, fallbackOg.url.trim())
   const ogImageWidth = ogFromListing ? 1200 : fallbackOg.width
   const ogImageHeight = ogFromListing ? 630 : fallbackOg.height
   const ogImageAlt = titleSegment

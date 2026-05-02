@@ -62,7 +62,7 @@ export const listingShopsAndOffices = defineType({
     { name: "location", title: "Località" },
     { name: "mapPosition", title: "Mappa e posizione" },
     { name: "content", title: "Contenuto" },
-    { name: "floorPlans", title: "Planimetrie" },
+    { name: "floorPlans", title: "Planimetria" },
     { ...ALL_FIELDS_GROUP, hidden: true },
   ],
   fields: [
