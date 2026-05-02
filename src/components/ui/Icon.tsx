@@ -16,9 +16,10 @@ const chevronRotateClass: Record<ChevronDirection, string> = {
   up: "-rotate-90",
 }
 
-export type IconProps = { size?: IconSize } & (
-  | { type: "chevron"; direction: ChevronDirection }
-)
+export type IconProps = { size?: IconSize } & {
+  type: "chevron"
+  direction: ChevronDirection
+}
 
 export function Icon({ size = "m", ...props }: IconProps) {
   if (props.type === "chevron") {

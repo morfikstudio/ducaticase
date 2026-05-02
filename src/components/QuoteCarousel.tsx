@@ -101,7 +101,6 @@ function applyQuoteCardTransforms(
   }
 }
 
-
 function GoogleLogo({ className }: { className?: string }) {
   return (
     <svg
