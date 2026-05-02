@@ -1,15 +1,27 @@
 import { Suspense } from "react"
+import type { Metadata } from "next"
 import type { AppLocale } from "@/i18n/routing"
 
 import { sanityFetch } from "@/sanity/lib/client"
 import { LISTINGS_PREVIEW_QUERY } from "@/sanity/lib/queries"
 import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
 
+import { buildPageMetadataByKey } from "@/seo/page-metadata"
+
 import { cn } from "@/utils/classNames"
 
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner"
 import { ListingsResults } from "@/components/listings-results"
 import { ListingsStoreHydrator } from "@/components/listings-results/providers/ListingsStoreHydrator"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale: localeParam } = await params
+  return buildPageMetadataByKey("listings", localeParam as AppLocale)
+}
 
 type ListingsPageProps = {
   params: Promise<{ locale: string }>
