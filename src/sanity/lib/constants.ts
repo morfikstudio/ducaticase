@@ -1,8 +1,8 @@
 import {
   BasketIcon,
+  BellIcon,
   CubeIcon,
   EarthGlobeIcon,
-  HeartIcon,
   HomeIcon,
   SunIcon,
 } from "@sanity/icons"
@@ -36,7 +36,7 @@ export const CATEGORY_OPTIONS = [
     title: { it: "Hospitality", en: "Hospitality" },
     value: "hospitality",
     documentType: "listingHospitality",
-    icon: HeartIcon,
+    icon: BellIcon,
   },
   {
     title: { it: "Terreni", en: "Land" },
