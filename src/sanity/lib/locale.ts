@@ -47,3 +47,28 @@ export function pickLocalizedPortableText(
   }
   return value.en
 }
+
+/** Plain text from localized Portable Text (block children only). */
+export function pickLocalizedPortableTextPlain(
+  value: LocalizedBlocks | null | undefined,
+  locale: AppLocale,
+): string {
+  const picked = pickLocalizedPortableText(value, locale)
+  if (!Array.isArray(picked)) return ""
+  const lines: string[] = []
+  for (const block of picked) {
+    if (
+      !block ||
+      typeof block !== "object" ||
+      (block as { _type?: string })._type !== "block"
+    ) {
+      continue
+    }
+    const children = (block as { children?: Array<{ text?: string }> }).children
+    if (!Array.isArray(children)) continue
+    const segment = children.map((c) => c.text ?? "").join("")
+    const t = segment.trim()
+    if (t) lines.push(t)
+  }
+  return lines.join("\n\n")
+}

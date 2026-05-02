@@ -1,9 +1,21 @@
+import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { AppLocale } from "@/i18n/routing"
 
 import { sanityFetch } from "@/sanity/lib/client"
+import {
+  pickLocalizedPortableTextPlain,
+  pickLocalizedString,
+} from "@/sanity/lib/locale"
 import { LISTING_BY_ID_QUERY } from "@/sanity/lib/queries"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
+
+import { JsonLd } from "@/components/seo/JsonLd"
+import { buildListingJsonLdGraph } from "@/seo/json-ld/listing-graph"
+import {
+  buildListingDetailMetadata,
+  buildPageMetadataByKey,
+} from "@/seo/page-metadata"
 
 import { Container } from "@/components/ui/Container"
 import { Gallery } from "@/components/listing-detail/Gallery"
@@ -21,6 +33,36 @@ import {
 
 type Props = {
   params: Promise<{ locale: string; id: string }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale: localeParam, id } = await params
+  const locale = localeParam as AppLocale
+
+  const listing = (await sanityFetch({
+    query: LISTING_BY_ID_QUERY,
+    params: { id },
+    revalidate: 60,
+  })) as LISTING_BY_ID_QUERY_RESULT
+
+  if (!listing?.content) {
+    return buildPageMetadataByKey("listings", locale)
+  }
+
+  const { content } = listing
+  const title = pickLocalizedString(content.title, locale)
+  const descriptionPlain = pickLocalizedPortableTextPlain(
+    content.excerpt,
+    locale,
+  )
+
+  return buildListingDetailMetadata({
+    locale,
+    listingId: id,
+    title,
+    descriptionPlain: descriptionPlain || undefined,
+    mainImage: content.mainImage ?? undefined,
+  })
 }
 
 export default async function ListingDetailPage({ params }: Props) {
@@ -81,8 +123,26 @@ export default async function ListingDetailPage({ params }: Props) {
   const specRows = [...propertySheetRows, ...optionalSpecRows]
   const hasValidSpecs = specRows.length > 0
 
+  const listingTitle = listing.content
+    ? pickLocalizedString(listing.content.title, locale)
+    : ""
+  const descriptionPlain = listing.content
+    ? pickLocalizedPortableTextPlain(listing.content.excerpt, locale)
+    : ""
+  const listingJsonLd =
+    listing.content && listingTitle
+      ? buildListingJsonLdGraph({
+          listing,
+          locale,
+          listingId: id,
+          listingTitle,
+          descriptionPlain: descriptionPlain || undefined,
+        })
+      : null
+
   return (
     <main className="w-full overflow-x-clip md:pt-32">
+      {listingJsonLd ? <JsonLd data={listingJsonLd} /> : null}
       <Container className="pt-20 md:pt-10">
         {hasValidGallery ? (
           <section>

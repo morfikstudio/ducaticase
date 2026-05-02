@@ -1,0 +1,242 @@
+{
+  "site": {
+    "it": {
+      "name": "Ducati Case",
+      "defaultDescription": "Agenzia immobiliare specializzata in immobili di lusso e di eccellenza.",
+      "locale": "it_IT",
+      "twitterSite": "",
+      "twitterCreator": ""
+    },
+    "en": {
+      "name": "Ducati Case",
+      "defaultDescription": "Real estate agency specialized in luxury and premium properties.",
+      "locale": "en_US",
+      "twitterSite": "",
+      "twitterCreator": ""
+    }
+  },
+  "home": {
+    "it": {
+      "title": "Home",
+      "description": "Agenzia immobiliare specializzata in immobili di lusso e di eccellenza.",
+      "keywords": [],
+      "canonicalPath": "/",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    },
+    "en": {
+      "title": "Home",
+      "description": "Real estate agency specialized in luxury and premium properties.",
+      "keywords": [],
+      "canonicalPath": "/",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    }
+  },
+  "listYourProperty": {
+    "it": {
+      "title": "Affidaci il tuo immobile",
+      "description": "Affidaci il tuo immobile e vendilo con la nostra agenzia immobiliare.",
+      "keywords": [],
+      "canonicalPath": "/affidaci-il-tuo-immobile",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    },
+    "en": {
+      "title": "List your property",
+      "description": "List your property and sell it with our real estate agency.",
+      "keywords": [],
+      "canonicalPath": "/affidaci-il-tuo-immobile",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    }
+  },
+  "listings": {
+    "it": {
+      "title": "I nostri immobili",
+      "description": "Esplora le nostre proposte immobiliari e trova la soluzione più adatta alle tue esigenze.",
+      "keywords": [],
+      "canonicalPath": "/immobili",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    },
+    "en": {
+      "title": "Our properties",
+      "description": "Explore our listings and find the solution that best suits your needs.",
+      "keywords": [],
+      "canonicalPath": "/immobili",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    }
+  },
+  "tayloredSearch": {
+    "it": {
+      "title": "Ricerca su misura",
+      "description": "Scopri la nostra soluzione di ricerca su misura per trovare la proprietà che fa per te.",
+      "keywords": [],
+      "canonicalPath": "/ricerca-su-misura",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    },
+    "en": {
+      "title": "Bespoke search",
+      "description": "Discover our bespoke property search to find the right home for you.",
+      "keywords": [],
+      "canonicalPath": "/ricerca-su-misura",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    }
+  },
+  "business": {
+    "it": {
+      "title": "Ducati per le aziende",
+      "description": "Ducati per le aziende: vendi il tuo immobile con la nostra agenzia immobiliare.",
+      "keywords": [],
+      "canonicalPath": "/ducati-per-le-aziende",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    },
+    "en": {
+      "title": "Ducati for businesses",
+      "description": "Ducati for businesses: sell your property with our real estate agency.",
+      "keywords": [],
+      "canonicalPath": "/ducati-per-le-aziende",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    }
+  },
+  "about": {
+    "it": {
+      "title": "Chi siamo",
+      "description": "Scopri la nostra storia e la nostra missione.",
+      "keywords": [],
+      "canonicalPath": "/about",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    },
+    "en": {
+      "title": "About us",
+      "description": "Discover our story and mission.",
+      "keywords": [],
+      "canonicalPath": "/about",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    }
+  },
+  "contact": {
+    "it": {
+      "title": "Contatti",
+      "description": "Contattaci per ottenere maggiori informazioni sulla nostra agenzia immobiliare.",
+      "keywords": [],
+      "canonicalPath": "/contact",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    },
+    "en": {
+      "title": "Contact",
+      "description": "Contact us for more information about our real estate agency.",
+      "keywords": [],
+      "canonicalPath": "/contact",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    }
+  }
+}

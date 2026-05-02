@@ -1,9 +1,11 @@
+import type { Metadata } from "next"
 import { type AppLocale } from "@/i18n/routing"
 import { getTranslations } from "next-intl/server"
 
 import { sanityFetch } from "@/sanity/lib/client"
 import {
   pickLocalizedPortableText,
+  pickLocalizedPortableTextPlain,
   pickLocalizedString,
 } from "@/sanity/lib/locale"
 import { HOME_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
@@ -11,6 +13,8 @@ import type {
   HOME_SITE_CONTENT_QUERY_RESULT,
   LISTINGS_PREVIEW_QUERY_RESULT,
 } from "@/sanity/types"
+
+import { buildPageMetadataByKey } from "@/seo/page-metadata"
 
 import { cn } from "@/utils/classNames"
 import { normalizePathnameForIntlLink } from "@/utils/navigation"
@@ -24,36 +28,21 @@ import { SplitBanner } from "@/components/SplitBanner"
 import { StatementHero } from "@/components/StatementHero"
 import { WaveText } from "@/components/WaveText"
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale: localeParam } = await params
+  return buildPageMetadataByKey("home", localeParam as AppLocale)
+}
+
 function portableTextHasBlocks(
   text: Parameters<typeof pickLocalizedPortableText>[0],
   locale: AppLocale,
 ): boolean {
   const blocks = pickLocalizedPortableText(text, locale)
   return Array.isArray(blocks) && blocks.length > 0
-}
-
-function portableTextToPlain(
-  text: Parameters<typeof pickLocalizedPortableText>[0],
-  locale: AppLocale,
-): string {
-  const picked = pickLocalizedPortableText(text, locale)
-  if (!Array.isArray(picked)) return ""
-  const lines: string[] = []
-  for (const block of picked) {
-    if (
-      !block ||
-      typeof block !== "object" ||
-      (block as { _type?: string })._type !== "block"
-    ) {
-      continue
-    }
-    const children = (block as { children?: Array<{ text?: string }> }).children
-    if (!Array.isArray(children)) continue
-    const segment = children.map((c) => c.text ?? "").join("")
-    const t = segment.trim()
-    if (t) lines.push(t)
-  }
-  return lines.join("\n\n")
 }
 
 type PageProps = {
@@ -191,7 +180,7 @@ export default async function Page({ params }: PageProps) {
           {highlightsWithImage.map((block, index) => {
             const title =
               pickLocalizedString(block.title ?? undefined, locale) ?? ""
-            const description = portableTextToPlain(
+            const description = pickLocalizedPortableTextPlain(
               block.text ?? undefined,
               locale,
             )

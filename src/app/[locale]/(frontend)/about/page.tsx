@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import type { AppLocale } from "@/i18n/routing"
 
 import { sanityFetch } from "@/sanity/lib/client"
@@ -5,12 +6,23 @@ import { pickLocalizedString } from "@/sanity/lib/locale"
 import { ABOUT_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
 import type { ABOUT_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
 
+import { buildPageMetadataByKey } from "@/seo/page-metadata"
+
 import { AboutSection } from "@/components/AboutSection"
 import { FeatureGrid } from "@/components/FeatureGrid"
 import { HeroText } from "@/components/HeroText"
 import { SplitBanner } from "@/components/SplitBanner"
 import { SplitSectionDisplay } from "@/components/SplitSectionDisplay"
 import { TeamGrid } from "@/components/TeamGrid"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale: localeParam } = await params
+  return buildPageMetadataByKey("about", localeParam as AppLocale)
+}
 
 type AboutPageProps = {
   params: Promise<{ locale: string }>

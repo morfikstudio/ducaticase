@@ -791,3 +791,18 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
     }
   }
 `)
+
+/** Public IDs of listings (sitemap / SEO). */
+export const LISTING_SITEMAP_IDS_QUERY = defineQuery(groq`
+  *[_type in [
+    "listingResidential",
+    "listingCountryHouses",
+    "listingShopsAndOffices",
+    "listingIndustrial",
+    "listingHospitality",
+    "listingLand"
+  ] && coalesce(isArchived, false) != true] {
+    _id,
+    _updatedAt
+  }
+`)

@@ -1,9 +1,12 @@
+import type { Metadata } from "next"
 import { type AppLocale } from "@/i18n/routing"
 
 import { sanityFetch } from "@/sanity/lib/client"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import { TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
 import type { TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
+
+import { buildPageMetadataByKey } from "@/seo/page-metadata"
 
 import { cn } from "@/utils/classNames"
 import { normalizePathnameForIntlLink } from "@/utils/navigation"
@@ -14,6 +17,15 @@ import { ContactForm } from "@/components/ContactForm"
 import { Cover } from "@/components/Cover"
 import { HeroContent } from "@/components/HeroContent"
 import { ImageFeatureList } from "@/components/ImageFeatureList"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale: localeParam } = await params
+  return buildPageMetadataByKey("tayloredSearch", localeParam as AppLocale)
+}
 
 type PageProps = {
   params: Promise<{ locale: string }>
