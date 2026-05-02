@@ -17,8 +17,8 @@ export function floorPlansField(options?: FloorPlansFieldOptions) {
   return defineField({
     ...(options?.group ? { group: options.group } : {}),
     name: "floorPlans",
-    title: "Planimetrie",
-    description: `Carica una o più planimetrie in PDF, JPG o PNG (massimo ${maxMb} MB per file)`,
+    title: "Planimetria",
+    description: `Carica un solo file in PDF, JPG o PNG (massimo ${maxMb} MB)`,
     type: "array",
     of: [
       defineArrayMember({
@@ -28,7 +28,8 @@ export function floorPlansField(options?: FloorPlansFieldOptions) {
         },
       }),
     ],
-    validation: (Rule) =>
+    validation: (Rule) => [
+      Rule.max(1).error("È consentito un solo file di planimetria."),
       Rule.custom(async (value, context) => {
         const items = Array.isArray(value) ? value : []
 
@@ -55,11 +56,12 @@ export function floorPlansField(options?: FloorPlansFieldOptions) {
             { id: ref },
           )
           if (typeof size === "number" && size > MAX_FLOOR_PLAN_FILE_BYTES) {
-            return `Ogni file (PDF, JPG, PNG) non può superare ${maxMb} MB. Riduci il file o dividi le planimetrie.`
+            return `Il file (PDF, JPG, PNG) non può superare ${maxMb} MB. Riduci le dimensioni del file.`
           }
         }
 
         return true
       }),
+    ],
   })
 }

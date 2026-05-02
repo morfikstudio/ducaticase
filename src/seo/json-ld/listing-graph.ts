@@ -11,7 +11,9 @@ type PriceBlock = {
   noPriceReason?: "priceOnRequest" | "privateNegotiation"
 } | null
 
-function collectImageUrls(listing: NonNullable<LISTING_BY_ID_QUERY_RESULT>): string[] {
+function collectImageUrls(
+  listing: NonNullable<LISTING_BY_ID_QUERY_RESULT>,
+): string[] {
   const content = listing.content
   if (!content) return []
 
@@ -41,7 +43,8 @@ function priceOffer(price: PriceBlock): Record<string, unknown> | undefined {
 function floorSizeSqm(
   propertySheet: NonNullable<LISTING_BY_ID_QUERY_RESULT>["propertySheet"],
 ): Record<string, unknown> | undefined {
-  if (!propertySheet || !("commercialAreaSqm" in propertySheet)) return undefined
+  if (!propertySheet || !("commercialAreaSqm" in propertySheet))
+    return undefined
   const sqm = propertySheet.commercialAreaSqm
   if (sqm == null || !Number.isFinite(sqm)) return undefined
   return {
@@ -69,7 +72,10 @@ export function buildListingJsonLdGraph(args: {
   const homeUrl = absoluteUrl(origin, buildLocalizedPathname(args.locale, "/"))
   const listingsIndexUrl = absoluteUrl(
     origin,
-    buildLocalizedPathname(args.locale, cfg.listings[args.locale].canonicalPath),
+    buildLocalizedPathname(
+      args.locale,
+      cfg.listings[args.locale].canonicalPath,
+    ),
   )
 
   const images = collectImageUrls(args.listing)
