@@ -288,7 +288,7 @@ export function StickyTextBlocks({
   ctaHref,
   className,
 }: StickyTextBlocksProps) {
-  const { ref: wrapRef } = useGsapReveal()
+  const { ref: wrapRef } = useGsapReveal({ fromY: 0 })
   const animationKey = useAnimationKey()
 
   if (!items || items.length === 0) return null

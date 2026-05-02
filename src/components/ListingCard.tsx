@@ -71,7 +71,7 @@ export function ListingCard({
   return (
     <li className="min-w-0 h-full">
       <Link
-        className="group flex flex-col overflow-hidden rounded-md bg-neutral-900 h-full"
+        className="group flex flex-col overflow-hidden rounded-md bg-neutral-900 h-full select-none"
         href={`/immobili/${entry._id}`}
         target="_self"
       >
