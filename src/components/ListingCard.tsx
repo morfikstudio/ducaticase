@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation"
 import type { AppLocale } from "@/i18n/routing"
 
 import { CATEGORY_OPTIONS } from "@/sanity/lib/constants"
+import { listingContractTypeLabel } from "@/sanity/lib/listingContractTypeLabel"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import { listingTypologyLabel } from "@/sanity/lib/listingTypologyLabel"
 import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
@@ -35,14 +36,13 @@ export function ListingCard({
   const categorySectionTitle =
     categoryRow?.title[locale] ?? t("genericListingCategory")
   const title = listingTitle || typology || categorySectionTitle
-  const contractType = (entry as { listingContractType?: string | null })
-    .listingContractType
-  const price = formatListingPrice(
-    entry.price,
-    locale,
-    contractType as "sale" | "rent" | null,
-  )
-  const infoMeta = [typology, categorySectionTitle].filter(Boolean).join(" | ")
+  const contractType = entry.listingContractType
+  const price = formatListingPrice(entry.price, locale, contractType)
+  const rentLabel =
+    contractType === "rent"
+      ? listingContractTypeLabel(contractType, locale)
+      : undefined
+  const infoMeta = [categorySectionTitle, typology].filter(Boolean).join(" | ")
   const address = (
     entry as {
       address?: {
@@ -146,26 +146,24 @@ export function ListingCard({
               <p
                 className={cn(
                   "font-sans text-[12px] font-medium uppercase",
-                  "truncate text-primary",
+                  "truncate",
                 )}
               >
                 {locationText}
               </p>
 
               <h3
-                className={cn(
-                  "type-listing-card-title text-primary mt-1",
-                  "line-clamp-2",
-                )}
+                className={cn("type-listing-card-title mt-1", "line-clamp-2")}
               >
                 {title}
               </h3>
             </div>
 
             <div className="flex items-end justify-between gap-4">
-              <p className="truncate type-body-2 text-primary">{infoMeta}</p>
-              <p className="shrink-0 truncate type-body-2 text-primary">
+              <p className="type-body-2 text-balance">{infoMeta}</p>
+              <p className="shrink-0 truncate type-body-2">
                 {price}
+                {rentLabel ? ` (${rentLabel})` : null}
               </p>
             </div>
           </div>
