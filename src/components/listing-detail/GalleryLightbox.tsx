@@ -252,6 +252,7 @@ export function GalleryLightbox({
           direction={isMobile ? "vertical" : "horizontal"}
           slidesPerView={isMobile ? "auto" : 1}
           spaceBetween={isMobile ? 8 : 0}
+          speed={800}
           initialSlide={initialIndex}
           onSlideChange={syncCurrentIndex}
           onReachEnd={syncCurrentIndex}

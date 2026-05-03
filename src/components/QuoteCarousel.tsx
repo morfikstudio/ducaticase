@@ -337,6 +337,7 @@ export function QuoteCarousel({
               slidesPerView={1.05}
               spaceBetween={8}
               loop={false}
+              speed={800}
               centeredSlides={false}
               watchOverflow
               breakpoints={{
