@@ -4,7 +4,7 @@ export type ChevronDirection = "left" | "right" | "up" | "down"
 type IconSize = "s" | "m" | "l"
 
 const sizeClass: Record<IconSize, string> = {
-  s: "size-[14px] shrink-0",
+  s: "size-[14px] shrink-0 md:size-[21px]",
   m: "size-[18px] shrink-0 md:size-[26px]",
   l: "size-[26px] shrink-0",
 }

@@ -264,7 +264,7 @@ export function QuoteCarousel({
                   "[&.swiper-button-disabled]:pointer-events-none",
                 )}
               >
-                <Icon type="chevron" direction="left" />
+                <Icon type="chevron" direction="left" size="s" />
               </button>
 
               <button
@@ -283,7 +283,7 @@ export function QuoteCarousel({
                   "[&.swiper-button-disabled]:pointer-events-none",
                 )}
               >
-                <Icon type="chevron" direction="right" />
+                <Icon type="chevron" direction="right" size="s" />
               </button>
             </div>
           </div>
