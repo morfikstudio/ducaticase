@@ -70,7 +70,7 @@ export function ListingSpecs({ rows, highlightRows = [] }: ListingSpecsProps) {
       <h2 className="type-heading-2">{tSpecs("title")}</h2>
 
       {highlightRows.length > 0 ? (
-        <div className="pt-12 pb-8 flex flex-col gap-4">
+        <div className="pt-12 pb-8 flex flex-col gap-4 md:flex-row md:items-center">
           <div className="type-body-2 uppercase font-medium">Highlights</div>
           <ul className="list-none flex gap-2 flex-wrap">
             {highlightRows.map((text, index) => (
