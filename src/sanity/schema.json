@@ -1,6 +1,43 @@
 [
   {
     "type": "type",
+    "name": "info",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "email": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "phone": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "whatsapp": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "address": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
     "name": "sanity.imageAsset.reference",
     "value": {
       "type": "object",
@@ -8183,11 +8220,11 @@
           "of": [
             {
               "type": "string",
-              "value": "footer"
+              "value": "menu"
             },
             {
               "type": "string",
-              "value": "menu"
+              "value": "footer"
             },
             {
               "type": "string",
@@ -8195,11 +8232,11 @@
             },
             {
               "type": "string",
-              "value": "aboutPage"
+              "value": "listYourPropertyPage"
             },
             {
               "type": "string",
-              "value": "listYourPropertyPage"
+              "value": "tailoredSearchPage"
             },
             {
               "type": "string",
@@ -8207,7 +8244,11 @@
             },
             {
               "type": "string",
-              "value": "tailoredSearchPage"
+              "value": "aboutPage"
+            },
+            {
+              "type": "string",
+              "value": "contactPage"
             }
           ]
         },
@@ -8242,6 +8283,14 @@
         "value": {
           "type": "inline",
           "name": "aboutPageSettings"
+        },
+        "optional": true
+      },
+      "contactPage": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "contactPageSettings"
         },
         "optional": true
       },
@@ -9010,6 +9059,70 @@
           "value": {
             "type": "inline",
             "name": "aboutHighlightCta"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "contactPageSettings",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "contactPageSettings"
+          }
+        },
+        "title": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedString"
+          },
+          "optional": true
+        },
+        "heroImage": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "contactPageResponsiveImage"
+          },
+          "optional": true
+        },
+        "subtitle": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedString"
+          },
+          "optional": true
+        },
+        "text": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedPortableText"
+          },
+          "optional": true
+        },
+        "info": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "info"
+          },
+          "optional": true
+        },
+        "map": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "geopoint"
           },
           "optional": true
         }
@@ -9978,6 +10091,132 @@
           "value": {
             "type": "inline",
             "name": "localizedPortableText"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "contactPageResponsiveImage",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "contactPageResponsiveImage"
+          }
+        },
+        "imageLandscape": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "object",
+            "attributes": {
+              "asset": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageAsset.reference"
+                },
+                "optional": true
+              },
+              "media": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "unknown"
+                },
+                "optional": true
+              },
+              "hotspot": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageHotspot"
+                },
+                "optional": true
+              },
+              "crop": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageCrop"
+                },
+                "optional": true
+              },
+              "alt": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "localizedString"
+                },
+                "optional": true
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "image"
+                }
+              }
+            }
+          },
+          "optional": true
+        },
+        "imagePortrait": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "object",
+            "attributes": {
+              "asset": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageAsset.reference"
+                },
+                "optional": true
+              },
+              "media": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "unknown"
+                },
+                "optional": true
+              },
+              "hotspot": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageHotspot"
+                },
+                "optional": true
+              },
+              "crop": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageCrop"
+                },
+                "optional": true
+              },
+              "alt": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "localizedString"
+                },
+                "optional": true
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "image"
+                }
+              }
+            }
           },
           "optional": true
         }
