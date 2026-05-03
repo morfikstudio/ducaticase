@@ -32,6 +32,7 @@ import {
   heatingField,
   isArchivedField,
   listingContractTypeField,
+  listingHighlightsField,
   listingPublicPageLinkField,
   listingSearchTokensField,
   listingTitleField,
@@ -105,6 +106,7 @@ export const listingCountryHouses = defineType({
     hasAccessibleAccessField({ group: "optionals" }),
     climateControlField({ group: "optionals" }),
     condoFeesField({ group: "optionals" }),
+    listingHighlightsField({ group: "optionals" }),
   ],
   preview: listingPreview({
     typologyField: "countryHouseTypology",

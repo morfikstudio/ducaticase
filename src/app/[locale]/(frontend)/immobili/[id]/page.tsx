@@ -121,7 +121,16 @@ export default async function ListingDetailPage({ params }: Props) {
     locale,
   )
   const specRows = [...propertySheetRows, ...optionalSpecRows]
-  const hasValidSpecs = specRows.length > 0
+
+  const highlightsRaw = listing.additionalFields?.highlights
+  const highlightRows =
+    Array.isArray(highlightsRaw) && highlightsRaw.length > 0
+      ? highlightsRaw
+          .map((entry) => pickLocalizedString(entry, locale)?.trim())
+          .filter((text): text is string => Boolean(text))
+      : []
+
+  const hasValidSpecs = specRows.length > 0 || highlightRows.length > 0
 
   const listingTitle = listing.content
     ? pickLocalizedString(listing.content.title, locale)
@@ -180,7 +189,7 @@ export default async function ListingDetailPage({ params }: Props) {
 
         {hasValidSpecs ? (
           <section className="my-16 md:my-32">
-            <ListingSpecs rows={specRows} />
+            <ListingSpecs rows={specRows} highlightRows={highlightRows} />
           </section>
         ) : null}
 

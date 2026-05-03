@@ -25,6 +25,7 @@ import {
   heatingField,
   isArchivedField,
   listingContractTypeField,
+  listingHighlightsField,
   listingPublicPageLinkField,
   listingSearchTokensField,
   listingTitleField,
@@ -94,6 +95,7 @@ export const listingHospitality = defineType({
     poolField({ group: "optionals" }),
     hasTennisCourtField({ group: "optionals" }),
     customSpecificationsField({ group: "optionals" }),
+    listingHighlightsField({ group: "optionals" }),
   ],
   preview: listingPreview(),
 })

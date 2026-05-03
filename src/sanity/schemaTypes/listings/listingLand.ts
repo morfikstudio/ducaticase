@@ -16,6 +16,7 @@ import {
   isArchivedField,
   landAccessField,
   listingContractTypeField,
+  listingHighlightsField,
   listingPublicPageLinkField,
   listingSearchTokensField,
   listingTitleField,
@@ -66,6 +67,7 @@ export const listingLand = defineType({
     /* Campi opzionali */
     buildableField({ group: "optionals" }),
     agriculturalField({ group: "optionals" }),
+    listingHighlightsField({ group: "optionals" }),
   ],
   preview: listingPreview(),
 })

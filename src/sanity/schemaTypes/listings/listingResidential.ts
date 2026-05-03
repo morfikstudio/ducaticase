@@ -35,6 +35,7 @@ import {
   mainImageField,
   positionInfoField,
   listingContractTypeField,
+  listingHighlightsField,
   listingPublicPageLinkField,
   listingSearchTokensField,
   parkingSpacesField,
@@ -102,6 +103,7 @@ export const listingResidential = defineType({
     hasTennisCourtField({ group: "optionals" }),
     hasAccessibleAccessField({ group: "optionals" }),
     climateControlField({ group: "optionals" }),
+    listingHighlightsField({ group: "optionals" }),
   ],
   preview: listingPreview(),
 })

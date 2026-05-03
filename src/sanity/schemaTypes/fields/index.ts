@@ -213,6 +213,10 @@ export {
   listingSearchTokensField,
   type ListingSearchTokensFieldOptions,
 } from "./listing/listingSearchTokensField"
+export {
+  listingHighlightsField,
+  type ListingHighlightsFieldOptions,
+} from "./listing/listingHighlightsField"
 
 /* Industrial (listing-specific fields; wire in listing schemas as needed) */
 export {

@@ -36,6 +36,7 @@ import {
   industrialTypologyField,
   isArchivedField,
   listingContractTypeField,
+  listingHighlightsField,
   listingPublicPageLinkField,
   listingSearchTokensField,
   listingTitleField,
@@ -222,6 +223,7 @@ export const listingIndustrial = defineType({
     hasAccessibleAccessField({ group: "optionals" }),
     climateControlField({ group: "optionals" }),
     heatingField({ group: "optionals" }),
+    listingHighlightsField({ group: "optionals" }),
   ],
   preview: listingPreview({
     typologyField: "industrialTypology",

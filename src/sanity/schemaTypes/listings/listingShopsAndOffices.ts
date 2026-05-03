@@ -31,6 +31,7 @@ import {
   heatingField,
   isArchivedField,
   listingContractTypeField,
+  listingHighlightsField,
   listingPublicPageLinkField,
   listingSearchTokensField,
   listingTitleField,
@@ -146,6 +147,7 @@ export const listingShopsAndOffices = defineType({
         (document as ShopsAndOfficesDoc)?.shopsAndOfficesTypology !== "offices",
     },
     condoFeesField({ group: "optionals" }),
+    listingHighlightsField({ group: "optionals" }),
   ],
   preview: listingPreview({
     typologyField: "shopsAndOfficesTypology",
