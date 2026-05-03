@@ -73,23 +73,18 @@ export function SplitBanner({
                   reverse ? "lg:pl-16" : "lg:pr-16",
                 )}
               >
-                <div className="type-heading-2 text-primary">{title}</div>
+                <h3 className="type-heading-2 text-primary">{title}</h3>
+
                 <p className="type-body-2 whitespace-pre-line text-gray">
                   {brTagsToNewlines(description)}
                 </p>
-              </div>
 
-              {ctaLabel && ctaHref ? (
-                <Button
-                  className={cn(
-                    "self-start",
-                    reverse ? "lg:ml-28" : "lg:mr-28",
-                  )}
-                  href={ctaHref}
-                >
-                  {ctaLabel}
-                </Button>
-              ) : null}
+                {ctaLabel && ctaHref ? (
+                  <Button className="self-start" href={ctaHref}>
+                    {ctaLabel}
+                  </Button>
+                ) : null}
+              </div>
             </div>
           </div>
 
