@@ -94,10 +94,10 @@ export function ListingDescription({
 
   const actionJustify =
     hasDescription && hasFloorPlans
-      ? "md:justify-between"
+      ? "lg:justify-between"
       : hasFloorPlans
-        ? "md:justify-end"
-        : "md:justify-start"
+        ? "lg:justify-end"
+        : "lg:justify-start"
 
   return (
     <div ref={wrapRef} className="w-full" style={{ opacity: 0 }}>
@@ -109,7 +109,7 @@ export function ListingDescription({
               text={excerpt}
               locale={locale}
               className={cn(
-                "col-span-12 md:col-start-3 md:col-span-8",
+                "col-span-12 lg:col-start-3 lg:col-span-8",
                 excerptPortableClassName,
               )}
             />
@@ -128,7 +128,7 @@ export function ListingDescription({
           >
             <div
               className={cn(
-                "col-span-12 md:col-start-5 md:col-span-6",
+                "col-span-12 lg:col-start-5 lg:col-span-6",
                 expandPanelClassName,
                 expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
               )}
@@ -157,11 +157,11 @@ export function ListingDescription({
 
         {/* ACTIONS */}
         {hasDescription || hasFloorPlans ? (
-          <div className="mt-8 md:mt-16 grid grid-cols-12">
+          <div className="mt-8 lg:mt-16 grid grid-cols-12">
             <div
               className={cn(
-                "w-full col-span-12 md:col-start-3 md:col-span-8",
-                "flex flex-col md:flex-row items-start md:items-center gap-16 md:gap-4",
+                "w-full col-span-12 lg:col-start-3 lg:col-span-8",
+                "flex flex-col lg:flex-row items-start lg:items-center gap-16 lg:gap-4",
                 actionJustify,
               )}
             >
