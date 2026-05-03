@@ -5,8 +5,15 @@ import { LISTING_STATIC_MAP_ZOOM } from "@/lib/listingStaticMap"
 const STATIC_MAP_BASE = "https://maps.googleapis.com/maps/api/staticmap"
 const MAX_DIMENSION = 640
 
-/** Roadmap desaturated to grayscale (Static Maps styling). */
-const GRAYSCALE_STYLE_PARAMS = ["feature:all|saturation:-100"] as const
+/**
+ * Static Maps styling: lighter desaturation than full grayscale, fewer POI/transit labels.
+ * Order: hide noisy layers first, then global saturation on what remains.
+ */
+const STATIC_MAP_STYLE_PARAMS = [
+  "feature:poi|visibility:off",
+  "feature:transit|visibility:off",
+  "feature:all|saturation:-52",
+] as const
 
 function parseCoord(value: string | null): number | null {
   if (value == null || value === "") {
@@ -59,7 +66,7 @@ function buildGoogleStaticMapUrl(params: {
   search.set("scale", "2")
   search.set("maptype", "roadmap")
 
-  for (const style of GRAYSCALE_STYLE_PARAMS) {
+  for (const style of STATIC_MAP_STYLE_PARAMS) {
     search.append("style", style)
   }
 

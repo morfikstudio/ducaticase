@@ -47,19 +47,19 @@ function googleMapsSearchUrl(
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`
 }
 
-type ListingLocationMapProps = {
+export type LocationMapProps = {
   lat: number
   lng: number
   location: Parameters<typeof buildListingLocationText>[0]
   positionInfoText?: string | null
 }
 
-export function ListingLocationMap({
+export function LocationMap({
   lat,
   lng,
   location,
   positionInfoText,
-}: ListingLocationMapProps) {
+}: LocationMapProps) {
   const { ref: wrapRef } = useGsapReveal()
   const t = useTranslations("listingDetail")
 
@@ -140,12 +140,28 @@ export function ListingLocationMap({
       <span
         aria-hidden
         className={cn(
-          "pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2",
-          "flex size-7 items-center justify-center rounded-full bg-black shadow-md",
-          "md:size-8",
+          "pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-full",
+          "drop-shadow-md",
         )}
       >
-        <span className="size-1.5 rounded-full bg-white md:size-2" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={32}
+          height={40}
+          viewBox="0 0 32 40"
+          fill="none"
+          className="h-10 w-8 md:h-12 md:w-[38.4px]"
+          aria-hidden
+        >
+          <path
+            d="M15.6738 39.4517C21.1966 34.344 25.323 29.6388 28.6568 23.9272C32.7455 16.8569 31.4874 8.4531 25.474 3.54667C19.4605 -1.35977 10.6542 -1.18364 4.90491 4.12538C-6.49299 14.6302 4.0117 29.8275 15.6864 39.4517H15.6738Z"
+            fill="#FF0000"
+          />
+          <path
+            d="M14.29 10.4765C17.4602 9.68389 20.0644 11.9358 20.555 14.2632C21.1841 17.27 19.4354 19.9119 16.8941 20.5284C13.988 21.2455 11.3587 19.6729 10.5913 17.1064C9.76099 14.3513 11.0568 11.2816 14.29 10.4765Z"
+            fill="white"
+          />
+        </svg>
       </span>
     </a>
   )
