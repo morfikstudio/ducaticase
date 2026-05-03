@@ -161,6 +161,7 @@ export default async function ListingDetailPage({ params }: Props) {
               location={listing.location}
               propertySheet={listing.propertySheet}
               metadata={listing.metadata}
+              typology={listing.typology}
               locale={locale}
             />
           </section>
