@@ -86,7 +86,7 @@ export function ListingsCarousel({
                   "[&.swiper-button-disabled]:pointer-events-none",
                 )}
               >
-                <Icon type="chevron" direction="left" />
+                <Icon type="chevron" direction="left" size="s" />
               </button>
               <button
                 ref={nextRef}
@@ -104,7 +104,7 @@ export function ListingsCarousel({
                   "[&.swiper-button-disabled]:pointer-events-none",
                 )}
               >
-                <Icon type="chevron" direction="right" />
+                <Icon type="chevron" direction="right" size="s" />
               </button>
             </div>
           </div>
