@@ -35,6 +35,7 @@ export type ListingLand = {
   _updatedAt: string
   _rev: string
   isArchived?: boolean
+  sanityStudioListingUrl?: string
   listingContractType?: "sale" | "rent"
   listingSearchTokens?: string
   price?: {
@@ -278,6 +279,7 @@ export type ListingHospitality = {
   _updatedAt: string
   _rev: string
   isArchived?: boolean
+  sanityStudioListingUrl?: string
   listingContractType?: "sale" | "rent"
   listingSearchTokens?: string
   price?: {
@@ -482,6 +484,7 @@ export type ListingIndustrial = {
   _updatedAt: string
   _rev: string
   isArchived?: boolean
+  sanityStudioListingUrl?: string
   listingContractType?: "sale" | "rent"
   listingSearchTokens?: string
   price?: {
@@ -708,6 +711,7 @@ export type ListingShopsAndOffices = {
   _updatedAt: string
   _rev: string
   isArchived?: boolean
+  sanityStudioListingUrl?: string
   listingContractType?: "sale" | "rent"
   listingSearchTokens?: string
   price?: {
@@ -942,6 +946,7 @@ export type ListingCountryHouses = {
   _updatedAt: string
   _rev: string
   isArchived?: boolean
+  sanityStudioListingUrl?: string
   listingContractType?: "sale" | "rent"
   listingSearchTokens?: string
   price?: {
@@ -1177,6 +1182,7 @@ export type ListingResidential = {
   _updatedAt: string
   _rev: string
   isArchived?: boolean
+  sanityStudioListingUrl?: string
   listingContractType?: "sale" | "rent"
   listingSearchTokens?: string
   price?: {

@@ -32,6 +32,7 @@ import {
   heatingField,
   isArchivedField,
   listingContractTypeField,
+  listingPublicPageLinkField,
   listingSearchTokensField,
   listingTitleField,
   mapField,
@@ -61,6 +62,7 @@ export const listingCountryHouses = defineType({
   fields: [
     /* Scheda immobile */
     isArchivedField({ group: "propertySheet" }),
+    listingPublicPageLinkField({ group: "propertySheet" }),
     listingContractTypeField({ required: true, group: "propertySheet" }),
     listingSearchTokensField({ group: "propertySheet" }),
     priceField({ group: "propertySheet" }),

@@ -202,6 +202,10 @@ export {
   type IsArchivedFieldOptions,
 } from "./listing/isArchivedField"
 export {
+  listingPublicPageLinkField,
+  type ListingPublicPageLinkFieldOptions,
+} from "./listing/listingPublicPageLinkField"
+export {
   listingContractTypeField,
   type ListingContractTypeFieldOptions,
 } from "./listing/listingContractTypeField"

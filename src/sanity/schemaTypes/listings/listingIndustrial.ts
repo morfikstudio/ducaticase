@@ -36,6 +36,7 @@ import {
   industrialTypologyField,
   isArchivedField,
   listingContractTypeField,
+  listingPublicPageLinkField,
   listingSearchTokensField,
   listingTitleField,
   landAreaSqmField,
@@ -70,6 +71,7 @@ export const listingIndustrial = defineType({
   fields: [
     /* Scheda immobile */
     isArchivedField({ group: "propertySheet" }),
+    listingPublicPageLinkField({ group: "propertySheet" }),
     listingContractTypeField({ required: true, group: "propertySheet" }),
     listingSearchTokensField({ group: "propertySheet" }),
     priceField({ group: "propertySheet" }),
