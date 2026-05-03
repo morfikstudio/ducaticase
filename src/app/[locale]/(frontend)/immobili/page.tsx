@@ -40,9 +40,7 @@ export default async function ListingsPage({ params }: ListingsPageProps) {
     <main className={cn("w-full overflow-x-clip", "pt-32 md:pt-54", "pb-24")}>
       <ListingsStoreHydrator listings={listings} />
       <Suspense fallback={<LoadingSpinner className="min-h-[40vh]" />}>
-        <section>
-          <ListingsResults locale={locale} />
-        </section>
+        <ListingsResults locale={locale} />
       </Suspense>
     </main>
   )

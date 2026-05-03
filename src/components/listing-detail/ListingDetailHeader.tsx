@@ -53,7 +53,6 @@ export function ListingDetailHeader({
   )
   const typologyLabel = listingTypologyLabel(metadata._type, typology, locale)
   const specParts = [
-    contractLabel,
     typologyLabel,
     sqm ? `${sqm} ${t("squareMeters")}` : null,
   ].filter(Boolean)
@@ -72,7 +71,6 @@ export function ListingDetailHeader({
             <h1
               className={cn(
                 "type-listing-card-title md:type-heading-2",
-                "text-primary",
                 "w-full md:w-1/2",
               )}
             >
@@ -80,17 +78,20 @@ export function ListingDetailHeader({
             </h1>
           ) : null}
 
-          {price ? (
-            <p
-              className={cn(
-                "type-body-1 md:type-heading-2",
-                "text-primary",
-                "w-full md:w-1/2 md:text-right",
-              )}
-            >
-              {price}
-            </p>
-          ) : null}
+          <div
+            className={cn(
+              "w-full md:w-1/2 md:text-right",
+              "flex gap-2 md:justify-end",
+            )}
+          >
+            {price ? (
+              <p className={cn("type-body-1 md:type-heading-2")}>{price}</p>
+            ) : null}
+
+            {contractLabel ? (
+              <p className="type-body-1 md:type-heading-2">({contractLabel})</p>
+            ) : null}
+          </div>
         </div>
 
         <div
@@ -102,14 +103,10 @@ export function ListingDetailHeader({
         >
           {locationText ? (
             <div className="flex flex-col gap-2">
-              <p className="type-body-2 md:type-body-1 text-primary">
-                {locationText}
-              </p>
+              <p className="type-body-2 md:type-body-1">{locationText}</p>
 
               {specParts.length > 0 ? (
-                <p className="type-body-2 text-primary">
-                  {specParts.join(" | ")}
-                </p>
+                <p className="type-body-2">{specParts.join(" | ")}</p>
               ) : null}
             </div>
           ) : null}

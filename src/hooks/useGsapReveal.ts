@@ -10,21 +10,23 @@ import { useSplashContext } from "@/components/providers/SplashProvider"
 export type UseGsapRevealOptions<T extends HTMLElement = HTMLDivElement> = {
   /**
    * When `false`, no GSAP styles or tweens run on the observed element; only
-   * `load` / `show` (viewport) update. `ready` and `fallbackRevealMs` apply only
-   * to the reveal animation, not to `show`.
+   * `load` / `show` (viewport) updates from IntersectionObserver.
+   * `fallbackRevealMs` applies only to the reveal animation path.
    */
   animate?: boolean
   /**
    * Element to observe and optionally animate. Defaults to an internal ref
    * returned as `ref`. If the ref’s `.current` is still `null` on the first
-   * effect run (e.g. conditional child), observers are not attached until you
-   * remount the hook or point the ref at a mounted node.
+   * effect run (e.g. conditional child), IntersectionObserver setup and the
+   * initial `gsap.set` retry when `ready` becomes true (or stays default `true`).
    */
   elementRef?: RefObject<T | null>
   /**
    * External readiness gate. Animation fires only when both the element is in
    * view AND `ready` is true. Defaults to `true` so components that have no
    * async dependency can omit it entirely. Ignored when `animate` is `false`.
+   * When `ready` is false on the first paint and later becomes true, viewport
+   * observers and initial hide styling re-run so a lazily mounted node is observed.
    */
   ready?: boolean
   duration?: number
@@ -117,7 +119,7 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
       loadObserver.disconnect()
       showObserver.disconnect()
     }
-  }, [targetRef])
+  }, [targetRef, ready])
 
   // --- Fallback deadline (animation only) ---
   const [deadlineReveal, setDeadlineReveal] = useState(false)
@@ -135,7 +137,7 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
   useLayoutEffect(() => {
     if (!animate || !targetRef.current) return
     gsap.set(targetRef.current, { opacity: 0, y: fromY })
-  }, [animate, fromY, targetRef])
+  }, [animate, fromY, targetRef, ready])
 
   // --- Entry animation ---
   useEffect(() => {

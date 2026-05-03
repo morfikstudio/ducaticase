@@ -129,6 +129,7 @@ export function ListingsCarousel({
             }}
             slidesPerView={1.1}
             spaceBetween={16}
+            speed={800}
             watchOverflow
             breakpoints={{
               768: {

@@ -23,7 +23,7 @@ export function ListingsHeader({
   const t = useTranslations("listingsResults")
 
   return (
-    <section ref={wrapRef} style={{ opacity: 0 }}>
+    <div ref={wrapRef} style={{ opacity: 0 }}>
       <div
         className={cn(
           "flex items-center justify-center gap-4",
@@ -78,6 +78,6 @@ export function ListingsHeader({
       >
         {t("headerDescription")}
       </p>
-    </section>
+    </div>
   )
 }

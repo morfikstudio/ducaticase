@@ -76,8 +76,6 @@
     "sortPriceAsc": "Price ascending",
     "sortRecentDesc": "Most recent",
     "sortRecentAsc": "Least recent",
-    "toolbarSectionAriaLabel": "Filters and sorting",
-    "listingsGridSectionAriaLabel": "Search results",
     "noListingsFound": "No listings found",
     "showingPages": "Showing {page} of {totalPages}",
     "paginationNavAriaLabel": "Results pagination",

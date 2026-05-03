@@ -53,29 +53,25 @@ export function SplitSection({
           "flex h-full min-h-0 flex-col",
           "pt-12 pb-4 justify-between",
           "md:pt-24 md:pb-12",
-          "lg:py-8 lg:flex-row lg:items-stretch lg:gap-12 xl:gap-20",
-          reverse ? "lg:flex-row-reverse" : "",
+          "lg:p-8",
+          hasAnyImage && "lg:grid lg:grid-cols-2 lg:items-stretch lg:0",
         )}
       >
         <div
           className={cn(
             "flex min-h-0 min-w-0 flex-col justify-center max-lg:w-full",
-            "md:max-w-[650px]",
-            "lg:max-w-[350px] xl:max-w-[500px]",
+            "md:max-w-[650px] lg:max-w-none",
+            "lg:pl-4 lg:pr-24",
+            reverse && "lg:pl-24 lg:pr-4",
           )}
         >
-          {title ? <h2 className="type-display-1">{title}</h2> : null}
-          {subtitle ? (
-            <p className="type-body-1 mt-8 lg:mt-12">{subtitle}</p>
-          ) : null}
-
-          {body ? (
-            <PortableTextComponent
-              text={body}
-              locale={locale}
-              className="type-body-3 lg:type-body-2 mt-4 [&_p]:mt-0 [&_p+p]:mt-4"
-            />
-          ) : null}
+          <h2 className="type-display-1">{title}</h2>
+          <p className="type-body-1 mt-8 lg:mt-32">{subtitle}</p>
+          <PortableTextComponent
+            text={body}
+            locale={locale}
+            className="type-body-3 lg:type-body-2 mt-4 [&_p]:mt-0 [&_p+p]:mt-4"
+          />
         </div>
 
         {hasAnyImage ? (
@@ -83,7 +79,8 @@ export function SplitSection({
             className={cn(
               "relative mt-8 w-full",
               "max-lg:shrink-0 max-lg:aspect-2/1 max-lg:overflow-hidden",
-              "lg:mt-0 lg:h-full lg:min-h-0 lg:min-w-[50%] lg:flex-1 lg:self-stretch",
+              "lg:mt-0 lg:h-full lg:min-h-0 lg:min-w-0 lg:self-stretch",
+              reverse && "lg:col-start-1 lg:row-start-1",
             )}
           >
             <SanityImage
