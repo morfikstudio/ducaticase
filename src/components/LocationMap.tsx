@@ -47,19 +47,19 @@ function googleMapsSearchUrl(
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`
 }
 
-type ListingLocationMapProps = {
+export type LocationMapProps = {
   lat: number
   lng: number
   location: Parameters<typeof buildListingLocationText>[0]
   positionInfoText?: string | null
 }
 
-export function ListingLocationMap({
+export function LocationMap({
   lat,
   lng,
   location,
   positionInfoText,
-}: ListingLocationMapProps) {
+}: LocationMapProps) {
   const { ref: wrapRef } = useGsapReveal()
   const t = useTranslations("listingDetail")
 

@@ -23,7 +23,7 @@ import { ListingDetailHeader } from "@/components/listing-detail/ListingDetailHe
 import { ListingDescription } from "@/components/listing-detail/ListingDescription"
 import { ListingSpecs } from "@/components/listing-detail/ListingSpecs"
 import { EnergyClassDisplay } from "@/components/listing-detail/EnergyClassDisplay"
-import { ListingLocationMap } from "@/components/listing-detail/ListingLocationMap"
+import { LocationMap } from "@/components/LocationMap"
 import { RelatedListings } from "@/components/listing-detail/RelatedListings"
 
 import {
@@ -201,7 +201,7 @@ export default async function ListingDetailPage({ params }: Props) {
 
         {hasValidMapPoint ? (
           <section className="my-16 md:my-32">
-            <ListingLocationMap
+            <LocationMap
               lat={mapLat ?? 0}
               lng={mapLng ?? 0}
               location={listing.location}
