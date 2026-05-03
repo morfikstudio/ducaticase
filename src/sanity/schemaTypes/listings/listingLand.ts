@@ -16,6 +16,8 @@ import {
   isArchivedField,
   landAccessField,
   listingContractTypeField,
+  listingHighlightsField,
+  listingPublicPageLinkField,
   listingSearchTokensField,
   listingTitleField,
   mapField,
@@ -41,6 +43,7 @@ export const listingLand = defineType({
   fields: [
     /* Scheda immobile */
     isArchivedField({ group: "propertySheet" }),
+    listingPublicPageLinkField({ group: "propertySheet" }),
     listingContractTypeField({ required: true, group: "propertySheet" }),
     listingSearchTokensField({ group: "propertySheet" }),
     priceField({ group: "propertySheet" }),
@@ -64,6 +67,7 @@ export const listingLand = defineType({
     /* Campi opzionali */
     buildableField({ group: "optionals" }),
     agriculturalField({ group: "optionals" }),
+    listingHighlightsField({ group: "optionals" }),
   ],
   preview: listingPreview(),
 })

@@ -202,6 +202,10 @@ export {
   type IsArchivedFieldOptions,
 } from "./listing/isArchivedField"
 export {
+  listingPublicPageLinkField,
+  type ListingPublicPageLinkFieldOptions,
+} from "./listing/listingPublicPageLinkField"
+export {
   listingContractTypeField,
   type ListingContractTypeFieldOptions,
 } from "./listing/listingContractTypeField"
@@ -209,6 +213,10 @@ export {
   listingSearchTokensField,
   type ListingSearchTokensFieldOptions,
 } from "./listing/listingSearchTokensField"
+export {
+  listingHighlightsField,
+  type ListingHighlightsFieldOptions,
+} from "./listing/listingHighlightsField"
 
 /* Industrial (listing-specific fields; wire in listing schemas as needed) */
 export {

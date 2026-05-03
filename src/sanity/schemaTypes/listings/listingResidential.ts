@@ -35,6 +35,8 @@ import {
   mainImageField,
   positionInfoField,
   listingContractTypeField,
+  listingHighlightsField,
+  listingPublicPageLinkField,
   listingSearchTokensField,
   parkingSpacesField,
   priceField,
@@ -59,6 +61,7 @@ export const listingResidential = defineType({
   fields: [
     /* Scheda immobile */
     isArchivedField({ group: "propertySheet" }),
+    listingPublicPageLinkField({ group: "propertySheet" }),
     listingContractTypeField({ required: true, group: "propertySheet" }),
     listingSearchTokensField({ group: "propertySheet" }),
     priceField({ group: "propertySheet" }),
@@ -100,6 +103,7 @@ export const listingResidential = defineType({
     hasTennisCourtField({ group: "optionals" }),
     hasAccessibleAccessField({ group: "optionals" }),
     climateControlField({ group: "optionals" }),
+    listingHighlightsField({ group: "optionals" }),
   ],
   preview: listingPreview(),
 })

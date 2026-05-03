@@ -3,6 +3,8 @@
 import { useTranslations } from "next-intl"
 
 import type { AppLocale } from "@/i18n/routing"
+import { listingContractTypeLabel } from "@/sanity/lib/listingContractTypeLabel"
+import { listingTypologyLabel } from "@/sanity/lib/listingTypologyLabel"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
 
@@ -21,6 +23,7 @@ type ListingDetailHeaderProps = {
   location: Listing["location"]
   propertySheet: Listing["propertySheet"]
   metadata: Listing["metadata"]
+  typology: Listing["typology"]
   locale: AppLocale
 }
 
@@ -29,6 +32,7 @@ export function ListingDetailHeader({
   location,
   propertySheet,
   metadata,
+  typology,
   locale,
 }: ListingDetailHeaderProps) {
   const { ref: wrapRef } = useGsapReveal({ delay: 0.2 })
@@ -43,10 +47,15 @@ export function ListingDetailHeader({
   )
 
   const sqm = propertySheet?.commercialAreaSqm
+  const contractLabel = listingContractTypeLabel(
+    metadata.listingContractType,
+    locale,
+  )
+  const typologyLabel = listingTypologyLabel(metadata._type, typology, locale)
   const specParts = [
+    contractLabel,
+    typologyLabel,
     sqm ? `${sqm} ${t("squareMeters")}` : null,
-    `Placeholder 1`,
-    `Placeholder 2`,
   ].filter(Boolean)
 
   return (

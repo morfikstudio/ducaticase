@@ -682,7 +682,8 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
         pool,
         hasTennisCourt,
         hasAccessibleAccess,
-        climateControl
+        climateControl,
+        highlights
       },
       _type == "listingCountryHouses" => {
         outdoorAreaSqm,
@@ -700,7 +701,8 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
         hasTennisCourt,
         hasAccessibleAccess,
         climateControl,
-        condoFees
+        condoFees,
+        highlights
       },
       _type == "listingShopsAndOffices" => {
         furnishing,
@@ -715,7 +717,8 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
         climateControl,
         conciergeServiceShops,
         officeLayout,
-        condoFees
+        condoFees,
+        highlights
       },
       _type == "listingIndustrial" => {
         hasLoadingDocks,
@@ -734,7 +737,8 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
         hasAlarmSystem,
         hasAccessibleAccess,
         climateControl,
-        heating
+        heating,
+        highlights
       },
       _type == "listingHospitality" => {
         hasAccessibleRestroom,
@@ -750,11 +754,13 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
         heating,
         pool,
         hasTennisCourt,
-        customSpecifications
+        customSpecifications,
+        highlights
       },
       _type == "listingLand" => {
         isBuildable,
-        isAgricultural
+        isAgricultural,
+        highlights
       }
     ),
     "relatedListings": *[

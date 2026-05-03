@@ -25,6 +25,8 @@ import {
   heatingField,
   isArchivedField,
   listingContractTypeField,
+  listingHighlightsField,
+  listingPublicPageLinkField,
   listingSearchTokensField,
   listingTitleField,
   mapField,
@@ -55,6 +57,7 @@ export const listingHospitality = defineType({
   fields: [
     /* Scheda immobile */
     isArchivedField({ group: "propertySheet" }),
+    listingPublicPageLinkField({ group: "propertySheet" }),
     listingContractTypeField({ required: true, group: "propertySheet" }),
     listingSearchTokensField({ group: "propertySheet" }),
     priceField({ group: "propertySheet" }),
@@ -92,6 +95,7 @@ export const listingHospitality = defineType({
     poolField({ group: "optionals" }),
     hasTennisCourtField({ group: "optionals" }),
     customSpecificationsField({ group: "optionals" }),
+    listingHighlightsField({ group: "optionals" }),
   ],
   preview: listingPreview(),
 })
