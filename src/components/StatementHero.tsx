@@ -11,6 +11,7 @@ import { cn } from "@/utils/classNames"
 
 import { CONTAINER_LAYOUT_CLASSNAME } from "@/components/ui/Container"
 import { SanityImage } from "@/components/ui/SanityImage"
+import { TitleReveal } from "@/components/ui/TitleReveal"
 
 const tabletDesktopImageWidth =
   "lg:w-[calc(50vw+min(100vw,86rem)/4-12px)] xl:w-[calc(50vw+min(100vw,86rem)/4-24px)]" as const
@@ -74,7 +75,7 @@ export function StatementHero({
     }
   }, [])
 
-  const { ref: wrapRef } = useGsapReveal({
+  const { ref: wrapRef, show } = useGsapReveal({
     ready: imageReady,
     clearProps: "opacity,y",
   })
@@ -141,7 +142,11 @@ export function StatementHero({
               "lg:col-span-10 lg:col-start-3 lg:max-w-none lg:translate-y-0 lg:px-0",
             )}
           >
-            {title.replace(/<br\s*\/?>/gi, "\n")}
+            <TitleReveal
+              title={title.replace(/<br\s*\/?>/gi, "\n")}
+              tag="h2"
+              show={imageReady && show}
+            />
           </div>
         </div>
       </div>

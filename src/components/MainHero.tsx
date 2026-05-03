@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
 import type { AppLocale } from "@/i18n/routing"
@@ -11,6 +11,7 @@ import { cn } from "@/utils/classNames"
 
 import { Container } from "@/components/ui/Container"
 import { SanityImage } from "@/components/ui/SanityImage"
+import { TitleReveal } from "@/components/ui/TitleReveal"
 
 type MainHeroProps = {
   locale: AppLocale
@@ -26,7 +27,7 @@ export function MainHero({
   imagePortrait,
 }: MainHeroProps) {
   const [imageReady, setImageReady] = useState(false)
-  const { ref: wrapRef } = useGsapReveal({ ready: imageReady })
+  const { ref: wrapRef, show } = useGsapReveal({ ready: imageReady })
 
   const hasMedia = Boolean(imageLandscape ?? imagePortrait)
   const hasTitle = title.trim() !== ""
@@ -94,14 +95,12 @@ export function MainHero({
               "pointer-events-auto",
             )}
           >
-            <h1
-              className={cn(
-                "type-display-1 max-w-[min(100%,42rem)] text-balance text-left",
-                "drop-shadow-[0_1px_2px_rgb(0_0_0/0.35)]",
-              )}
-            >
-              {title}
-            </h1>
+            <TitleReveal
+              title={title}
+              tag="h1"
+              show={show && (!hasMedia || imageReady)}
+              className="max-w-[min(100%,42rem)]"
+            />
           </Container>
         </div>
       ) : null}

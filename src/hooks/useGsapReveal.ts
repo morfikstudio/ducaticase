@@ -60,7 +60,7 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
     ease = "power2.out",
     fromY = 20,
     clearProps = "all",
-    delay = 0,
+    delay = 0.2,
     fallbackRevealMs,
   } = options ?? {}
 

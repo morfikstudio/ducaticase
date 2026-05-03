@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/Button"
 import { Container } from "@/components/ui/Container"
 import { PortableTextComponent } from "@/components/ui/PortableText"
 import { SanityImage } from "@/components/ui/SanityImage"
+import { TitleReveal } from "@/components/ui/TitleReveal"
 
 const { landscape: heroLandscapeCrop, portrait: heroPortraitCrop } =
   listYourPropertyHeroRecommendedCrop
@@ -52,7 +53,7 @@ export function HeroContent({
     })
   }, [])
 
-  const { ref: wrapRef } = useGsapReveal({ ready: imageReady })
+  const { ref: wrapRef, show } = useGsapReveal({ ready: imageReady })
 
   const hasTitle = title.trim() !== ""
   const hasSubtitle = subtitle.trim() !== ""
@@ -91,16 +92,12 @@ export function HeroContent({
         )}
       >
         {hasTitle ? (
-          <h1
-            className={cn(
-              "type-display-1",
-              "max-lg:text-[56px] max-lg:leading-[56px]",
-              "md:max-w-[500px] lg:max-w-[900px]",
-              "flex-1",
-            )}
-          >
-            {title}
-          </h1>
+          <TitleReveal
+            title={title}
+            tag="h1"
+            show={show}
+            className="max-lg:text-[56px] max-w-[550px] lg:max-w-[900px] flex-1"
+          />
         ) : null}
 
         {hasSubtitle ? (
