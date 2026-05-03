@@ -42,7 +42,11 @@ export function ListingsList({
   totalPages,
   onUserPageChange,
 }: ListingsListProps) {
-  const { ref: wrapRef } = useGsapReveal()
+  const { ref: wrapRef } = useGsapReveal({
+    ready: isListingsHydrated,
+    delay: 0.5,
+  })
+
   const t = useTranslations("listingsResults")
   const ulRef = useRef<HTMLUListElement>(null)
 
@@ -134,15 +138,15 @@ export function ListingsList({
   }
 
   if (showNoListingsMessage) {
-    return <p className="type-body-1 text-primary">{t("noListingsFound")}</p>
+    return (
+      <div ref={wrapRef} style={{ opacity: 0 }}>
+        <p className="type-body-1 text-primary">{t("noListingsFound")}</p>
+      </div>
+    )
   }
 
   return (
-    <section
-      ref={wrapRef}
-      style={{ opacity: 0 }}
-      aria-label={t("listingsGridSectionAriaLabel")}
-    >
+    <div ref={wrapRef} style={{ opacity: 0 }}>
       <ul
         ref={ulRef}
         className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8"
@@ -161,6 +165,6 @@ export function ListingsList({
           />
         </div>
       ) : null}
-    </section>
+    </div>
   )
 }

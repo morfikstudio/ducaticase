@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import type { AppLocale } from "@/i18n/routing"
 import { usePathname, useRouter } from "@/i18n/navigation"
+
 import { useListingsStore } from "@/stores/listingsStore"
 
 import { useLenis } from "@/components/providers/LenisProvider"
@@ -293,11 +294,7 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
           />
         </div>
 
-        <div
-          ref={resultsAnchorRef}
-          className="mt-12 min-w-0 scroll-mt-32"
-          aria-live="polite"
-        >
+        <div ref={resultsAnchorRef} className="mt-12 min-w-0 scroll-mt-32">
           <ListingsList
             key={currentPage}
             listings={paginatedListings}

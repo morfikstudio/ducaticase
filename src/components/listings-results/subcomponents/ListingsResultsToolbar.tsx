@@ -52,11 +52,7 @@ export function ListingsResultsToolbar({
   const { ref: wrapRef } = useGsapReveal()
 
   return (
-    <section
-      ref={wrapRef}
-      style={{ opacity: 0 }}
-      aria-label={t("toolbarSectionAriaLabel")}
-    >
+    <div ref={wrapRef} style={{ opacity: 0 }}>
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-end gap-4 lg:justify-between">
           <div className="hidden lg:inline-flex lg:w-auto">
@@ -119,6 +115,6 @@ export function ListingsResultsToolbar({
           </div>
         </div>
       ) : null}
-    </section>
+    </div>
   )
 }
