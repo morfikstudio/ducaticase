@@ -4,9 +4,12 @@ import { useLayoutEffect, useRef } from "react"
 import { useTranslations } from "next-intl"
 import gsap from "gsap"
 
-import { ListingCard } from "@/components/ListingCard"
 import type { AppLocale } from "@/i18n/routing"
 import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
+
+import { useGsapReveal } from "@/hooks/useGsapReveal"
+
+import { ListingCard } from "@/components/ListingCard"
 
 import { ListingsPagination } from "./ListingsPagination"
 
@@ -39,6 +42,7 @@ export function ListingsList({
   totalPages,
   onUserPageChange,
 }: ListingsListProps) {
+  const { ref: wrapRef } = useGsapReveal()
   const t = useTranslations("listingsResults")
   const ulRef = useRef<HTMLUListElement>(null)
 
@@ -134,7 +138,11 @@ export function ListingsList({
   }
 
   return (
-    <section aria-label={t("listingsGridSectionAriaLabel")}>
+    <section
+      ref={wrapRef}
+      style={{ opacity: 0 }}
+      aria-label={t("listingsGridSectionAriaLabel")}
+    >
       <ul
         ref={ulRef}
         className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8"
