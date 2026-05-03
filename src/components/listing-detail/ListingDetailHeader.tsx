@@ -133,9 +133,8 @@ export function ListingDetailHeader({
             </Button>
 
             <Button
-              type="button"
+              href="/contact"
               variant="primary"
-              onClick={() => console.log("bookVisit")}
               className="w-full md:w-auto"
             >
               {t("bookVisit")}
