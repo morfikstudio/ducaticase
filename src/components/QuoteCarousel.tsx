@@ -22,6 +22,7 @@ import { cn } from "@/utils/classNames"
 import { Icon } from "@/components/ui/Icon"
 import { PortableTextComponent } from "@/components/ui/PortableText"
 import { Container } from "@/components/ui/Container"
+import { TitleReveal } from "@/components/ui/TitleReveal"
 
 const QUOTE_CAROUSEL_LG_PX = 1024
 /** Swiper loop + centeredSlides at lg (~slidesPerView 2.25): need enough real slides. */
@@ -167,7 +168,7 @@ export function QuoteCarousel({
   title,
   items,
 }: QuoteCarouselProps) {
-  const { ref: wrapRef } = useGsapReveal()
+  const { ref: wrapRef, show } = useGsapReveal()
 
   const swiperRef = useRef<SwiperType | null>(null)
   const prevRef = useRef<HTMLButtonElement>(null)
@@ -240,10 +241,14 @@ export function QuoteCarousel({
               className={cn("flex min-w-0 shrink-0 flex-col gap-8 lg:gap-12")}
             >
               {title ? <span className="type-body-2">{title}</span> : null}
+
               {subtitle ? (
-                <h2 className="type-display-1 text-dark-gray max-w-[550px]">
-                  {subtitle}
-                </h2>
+                <TitleReveal
+                  title={subtitle}
+                  tag="h2"
+                  show={show}
+                  className="text-dark-gray max-w-[550px]"
+                />
               ) : null}
             </div>
 

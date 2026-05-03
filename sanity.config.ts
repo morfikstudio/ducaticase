@@ -40,6 +40,15 @@ export default defineConfig({
       }),
     },
     {
+      id: "siteContent-contactPage",
+      title: "Contatti",
+      schemaType: "siteContent",
+      value: () => ({
+        title: "Contatti",
+        sectionType: "contactPage",
+      }),
+    },
+    {
       id: "siteContent-listYourPropertyPage",
       title: "Affidaci il tuo immobile",
       schemaType: "siteContent",

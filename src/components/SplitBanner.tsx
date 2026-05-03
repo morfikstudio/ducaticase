@@ -11,6 +11,7 @@ import { cn } from "@/utils/classNames"
 
 import { Button } from "@/components/ui/Button"
 import { CONTAINER_LAYOUT_CLASSNAME } from "@/components/ui/Container"
+import { ImageParallax } from "@/components/ui/ImageParallax"
 import { SanityImage } from "@/components/ui/SanityImage"
 
 function brTagsToNewlines(text: string): string {
@@ -93,9 +94,9 @@ export function SplitBanner({
           </div>
 
           {hasImage ? (
-            <div
+            <ImageParallax
               className={cn(
-                "relative aspect-720/686 w-full min-h-0 overflow-hidden md:aspect-auto md:h-full",
+                "aspect-720/686 w-full min-h-0 md:aspect-auto md:h-full",
                 reverse ? "md:order-1" : "md:order-2",
               )}
             >
@@ -119,7 +120,7 @@ export function SplitBanner({
                 aria-hidden
                 className="pointer-events-none absolute inset-0 bg-linear-to-b from-[rgba(27,27,27,0.22)] to-[rgba(0,0,0,0)] to-[20.452%]"
               />
-            </div>
+            </ImageParallax>
           ) : null}
         </div>
       </div>

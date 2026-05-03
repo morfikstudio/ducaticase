@@ -1,15 +1,27 @@
 "use client"
 
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react"
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react"
+
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 import type { AppLocale } from "@/i18n/routing"
 
 import type { LocalizedPortableText } from "@/sanity/types"
 
 import { useGsapReveal } from "@/hooks/useGsapReveal"
-import { useAnimationKey } from "@/components/providers/LenisProvider"
+import { useAnimationKey, useLenis } from "@/components/providers/LenisProvider"
 
 import { cn } from "@/utils/classNames"
+import { prefersReducedMotion } from "@/utils/reducedMotion"
+
+gsap.registerPlugin(ScrollTrigger)
 
 import { Container } from "@/components/ui/Container"
 import { Button } from "@/components/ui/Button"
@@ -99,9 +111,63 @@ function StickyTextBlocksDesktop({
   ctaLabel,
   ctaHref,
   items,
+  animationKey,
 }: StickyTextSharedProps) {
+  const rootRef = useRef<HTMLDivElement>(null)
+  const blockRefs = useRef(new Map<string, HTMLDivElement>())
+  const lenis = useLenis()
+
+  const setBlockRef = useCallback(
+    (key: string) => (el: HTMLDivElement | null) => {
+      if (el) {
+        blockRefs.current.set(key, el)
+      } else {
+        blockRefs.current.delete(key)
+      }
+    },
+    [],
+  )
+
+  useEffect(() => {
+    if (!lenis) return
+    if (prefersReducedMotion()) return
+
+    const root = rootRef.current
+    if (!root) return
+
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia()
+
+      mm.add("(min-width: 1024px)", () => {
+        for (const { key } of items) {
+          const el = blockRefs.current.get(key)
+          if (!el) continue
+
+          gsap.fromTo(
+            el,
+            { opacity: 0, y: 48 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: el,
+                start: "top 80%",
+                end: "top 80%",
+                invalidateOnRefresh: true,
+              },
+            },
+          )
+        }
+      })
+    }, root)
+
+    return () => ctx.revert()
+  }, [lenis, items, animationKey])
+
   return (
-    <div className="hidden lg:grid lg:grid-cols-12 lg:gap-x-4">
+    <div ref={rootRef} className="hidden lg:grid lg:grid-cols-12 lg:gap-x-4">
       <StickyTextBlocksHeader
         locale={locale}
         title={title}
@@ -113,13 +179,13 @@ function StickyTextBlocksDesktop({
 
       <div className="lg:col-start-7 lg:col-span-6">
         {items.map(({ key, title: itemTitle, text }, index) => (
-          <React.Fragment key={key}>
+          <div
+            key={key}
+            ref={setBlockRef(key)}
+            className={cn(index > 0 ? "mt-48" : "")}
+          >
             <div
-              className={cn(
-                "flex pb-6",
-                "bg-primary border-b border-gray/50",
-                index > 0 ? "mt-48" : "",
-              )}
+              className={cn("flex pb-6", "bg-primary border-b border-gray/50")}
             >
               <h3 className="type-heading-1">{itemTitle}</h3>
             </div>
@@ -135,7 +201,7 @@ function StickyTextBlocksDesktop({
                 className="type-body-3"
               />
             </div>
-          </React.Fragment>
+          </div>
         ))}
       </div>
     </div>
@@ -322,6 +388,7 @@ export function StickyTextBlocks({
             ctaLabel={ctaLabel}
             ctaHref={ctaHref}
             items={items}
+            animationKey={animationKey}
           />
         </div>
       </Container>

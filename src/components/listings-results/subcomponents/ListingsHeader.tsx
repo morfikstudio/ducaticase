@@ -6,6 +6,8 @@ import { useGsapReveal } from "@/hooks/useGsapReveal"
 
 import { cn } from "@/utils/classNames"
 
+import { TitleReveal } from "@/components/ui/TitleReveal"
+
 type CountryValue = "it" | "intl"
 
 type ListingsHeaderProps = {
@@ -17,7 +19,7 @@ export function ListingsHeader({
   activeCountry,
   onCountrySwitch,
 }: ListingsHeaderProps) {
-  const { ref: wrapRef } = useGsapReveal()
+  const { ref: wrapRef, show } = useGsapReveal()
   const t = useTranslations("listingsResults")
 
   return (
@@ -59,10 +61,21 @@ export function ListingsHeader({
         </button>
       </div>
 
-      <h1 className={cn("type-display-1 text-primary text-center", "mt-12")}>
-        {t("headerTitle")}
-      </h1>
-      <p className="type-body-2 text-primary text-center mt-6">
+      <TitleReveal
+        title={t("headerTitle")}
+        tag="h1"
+        show={show}
+        className="text-center mt-12"
+      />
+
+      <p
+        className={cn(
+          "type-body-2 text-primary text-center mt-6",
+          !show && "opacity-0 translate-y-4",
+          "transition-all duration-500 ease-out delay-500",
+          "motion-reduce:transition-none motion-reduce:duration-0",
+        )}
+      >
         {t("headerDescription")}
       </p>
     </section>

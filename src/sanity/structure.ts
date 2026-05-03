@@ -2,6 +2,7 @@ import {
   AddDocumentIcon,
   ArchiveIcon,
   CaseIcon,
+  EnvelopeIcon,
   HomeIcon,
   LaunchIcon,
   LinkIcon,
@@ -140,6 +141,24 @@ export const structure: StructureResolver = (S) =>
                     )
                     .initialValueTemplates([
                       S.initialValueTemplateItem("siteContent-aboutPage"),
+                    ])
+                    .defaultOrdering([
+                      { field: "_updatedAt", direction: "desc" },
+                    ]),
+                ),
+              S.listItem()
+                .title("Contatti")
+                .icon(EnvelopeIcon)
+                .id("siteContentContactPage")
+                .child(
+                  S.documentList()
+                    .title("Contatti")
+                    .schemaType("siteContent")
+                    .filter(
+                      '_type == "siteContent" && sectionType == "contactPage"',
+                    )
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem("siteContent-contactPage"),
                     ])
                     .defaultOrdering([
                       { field: "_updatedAt", direction: "desc" },

@@ -20,6 +20,8 @@ import { homePartnerItem } from "./objects/homePartnerItem"
 import { homePayoffResponsiveImage } from "./objects/homePayoffResponsiveImage"
 import { homeTestimonialItem } from "./objects/homeTestimonialItem"
 import { businessPageSettings } from "./objects/businessPageSettings"
+import { contactPageResponsiveImage } from "./objects/contactPageResponsiveImage"
+import { contactPageSettings } from "./objects/contactPageSettings"
 import { listYourPropertyPageSettings } from "./objects/listYourPropertyPageSettings"
 import { tailoredSearchPageSettings } from "./objects/tailoredSearchPageSettings"
 import { listYourPropertyServiceItem } from "./objects/listYourPropertyServiceItem"
@@ -55,6 +57,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     teamMemberType,
     aboutTeamSection,
     aboutPageSettings,
+    contactPageResponsiveImage,
+    contactPageSettings,
     listYourPropertyServiceItem,
     listYourPropertyValueItem,
     listYourPropertyPageSettings,

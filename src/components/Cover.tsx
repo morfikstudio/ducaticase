@@ -10,6 +10,7 @@ import { listYourPropertyCoverRecommendedCrop } from "@/lib/listYourPropertyCove
 
 import { cn } from "@/utils/classNames"
 
+import { ImageParallax } from "@/components/ui/ImageParallax"
 import { SanityImage } from "@/components/ui/SanityImage"
 
 const { landscape: coverLandscapeCrop, portrait: coverPortraitCrop } =
@@ -35,6 +36,7 @@ export function Cover({
   const { ref: wrapRef } = useGsapReveal({ fromY: 0 })
 
   const hasMedia = Boolean(imageLandscape ?? imagePortrait)
+
   if (!hasMedia) {
     return null
   }
@@ -45,11 +47,9 @@ export function Cover({
       style={{ opacity: 0 }}
       className={cn("relative isolate w-full", className)}
     >
-      <div
-        className={cn(
-          "relative w-full overflow-hidden",
-          "aspect-4/5 md:aspect-video",
-        )}
+      <ImageParallax
+        variant="prominent"
+        className={cn("w-full", "aspect-4/5 md:aspect-video")}
       >
         <SanityImage
           landscape={imageLandscape}
@@ -70,7 +70,7 @@ export function Cover({
           altFallback={altFallback}
           className="object-cover object-center"
         />
-      </div>
+      </ImageParallax>
     </div>
   )
 }

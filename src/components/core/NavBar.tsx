@@ -64,7 +64,7 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
       } else if (velocity < -VELOCITY_THRESHOLD) {
         // Scrolling up — show with background
         el.style.transform = ""
-        el.style.background = "rgba(24, 24, 24, 0.15)"
+        el.style.background = "rgba(24, 24, 24, 0.5)"
         el.style.backdropFilter = "blur(12px)"
       }
     }

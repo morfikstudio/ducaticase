@@ -115,6 +115,36 @@ export const ABOUT_SITE_CONTENT_QUERY = defineQuery(groq`
     }
 `)
 
+export const CONTACT_SITE_CONTENT_QUERY = defineQuery(groq`
+  *[_type == "siteContent" && sectionType == "contactPage"]
+    | order(_updatedAt desc)
+    [0] {
+      _id,
+      contactPage {
+        title,
+        subtitle,
+        text,
+        heroImage {
+          "imageLandscape": imageLandscape {
+            ...,
+            asset->
+          },
+          "imagePortrait": imagePortrait {
+            ...,
+            asset->
+          }
+        },
+        info {
+          email,
+          phone,
+          whatsapp,
+          address
+        },
+        map
+      }
+    }
+`)
+
 export const HOME_SITE_CONTENT_QUERY = defineQuery(groq`
   *[_type == "siteContent" && sectionType == "homePage"]
     | order(_updatedAt desc)

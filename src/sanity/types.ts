@@ -21,6 +21,13 @@ type ArrayOf<T> = Array<
 >
 
 // Source: src/sanity/schema.json
+export type Info = {
+  email?: string
+  phone?: string
+  whatsapp?: string
+  address?: string
+}
+
 export type SanityImageAssetReference = {
   _ref: string
   _type: "reference"
@@ -1448,17 +1455,19 @@ export type SiteContent = {
   _rev: string
   title?: string
   sectionType?:
-    | "footer"
     | "menu"
+    | "footer"
     | "homePage"
-    | "aboutPage"
     | "listYourPropertyPage"
-    | "businessPage"
     | "tailoredSearchPage"
+    | "businessPage"
+    | "aboutPage"
+    | "contactPage"
   footer?: FooterSettings
   menu?: MenuSettings
   homePage?: HomePageSettings
   aboutPage?: AboutPageSettings
+  contactPage?: ContactPageSettings
   listYourPropertyPage?: ListYourPropertyPageSettings
   businessPage?: BusinessPageSettings
   tailoredSearchPage?: TailoredSearchPageSettings
@@ -1578,6 +1587,16 @@ export type ListYourPropertyPageSettings = {
   bannerTitle?: LocalizedString
   bannerText?: LocalizedPortableText
   bannerCta?: AboutHighlightCta
+}
+
+export type ContactPageSettings = {
+  _type: "contactPageSettings"
+  title?: LocalizedString
+  heroImage?: ContactPageResponsiveImage
+  subtitle?: LocalizedString
+  text?: LocalizedPortableText
+  info?: Info
+  map?: Geopoint
 }
 
 export type AboutPageSettings = {
@@ -1762,6 +1781,26 @@ export type ListYourPropertyServiceItem = {
   _type: "listYourPropertyServiceItem"
   title?: LocalizedString
   text?: LocalizedPortableText
+}
+
+export type ContactPageResponsiveImage = {
+  _type: "contactPageResponsiveImage"
+  imageLandscape?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: LocalizedString
+    _type: "image"
+  }
+  imagePortrait?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: LocalizedString
+    _type: "image"
+  }
 }
 
 export type AboutTeamSection = {
@@ -2069,6 +2108,7 @@ export type Slug = {
 }
 
 export type AllSanitySchemaTypes =
+  | Info
   | SanityImageAssetReference
   | ListingLand
   | LocalizedPortableText
@@ -2087,6 +2127,7 @@ export type AllSanitySchemaTypes =
   | TailoredSearchPageSettings
   | BusinessPageSettings
   | ListYourPropertyPageSettings
+  | ContactPageSettings
   | AboutPageSettings
   | ListingResidentialReference
   | ListingCountryHousesReference
@@ -2102,6 +2143,7 @@ export type AllSanitySchemaTypes =
   | ListYourPropertyHeroResponsiveImage
   | ListYourPropertyValueItem
   | ListYourPropertyServiceItem
+  | ContactPageResponsiveImage
   | AboutTeamSection
   | AboutTodaySection
   | AboutHeroResponsiveImage
@@ -2430,6 +2472,85 @@ export type ABOUT_SITE_CONTENT_QUERY_RESULT = {
         > | null
       }> | null
     } | null
+  } | null
+} | null
+
+// Source: src/sanity/lib/queries.ts
+// Variable: CONTACT_SITE_CONTENT_QUERY
+// Query: *[_type == "siteContent" && sectionType == "contactPage"]    | order(_updatedAt desc)    [0] {      _id,      contactPage {        title,        subtitle,        text,        heroImage {          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        info {          email,          phone,          whatsapp,          address        },        map      }    }
+export type CONTACT_SITE_CONTENT_QUERY_RESULT = {
+  _id: string
+  contactPage: {
+    title: LocalizedString | null
+    subtitle: LocalizedString | null
+    text: LocalizedPortableText | null
+    heroImage: {
+      imageLandscape: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+      imagePortrait: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
+          uploadId?: string
+          path: string
+          url: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: LocalizedString
+        _type: "image"
+      } | null
+    } | null
+    info: {
+      email: string | null
+      phone: string | null
+      whatsapp: string | null
+      address: string | null
+    } | null
+    map: Geopoint | null
   } | null
 } | null
 
@@ -8191,6 +8312,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "siteContent" && sectionType == "menu"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      menu {\n        headerTagline,\n        payoff\n      }\n    }\n': MENU_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "footer"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      footer {\n        payoff,\n        email,\n        phone,\n        addressLine1,\n        addressLine2,\n        vat,\n        privacyPolicyLabel,\n        privacyPolicyPath\n      }\n    }\n': FOOTER_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "aboutPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      aboutPage {\n        heroImages {\n          "imageDesktop": imageDesktop {\n            ...,\n            asset->\n          },\n          "imageMobile": imageMobile {\n            ...,\n            asset->\n          }\n        },\n        heroText,\n        historySection[] {\n          _key,\n          title,\n          subtitle,\n          body,\n          reverse,\n          images {\n            "imageDesktop": imageDesktop {\n              ...,\n              asset->\n            },\n            "imageMobile": imageMobile {\n              ...,\n              asset->\n            }\n          }\n        },\n        todaySection {\n          title,\n          subtitle,\n          text\n        },\n        highlightsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        sectorsHeading,\n        sectorsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          }\n        },\n        teamSection {\n          title,\n          subtitle,\n          text,\n          cta {\n            label,\n            path\n          },\n          teamMember[] {\n            _key,\n            title,\n            text,\n            image {\n              ...,\n              asset->\n            },\n            roles[]\n          }\n        }\n      }\n    }\n': ABOUT_SITE_CONTENT_QUERY_RESULT
+    '\n  *[_type == "siteContent" && sectionType == "contactPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      contactPage {\n        title,\n        subtitle,\n        text,\n        heroImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        info {\n          email,\n          phone,\n          whatsapp,\n          address\n        },\n        map\n      }\n    }\n': CONTACT_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "homePage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      homePage {\n        heroTitle,\n        heroImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        whoWeAreText1,\n        whoWeAreText2,\n        whoWeAreCta {\n          label,\n          path\n        },\n        payoffTitle,\n        payoffImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        highlights[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        "featuredListings": featuredListings[\n          coalesce(@->isArchived, false) != true\n        ]->{\n          _id,\n          _type,\n          title,\n          listingContractType,\n          price,\n          country,\n          city,\n          province,\n          address,\n          postalCode,\n          "typology": select(\n            _type == "listingCountryHouses" => countryHouseTypology,\n            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n            _type == "listingIndustrial" => industrialTypology,\n            true => null\n          ),\n          "mainImage": mainImage {\n            ...,\n            asset->\n          }\n        },\n        testimonialsTitle,\n        testimonialsSubtitle,\n        testimonials[] {\n          _key,\n          text,\n          name,\n          provider\n        },\n        partners[] {\n          _key,\n          name,\n          image {\n            ...,\n            asset->\n          }\n        }\n      }\n    }\n': HOME_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "listYourPropertyPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      listYourPropertyPage {\n        heroTitle,\n        heroSubtitle,\n        heroPayoff1,\n        heroPayoff2,\n        heroCta {\n          label,\n          path\n        },\n        heroImage {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "20:9",\n              "width": 1920,\n              "height": 810\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover1Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover2Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        bannerTitle,\n        bannerText,\n        bannerCta {\n          label,\n          path\n        },\n        valuesTitle,\n        valuesSubtitle,\n        valuesCta {\n          label,\n          path\n        },\n        valuesImage {\n          ...,\n          asset->\n        },\n        valuesItems[] {\n          _key,\n          title\n        },\n        servicesTitle,\n        servicesSubtitle,\n        servicesCta {\n          label,\n          path\n        },\n        servicesItems[] {\n          _key,\n          title,\n          text\n        }\n      }\n    }\n': LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "businessPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      businessPage {\n        heroTitle,\n        heroSubtitle,\n        heroPayoff1,\n        heroPayoff2,\n        heroCta {\n          label,\n          path\n        },\n        heroImage {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "20:9",\n              "width": 1920,\n              "height": 810\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover1Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover2Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        valuesTitle,\n        valuesSubtitle,\n        valuesCta {\n          label,\n          path\n        },\n        valuesImage {\n          ...,\n          asset->\n        },\n        valuesItems[] {\n          _key,\n          title\n        },\n        servicesTitle,\n        servicesSubtitle,\n        servicesCta {\n          label,\n          path\n        },\n        servicesItems[] {\n          _key,\n          title,\n          text\n        },\n        bannerPartnersTitle,\n        bannerPartnersText,\n        bannerPartnersCta {\n          label,\n          path\n        },\n        bannerPartnersItems[] {\n          _key,\n          name,\n          image {\n            ...,\n            asset->\n          }\n        }\n      }\n    }\n': BUSINESS_PAGE_SITE_CONTENT_QUERY_RESULT
