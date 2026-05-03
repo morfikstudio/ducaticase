@@ -10,6 +10,7 @@ import { useGsapReveal } from "@/hooks/useGsapReveal"
 import { cn } from "@/utils/classNames"
 
 import { CONTAINER_LAYOUT_CLASSNAME } from "@/components/ui/Container"
+import { ImageParallax } from "@/components/ui/ImageParallax"
 import { SanityImage } from "@/components/ui/SanityImage"
 import { TitleReveal } from "@/components/ui/TitleReveal"
 
@@ -80,6 +81,12 @@ export function StatementHero({
     clearProps: "opacity,y",
   })
 
+  const imageShellClass = cn(
+    "h-[480px] w-full",
+    "lg:absolute lg:inset-y-0 lg:left-0 lg:right-auto lg:h-full lg:min-h-0",
+    tabletDesktopImageWidth,
+  )
+
   return (
     <div
       ref={wrapRef}
@@ -87,14 +94,8 @@ export function StatementHero({
       className={cn("relative", className)}
     >
       <div className="relative isolate w-full lg:min-h-svh">
-        <div
-          className={cn(
-            "relative h-[480px] w-full overflow-hidden",
-            "lg:absolute lg:inset-y-0 lg:left-0 lg:right-auto lg:h-full lg:min-h-0",
-            tabletDesktopImageWidth,
-          )}
-        >
-          {hasImage ? (
+        {hasImage ? (
+          <ImageParallax className={imageShellClass}>
             <SanityImage
               landscape={imageLandscape}
               portrait={imagePortrait}
@@ -116,16 +117,16 @@ export function StatementHero({
               onLoad={handleImageSettled}
               onError={handleImageSettled}
             />
-          ) : (
-            <div aria-hidden className="absolute inset-0 bg-bg lg:min-h-full" />
-          )}
-          {hasImage ? (
             <div
               aria-hidden
               className="pointer-events-none absolute inset-0 bg-[rgba(35,35,35,0.25)]"
             />
-          ) : null}
-        </div>
+          </ImageParallax>
+        ) : (
+          <div className={cn("relative overflow-hidden", imageShellClass)}>
+            <div aria-hidden className="absolute inset-0 bg-bg lg:min-h-full" />
+          </div>
+        )}
 
         <div
           className={cn(
@@ -146,6 +147,7 @@ export function StatementHero({
               title={title.replace(/<br\s*\/?>/gi, "\n")}
               tag="h2"
               show={imageReady && show}
+              className="text-balance"
             />
           </div>
         </div>

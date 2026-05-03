@@ -82,7 +82,7 @@ export function TitleReveal({
     <Tag
       ref={titleRef}
       className={cn(
-        "type-display-1 leading-none text-left text-balance",
+        "type-display-1 leading-none text-left text-pretty",
         className,
         !show && "opacity-0",
       )}

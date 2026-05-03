@@ -15,6 +15,7 @@ import { cn } from "@/utils/classNames"
 
 import { Button } from "@/components/ui/Button"
 import { Container } from "@/components/ui/Container"
+import { ImageParallax } from "@/components/ui/ImageParallax"
 import { PortableTextComponent } from "@/components/ui/PortableText"
 import { SanityImage } from "@/components/ui/SanityImage"
 import { TitleReveal } from "@/components/ui/TitleReveal"
@@ -114,12 +115,7 @@ export function HeroContent({
 
       {hasMedia ? (
         <div className="mt-12 pl-4 md:pl-8 lg:pl-12">
-          <div
-            className={cn(
-              "relative w-full overflow-hidden",
-              "aspect-square md:aspect-20/9",
-            )}
-          >
+          <ImageParallax className="w-full aspect-square md:aspect-20/9">
             <SanityImage
               landscape={imageLandscape}
               portrait={imagePortrait}
@@ -141,7 +137,7 @@ export function HeroContent({
               onLoad={handleImageSettled}
               onError={handleImageSettled}
             />
-          </div>
+          </ImageParallax>
         </div>
       ) : null}
 
