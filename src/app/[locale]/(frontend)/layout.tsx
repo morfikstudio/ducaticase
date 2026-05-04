@@ -12,6 +12,7 @@ import type {
 import { LenisProvider } from "@/components/providers/LenisProvider"
 import { BreakpointProvider } from "@/components/providers/BreakpointProvider"
 import { FocusVisibleModality } from "@/components/providers/FocusVisibleProvider"
+import { PageTransitionProvider } from "@/components/providers/PageTransitionProvider"
 
 import { NavBar } from "@/components/core/NavBar"
 import { Footer } from "@/components/core/Footer"
@@ -50,19 +51,21 @@ export default async function FrontendLayout({
 
   return (
     <LenisProvider>
-      <SplashProvider>
-        <NavBar locale={locale} menuContent={menuContent} />
-        <div className="absolute top-0 left-0 w-full z-10">
-          <Breadcrumbs />
-        </div>
-        <div className="flex min-h-screen flex-col">
-          <div className="flex-1">{children}</div>
-        </div>
-        <Footer content={footerContent} />
-        <SplashScreen />
-      </SplashProvider>
-      <BreakpointProvider />
-      <FocusVisibleModality />
+      <PageTransitionProvider>
+        <SplashProvider>
+          <NavBar locale={locale} menuContent={menuContent} />
+          <div className="absolute top-0 left-0 w-full z-10">
+            <Breadcrumbs />
+          </div>
+          <div className="flex min-h-screen flex-col">
+            <div className="flex-1">{children}</div>
+          </div>
+          <Footer content={footerContent} />
+          <SplashScreen />
+        </SplashProvider>
+        <BreakpointProvider />
+        <FocusVisibleModality />
+      </PageTransitionProvider>
     </LenisProvider>
   )
 }

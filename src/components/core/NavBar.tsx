@@ -103,7 +103,16 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
     setIsDrawerMounted(false)
   }, [])
 
-  // Close the menu when the route changes.
+  // Close the menu as soon as a page transition starts (before pathname changes).
+  useEffect(() => {
+    const handler = () => {
+      if (isMenuOpenRef.current) closeMenu()
+    }
+    window.addEventListener("page-transition-start", handler)
+    return () => window.removeEventListener("page-transition-start", handler)
+  }, [closeMenu])
+
+  // Close the menu when the route changes (fallback / non-transition navigations).
   useEffect(() => {
     if (!isMenuOpenRef.current) return
     closeMenu()
