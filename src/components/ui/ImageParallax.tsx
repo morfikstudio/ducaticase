@@ -20,8 +20,7 @@ const VARIANT_Y_PERCENT: Record<ImageParallaxVariant, number> = {
 
 const VARIANT_INNER_CLASS: Record<ImageParallaxVariant, string> = {
   default: "absolute inset-x-0 top-[-5%] h-[110%] will-change-transform",
-  prominent:
-    "absolute inset-x-0 top-[-7.5%] h-[115%] will-change-transform",
+  prominent: "absolute inset-x-0 top-[-7.5%] h-[115%] will-change-transform",
 }
 
 export type ImageParallaxProps = {
@@ -71,10 +70,7 @@ export function ImageParallax({
   }, [variant, lenis])
 
   return (
-    <div
-      ref={cellRef}
-      className={cn("relative overflow-hidden", className)}
-    >
+    <div ref={cellRef} className={cn("relative overflow-hidden", className)}>
       <div ref={parallaxRef} className={VARIANT_INNER_CLASS[variant]}>
         {children}
       </div>

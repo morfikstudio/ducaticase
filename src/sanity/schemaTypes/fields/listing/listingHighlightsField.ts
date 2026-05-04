@@ -4,7 +4,9 @@ export type ListingHighlightsFieldOptions = {
   group?: string
 }
 
-export function listingHighlightsField(options?: ListingHighlightsFieldOptions) {
+export function listingHighlightsField(
+  options?: ListingHighlightsFieldOptions,
+) {
   return defineField({
     ...(options?.group ? { group: options.group } : {}),
     name: "highlights",
