@@ -1,8 +1,4 @@
-import {
-  ALL_FIELDS_GROUP,
-  defineField,
-  defineType,
-} from "sanity"
+import { ALL_FIELDS_GROUP, defineField, defineType } from "sanity"
 
 import { mapField } from "../fields"
 
