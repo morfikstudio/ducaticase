@@ -113,7 +113,7 @@ export function LocationMap({
       href={externalMapsUrl}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={t("listingMapBlockAria")}
+      aria-label={t("listingMapBlock")}
       className={cn(
         "group relative block cursor-pointer rounded-sm outline-none",
         "transition-opacity group-hover:opacity-90",
@@ -163,6 +163,16 @@ export function LocationMap({
           />
         </svg>
       </span>
+
+      <div
+        className={cn(
+          "absolute bottom-3 left-3 md:bottom-6 md:left-6",
+          "bg-black px-6 py-4",
+          "rounded-md pointer-events-none",
+        )}
+      >
+        <p className="type-button">{t("listingMapBlock")}</p>
+      </div>
     </a>
   )
 

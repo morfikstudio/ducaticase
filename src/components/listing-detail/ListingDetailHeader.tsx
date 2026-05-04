@@ -51,6 +51,8 @@ export function ListingDetailHeader({
     metadata.listingContractType,
     locale,
   )
+  const showContractLabel =
+    contractLabel && metadata.listingContractType === "rent"
   const typologyLabel = listingTypologyLabel(metadata._type, typology, locale)
   const specParts = [
     typologyLabel,
@@ -88,7 +90,7 @@ export function ListingDetailHeader({
               <p className={cn("type-body-1 md:type-heading-2")}>{price}</p>
             ) : null}
 
-            {contractLabel ? (
+            {showContractLabel ? (
               <p className="type-body-1 md:type-heading-2">({contractLabel})</p>
             ) : null}
           </div>

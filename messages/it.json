@@ -18,7 +18,7 @@
     "energyEfficiency": "Efficienza energetica",
     "energyClassNotClassifiable": "Non classificabile",
     "energyClassInProgress": "In fase di realizzazione",
-    "listingMapBlockAria": "Mappa della posizione: apri in Google Maps.",
+    "listingMapBlock": "Apri in Google Maps",
     "positionInfoTitle": "Posizione",
     "relatedListingsTitle": "Immobili correlati",
     "specs": {
