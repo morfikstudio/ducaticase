@@ -153,9 +153,7 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
               className={cn(hamburgerButtonClass, "shrink-0")}
             >
               <span className="flex h-[14px] w-[22px] flex-col justify-between">
-                <span className="h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-[2px]" />
-                <span className="h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 ease-out group-hover:translate-x-[2.5px]" />
-                <span className="h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 ease-out group-hover:translate-y-0.5 group-hover:translate-x-[2px]" />
+                <HamburgerIcon />
               </span>
             </button>
 
@@ -245,5 +243,40 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
         />
       ) : null}
     </>
+  )
+}
+
+function HamburgerIcon() {
+  const baseClass =
+    "h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 ease-out"
+
+  return (
+    <span
+      className={cn(
+        "h-[9px] w-[22px]",
+        "lg:h-[14px]",
+        "flex flex-col justify-between",
+      )}
+    >
+      <span
+        className={cn(
+          baseClass,
+          "group-hover:-translate-y-0.5 group-hover:translate-x-[2px]",
+        )}
+      />
+      <span
+        className={cn(
+          baseClass,
+          "group-hover:translate-x-[2.5px]",
+          "hidden lg:block",
+        )}
+      />
+      <span
+        className={cn(
+          baseClass,
+          "group-hover:translate-y-0.5 group-hover:translate-x-[2px]",
+        )}
+      />
+    </span>
   )
 }
