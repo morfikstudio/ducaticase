@@ -17,7 +17,7 @@ type CategoryOption = {
   title: string
 }
 
-type SortOption = "priceDesc" | "priceAsc" | "recentDesc" | "recentAsc"
+type SortOption = "priceDesc" | "priceAsc"
 
 type ListingsResultsToolbarProps = {
   hasSingleResultOnPage: boolean

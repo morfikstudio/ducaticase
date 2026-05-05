@@ -74,8 +74,6 @@
     "sortBy": "Ordina per",
     "sortPriceDesc": "Prezzo decrescente",
     "sortPriceAsc": "Prezzo crescente",
-    "sortRecentDesc": "Piu recenti",
-    "sortRecentAsc": "Meno recenti",
     "noListingsFound": "Nessun annuncio trovato",
     "showingPages": "Mostrando {page} di {totalPages}",
     "paginationNavAriaLabel": "Pagine dei risultati",

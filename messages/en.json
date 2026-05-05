@@ -74,8 +74,6 @@
     "sortBy": "Sort by",
     "sortPriceDesc": "Price descending",
     "sortPriceAsc": "Price ascending",
-    "sortRecentDesc": "Most recent",
-    "sortRecentAsc": "Least recent",
     "noListingsFound": "No listings found",
     "showingPages": "Showing {page} of {totalPages}",
     "paginationNavAriaLabel": "Results pagination",
