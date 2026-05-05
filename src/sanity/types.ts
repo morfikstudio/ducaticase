@@ -173,6 +173,7 @@ export type ListingLand = {
   postalCode?: string
   map?: Geopoint
   positionInfo?: LocalizedText
+  internalListingName?: string
   title?: LocalizedString
   mainImage?: {
     asset?: SanityImageAssetReference
@@ -438,6 +439,7 @@ export type ListingHospitality = {
   postalCode?: string
   map?: Geopoint
   positionInfo?: LocalizedText
+  internalListingName?: string
   title?: LocalizedString
   mainImage?: {
     asset?: SanityImageAssetReference
@@ -672,6 +674,7 @@ export type ListingIndustrial = {
   postalCode?: string
   map?: Geopoint
   positionInfo?: LocalizedText
+  internalListingName?: string
   title?: LocalizedString
   mainImage?: {
     asset?: SanityImageAssetReference
@@ -910,6 +913,7 @@ export type ListingShopsAndOffices = {
   postalCode?: string
   map?: Geopoint
   positionInfo?: LocalizedText
+  internalListingName?: string
   title?: LocalizedString
   mainImage?: {
     asset?: SanityImageAssetReference
@@ -1149,6 +1153,7 @@ export type ListingCountryHouses = {
   postalCode?: string
   map?: Geopoint
   positionInfo?: LocalizedText
+  internalListingName?: string
   title?: LocalizedString
   mainImage?: {
     asset?: SanityImageAssetReference
@@ -1395,6 +1400,7 @@ export type ListingResidential = {
   postalCode?: string
   map?: Geopoint
   positionInfo?: LocalizedText
+  internalListingName?: string
   title?: LocalizedString
   mainImage?: {
     asset?: SanityImageAssetReference

@@ -771,6 +771,13 @@
         },
         "optional": true
       },
+      "internalListingName": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "title": {
         "type": "objectAttribute",
         "value": {
@@ -2298,6 +2305,13 @@
         },
         "optional": true
       },
+      "internalListingName": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "title": {
         "type": "objectAttribute",
         "value": {
@@ -3622,6 +3636,13 @@
         "value": {
           "type": "inline",
           "name": "localizedText"
+        },
+        "optional": true
+      },
+      "internalListingName": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },
@@ -5020,6 +5041,13 @@
         },
         "optional": true
       },
+      "internalListingName": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "title": {
         "type": "objectAttribute",
         "value": {
@@ -6404,6 +6432,13 @@
         "value": {
           "type": "inline",
           "name": "localizedText"
+        },
+        "optional": true
+      },
+      "internalListingName": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },
@@ -7855,6 +7890,13 @@
         "value": {
           "type": "inline",
           "name": "localizedText"
+        },
+        "optional": true
+      },
+      "internalListingName": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },

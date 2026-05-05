@@ -101,6 +101,15 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
       return
     }
 
+    const pageRaw = searchParams.get("page")
+    if (pageRaw) {
+      const pageNum = parseInt(pageRaw, 10)
+      if (Number.isFinite(pageNum) && pageNum >= 1) {
+        defaultCategoriesBootstrapRef.current = true
+        return
+      }
+    }
+
     const visibleValues = new Set(
       visibleCategoryOptions.map((option) => option.value),
     )
