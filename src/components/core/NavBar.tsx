@@ -113,7 +113,14 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
   const otherLocaleLabel = otherLocale.toUpperCase()
 
   function switchLocale() {
-    router.replace(pathname, { locale: otherLocale })
+    const params = new URLSearchParams(window.location.search)
+    const query = Object.fromEntries(params)
+
+    if (Object.keys(query).length > 0) {
+      router.replace({ pathname, query }, { locale: otherLocale })
+    } else {
+      router.replace(pathname, { locale: otherLocale })
+    }
   }
 
   const hamburgerButtonClass = cn(
