@@ -4,6 +4,7 @@ import { PRICE_FALLBACK_OPTIONS } from "@/sanity/lib/constants"
 type PriceValue =
   | {
       amount?: number | null
+      currency?: string | null
       noPriceReason?: string | null
     }
   | null
@@ -20,18 +21,15 @@ export function formatListingPrice(
     return ""
   }
 
-  if (!price.amount && !price.noPriceReason) {
-    return ""
-  }
+  const reason = price.noPriceReason
+  const hasReason =
+    typeof reason === "string" && reason.trim() !== ""
 
-  const amount = price?.amount
-
-  if (typeof amount !== "number" || !Number.isFinite(amount) || amount <= 0) {
-    const reason = price?.noPriceReason
-    const reasonLabel =
-      typeof reason === "string"
-        ? PRICE_FALLBACK_OPTIONS.find((o) => o.value === reason)?.title[locale]
-        : undefined
+  // noPriceReason controls public visibility: if set, show the label regardless of amount
+  if (hasReason) {
+    const reasonLabel = PRICE_FALLBACK_OPTIONS.find(
+      (o) => o.value === reason,
+    )?.title[locale]
 
     if (reasonLabel) {
       return reasonLabel
@@ -44,10 +42,23 @@ export function formatListingPrice(
     return PRICE_FALLBACK_OPTIONS[1].title[locale]
   }
 
+  const amount = price.amount
+
+  if (typeof amount !== "number" || !Number.isFinite(amount) || amount <= 0) {
+    return ""
+  }
+
+  const currency =
+    typeof price.currency === "string" && price.currency.trim() !== ""
+      ? price.currency
+      : "EUR"
+
+  const currencySymbol = currency === "CHF" ? "CHF" : "€"
+
   try {
     const formatter = new Intl.NumberFormat(locale, {
       style: "currency",
-      currency: "EUR",
+      currency,
       maximumFractionDigits: 0,
     })
     const parts = formatter.formatToParts(amount)
@@ -56,8 +67,8 @@ export function formatListingPrice(
       .map((part) => part.value)
       .join("")
       .trim()
-    return `€ ${numericPart}`
+    return `${currencySymbol} ${numericPart}`
   } catch {
-    return `€ ${amount}`
+    return `${currencySymbol} ${amount}`
   }
 }

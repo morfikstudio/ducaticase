@@ -70,8 +70,12 @@ export const FIELD_LABELS = {
   priceEur: { it: "Prezzo (€)", en: "Price (€)" },
   amount: { it: "Importo", en: "Amount" },
   noPriceReason: {
-    it: "Seleziona opzione senza prezzo",
-    en: "Select no-price option",
+    it: "Tipo di prezzo",
+    en: "Price type",
+  },
+  currency: {
+    it: "Valuta",
+    en: "Currency",
   },
   hasChangingRoom: { it: "Spogliatoio", en: "Changing room" },
   commercialAreaSqm: {
@@ -267,7 +271,7 @@ export const FLOOR_OPTION_LABELS_EN: Record<string, string> = {
   entireBuilding: "Entire building",
 }
 
-export const CONDO_FEE_CURRENCY_OPTIONS = [
+export const CURRENCY_OPTIONS = [
   { title: "Euro (€)", value: "EUR" },
   { title: "Franco svizzero (CHF)", value: "CHF" },
 ] as const
