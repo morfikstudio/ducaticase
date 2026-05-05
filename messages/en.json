@@ -21,6 +21,16 @@
     "listingMapBlock": "Open in Google Maps",
     "positionInfoTitle": "Location",
     "relatedListingsTitle": "Related listings",
+    "countries": {
+      "IT": "Italy",
+      "CH": "Switzerland",
+      "AT": "Austria",
+      "FR": "France",
+      "MC": "Monaco",
+      "DE": "Germany",
+      "NL": "Netherlands",
+      "ES": "Spain"
+    },
     "specs": {
       "title": "Features",
       "booleanYes": "Yes",

@@ -2,6 +2,7 @@ export type ListingLocationLike = {
   address?: { streetName?: string | null; streetNumber?: string | null } | null
   city?: string | null
   province?: string | null
+  country?: string | null
 } | null
 
 export function getListingStreetLine(
@@ -18,6 +19,7 @@ export function getListingStreetLine(
 
 export function getListingCityLine(
   location: ListingLocationLike,
+  countryLabel?: string | null,
 ): string | null {
   const city = location?.city?.trim()
   const province = location?.province?.trim()
@@ -26,14 +28,26 @@ export function getListingCityLine(
       ? `${city} (${province})`
       : city || (province ? `(${province})` : "")
 
-  return cityWithProvince || null
+  const label =
+    typeof countryLabel === "string" ? countryLabel.trim() : ""
+
+  if (!cityWithProvince) {
+    return label || null
+  }
+
+  if (!label) {
+    return cityWithProvince
+  }
+
+  return `${cityWithProvince}, ${label}`
 }
 
 export function buildListingLocationText(
   location: ListingLocationLike,
+  countryLabel?: string | null,
 ): string | null {
   return (
-    [getListingStreetLine(location), getListingCityLine(location)]
+    [getListingStreetLine(location), getListingCityLine(location, countryLabel)]
       .filter(Boolean)
       .join(" · ") || null
   )

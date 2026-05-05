@@ -343,10 +343,25 @@ export const LOCATION_COUNTRY_OPTIONS = [
   { title: "Svizzera", value: "CH" },
   { title: "Austria", value: "AT" },
   { title: "Francia", value: "FR" },
+  { title: "Montecarlo", value: "MC" },
   { title: "Germania", value: "DE" },
   { title: "Paesi Bassi", value: "NL" },
   { title: "Spagna", value: "ES" },
 ] as const
+
+export type ListingLocationCountryCode =
+  (typeof LOCATION_COUNTRY_OPTIONS)[number]["value"]
+
+export function parseListingLocationCountryCode(
+  raw: string | null | undefined,
+): ListingLocationCountryCode | null {
+  const s = typeof raw === "string" ? raw.trim() : ""
+  if (!s) return null
+  for (const o of LOCATION_COUNTRY_OPTIONS) {
+    if (o.value === s) return o.value
+  }
+  return null
+}
 
 export const ITALIAN_PROVINCE_OPTIONS = [
   { title: "Agrigento", value: "AG" },

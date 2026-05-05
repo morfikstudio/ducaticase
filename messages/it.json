@@ -21,6 +21,16 @@
     "listingMapBlock": "Apri in Google Maps",
     "positionInfoTitle": "Posizione",
     "relatedListingsTitle": "Immobili correlati",
+    "countries": {
+      "IT": "Italia",
+      "CH": "Svizzera",
+      "AT": "Austria",
+      "FR": "Francia",
+      "MC": "Montecarlo",
+      "DE": "Germania",
+      "NL": "Paesi Bassi",
+      "ES": "Spagna"
+    },
     "specs": {
       "title": "Caratteristiche",
       "booleanYes": "Sì",
