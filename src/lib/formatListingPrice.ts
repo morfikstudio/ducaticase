@@ -22,14 +22,12 @@ export function formatListingPrice(
   }
 
   const reason = price.noPriceReason
-  const hasReason =
-    typeof reason === "string" && reason.trim() !== ""
+  const hasReason = typeof reason === "string" && reason.trim() !== ""
 
   // noPriceReason controls public visibility: if set, show the label regardless of amount
   if (hasReason) {
-    const reasonLabel = PRICE_FALLBACK_OPTIONS.find(
-      (o) => o.value === reason,
-    )?.title[locale]
+    const reasonLabel = PRICE_FALLBACK_OPTIONS.find((o) => o.value === reason)
+      ?.title[locale]
 
     if (reasonLabel) {
       return reasonLabel
