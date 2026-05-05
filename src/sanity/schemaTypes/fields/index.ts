@@ -122,6 +122,10 @@ export {
 } from "./contents/descriptionField"
 export { excerptField, type ExcerptFieldOptions } from "./contents/excerptField"
 export {
+  listingInternalNameField,
+  type ListingInternalNameFieldOptions,
+} from "./contents/listingInternalNameField"
+export {
   listingTitleField,
   type ListingTitleFieldOptions,
 } from "./contents/listingTitleField"
