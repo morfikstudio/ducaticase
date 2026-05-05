@@ -47,6 +47,7 @@ export type ListingLand = {
   listingSearchTokens?: string
   price?: {
     amount?: number
+    currency?: "EUR" | "CHF"
     noPriceReason?: "privateNegotiation" | "priceOnRequest"
   }
   commercialAreaSqm?: number
@@ -55,7 +56,7 @@ export type ListingLand = {
     otherSpecification?: string
   }
   hasFencedProperty?: boolean
-  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
+  country?: "IT" | "CH" | "AT" | "FR" | "MC" | "DE" | "NL" | "ES"
   province?:
     | "AG"
     | "AL"
@@ -296,6 +297,7 @@ export type ListingHospitality = {
   listingSearchTokens?: string
   price?: {
     amount?: number
+    currency?: "EUR" | "CHF"
     noPriceReason?: "privateNegotiation" | "priceOnRequest"
   }
   commercialAreaSqm?: number
@@ -319,7 +321,7 @@ export type ListingHospitality = {
       | "F"
       | "G"
   }
-  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
+  country?: "IT" | "CH" | "AT" | "FR" | "MC" | "DE" | "NL" | "ES"
   province?:
     | "AG"
     | "AL"
@@ -506,6 +508,7 @@ export type ListingIndustrial = {
   listingSearchTokens?: string
   price?: {
     amount?: number
+    currency?: "EUR" | "CHF"
     noPriceReason?: "privateNegotiation" | "priceOnRequest"
   }
   industrialTypology?: "warehouses" | "sheds"
@@ -552,7 +555,7 @@ export type ListingIndustrial = {
       | "F"
       | "G"
   }
-  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
+  country?: "IT" | "CH" | "AT" | "FR" | "MC" | "DE" | "NL" | "ES"
   province?:
     | "AG"
     | "AL"
@@ -738,6 +741,7 @@ export type ListingShopsAndOffices = {
   listingSearchTokens?: string
   price?: {
     amount?: number
+    currency?: "EUR" | "CHF"
     noPriceReason?: "privateNegotiation" | "priceOnRequest"
   }
   shopsAndOfficesTypology?: "shops" | "offices"
@@ -789,7 +793,7 @@ export type ListingShopsAndOffices = {
       | "F"
       | "G"
   }
-  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
+  country?: "IT" | "CH" | "AT" | "FR" | "MC" | "DE" | "NL" | "ES"
   province?:
     | "AG"
     | "AL"
@@ -978,6 +982,7 @@ export type ListingCountryHouses = {
   listingSearchTokens?: string
   price?: {
     amount?: number
+    currency?: "EUR" | "CHF"
     noPriceReason?: "privateNegotiation" | "priceOnRequest"
   }
   countryHouseTypology?: "sea" | "lakesAndCountryside" | "mountain"
@@ -1027,7 +1032,7 @@ export type ListingCountryHouses = {
       | "F"
       | "G"
   }
-  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
+  country?: "IT" | "CH" | "AT" | "FR" | "MC" | "DE" | "NL" | "ES"
   province?:
     | "AG"
     | "AL"
@@ -1219,6 +1224,7 @@ export type ListingResidential = {
   listingSearchTokens?: string
   price?: {
     amount?: number
+    currency?: "EUR" | "CHF"
     noPriceReason?: "privateNegotiation" | "priceOnRequest"
   }
   commercialAreaSqm?: number
@@ -1272,7 +1278,7 @@ export type ListingResidential = {
       | "F"
       | "G"
   }
-  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
+  country?: "IT" | "CH" | "AT" | "FR" | "MC" | "DE" | "NL" | "ES"
   province?:
     | "AG"
     | "AL"
@@ -2750,9 +2756,10 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           listingContractType: "rent" | "sale" | null
           price: {
             amount?: number
+            currency?: "CHF" | "EUR"
             noPriceReason?: "priceOnRequest" | "privateNegotiation"
           } | null
-          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
           city: string | null
           province:
             | "AG"
@@ -2906,9 +2913,10 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           listingContractType: "rent" | "sale" | null
           price: {
             amount?: number
+            currency?: "CHF" | "EUR"
             noPriceReason?: "priceOnRequest" | "privateNegotiation"
           } | null
-          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
           city: string | null
           province:
             | "AG"
@@ -3062,9 +3070,10 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           listingContractType: "rent" | "sale" | null
           price: {
             amount?: number
+            currency?: "CHF" | "EUR"
             noPriceReason?: "priceOnRequest" | "privateNegotiation"
           } | null
-          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
           city: string | null
           province:
             | "AG"
@@ -3218,9 +3227,10 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           listingContractType: "rent" | "sale" | null
           price: {
             amount?: number
+            currency?: "CHF" | "EUR"
             noPriceReason?: "priceOnRequest" | "privateNegotiation"
           } | null
-          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
           city: string | null
           province:
             | "AG"
@@ -3374,9 +3384,10 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           listingContractType: "rent" | "sale" | null
           price: {
             amount?: number
+            currency?: "CHF" | "EUR"
             noPriceReason?: "priceOnRequest" | "privateNegotiation"
           } | null
-          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
           city: string | null
           province:
             | "AG"
@@ -3530,9 +3541,10 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           listingContractType: "rent" | "sale" | null
           price: {
             amount?: number
+            currency?: "CHF" | "EUR"
             noPriceReason?: "priceOnRequest" | "privateNegotiation"
           } | null
-          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
           city: string | null
           province:
             | "AG"
@@ -4643,9 +4655,10 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
+        currency?: "CHF" | "EUR"
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -4799,9 +4812,10 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
+        currency?: "CHF" | "EUR"
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -4955,9 +4969,10 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
+        currency?: "CHF" | "EUR"
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -5111,9 +5126,10 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
+        currency?: "CHF" | "EUR"
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -5267,9 +5283,10 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
+        currency?: "CHF" | "EUR"
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -5423,9 +5440,10 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
+        currency?: "CHF" | "EUR"
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -5591,6 +5609,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
       propertySheet: {
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         commercialAreaSqm: number | null
@@ -5650,7 +5669,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         } | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -5906,6 +5925,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         listingContractType: "rent" | "sale" | null
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         city: string | null
@@ -6068,6 +6088,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
       propertySheet: {
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         commercialAreaSqm: number | null
@@ -6132,7 +6153,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         } | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -6383,6 +6404,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         listingContractType: "rent" | "sale" | null
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         city: string | null
@@ -6545,6 +6567,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
       propertySheet: {
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         commercialAreaSqm: number | null
@@ -6601,7 +6624,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         } | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -6850,6 +6873,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         listingContractType: "rent" | "sale" | null
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         city: string | null
@@ -7012,6 +7036,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
       propertySheet: {
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         commercialAreaSqm: number | null
@@ -7073,7 +7098,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         } | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -7326,6 +7351,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         listingContractType: "rent" | "sale" | null
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         city: string | null
@@ -7488,6 +7514,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
       propertySheet: {
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         commercialAreaSqm: number | null
@@ -7521,7 +7548,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         } | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -7771,6 +7798,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         listingContractType: "rent" | "sale" | null
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         city: string | null
@@ -7933,6 +7961,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
       propertySheet: {
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         commercialAreaSqm: number | null
@@ -7943,7 +7972,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         hasFencedProperty: boolean | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -8146,6 +8175,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         listingContractType: "rent" | "sale" | null
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         city: string | null

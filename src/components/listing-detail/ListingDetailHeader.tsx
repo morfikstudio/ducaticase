@@ -6,6 +6,7 @@ import type { AppLocale } from "@/i18n/routing"
 import { listingContractTypeLabel } from "@/sanity/lib/listingContractTypeLabel"
 import { listingTypologyLabel } from "@/sanity/lib/listingTypologyLabel"
 import { pickLocalizedString } from "@/sanity/lib/locale"
+import { parseListingLocationCountryCode } from "@/sanity/lib/constants"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
 
 import { useGsapReveal } from "@/hooks/useGsapReveal"
@@ -37,9 +38,12 @@ export function ListingDetailHeader({
 }: ListingDetailHeaderProps) {
   const { ref: wrapRef } = useGsapReveal({ delay: 0.2 })
   const t = useTranslations("listingDetail")
+  const tCountries = useTranslations("listingDetail.countries")
 
   const title = pickLocalizedString(content.title, locale)
-  const locationText = buildListingLocationText(location)
+  const countryCode = parseListingLocationCountryCode(location?.country)
+  const countryLabel = countryCode ? tCountries(countryCode) : null
+  const locationText = buildListingLocationText(location, countryLabel)
   const price = formatListingPrice(
     propertySheet?.price,
     locale,

@@ -10,6 +10,7 @@ import {
   getListingCityLine,
   getListingStreetLine,
 } from "@/lib/buildListingLocationText"
+import { parseListingLocationCountryCode } from "@/sanity/lib/constants"
 
 import { cn } from "@/utils/classNames"
 
@@ -62,13 +63,16 @@ export function LocationMap({
 }: LocationMapProps) {
   const { ref: wrapRef } = useGsapReveal()
   const t = useTranslations("listingDetail")
+  const tCountries = useTranslations("listingDetail.countries")
 
   const mobileSrc = staticMapProxyUrl(lat, lng, MOBILE_W, MOBILE_H)
   const desktopSrc = staticMapProxyUrl(lat, lng, DESKTOP_W, DESKTOP_H)
 
-  const locationText = buildListingLocationText(location)
+  const countryCode = parseListingLocationCountryCode(location?.country)
+  const countryLabel = countryCode ? tCountries(countryCode) : null
+  const locationText = buildListingLocationText(location, countryLabel)
   const externalMapsUrl = googleMapsSearchUrl(lat, lng, locationText)
-  const cityLine = getListingCityLine(location)
+  const cityLine = getListingCityLine(location, countryLabel)
   const streetLine = getListingStreetLine(location)
   const positionInfo =
     typeof positionInfoText === "string" ? positionInfoText.trim() : ""

@@ -70,8 +70,12 @@ export const FIELD_LABELS = {
   priceEur: { it: "Prezzo (€)", en: "Price (€)" },
   amount: { it: "Importo", en: "Amount" },
   noPriceReason: {
-    it: "Seleziona opzione senza prezzo",
-    en: "Select no-price option",
+    it: "Tipo di prezzo",
+    en: "Price type",
+  },
+  currency: {
+    it: "Valuta",
+    en: "Currency",
   },
   hasChangingRoom: { it: "Spogliatoio", en: "Changing room" },
   commercialAreaSqm: {
@@ -267,7 +271,7 @@ export const FLOOR_OPTION_LABELS_EN: Record<string, string> = {
   entireBuilding: "Entire building",
 }
 
-export const CONDO_FEE_CURRENCY_OPTIONS = [
+export const CURRENCY_OPTIONS = [
   { title: "Euro (€)", value: "EUR" },
   { title: "Franco svizzero (CHF)", value: "CHF" },
 ] as const
@@ -339,10 +343,25 @@ export const LOCATION_COUNTRY_OPTIONS = [
   { title: "Svizzera", value: "CH" },
   { title: "Austria", value: "AT" },
   { title: "Francia", value: "FR" },
+  { title: "Montecarlo", value: "MC" },
   { title: "Germania", value: "DE" },
   { title: "Paesi Bassi", value: "NL" },
   { title: "Spagna", value: "ES" },
 ] as const
+
+export type ListingLocationCountryCode =
+  (typeof LOCATION_COUNTRY_OPTIONS)[number]["value"]
+
+export function parseListingLocationCountryCode(
+  raw: string | null | undefined,
+): ListingLocationCountryCode | null {
+  const s = typeof raw === "string" ? raw.trim() : ""
+  if (!s) return null
+  for (const o of LOCATION_COUNTRY_OPTIONS) {
+    if (o.value === s) return o.value
+  }
+  return null
+}
 
 export const ITALIAN_PROVINCE_OPTIONS = [
   { title: "Agrigento", value: "AG" },

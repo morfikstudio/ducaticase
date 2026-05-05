@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl"
 
 import { cn } from "@/utils/classNames"
 
-type SortOption = "priceDesc" | "priceAsc" | "recentDesc" | "recentAsc"
+type SortOption = "priceDesc" | "priceAsc"
 
 type ListingsSortPanelProps = {
   selectedSort: SortOption
@@ -16,8 +16,6 @@ type ListingsSortPanelProps = {
 const SORT_OPTIONS: ReadonlyArray<{ value: SortOption; labelKey: string }> = [
   { value: "priceDesc", labelKey: "sortPriceDesc" },
   { value: "priceAsc", labelKey: "sortPriceAsc" },
-  { value: "recentDesc", labelKey: "sortRecentDesc" },
-  { value: "recentAsc", labelKey: "sortRecentAsc" },
 ]
 
 export function ListingsSortPanel({

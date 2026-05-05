@@ -23,6 +23,21 @@ type ListingsResultsProps = {
 
 const LISTINGS_PAGE_SIZE = 10
 
+/** Default categories on first visit */
+const DEFAULT_LISTING_CATEGORY_VALUES = [
+  "residential",
+  "countryHouses",
+] as const
+
+function parseCategoryQuery(value: string | null): string[] {
+  if (!value) return []
+
+  return value
+    .split(",")
+    .map((part) => part.trim())
+    .filter(Boolean)
+}
+
 export function ListingsResults({ locale }: ListingsResultsProps) {
   const [isFiltersPanelOpen, setIsFiltersPanelOpen] = useState(false)
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
@@ -42,6 +57,7 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
   const pagingTargetRef = useRef<number | null>(null)
   const countryTargetRef = useRef<string | null>(null)
   const exitInProgressRef = useRef(false)
+  const defaultCategoriesBootstrapRef = useRef(false) // flag to prevent multiple default categories bootstraps
   const lenis = useLenis()
 
   const searchParams = useSearchParams()
@@ -72,6 +88,47 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
     changeCountry,
     hasActiveListingFilters,
   } = useListingsFilters({ listings, locale, isHydrated: isListingsHydrated })
+
+  /** Default categories on first visit */
+  useEffect(() => {
+    if (!isListingsHydrated) return
+    if (defaultCategoriesBootstrapRef.current) return
+
+    const explicitCategories = parseCategoryQuery(searchParams.get("category"))
+
+    if (explicitCategories.length > 0) {
+      defaultCategoriesBootstrapRef.current = true
+      return
+    }
+
+    const visibleValues = new Set(
+      visibleCategoryOptions.map((option) => option.value),
+    )
+
+    // Filter default categories to only include visible ones
+    const defaultsToSet = DEFAULT_LISTING_CATEGORY_VALUES.filter((value) =>
+      visibleValues.has(value),
+    )
+
+    defaultCategoriesBootstrapRef.current = true
+
+    if (defaultsToSet.length === 0) return
+
+    const next = new URLSearchParams(searchParams.toString()) // clone the search params
+    next.delete("page") // remove the page parameter
+    next.set("category", defaultsToSet.join(",")) // set the default categories
+    const query = next.toString() // convert the search params to a query string
+    // replace the current URL with the new search params
+    router.replace(query ? `${pathname}?${query}` : pathname, {
+      scroll: false,
+    })
+  }, [
+    isListingsHydrated,
+    pathname,
+    router,
+    searchParams,
+    visibleCategoryOptions,
+  ])
 
   const totalCount = sortedListings.length
   const totalPages = useMemo(

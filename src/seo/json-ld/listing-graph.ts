@@ -8,6 +8,7 @@ import { getSiteOrigin } from "@/seo/site-url"
 
 type PriceBlock = {
   amount?: number
+  currency?: "EUR" | "CHF" | null
   noPriceReason?: "priceOnRequest" | "privateNegotiation"
 } | null
 
@@ -32,10 +33,15 @@ function collectImageUrls(
 function priceOffer(price: PriceBlock): Record<string, unknown> | undefined {
   if (!price?.amount || price.noPriceReason) return undefined
 
+  const priceCurrency =
+    typeof price.currency === "string" && price.currency.trim() !== ""
+      ? price.currency
+      : "EUR"
+
   return {
     "@type": "Offer",
     price: price.amount,
-    priceCurrency: "EUR",
+    priceCurrency,
     availability: "https://schema.org/InStock",
   }
 }

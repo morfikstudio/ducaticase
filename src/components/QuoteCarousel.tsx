@@ -397,9 +397,11 @@ export function QuoteCarousel({
                             "mt-16",
                           )}
                         >
-                          <div className="shrink-0">
-                            {providerLogo(item.provider)}
-                          </div>
+                          {item.provider ? (
+                            <div className="shrink-0">
+                              {providerLogo(item.provider)}
+                            </div>
+                          ) : null}
 
                           {author ? (
                             <p className="type-body-3 max-w-[min(100%,16rem)] text-right text-white">

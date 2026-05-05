@@ -1,6 +1,6 @@
 import { defineField } from "sanity"
 
-import { CONDO_FEE_CURRENCY_OPTIONS } from "../../../lib/constants"
+import { CURRENCY_OPTIONS } from "../../../lib/constants"
 import {
   FIELD_REQUIRED_IT,
   INVALID_VALUE_MESSAGE_IT,
@@ -90,7 +90,7 @@ export function condoFeesField(options?: CondoFeesFieldOptions) {
         title: "Valuta",
         type: "string",
         options: {
-          list: [...CONDO_FEE_CURRENCY_OPTIONS],
+          list: [...CURRENCY_OPTIONS],
         },
       }),
     ],

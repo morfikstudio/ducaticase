@@ -6,7 +6,7 @@
   "listingDetail": {
     "downloadBrochure": "Scarica la brochure",
     "bookVisit": "Prenota una visita",
-    "squareMeters": "mq",
+    "squareMeters": "mq. ca.",
     "moreDetails": "Più dettagli",
     "lessDetails": "Meno dettagli",
     "floorPlan": "Planimetria",
@@ -21,6 +21,16 @@
     "listingMapBlock": "Apri in Google Maps",
     "positionInfoTitle": "Posizione",
     "relatedListingsTitle": "Immobili correlati",
+    "countries": {
+      "IT": "Italia",
+      "CH": "Svizzera",
+      "AT": "Austria",
+      "FR": "Francia",
+      "MC": "Montecarlo",
+      "DE": "Germania",
+      "NL": "Paesi Bassi",
+      "ES": "Spagna"
+    },
     "specs": {
       "title": "Caratteristiche",
       "booleanYes": "Sì",
@@ -74,8 +84,6 @@
     "sortBy": "Ordina per",
     "sortPriceDesc": "Prezzo decrescente",
     "sortPriceAsc": "Prezzo crescente",
-    "sortRecentDesc": "Piu recenti",
-    "sortRecentAsc": "Meno recenti",
     "noListingsFound": "Nessun annuncio trovato",
     "showingPages": "Mostrando {page} di {totalPages}",
     "paginationNavAriaLabel": "Pagine dei risultati",

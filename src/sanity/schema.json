@@ -151,6 +151,23 @@
               },
               "optional": true
             },
+            "currency": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "EUR"
+                  },
+                  {
+                    "type": "string",
+                    "value": "CHF"
+                  }
+                ]
+              },
+              "optional": true
+            },
             "noPriceReason": {
               "type": "objectAttribute",
               "value": {
@@ -243,6 +260,10 @@
             {
               "type": "string",
               "value": "FR"
+            },
+            {
+              "type": "string",
+              "value": "MC"
             },
             {
               "type": "string",
@@ -1570,6 +1591,23 @@
               },
               "optional": true
             },
+            "currency": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "EUR"
+                  },
+                  {
+                    "type": "string",
+                    "value": "CHF"
+                  }
+                ]
+              },
+              "optional": true
+            },
             "noPriceReason": {
               "type": "objectAttribute",
               "value": {
@@ -1749,6 +1787,10 @@
             {
               "type": "string",
               "value": "FR"
+            },
+            {
+              "type": "string",
+              "value": "MC"
             },
             {
               "type": "string",
@@ -2763,6 +2805,23 @@
               },
               "optional": true
             },
+            "currency": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "EUR"
+                  },
+                  {
+                    "type": "string",
+                    "value": "CHF"
+                  }
+                ]
+              },
+              "optional": true
+            },
             "noPriceReason": {
               "type": "objectAttribute",
               "value": {
@@ -3055,6 +3114,10 @@
             {
               "type": "string",
               "value": "FR"
+            },
+            {
+              "type": "string",
+              "value": "MC"
             },
             {
               "type": "string",
@@ -4079,6 +4142,23 @@
               },
               "optional": true
             },
+            "currency": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "EUR"
+                  },
+                  {
+                    "type": "string",
+                    "value": "CHF"
+                  }
+                ]
+              },
+              "optional": true
+            },
             "noPriceReason": {
               "type": "objectAttribute",
               "value": {
@@ -4429,6 +4509,10 @@
             {
               "type": "string",
               "value": "FR"
+            },
+            {
+              "type": "string",
+              "value": "MC"
             },
             {
               "type": "string",
@@ -5469,6 +5553,23 @@
               },
               "optional": true
             },
+            "currency": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "EUR"
+                  },
+                  {
+                    "type": "string",
+                    "value": "CHF"
+                  }
+                ]
+              },
+              "optional": true
+            },
             "noPriceReason": {
               "type": "objectAttribute",
               "value": {
@@ -5795,6 +5896,10 @@
             {
               "type": "string",
               "value": "FR"
+            },
+            {
+              "type": "string",
+              "value": "MC"
             },
             {
               "type": "string",
@@ -6866,6 +6971,23 @@
               },
               "optional": true
             },
+            "currency": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "EUR"
+                  },
+                  {
+                    "type": "string",
+                    "value": "CHF"
+                  }
+                ]
+              },
+              "optional": true
+            },
             "noPriceReason": {
               "type": "objectAttribute",
               "value": {
@@ -7225,6 +7347,10 @@
             {
               "type": "string",
               "value": "FR"
+            },
+            {
+              "type": "string",
+              "value": "MC"
             },
             {
               "type": "string",

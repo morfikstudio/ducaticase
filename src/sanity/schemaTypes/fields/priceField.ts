@@ -1,6 +1,10 @@
 import { defineField, useFormValue, type ObjectFieldProps } from "sanity"
 
-import { FIELD_LABELS, PRICE_FALLBACK_OPTIONS } from "../../lib/constants"
+import {
+  CURRENCY_OPTIONS,
+  FIELD_LABELS,
+  PRICE_FALLBACK_OPTIONS,
+} from "../../lib/constants"
 import {
   FIELD_REQUIRED_IT,
   INVALID_VALUE_MESSAGE_IT,
@@ -9,6 +13,7 @@ import {
 type PriceValue =
   | {
       amount?: number | null
+      currency?: string | null
       noPriceReason?: string | null
     }
   | undefined
@@ -50,6 +55,9 @@ export function priceField(options?: PriceFieldOptions) {
     components: {
       field: PriceFieldTitleByContract,
     },
+    initialValue: () => ({
+      currency: "EUR",
+    }),
     validation: (Rule) =>
       Rule.custom((value: PriceValue) => {
         if (!required && (value === undefined || value === null)) {
@@ -61,31 +69,31 @@ export function priceField(options?: PriceFieldOptions) {
         }
 
         const amount = value.amount
-        const hasAmount =
+        const hasValidAmount =
           typeof amount === "number" && Number.isFinite(amount) && amount > 0
 
-        if (hasAmount) {
-          return true
-        }
-
-        if (amount !== undefined && amount !== null) {
+        if (amount !== undefined && amount !== null && !hasValidAmount) {
           return INVALID_VALUE_MESSAGE_IT
         }
 
         const reason = value.noPriceReason
-        if (
-          reason === undefined ||
-          reason === null ||
-          (typeof reason === "string" && reason.trim() === "")
-        ) {
-          return FIELD_REQUIRED_IT
-        }
+        const hasValidReason =
+          typeof reason === "string" &&
+          reason.trim() !== "" &&
+          PRICE_FALLBACK_OPTIONS.some((o) => o.value === reason)
 
         if (
-          typeof reason !== "string" ||
-          !PRICE_FALLBACK_OPTIONS.some((o) => o.value === reason)
+          reason !== undefined &&
+          reason !== null &&
+          typeof reason === "string" &&
+          reason.trim() !== "" &&
+          !hasValidReason
         ) {
           return INVALID_VALUE_MESSAGE_IT
+        }
+
+        if (required && !hasValidAmount && !hasValidReason) {
+          return FIELD_REQUIRED_IT
         }
 
         return true
@@ -112,12 +120,18 @@ export function priceField(options?: PriceFieldOptions) {
           }),
       }),
       defineField({
+        name: "currency",
+        title: FIELD_LABELS.currency.it,
+        type: "string",
+        initialValue: "EUR",
+        options: {
+          list: [...CURRENCY_OPTIONS],
+        },
+      }),
+      defineField({
         name: "noPriceReason",
         title: FIELD_LABELS.noPriceReason.it,
         type: "string",
-        hidden: ({ parent }) =>
-          typeof (parent as { amount?: number } | undefined)?.amount ===
-          "number",
         options: {
           list: PRICE_FALLBACK_OPTIONS.map((o) => ({
             title: o.title.it,
