@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { useTranslations } from "next-intl"
 
 import type { AppLocale } from "@/i18n/routing"
@@ -154,8 +155,13 @@ export function ContactHero({
   mapCoords,
   locale,
 }: ContactHeroProps) {
-  const { ref: wrapRef } = useGsapReveal({ fromOpacity: 1 })
   const t = useTranslations("contactPage")
+  const [imageReady, setImageReady] = useState(false)
+
+  const { ref: wrapRef } = useGsapReveal({
+    fromOpacity: 1,
+    ready: imageReady,
+  })
 
   const renderInfoListItem = useCallback(
     (key: ContactInfoRowKind) => {
@@ -281,6 +287,9 @@ export function ContactHero({
               }}
               fill
               className="object-cover object-center overflow-hidden"
+              loading="eager"
+              onLoad={() => requestAnimationFrame(() => setImageReady(true))}
+              onError={() => requestAnimationFrame(() => setImageReady(true))}
             />
 
             <div

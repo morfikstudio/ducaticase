@@ -84,6 +84,7 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
               }}
               fill
               className="object-cover"
+              loading="eager"
               onLoad={bumpGateProgress}
               onError={bumpGateProgress}
             />
@@ -119,6 +120,7 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                     }}
                     fill
                     className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    loading="eager"
                     onLoad={bumpGateProgress}
                     onError={bumpGateProgress}
                   />
