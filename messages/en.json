@@ -23,13 +23,13 @@
     "relatedListingsTitle": "Related listings",
     "countries": {
       "IT": "Italy",
-      "CH": "Switzerland",
       "AT": "Austria",
       "FR": "France",
-      "MC": "Monaco",
       "DE": "Germany",
+      "MC": "Monaco",
       "NL": "Netherlands",
-      "ES": "Spain"
+      "ES": "Spain",
+      "CH": "Switzerland"
     },
     "specs": {
       "title": "Features",
@@ -96,6 +96,9 @@
   "teamGrid": {
     "openMemberDescription": "Open member description",
     "closeMemberDescription": "Close member description"
+  },
+  "contactPage": {
+    "whatsappChat": "Whatsapp Chat"
   },
   "homePage": {
     "featuredListingsTitle": "Featured listings",
