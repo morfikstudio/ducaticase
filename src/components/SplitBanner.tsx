@@ -73,7 +73,7 @@ export function SplitBanner({
                   reverse ? "lg:pl-16" : "lg:pr-16",
                 )}
               >
-                <h3 className="type-heading-2 text-primary">{title}</h3>
+                <h3 className="type-heading-2">{title}</h3>
 
                 <p className="type-body-2 whitespace-pre-line text-gray">
                   {brTagsToNewlines(description)}

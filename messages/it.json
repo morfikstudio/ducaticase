@@ -23,13 +23,13 @@
     "relatedListingsTitle": "Immobili correlati",
     "countries": {
       "IT": "Italia",
-      "CH": "Svizzera",
       "AT": "Austria",
       "FR": "Francia",
-      "MC": "Montecarlo",
       "DE": "Germania",
+      "MC": "Montecarlo",
       "NL": "Paesi Bassi",
-      "ES": "Spagna"
+      "ES": "Spagna",
+      "CH": "Svizzera"
     },
     "specs": {
       "title": "Caratteristiche",
@@ -96,6 +96,9 @@
   "teamGrid": {
     "openMemberDescription": "Apri descrizione membro",
     "closeMemberDescription": "Chiudi descrizione membro"
+  },
+  "contactPage": {
+    "whatsappChat": "Chat Whatsapp"
   },
   "homePage": {
     "featuredListingsTitle": "Immobili in evidenza",

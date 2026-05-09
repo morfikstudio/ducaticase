@@ -32,6 +32,7 @@ export type UseGsapRevealOptions<T extends HTMLElement = HTMLDivElement> = {
   duration?: number
   ease?: string
   fromY?: number
+  fromOpacity?: number
   clearProps?: string | false
   /** Force-reveal after this many ms, even if `ready` never becomes true. */
   fallbackRevealMs?: number
@@ -61,6 +62,7 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
     duration = 1,
     ease = "power2.out",
     fromY = 20,
+    fromOpacity = 0,
     clearProps = "all",
     delay = 0.2,
     fallbackRevealMs,
@@ -136,8 +138,8 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
   // --- Initial hidden state ---
   useLayoutEffect(() => {
     if (!animate || !targetRef.current) return
-    gsap.set(targetRef.current, { opacity: 0, y: fromY })
-  }, [animate, fromY, targetRef, ready])
+    gsap.set(targetRef.current, { opacity: fromOpacity, y: fromY })
+  }, [animate, fromY, fromOpacity, targetRef, ready])
 
   // --- Entry animation ---
   useEffect(() => {
@@ -175,6 +177,7 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
     ease,
     clearProps,
     fromY,
+    fromOpacity,
     delay,
     targetRef,
   ])

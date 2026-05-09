@@ -140,7 +140,7 @@ export function ListingsList({
   if (showNoListingsMessage) {
     return (
       <div ref={wrapRef} style={{ opacity: 0 }}>
-        <p className="type-body-1 text-primary">{t("noListingsFound")}</p>
+        <p className="type-body-1">{t("noListingsFound")}</p>
       </div>
     )
   }

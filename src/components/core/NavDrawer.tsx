@@ -250,7 +250,7 @@ export function NavDrawer({
           "h-full w-full max-w-[580px]",
           "flex flex-col",
           "pointer-events-auto overflow-hidden",
-          "bg-dark text-primary shadow-2xl",
+          "bg-dark shadow-2xl",
           "transition-transform duration-500 ease-in-out",
           isVisible ? "translate-x-0" : "-translate-x-full md:translate-x-full",
         )}
@@ -259,7 +259,7 @@ export function NavDrawer({
         <button
           ref={closeButtonRef}
           type="button"
-          className="absolute right-6 top-6 text-primary cursor-pointer z-10"
+          className="absolute right-6 top-6 cursor-pointer z-10"
           aria-label="Chiudi menu"
           onClick={onClose}
         >
@@ -302,7 +302,7 @@ export function NavDrawer({
                       onClick={onClose}
                       className={cn(
                         "relative block w-fit py-2",
-                        "font-sans text-[32px] md:text-[36px] text-primary transition-opacity duration-200 hover:opacity-75",
+                        "font-sans text-[32px] md:text-[36px] transition-opacity duration-200 hover:opacity-75",
                         "after:absolute after:bottom-[0.1em] after:left-0 after:h-px after:w-full after:bg-current after:content-['']",
                         "after:origin-right after:scale-x-0 after:transition-transform after:duration-500 after:ease-in-out",
                         "hover:after:origin-left hover:after:scale-x-100",
@@ -330,7 +330,7 @@ export function NavDrawer({
                         rel="noopener noreferrer"
                         className={cn(
                           "group inline-flex items-center gap-1.5",
-                          "type-body-3 text-primary",
+                          "type-body-3",
                           "hover:underline underline-offset-4",
                         )}
                       >

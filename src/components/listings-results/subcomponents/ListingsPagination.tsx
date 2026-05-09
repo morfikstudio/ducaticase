@@ -109,7 +109,7 @@ export function ListingsPagination({
           type="button"
           className={cn(
             pageButtonClass,
-            "bg-dark text-primary",
+            "bg-dark",
             "hover:border-primary focus-visible:border-primary",
           )}
           aria-label={t("paginationPrevAriaLabel")}
@@ -126,7 +126,7 @@ export function ListingsPagination({
             className={cn(
               "size-12",
               "inline-flex items-center justify-center",
-              "type-body-2 text-primary",
+              "type-body-2",
             )}
             aria-hidden="true"
           >
@@ -141,7 +141,7 @@ export function ListingsPagination({
               item === currentPage
                 ? "bg-primary text-accent border-transparent cursor-not-allowed"
                 : cn(
-                    "bg-dark text-primary",
+                    "bg-dark",
                     "hover:border-primary focus-visible:border-primary",
                   ),
             )}
@@ -160,7 +160,7 @@ export function ListingsPagination({
           type="button"
           className={cn(
             pageButtonClass,
-            "bg-dark text-primary",
+            "bg-dark",
             "hover:border-primary focus-visible:border-primary",
           )}
           aria-label={t("paginationNextAriaLabel")}

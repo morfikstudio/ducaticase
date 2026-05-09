@@ -396,7 +396,7 @@ export function ListingsFiltersDrawer({
               "px-4 py-5",
               "type-button",
               hasActiveFilters
-                ? "bg-accent text-primary cursor-pointer"
+                ? "bg-accent cursor-pointer"
                 : "bg-accent/40 text-primary/60 cursor-not-allowed",
             )}
           >

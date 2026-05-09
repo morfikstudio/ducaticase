@@ -140,7 +140,7 @@ function getButtonClasses({
   if (variant === "secondary") {
     return cn(
       "type-button inline-flex w-fit items-center gap-3",
-      "group border-0 bg-transparent p-0 text-left uppercase tracking-[0.08em] text-primary",
+      "group border-0 bg-transparent p-0 text-left uppercase tracking-[0.08em]",
       disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
       className,
     )
@@ -155,7 +155,7 @@ function getButtonClasses({
       disabled
         ? "cursor-not-allowed bg-transparent text-black opacity-50"
         : isActive || highlight
-          ? "bg-black text-primary hover:bg-black hover:text-primary"
+          ? "bg-black hover:bg-black hover:text-primary"
           : "bg-transparent text-black hover:bg-black hover:text-primary",
       className,
     )

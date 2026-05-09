@@ -126,7 +126,7 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                     className="pointer-events-none absolute inset-0 flex items-center justify-center backdrop-blur-sm bg-black/30"
                     aria-hidden
                   >
-                    <span className="type-button text-primary group-hover:underline">
+                    <span className="type-button group-hover:underline">
                       {t("viewAll")}
                     </span>
                   </span>
