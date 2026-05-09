@@ -340,13 +340,13 @@ export const ENERGY_CLASS_LAW90_OPTIONS = [
 
 export const LOCATION_COUNTRY_OPTIONS = [
   { title: "Italia", value: "IT" },
-  { title: "Svizzera", value: "CH" },
   { title: "Austria", value: "AT" },
   { title: "Francia", value: "FR" },
-  { title: "Montecarlo", value: "MC" },
   { title: "Germania", value: "DE" },
+  { title: "Montecarlo", value: "MC" },
   { title: "Paesi Bassi", value: "NL" },
   { title: "Spagna", value: "ES" },
+  { title: "Svizzera", value: "CH" },
 ] as const
 
 export type ListingLocationCountryCode =

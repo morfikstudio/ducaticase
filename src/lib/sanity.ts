@@ -27,10 +27,10 @@ export function getSanityImageUrl(
   const safeQuality = Math.min(100, Math.max(1, Math.round(quality)))
 
   const img = builder
-    .image(image)
-    .width(width)
-    .auto("format")
-    .quality(safeQuality)
+    .image(image) // image asset
+    .width(width) // max width
+    .auto("format") // serves WebP or AVIF automatically
+    .quality(safeQuality) // quality compression
 
   if (height != null && height > 0) {
     return img.height(height).fit("crop").dpr(2).url()

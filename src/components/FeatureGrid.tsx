@@ -29,7 +29,7 @@ export function FeatureGrid({ heading, locale, items }: FeatureGridProps) {
   return (
     <div
       className={cn(
-        "relative w-full text-primary",
+        "relative w-full",
         "pt-20",
         "md:pt-32 md:pb-20",
         "lg:pt-64 md:pb-64",

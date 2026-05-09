@@ -124,7 +124,7 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
   }
 
   const hamburgerButtonClass = cn(
-    "group inline-flex items-center justify-center text-primary",
+    "group inline-flex items-center justify-center",
     "cursor-pointer",
     "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40",
   )
@@ -133,7 +133,7 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
     <>
       <header
         ref={headerRef}
-        className={cn("fixed top-0 left-0 right-0 z-40", "text-primary")}
+        className={cn("fixed top-0 left-0 right-0 z-40")}
         style={{
           transition:
             "transform 380ms cubic-bezier(0.25, 0.46, 0.45, 0.94), background 300ms ease-out, backdrop-filter 300ms ease-out",
@@ -161,7 +161,7 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
             <Link
               href="/"
               aria-label="Ducati Case — Home"
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-block w-[72px] text-primary [&_svg]:w-full [&_svg]:h-auto"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-block w-[72px] [&_svg]:w-full [&_svg]:h-auto"
             >
               <Logo />
             </Link>
@@ -171,7 +171,7 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
               type="button"
               onClick={switchLocale}
               className={cn(
-                "ml-auto shrink-0 type-button text-primary",
+                "ml-auto shrink-0 type-button",
                 "cursor-pointer transition-opacity hover:opacity-60",
               )}
             >
@@ -185,7 +185,7 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
             <Link
               href="/"
               aria-label="Ducati Case — Home"
-              className="relative z-10 inline-block w-[88px] shrink-0 text-primary [&_svg]:w-full [&_svg]:h-auto"
+              className="relative z-10 inline-block w-[88px] shrink-0 [&_svg]:w-full [&_svg]:h-auto"
             >
               <Logo />
             </Link>
@@ -208,7 +208,7 @@ export function NavBar({ locale, menuContent }: NavBarProps) {
                 type="button"
                 onClick={switchLocale}
                 className={cn(
-                  "type-button text-primary",
+                  "type-button",
                   "cursor-pointer transition-opacity hover:opacity-60",
                 )}
               >

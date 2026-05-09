@@ -33,7 +33,7 @@ export function ListingsSortPanel({
             type="button"
             className={cn(
               "group inline-flex items-center gap-1",
-              "type-body-3 text-primary",
+              "type-body-3",
               "cursor-pointer",
               "rounded-sm",
             )}

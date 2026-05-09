@@ -89,12 +89,10 @@ export function LocationMap({
         "md:mb-6",
       )}
     >
-      <p className="type-body-2 uppercase font-medium text-primary">
+      <p className="type-body-2 uppercase font-medium">
         {t("positionInfoTitle")}
       </p>
-      <p className="type-body-2 text-primary whitespace-pre-line">
-        {positionInfo}
-      </p>
+      <p className="type-body-2 whitespace-pre-line">{positionInfo}</p>
     </div>
   ) : null
 
@@ -105,10 +103,8 @@ export function LocationMap({
         bothTextBlocks ? "md:col-start-1 md:row-start-2" : "[grid-area:addr]",
       )}
     >
-      {cityLine ? <p className="type-body-1 text-primary">{cityLine}</p> : null}
-      {streetLine ? (
-        <p className="type-body-2 text-primary">{streetLine}</p>
-      ) : null}
+      {cityLine ? <p className="type-body-1">{cityLine}</p> : null}
+      {streetLine ? <p className="type-body-2">{streetLine}</p> : null}
     </div>
   ) : null
 

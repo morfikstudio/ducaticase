@@ -24,12 +24,7 @@ export function ListingsHeader({
 
   return (
     <div ref={wrapRef} style={{ opacity: 0 }}>
-      <div
-        className={cn(
-          "flex items-center justify-center gap-4",
-          "type-body-2 text-primary",
-        )}
-      >
+      <div className={cn("flex items-center justify-center gap-4 type-body-2")}>
         <button
           type="button"
           onClick={() => onCountrySwitch("it")}
@@ -70,7 +65,7 @@ export function ListingsHeader({
 
       <p
         className={cn(
-          "type-body-2 text-primary text-center mt-6",
+          "type-body-2 text-center mt-6",
           !show && "opacity-0 translate-y-4",
           "transition-all duration-500 ease-out delay-500",
           "motion-reduce:transition-none motion-reduce:duration-0",

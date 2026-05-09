@@ -208,7 +208,7 @@ export function HeroText({
             <h1
               ref={titleRef}
               className={cn(
-                "type-heading-2 max-md:text-[30px] md:text-center text-primary",
+                "type-heading-2 max-md:text-[30px] md:text-center",
                 "mx-auto md:max-w-[900px]",
                 hide && "opacity-0",
               )}
