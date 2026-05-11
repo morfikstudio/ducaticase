@@ -71,7 +71,16 @@ export default defineConfig({
     structureTool({ structure }),
     media(),
     ...(googleMapsApiKey
-      ? [googleMapsInput({ apiKey: googleMapsApiKey })]
+      ? [
+          googleMapsInput({
+            apiKey: googleMapsApiKey,
+            defaultZoom: 14,
+            defaultLocation: {
+              lat: 45.46427374118163,
+              lng: 9.189750092364932,
+            },
+          }),
+        ]
       : []),
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
