@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
+import gsap from "gsap"
 
 import type { AppLocale } from "@/i18n/routing"
 import type { CONTACT_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
@@ -158,8 +159,12 @@ export function ContactHero({
   const t = useTranslations("contactPage")
   const [imageReady, setImageReady] = useState(false)
 
-  const { ref: wrapRef } = useGsapReveal({
-    fromOpacity: 1,
+  const titleRef = useRef<HTMLDivElement>(null)
+  const imageRef = useRef<HTMLDivElement>(null)
+  const infoListRef = useRef<HTMLDivElement>(null)
+
+  const { ref: wrapRef, show } = useGsapReveal({
+    animate: false,
     ready: imageReady,
   })
 
@@ -243,13 +248,61 @@ export function ContactHero({
     [email, phone, whatsapp, address, t],
   )
 
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const elements = [imageRef.current, infoListRef.current].filter(Boolean)
+
+      if (elements.length === 0) return
+
+      gsap.killTweensOf(elements)
+
+      gsap
+        .timeline({ delay: 0.1 })
+        .set(wrapRef.current, {
+          opacity: 1,
+        })
+        .from(titleRef.current, {
+          opacity: 0,
+          y: 24,
+          duration: 1,
+          ease: "power2.out",
+          clearProps: "opacity,y",
+        })
+        .from(
+          imageRef.current,
+          {
+            opacity: 0,
+            y: 24,
+            duration: 1,
+            ease: "power2.out",
+            clearProps: "opacity,y",
+          },
+          "-=0.9",
+        )
+        .from(
+          infoListRef.current,
+          {
+            opacity: 0,
+            y: "+=24",
+            duration: 1,
+            ease: "power2.out",
+            clearProps: "opacity,y",
+          },
+          "-=0.9",
+        )
+    }, wrapRef)
+
+    return () => ctx?.revert()
+  }, [show])
+
   return (
-    <div ref={wrapRef}>
+    <div ref={wrapRef} style={{ opacity: 0 }}>
       <Container>
         {/* HEADER */}
         <section className="grid grid-cols-12 gap-x-4">
           {title ? (
             <div
+              ref={titleRef}
               className={cn(
                 "px-4 lg:px-0",
                 "col-span-12 lg:col-start-1 lg:col-span-8 xl:col-span-7",
@@ -270,29 +323,32 @@ export function ContactHero({
               "col-span-11 lg:col-span-10 lg:col-start-2",
             )}
           >
-            <SanityImage
-              landscape={heroLandscape ?? undefined}
-              portrait={heroPortrait ?? undefined}
-              locale={locale}
-              altFallback={title}
-              landscapeParams={{
-                width: 1024,
-                height: 768,
-                sizes: "(min-width: 1px) 75vw",
-              }}
-              portraitParams={{
-                width: 720,
-                height: 900,
-                sizes: "(min-width: 1px) 100vw",
-              }}
-              fill
-              className="object-cover object-center overflow-hidden"
-              loading="eager"
-              onLoad={() => requestAnimationFrame(() => setImageReady(true))}
-              onError={() => requestAnimationFrame(() => setImageReady(true))}
-            />
+            <div ref={imageRef} className="relative w-full h-full">
+              <SanityImage
+                landscape={heroLandscape ?? undefined}
+                portrait={heroPortrait ?? undefined}
+                locale={locale}
+                altFallback={title}
+                landscapeParams={{
+                  width: 1024,
+                  height: 768,
+                  sizes: "(min-width: 1px) 75vw",
+                }}
+                portraitParams={{
+                  width: 720,
+                  height: 900,
+                  sizes: "(min-width: 1px) 100vw",
+                }}
+                fill
+                className="object-cover object-center overflow-hidden"
+                loading="eager"
+                onLoad={() => requestAnimationFrame(() => setImageReady(true))}
+                onError={() => requestAnimationFrame(() => setImageReady(true))}
+              />
+            </div>
 
             <div
+              ref={infoListRef}
               className={cn(
                 "absolute top-1/2 -translate-y-1/2",
                 "-right-8 md:-right-16 lg:-right-23",
