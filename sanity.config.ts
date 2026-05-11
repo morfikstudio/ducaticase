@@ -6,7 +6,7 @@ import { googleMapsInput } from "@sanity/google-maps-input"
 import { visionTool } from "@sanity/vision"
 import { defineConfig } from "sanity"
 import { structureTool } from "sanity/structure"
-import { media, mediaAssetSource } from "sanity-plugin-media"
+import { media } from "sanity-plugin-media"
 
 import { apiVersion, dataset, projectId } from "./src/sanity/env"
 import { schema } from "./src/sanity/schemaTypes"
@@ -66,20 +66,21 @@ export default defineConfig({
         icon: AddIcon,
       })),
   },
-  form: {
-    image: {
-      assetSources: (previousAssetSources) => [
-        ...previousAssetSources,
-        mediaAssetSource,
-      ],
-    },
-  },
   plugins: [
     itITLocale(),
     structureTool({ structure }),
     media(),
     ...(googleMapsApiKey
-      ? [googleMapsInput({ apiKey: googleMapsApiKey })]
+      ? [
+          googleMapsInput({
+            apiKey: googleMapsApiKey,
+            defaultZoom: 14,
+            defaultLocation: {
+              lat: 45.46427374118163,
+              lng: 9.189750092364932,
+            },
+          }),
+        ]
       : []),
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),

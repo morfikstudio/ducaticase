@@ -33,7 +33,8 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
 
   const { current: breakpoint } = useBreakpoint()
   const isMobileLayout = breakpoint?.startsWith("mobile")
-  const viewAllIndex = isMobileLayout ? 1 : 3
+  const maxThumbIndex = isMobileLayout ? 1 : 3
+  const viewAllIndex = Math.min(thumbs.length - 1, maxThumbIndex)
 
   // Wait for mainImage + first 2 thumbs before revealing the gallery.
   const imagesAreReady = useMemo(() => {
