@@ -283,7 +283,6 @@ export function ContactHero({
           infoListRef.current,
           {
             opacity: 0,
-            y: "+=24",
             duration: 1,
             ease: "power2.out",
             clearProps: "opacity,y",
@@ -330,7 +329,7 @@ export function ContactHero({
                 locale={locale}
                 altFallback={title}
                 landscapeParams={{
-                  width: 1024,
+                  width: 1280,
                   height: 768,
                   sizes: "(min-width: 1px) 75vw",
                 }}
