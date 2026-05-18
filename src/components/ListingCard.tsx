@@ -78,19 +78,12 @@ export function ListingCard({
         <div className="relative aspect-square overflow-hidden">
           {entry.mainImage ? (
             <SanityImage
-              landscape={entry.mainImage}
-              portrait={entry.mainImage}
+              image={entry.mainImage}
               locale={locale}
-              landscapeParams={{
+              params={{
                 width: 720,
                 height: 960,
                 sizes: "(min-width: 768px) 50vw, 100vw",
-                quality: 50,
-              }}
-              portraitParams={{
-                width: 720,
-                height: 960,
-                sizes: "100vw",
                 quality: 50,
               }}
               fill
@@ -110,19 +103,12 @@ export function ListingCard({
           <div className="absolute inset-0">
             {entry.mainImage ? (
               <SanityImage
-                landscape={entry.mainImage}
-                portrait={entry.mainImage}
+                image={entry.mainImage}
                 locale={locale}
-                landscapeParams={{
+                params={{
                   width: 720,
                   height: 960,
                   sizes: "(min-width: 768px) 50vw, 100vw",
-                  quality: 10,
-                }}
-                portraitParams={{
-                  width: 720,
-                  height: 960,
-                  sizes: "100vw",
                   quality: 10,
                 }}
                 fill
