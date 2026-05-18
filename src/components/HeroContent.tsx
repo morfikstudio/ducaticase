@@ -134,7 +134,6 @@ export function HeroContent({
               priority
               altFallback={altFallback}
               className="object-cover object-center"
-              loading="eager"
               onLoad={handleImageSettled}
               onError={handleImageSettled}
             />

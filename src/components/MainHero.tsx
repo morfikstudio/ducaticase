@@ -69,7 +69,6 @@ export function MainHero({
             }}
             fill
             priority
-            loading="eager"
             altFallback={hasTitle ? title : undefined}
             className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-center"
             onLoad={onImageSettled}

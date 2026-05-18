@@ -187,7 +187,6 @@ export function HeroText({
               fill
               priority
               className="pointer-events-none -z-20 object-cover object-center"
-              loading="eager"
               onLoad={onImageSettled}
               onError={onImageSettled}
             />
