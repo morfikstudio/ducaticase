@@ -177,17 +177,16 @@ export function HeroText({
               landscapeParams={{
                 width: 1920,
                 height: 1080,
-                sizes: "(min-width: 1px) 100vw",
+                sizes: "100vw",
               }}
               portraitParams={{
                 width: 720,
                 height: 1280,
-                sizes: "(min-width: 1px) 100vw",
+                sizes: "100vw",
               }}
               fill
               priority
               className="pointer-events-none -z-20 object-cover object-center"
-              loading="eager"
               onLoad={onImageSettled}
               onError={onImageSettled}
             />

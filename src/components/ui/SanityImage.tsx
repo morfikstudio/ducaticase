@@ -1,5 +1,5 @@
 import type { ReactEventHandler } from "react"
-import Image from "next/image"
+import Image, { getImageProps } from "next/image"
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
 import type { AppLocale } from "@/i18n/routing"
@@ -7,7 +7,6 @@ import { pickLocalizedString } from "@/sanity/lib/locale"
 import type { LocalizedString } from "@/sanity/types"
 
 import { getSanityImageUrl } from "@/lib/sanity"
-import { cn } from "@/utils/classNames"
 
 function localizedAltFromSource(
   image: SanityImageSource | null | undefined,
@@ -143,11 +142,11 @@ export type SanityImageProps =
   | SanityImageSingleProps
   | SanityImageResponsiveProps
 
-const BREAKPOINT_CLASSES = {
-  sm: { landscape: "hidden sm:block", portrait: "sm:hidden" },
-  md: { landscape: "hidden md:block", portrait: "md:hidden" },
-  lg: { landscape: "hidden lg:block", portrait: "lg:hidden" },
-  xl: { landscape: "hidden xl:block", portrait: "xl:hidden" },
+const BREAKPOINT_MEDIA = {
+  sm: "(min-width: 640px)",
+  md: "(min-width: 768px)",
+  lg: "(min-width: 1024px)",
+  xl: "(min-width: 1280px)",
 } as const
 
 /** Next.js `Image` needs a positive height for aspect ratio when `fill` is false. */
@@ -248,7 +247,6 @@ export function SanityImage(props: SanityImageProps) {
   )
 
   const hasBoth = Boolean(landscapeUrl && portraitUrl)
-  const bpClasses = BREAKPOINT_CLASSES[breakpoint]
 
   const sharedProps = {
     alt: resolvedAlt,
@@ -259,20 +257,29 @@ export function SanityImage(props: SanityImageProps) {
   } as const
 
   if (hasBoth && landscapeUrl && portraitUrl) {
+    const sharedLandscapeProps = {
+      src: landscapeUrl,
+      alt: resolvedAlt,
+      sizes: lp.sizes,
+      priority,
+      ...(priority ? {} : loading ? { loading } : {}),
+    }
+    const {
+      props: { srcSet: landscapeSrcSet },
+    } = fill
+      ? getImageProps({ ...sharedLandscapeProps, fill: true })
+      : getImageProps({
+          ...sharedLandscapeProps,
+          width: lp.width,
+          height: intrinsicImageHeight(lp.width, lp.height),
+        })
+
     return (
-      <>
-        <Image
-          {...sharedProps}
-          src={landscapeUrl}
-          {...(fill
-            ? { fill: true }
-            : {
-                width: lp.width,
-                height: intrinsicImageHeight(lp.width, lp.height),
-                style: { width: "100%", height: "auto" },
-              })}
+      <picture>
+        <source
+          media={BREAKPOINT_MEDIA[breakpoint]}
+          srcSet={landscapeSrcSet}
           sizes={lp.sizes}
-          className={cn(bpClasses.landscape, className)}
         />
         <Image
           {...sharedProps}
@@ -285,9 +292,9 @@ export function SanityImage(props: SanityImageProps) {
                 style: { width: "100%", height: "auto" },
               })}
           sizes={pp.sizes}
-          className={cn(bpClasses.portrait, className)}
+          className={className}
         />
-      </>
+      </picture>
     )
   }
 

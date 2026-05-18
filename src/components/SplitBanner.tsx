@@ -103,7 +103,7 @@ export function SplitBanner({
                 params={{
                   width: 720,
                   height: 686,
-                  sizes: "((min-width: 1px) 50vw",
+                  sizes: "(min-width: 768px) 50vw, 100vw",
                 }}
                 fill
                 className="object-cover object-center"

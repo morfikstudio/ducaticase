@@ -123,18 +123,17 @@ export function HeroContent({
               landscapeParams={{
                 width: heroLandscapeCrop.width,
                 height: heroLandscapeCrop.height,
-                sizes: "(min-width: 1px) 100vw",
+                sizes: "100vw",
               }}
               portraitParams={{
                 width: heroPortraitCrop.width,
                 height: heroPortraitCrop.height,
-                sizes: "(min-width: 1px) 100vw",
+                sizes: "100vw",
               }}
               fill
               priority
               altFallback={altFallback}
               className="object-cover object-center"
-              loading="eager"
               onLoad={handleImageSettled}
               onError={handleImageSettled}
             />

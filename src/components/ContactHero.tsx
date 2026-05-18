@@ -331,12 +331,12 @@ export function ContactHero({
                 landscapeParams={{
                   width: 1280,
                   height: 768,
-                  sizes: "(min-width: 1px) 75vw",
+                  sizes: "(min-width: 768px) 75vw, 100vw",
                 }}
                 portraitParams={{
                   width: 720,
                   height: 900,
-                  sizes: "(min-width: 1px) 100vw",
+                  sizes: "100vw",
                 }}
                 fill
                 className="object-cover object-center overflow-hidden"

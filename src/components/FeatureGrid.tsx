@@ -108,19 +108,13 @@ function FeatureCard({ title, text, image, locale }: FeatureCardProps) {
             )}
           >
             <SanityImage
-              landscape={image}
-              portrait={image}
+              image={image}
               locale={locale}
               altFallback={title}
-              landscapeParams={{
+              params={{
                 width: 720,
                 height: 375,
-                sizes: "(min-width: 1px) 100vw",
-              }}
-              portraitParams={{
-                width: 720,
-                height: 375,
-                sizes: "(min-width: 1px) 100vw",
+                sizes: "100vw",
               }}
               className="object-cover object-center"
             />
