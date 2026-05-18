@@ -76,12 +76,12 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
               landscapeParams={{
                 width: 900,
                 height: 560,
-                sizes: "(min-width: 1px) 80vw",
+                sizes: "(min-width: 768px) 80vw, 100vw",
               }}
               portraitParams={{
                 width: 720,
                 height: 450,
-                sizes: "(min-width: 1px) 100vw",
+                sizes: "100vw",
               }}
               fill
               className="object-cover"
@@ -116,7 +116,7 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                     params={{
                       width: 500,
                       height: 500,
-                      sizes: "(min-width: 1px) 50vw",
+                      sizes: "(min-width: 768px) 25vw, 50vw",
                       quality: 50,
                     }}
                     fill
@@ -151,7 +151,7 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                   params={{
                     width: 500,
                     height: 500,
-                    sizes: "(min-width: 1px) 50vw",
+                    sizes: "(min-width: 768px) 25vw, 50vw",
                     quality: 50,
                   }}
                   fill
