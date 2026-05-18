@@ -172,7 +172,7 @@ function MemberCardDesktop({ member, locale }: MemberCardProps) {
             params={{
               width: 400,
               height: 560,
-              sizes: "(min-width: 1px) 30vw",
+              sizes: "(min-width: 768px) 30vw, 100vw",
             }}
             fill
             className="object-cover object-center"
@@ -218,7 +218,7 @@ function MemberCardMobile({ member, locale }: MemberCardProps) {
             params={{
               width: 720,
               height: 1008,
-              sizes: "(min-width: 1px) 100vw",
+              sizes: "100vw",
             }}
             fill
             className="object-cover object-center"

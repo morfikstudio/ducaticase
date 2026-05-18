@@ -58,12 +58,12 @@ export function Cover({
           landscapeParams={{
             width: coverLandscapeCrop.width,
             height: coverLandscapeCrop.height,
-            sizes: "(min-width: 1px) 100vw",
+            sizes: "100vw",
           }}
           portraitParams={{
             width: coverPortraitCrop.width,
             height: coverPortraitCrop.height,
-            sizes: "(min-width: 1px) 100vw",
+            sizes: "100vw",
           }}
           fill
           priority={priority}

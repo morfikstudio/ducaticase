@@ -84,13 +84,13 @@ export function ListingCard({
               landscapeParams={{
                 width: 720,
                 height: 960,
-                sizes: "(min-width: 1px) 50vw",
+                sizes: "(min-width: 768px) 50vw, 100vw",
                 quality: 50,
               }}
               portraitParams={{
                 width: 720,
                 height: 960,
-                sizes: "(min-width: 1px) 100vw",
+                sizes: "100vw",
                 quality: 50,
               }}
               fill
@@ -116,13 +116,13 @@ export function ListingCard({
                 landscapeParams={{
                   width: 720,
                   height: 960,
-                  sizes: "(min-width: 1px) 50vw",
+                  sizes: "(min-width: 768px) 50vw, 100vw",
                   quality: 10,
                 }}
                 portraitParams={{
                   width: 720,
                   height: 960,
-                  sizes: "(min-width: 1px) 100vw",
+                  sizes: "100vw",
                   quality: 10,
                 }}
                 fill
