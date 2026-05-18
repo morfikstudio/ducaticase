@@ -62,7 +62,7 @@ function contactPageImageField(
   })
 }
 
-/** Pagina Contatti: desktop 16:9, mobile 4:5. */
+/** Pagina Contatti: desktop 5:3, mobile 4:5. */
 export const contactPageResponsiveImage = defineType({
   name: "contactPageResponsiveImage",
   title: "Immagini Landscape / Portrait",
@@ -71,8 +71,8 @@ export const contactPageResponsiveImage = defineType({
     contactPageImageField(
       "imageLandscape",
       "Landscape (desktop)",
-      16 / 9,
-      "Landscape 16:9",
+      5 / 3,
+      "Landscape 5:3",
     ),
     contactPageImageField(
       "imagePortrait",

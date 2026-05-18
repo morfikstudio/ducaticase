@@ -330,7 +330,7 @@ export function ContactHero({
                 locale={locale}
                 altFallback={title}
                 landscapeParams={{
-                  width: 1024,
+                  width: 1280,
                   height: 768,
                   sizes: "(min-width: 1px) 75vw",
                 }}
