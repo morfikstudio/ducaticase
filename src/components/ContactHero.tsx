@@ -283,7 +283,6 @@ export function ContactHero({
           infoListRef.current,
           {
             opacity: 0,
-            y: "+=24",
             duration: 1,
             ease: "power2.out",
             clearProps: "opacity,y",
