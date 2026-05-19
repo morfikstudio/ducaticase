@@ -3,7 +3,6 @@
 import { useTranslations } from "next-intl"
 
 import type { AppLocale } from "@/i18n/routing"
-import { listingContractTypeLabel } from "@/sanity/lib/listingContractTypeLabel"
 import { listingTypologyLabel } from "@/sanity/lib/listingTypologyLabel"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import { parseListingLocationCountryCode } from "@/sanity/lib/constants"
@@ -51,12 +50,7 @@ export function ListingDetailHeader({
   )
 
   const sqm = propertySheet?.commercialAreaSqm
-  const contractLabel = listingContractTypeLabel(
-    metadata.listingContractType,
-    locale,
-  )
-  const showContractLabel =
-    contractLabel && metadata.listingContractType === "rent"
+  const showRentPriceLabel = metadata.listingContractType === "rent"
   const typologyLabel = listingTypologyLabel(metadata._type, typology, locale)
   const specParts = [
     typologyLabel,
@@ -87,15 +81,15 @@ export function ListingDetailHeader({
           <div
             className={cn(
               "w-full md:w-1/2 md:text-right",
-              "flex gap-2 md:justify-end",
+              "flex gap-2 items-baseline md:justify-end",
             )}
           >
             {price ? (
               <p className={cn("type-body-1 md:type-heading-2")}>{price}</p>
             ) : null}
 
-            {showContractLabel ? (
-              <p className="type-body-1 md:type-heading-2">({contractLabel})</p>
+            {showRentPriceLabel ? (
+              <p className="type-body-2">{t("rentPriceLabel")}</p>
             ) : null}
           </div>
         </div>
