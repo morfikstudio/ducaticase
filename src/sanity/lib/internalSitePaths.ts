@@ -10,7 +10,7 @@ export const GLOBAL_NAV_ITEMS = [
   },
   {
     path: "/ricerca-su-misura",
-    label: { it: "Ricerca su misura", en: "Tailored research" },
+    label: { it: "Ricerca su misura", en: "Bespoke Property Search" },
   },
   {
     path: "/ducati-per-le-aziende",
@@ -41,7 +41,7 @@ export const SITE_MENU_NAV_ITEMS = [
   },
   {
     path: "/ricerca-su-misura",
-    label: { it: "Ricerca su misura", en: "Tailored research" },
+    label: { it: "Ricerca su misura", en: "Bespoke Property Search" },
   },
   {
     path: "/ducati-per-le-aziende",
