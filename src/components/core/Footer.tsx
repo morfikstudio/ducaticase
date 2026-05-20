@@ -7,16 +7,8 @@ import { Container } from "@/components/ui/Container"
 import { cn } from "@/utils/classNames"
 
 import type { FooterContent } from "@/lib/formatFooterContent"
+import { hrefUsesNativeAnchor } from "@/lib/hrefUsesNativeAnchor"
 import { Logo } from "@/components/ui/Logo"
-
-function hrefUsesNativeAnchor(href: string): boolean {
-  return (
-    href.startsWith("http://") ||
-    href.startsWith("https://") ||
-    href.startsWith("mailto:") ||
-    href.startsWith("tel:")
-  )
-}
 
 function ExternalLinkIcon({ className }: { className?: string }) {
   return (

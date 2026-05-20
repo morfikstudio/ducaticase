@@ -99,7 +99,7 @@ export function MainHero({
               title={title}
               tag="h1"
               show={show && (!hasMedia || imageReady)}
-              className="max-w-[min(100%,42rem)]"
+              className="max-w-[min(100%,52rem)]"
             />
           </Container>
         </div>

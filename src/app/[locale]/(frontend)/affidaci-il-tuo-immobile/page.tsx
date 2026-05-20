@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
 import { type AppLocale } from "@/i18n/routing"
 
 import { sanityFetch } from "@/sanity/lib/client"
@@ -7,6 +8,7 @@ import { LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
 import type { LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
 
 import { buildPageMetadataByKey } from "@/seo/page-metadata"
+import { buildCompanyMailtoHref } from "@/lib/buildCompanyMailtoHref"
 
 import { cn } from "@/utils/classNames"
 import { normalizePathnameForIntlLink } from "@/utils/navigation"
@@ -34,6 +36,11 @@ export default async function Page({ params }: PageProps) {
   const { locale: localeParam } = await params
   const locale = localeParam as AppLocale
 
+  const t = await getTranslations({ locale, namespace: "listYourProperty" })
+  const listYourPropertyMailtoHref = buildCompanyMailtoHref(
+    t("infoEmailSubject"),
+  )
+
   const data = (await sanityFetch({
     query: LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY,
     revalidate: 60,
@@ -48,11 +55,9 @@ export default async function Page({ params }: PageProps) {
     pickLocalizedString(page?.heroSubtitle ?? undefined, locale) ?? ""
   const heroLandscape = hero?.imageLandscape
   const heroPortrait = hero?.imagePortrait
-  const cta = page?.heroCta
-  const ctaLabel = pickLocalizedString(cta?.label ?? undefined, locale) ?? ""
-  const ctaPath = cta?.path?.trim() ?? ""
-  const showCta = ctaLabel.trim() !== "" && ctaPath !== ""
-  const ctaHref = showCta ? normalizePathnameForIntlLink(ctaPath) : undefined
+  const ctaLabel = pickLocalizedString(page?.heroCta ?? undefined, locale) ?? ""
+  const showCta = ctaLabel.trim() !== ""
+  const ctaHref = showCta ? listYourPropertyMailtoHref : undefined
   const hasHero =
     title.trim() !== "" ||
     subtitle.trim() !== "" ||
@@ -78,15 +83,12 @@ export default async function Page({ params }: PageProps) {
       text: item.text,
     })) ?? []
 
-  const servicesCta = page?.servicesCta
-  const servicesCtaPath = servicesCta?.path?.trim() ?? ""
-
-  const servicesCtaHref =
-    servicesCtaPath !== ""
-      ? normalizePathnameForIntlLink(servicesCtaPath)
-      : undefined
   const servicesCtaLabel =
-    pickLocalizedString(servicesCta?.label ?? undefined, locale) ?? ""
+    pickLocalizedString(page?.servicesCta ?? undefined, locale) ?? ""
+  const showServicesCta = servicesCtaLabel.trim() !== ""
+  const servicesCtaHref = showServicesCta
+    ? listYourPropertyMailtoHref
+    : undefined
   const hasServices = Boolean(
     servicesTitle ?? servicesSubtitle ?? servicesItems?.length,
   )
@@ -158,7 +160,7 @@ export default async function Page({ params }: PageProps) {
             locale={locale}
             title={servicesTitle}
             subtitle={servicesSubtitle}
-            ctaLabel={servicesCtaLabel}
+            ctaLabel={showServicesCta ? servicesCtaLabel : undefined}
             ctaHref={servicesCtaHref}
             items={servicesItems}
           />

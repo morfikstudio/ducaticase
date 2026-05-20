@@ -6,6 +6,7 @@
   "listingDetail": {
     "downloadBrochure": "Download brochure",
     "bookVisit": "Book a visit",
+    "visitRequestEmailSubject": "Visit request - {location}",
     "squareMeters": "sqm",
     "rentPriceLabel": "Monthly rent | plus utilities",
     "moreDetails": "More details",
@@ -100,6 +101,9 @@
   },
   "contactPage": {
     "whatsappChat": "Whatsapp Chat"
+  },
+  "listYourProperty": {
+    "infoEmailSubject": "Info - List your property with us"
   },
   "homePage": {
     "featuredListingsTitle": "Featured listings",

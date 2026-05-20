@@ -1,5 +1,6 @@
 "use client"
 
+import { useMemo } from "react"
 import { useTranslations } from "next-intl"
 
 import type { AppLocale } from "@/i18n/routing"
@@ -11,6 +12,7 @@ import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
 import { useGsapReveal } from "@/hooks/useGsapReveal"
 
 import { buildListingLocationText } from "@/lib/buildListingLocationText"
+import { buildListingVisitMailtoHref } from "@/lib/buildListingVisitMailtoHref"
 import { formatListingPrice } from "@/lib/formatListingPrice"
 import { cn } from "@/utils/classNames"
 
@@ -56,6 +58,14 @@ export function ListingDetailHeader({
     typologyLabel,
     sqm ? `${sqm} ${t("squareMeters")}` : null,
   ].filter(Boolean)
+
+  const visitMailtoHref = useMemo(
+    () =>
+      buildListingVisitMailtoHref(location, (values) =>
+        t("visitRequestEmailSubject", values),
+      ),
+    [location, t],
+  )
 
   return (
     <section ref={wrapRef} className="w-full" style={{ opacity: 0 }}>
@@ -130,7 +140,7 @@ export function ListingDetailHeader({
             </Button>
 
             <Button
-              href="/contact"
+              href={visitMailtoHref}
               variant="primary"
               className="w-full md:w-auto"
             >

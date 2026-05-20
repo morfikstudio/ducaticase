@@ -7,6 +7,8 @@ import {
   SunIcon,
 } from "@sanity/icons"
 
+export const COMPANY_EMAIL = "info@ducaticase.it"
+
 export const CATEGORY_OPTIONS = [
   {
     title: { it: "Residenziale", en: "Residential" },
@@ -100,7 +102,10 @@ export const OPTIONAL_FIELD_LABELS: Record<string, LocalizedLabel> = {
   hasAccessibleAccess: { it: "Accesso per disabili", en: "Accessible access" },
   climateControl: { it: "Impianto di climatizzazione", en: "Climate control" },
   outdoorAreaSqm: { it: "Superficie terreno (mq)", en: "Outdoor area (sqm)" },
-  condoFees: { it: "Spese condominiali", en: "Condo fees" },
+  condoFees: {
+    it: "Spese condominiali (al mese)",
+    en: "Condo fees (per month)",
+  },
   hasAccessibleRestroom: {
     it: "Bagno per disabili",
     en: "Accessible restroom",
