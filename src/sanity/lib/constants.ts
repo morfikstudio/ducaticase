@@ -100,7 +100,10 @@ export const OPTIONAL_FIELD_LABELS: Record<string, LocalizedLabel> = {
   hasAccessibleAccess: { it: "Accesso per disabili", en: "Accessible access" },
   climateControl: { it: "Impianto di climatizzazione", en: "Climate control" },
   outdoorAreaSqm: { it: "Superficie terreno (mq)", en: "Outdoor area (sqm)" },
-  condoFees: { it: "Spese condominiali", en: "Condo fees" },
+  condoFees: {
+    it: "Spese condominiali (mensili)",
+    en: "Condo fees (monthly)",
+  },
   hasAccessibleRestroom: {
     it: "Bagno per disabili",
     en: "Accessible restroom",
