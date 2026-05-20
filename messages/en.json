@@ -6,6 +6,7 @@
   "listingDetail": {
     "downloadBrochure": "Download brochure",
     "bookVisit": "Book a visit",
+    "visitRequestEmailSubject": "Visit request - {location}",
     "squareMeters": "sqm",
     "rentPriceLabel": "Monthly rent | plus utilities",
     "moreDetails": "More details",

@@ -6,6 +6,7 @@
   "listingDetail": {
     "downloadBrochure": "Scarica la brochure",
     "bookVisit": "Prenota una visita",
+    "visitRequestEmailSubject": "Richiesta visita - {location}",
     "squareMeters": "mq. ca.",
     "rentPriceLabel": "canone mensile | oltre spese",
     "moreDetails": "Più dettagli",

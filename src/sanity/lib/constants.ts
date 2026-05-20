@@ -7,6 +7,8 @@ import {
   SunIcon,
 } from "@sanity/icons"
 
+export const COMPANY_EMAIL = "info@ducaticase.it"
+
 export const CATEGORY_OPTIONS = [
   {
     title: { it: "Residenziale", en: "Residential" },

@@ -3,6 +3,7 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react"
 import { Link } from "@/i18n/navigation"
 
+import { hrefUsesNativeAnchor } from "@/lib/hrefUsesNativeAnchor"
 import { cn } from "@/utils/classNames"
 
 type ButtonIcon = "externalLink" | "filters" | "detailsArrow" | "download"
@@ -272,6 +273,13 @@ export function Button(props: ButtonProps) {
 
   if ("href" in rest && rest.href !== undefined) {
     const { href, ...anchorProps } = rest
+    if (hrefUsesNativeAnchor(href)) {
+      return (
+        <a href={href} className={classes} {...anchorProps}>
+          {body}
+        </a>
+      )
+    }
     return (
       <Link href={href} className={classes} {...anchorProps}>
         {body}
