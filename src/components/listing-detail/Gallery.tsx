@@ -73,6 +73,7 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
               landscape={mainImage}
               portrait={mainImage}
               locale={locale}
+              protectFromDownload
               landscapeParams={{
                 width: 900,
                 height: 560,
@@ -113,6 +114,7 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                   <SanityImage
                     image={thumb}
                     locale={locale}
+                    protectFromDownload
                     params={{
                       width: 500,
                       height: 500,
@@ -148,6 +150,7 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                 <SanityImage
                   image={thumb}
                   locale={locale}
+                  protectFromDownload
                   params={{
                     width: 500,
                     height: 500,

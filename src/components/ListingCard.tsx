@@ -75,6 +75,7 @@ export function ListingCard({
             <SanityImage
               image={entry.mainImage}
               locale={locale}
+              protectFromDownload
               params={{
                 width: 720,
                 height: 960,
@@ -100,6 +101,7 @@ export function ListingCard({
               <SanityImage
                 image={entry.mainImage}
                 locale={locale}
+                protectFromDownload
                 params={{
                   width: 720,
                   height: 960,

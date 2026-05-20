@@ -131,9 +131,11 @@ export function LocationMap({
           alt=""
           width={MOBILE_W}
           height={MOBILE_H}
-          className="h-full w-full object-cover"
+          className="h-full w-full select-none object-cover [-webkit-touch-callout:none]"
           loading="lazy"
           decoding="async"
+          draggable={false}
+          onContextMenu={(e) => e.preventDefault()}
         />
       </picture>
 

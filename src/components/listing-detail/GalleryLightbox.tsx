@@ -275,6 +275,7 @@ export function GalleryLightbox({
                   <SanityImage
                     image={image}
                     locale={locale}
+                    protectFromDownload
                     params={{
                       width: 720,
                       sizes: "100vw",
@@ -288,6 +289,7 @@ export function GalleryLightbox({
                     <SanityImage
                       image={image}
                       locale={locale}
+                      protectFromDownload
                       params={{
                         width: 1280,
                         sizes: "100vw",

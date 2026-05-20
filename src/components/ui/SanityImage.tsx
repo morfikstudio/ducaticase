@@ -1,4 +1,4 @@
-import type { ReactEventHandler } from "react"
+import type { MouseEventHandler, ReactEventHandler } from "react"
 import Image, { getImageProps } from "next/image"
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
@@ -7,6 +7,7 @@ import { pickLocalizedString } from "@/sanity/lib/locale"
 import type { LocalizedString } from "@/sanity/types"
 
 import { getSanityImageUrl } from "@/lib/sanity"
+import { cn } from "@/utils/classNames"
 
 function localizedAltFromSource(
   image: SanityImageSource | null | undefined,
@@ -103,6 +104,9 @@ type CommonSanityImageProps = {
 
   onLoad?: ReactEventHandler<HTMLImageElement>
   onError?: ReactEventHandler<HTMLImageElement>
+
+  /** Block context menu and long-press save (only where explicitly enabled). */
+  protectFromDownload?: boolean
 }
 
 /**
@@ -155,6 +159,19 @@ function intrinsicImageHeight(width: number, height?: number): number {
   return Math.round((width * 3) / 4)
 }
 
+const blockImageContextMenu: MouseEventHandler<HTMLImageElement> = (e) => {
+  e.preventDefault()
+}
+
+function resolveImageClassName(
+  className: string | undefined,
+  protectFromDownload: boolean,
+) {
+  return protectFromDownload
+    ? cn(className, "select-none [-webkit-touch-callout:none]")
+    : className
+}
+
 /**
  * Sanity-backed image with optional responsive art direction.
  *
@@ -175,6 +192,7 @@ export function SanityImage(props: SanityImageProps) {
     className,
     onLoad,
     onError,
+    protectFromDownload = false,
   } = props
 
   if ("image" in props && "params" in props) {
@@ -199,6 +217,8 @@ export function SanityImage(props: SanityImageProps) {
     const sharedProps = {
       alt: resolvedAlt,
       priority,
+      draggable: false,
+      ...(protectFromDownload ? { onContextMenu: blockImageContextMenu } : {}),
       ...(priority ? {} : loading ? { loading } : {}),
       onLoad,
       onError,
@@ -216,7 +236,7 @@ export function SanityImage(props: SanityImageProps) {
               style: { width: "100%", height: "auto" },
             })}
         sizes={params.sizes}
-        className={className}
+        className={resolveImageClassName(className, protectFromDownload)}
       />
     )
   }
@@ -251,10 +271,17 @@ export function SanityImage(props: SanityImageProps) {
   const sharedProps = {
     alt: resolvedAlt,
     priority,
+    draggable: false,
+    ...(protectFromDownload ? { onContextMenu: blockImageContextMenu } : {}),
     ...(priority ? {} : loading ? { loading } : {}),
     onLoad,
     onError,
   } as const
+
+  const resolvedClassName = resolveImageClassName(
+    className,
+    protectFromDownload,
+  )
 
   if (hasBoth && landscapeUrl && portraitUrl) {
     const sharedLandscapeProps = {
@@ -292,7 +319,7 @@ export function SanityImage(props: SanityImageProps) {
                 style: { width: "100%", height: "auto" },
               })}
           sizes={pp.sizes}
-          className={className}
+          className={resolvedClassName}
         />
       </picture>
     )
@@ -318,7 +345,7 @@ export function SanityImage(props: SanityImageProps) {
             style: { width: "100%", height: "auto" },
           })}
       sizes={singleParams.sizes}
-      className={className}
+      className={resolvedClassName}
     />
   )
 }
