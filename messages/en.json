@@ -102,6 +102,9 @@
   "contactPage": {
     "whatsappChat": "Whatsapp Chat"
   },
+  "listYourProperty": {
+    "infoEmailSubject": "Info - List your property with us"
+  },
   "homePage": {
     "featuredListingsTitle": "Featured listings",
     "featuredListingsFooter": "A selection of currently available properties, representing our residential, corporate, and lifestyle portfolio.",

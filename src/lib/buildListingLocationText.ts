@@ -28,8 +28,7 @@ export function getListingCityLine(
       ? `${city} (${province})`
       : city || (province ? `(${province})` : "")
 
-  const label =
-    typeof countryLabel === "string" ? countryLabel.trim() : ""
+  const label = typeof countryLabel === "string" ? countryLabel.trim() : ""
 
   if (!cityWithProvince) {
     return label || null

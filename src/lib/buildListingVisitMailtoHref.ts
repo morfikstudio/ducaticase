@@ -1,10 +1,9 @@
-import { COMPANY_EMAIL } from "@/sanity/lib/constants"
-
 import {
   getListingCityLine,
   getListingStreetLine,
   type ListingLocationLike,
 } from "@/lib/buildListingLocationText"
+import { buildCompanyMailtoHref } from "@/lib/buildCompanyMailtoHref"
 
 export function buildListingVisitMailtoHref(
   location: ListingLocationLike,
@@ -15,5 +14,5 @@ export function buildListingVisitMailtoHref(
   const locationLabel = street ? `${street}, ${city}` : city
   const subject = formatSubject({ location: locationLabel })
 
-  return `mailto:${COMPANY_EMAIL}?subject=${encodeURIComponent(subject)}`
+  return buildCompanyMailtoHref(subject)
 }

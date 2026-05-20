@@ -251,10 +251,6 @@
             },
             {
               "type": "string",
-              "value": "CH"
-            },
-            {
-              "type": "string",
               "value": "AT"
             },
             {
@@ -263,11 +259,11 @@
             },
             {
               "type": "string",
-              "value": "MC"
+              "value": "DE"
             },
             {
               "type": "string",
-              "value": "DE"
+              "value": "MC"
             },
             {
               "type": "string",
@@ -276,6 +272,10 @@
             {
               "type": "string",
               "value": "ES"
+            },
+            {
+              "type": "string",
+              "value": "CH"
             }
           ]
         },
@@ -1785,10 +1785,6 @@
             },
             {
               "type": "string",
-              "value": "CH"
-            },
-            {
-              "type": "string",
               "value": "AT"
             },
             {
@@ -1797,11 +1793,11 @@
             },
             {
               "type": "string",
-              "value": "MC"
+              "value": "DE"
             },
             {
               "type": "string",
-              "value": "DE"
+              "value": "MC"
             },
             {
               "type": "string",
@@ -1810,6 +1806,10 @@
             {
               "type": "string",
               "value": "ES"
+            },
+            {
+              "type": "string",
+              "value": "CH"
             }
           ]
         },
@@ -3119,10 +3119,6 @@
             },
             {
               "type": "string",
-              "value": "CH"
-            },
-            {
-              "type": "string",
               "value": "AT"
             },
             {
@@ -3131,11 +3127,11 @@
             },
             {
               "type": "string",
-              "value": "MC"
+              "value": "DE"
             },
             {
               "type": "string",
-              "value": "DE"
+              "value": "MC"
             },
             {
               "type": "string",
@@ -3144,6 +3140,10 @@
             {
               "type": "string",
               "value": "ES"
+            },
+            {
+              "type": "string",
+              "value": "CH"
             }
           ]
         },
@@ -4521,10 +4521,6 @@
             },
             {
               "type": "string",
-              "value": "CH"
-            },
-            {
-              "type": "string",
               "value": "AT"
             },
             {
@@ -4533,11 +4529,11 @@
             },
             {
               "type": "string",
-              "value": "MC"
+              "value": "DE"
             },
             {
               "type": "string",
-              "value": "DE"
+              "value": "MC"
             },
             {
               "type": "string",
@@ -4546,6 +4542,10 @@
             {
               "type": "string",
               "value": "ES"
+            },
+            {
+              "type": "string",
+              "value": "CH"
             }
           ]
         },
@@ -5915,10 +5915,6 @@
             },
             {
               "type": "string",
-              "value": "CH"
-            },
-            {
-              "type": "string",
               "value": "AT"
             },
             {
@@ -5927,11 +5923,11 @@
             },
             {
               "type": "string",
-              "value": "MC"
+              "value": "DE"
             },
             {
               "type": "string",
-              "value": "DE"
+              "value": "MC"
             },
             {
               "type": "string",
@@ -5940,6 +5936,10 @@
             {
               "type": "string",
               "value": "ES"
+            },
+            {
+              "type": "string",
+              "value": "CH"
             }
           ]
         },
@@ -7373,10 +7373,6 @@
             },
             {
               "type": "string",
-              "value": "CH"
-            },
-            {
-              "type": "string",
               "value": "AT"
             },
             {
@@ -7385,11 +7381,11 @@
             },
             {
               "type": "string",
-              "value": "MC"
+              "value": "DE"
             },
             {
               "type": "string",
-              "value": "DE"
+              "value": "MC"
             },
             {
               "type": "string",
@@ -7398,6 +7394,10 @@
             {
               "type": "string",
               "value": "ES"
+            },
+            {
+              "type": "string",
+              "value": "CH"
             }
           ]
         },
@@ -9039,7 +9039,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "inline",
-            "name": "aboutHighlightCta"
+            "name": "localizedString"
           },
           "optional": true
         },
@@ -9071,7 +9071,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "inline",
-            "name": "aboutHighlightCta"
+            "name": "localizedString"
           },
           "optional": true
         },
@@ -11667,6 +11667,81 @@
     }
   },
   {
+    "name": "media.tag",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "media.tag"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "name": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "slug"
+        },
+        "optional": true
+      }
+    }
+  },
+  {
+    "name": "slug",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "slug"
+          }
+        },
+        "current": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": false
+        },
+        "source": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "name": "sanity.imagePaletteSwatch",
     "type": "type",
     "value": {
@@ -12208,36 +12283,6 @@
           "name": "sanity.assetSourceData"
         },
         "optional": true
-      }
-    }
-  },
-  {
-    "name": "slug",
-    "type": "type",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "slug"
-          }
-        },
-        "current": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": false
-        },
-        "source": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        }
       }
     }
   }

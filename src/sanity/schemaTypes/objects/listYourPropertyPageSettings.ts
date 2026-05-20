@@ -132,10 +132,14 @@ export const listYourPropertyPageSettings = defineType({
     defineField({
       name: "heroCta",
       title: "Call to action",
-      type: "aboutHighlightCta",
+      description:
+        "Opzionale. Etichetta del pulsante; il link apre l’email aziendale con oggetto predefinito.",
+      type: "localizedString",
       group: "hero",
       validation: (Rule) =>
-        Rule.custom((value: HighlightCtaValue) => validateHighlightCta(value)),
+        Rule.custom((value: LocalizedStringValue) =>
+          validatePairedLocalizedString(value),
+        ),
     }),
     defineField({
       name: "cover1Image",
@@ -166,10 +170,14 @@ export const listYourPropertyPageSettings = defineType({
     defineField({
       name: "servicesCta",
       title: "Call to action",
-      type: "aboutHighlightCta",
+      description:
+        "Opzionale. Etichetta del pulsante; il link apre l’email aziendale con oggetto predefinito.",
+      type: "localizedString",
       group: "services",
       validation: (Rule) =>
-        Rule.custom((value: HighlightCtaValue) => validateHighlightCta(value)),
+        Rule.custom((value: LocalizedStringValue) =>
+          validatePairedLocalizedString(value),
+        ),
     }),
     defineField({
       name: "servicesItems",

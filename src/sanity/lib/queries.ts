@@ -246,10 +246,7 @@ export const LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY = defineQuery(groq`
         heroSubtitle,
         heroPayoff1,
         heroPayoff2,
-        heroCta {
-          label,
-          path
-        },
+        heroCta,
         heroImage {
           "recommendedCrop": {
             "landscape": {
@@ -338,10 +335,7 @@ export const LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY = defineQuery(groq`
         },
         servicesTitle,
         servicesSubtitle,
-        servicesCta {
-          label,
-          path
-        },
+        servicesCta,
         servicesItems[] {
           _key,
           title,
