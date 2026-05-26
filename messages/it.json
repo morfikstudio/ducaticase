@@ -102,6 +102,31 @@
   "contactPage": {
     "whatsappChat": "Chat Whatsapp"
   },
+  "contactForm": {
+    "formAriaLabel": "Modulo di contatto",
+    "firstNameLabel": "Nome",
+    "firstNamePlaceholder": "Nome",
+    "lastNameLabel": "Cognome",
+    "lastNamePlaceholder": "Cognome",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Indirizzo email",
+    "phoneLabel": "Numero di telefono",
+    "phonePlaceholder": "Telefono",
+    "inquiryTypeLabel": "Motivo del contatto",
+    "inquiryTypePlaceholder": "Seleziona un'opzione",
+    "inquiryTypeOptions": {
+      "general": "Informazioni generali",
+      "propertyInquiry": "Richiesta informazioni immobile",
+      "visitRequest": "Prenota una visita",
+      "listProperty": "Affida il tuo immobile",
+      "customSearch": "Ricerca su misura"
+    },
+    "messageLabel": "Messaggio",
+    "messagePlaceholder": "Note",
+    "buttonLabel": "Invia",
+    "submittingLabel": "Invio in corso…",
+    "successMessage": "Grazie. Il tuo messaggio è stato inviato correttamente."
+  },
   "listYourProperty": {
     "infoEmailSubject": "Info - Affidaci il tuo immobile"
   },
