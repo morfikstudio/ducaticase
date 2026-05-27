@@ -132,7 +132,9 @@ export function ListingDetailHeader({
               variant="primary"
               icon="download"
               iconPosition="end"
-              onClick={() => console.log("downloadBrochure")}
+              onClick={() => {
+                window.location.href = `/api/brochure/${locale}/${metadata._id}`
+              }}
               highlight
               className="w-full md:w-auto"
             >
