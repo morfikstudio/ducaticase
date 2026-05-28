@@ -45,7 +45,6 @@ export function Select({
 
   const selectedOption = options.find((option) => option.value === value)
 
-  /* CLOSE ON OUTSIDE CLICK / ESCAPE */
   useEffect(() => {
     if (!open) return
 

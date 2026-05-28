@@ -11,7 +11,7 @@ export type ModalProps = {
   title: string
   children?: ReactNode
   className?: string
-  /** Optional ARIA label override; defaults to `title`. */
+
   ariaLabel?: string
 }
 
@@ -26,7 +26,6 @@ export function Modal({
   const [mounted, setMounted] = useState(false)
   const [entered, setEntered] = useState(false)
 
-  /* PORTAL TARGET SAFE-GUARD FOR SSR */
   useEffect(() => {
     setMounted(true)
   }, [])

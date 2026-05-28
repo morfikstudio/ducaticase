@@ -62,7 +62,7 @@ export function BaseForm() {
   const [budget, setBudget] = useState("")
   const [successModalOpen, setSuccessModalOpen] = useState(false)
 
-  /* OPEN MODAL 1.5s AFTER SUCCESSFUL SUBMISSION (CALLOUT HIDES IN SYNC) */
+  /* OPEN MODAL: you can change the delay here */
   useEffect(() => {
     if (!state.succeeded) return
     const timer = setTimeout(
