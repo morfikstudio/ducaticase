@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl"
 import { cn } from "@/utils/classNames"
 
 import { Button } from "@/components/ui/Button"
+import { Callout } from "@/components/ui/Callout"
 import { Icon } from "@/components/ui/Icon"
 
 type ContactFormFields = {
@@ -85,13 +86,7 @@ export function BaseForm() {
     state.errors?.getFieldErrors("message")?.length,
   )
 
-  if (state.succeeded) {
-    return (
-      <p role="status" aria-live="polite" className="type-body-1 text-white">
-        {t("successMessage")}
-      </p>
-    )
-  }
+  const hasFormError = Boolean(state.errors?.getFormErrors().length)
 
   return (
     <form
@@ -273,12 +268,18 @@ export function BaseForm() {
       <div>
         <Button
           type="submit"
-          disabled={state.submitting}
+          disabled={state.submitting || state.succeeded}
           aria-busy={state.submitting}
         >
           {state.submitting ? t("submittingLabel") : t("buttonLabel")}
         </Button>
       </div>
+
+      {state.succeeded ? (
+        <Callout variant="success" message={t("successMessage")} />
+      ) : hasFormError ? (
+        <Callout variant="error" message={t("errorMessage")} />
+      ) : null}
     </form>
   )
 }

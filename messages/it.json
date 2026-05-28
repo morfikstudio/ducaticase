@@ -113,19 +113,20 @@
     "phoneLabel": "Numero di telefono",
     "phonePlaceholder": "Telefono",
     "inquiryTypeLabel": "Motivo del contatto",
-    "inquiryTypePlaceholder": "Seleziona un'opzione",
+    "inquiryTypePlaceholder": "Budget",
     "inquiryTypeOptions": {
-      "general": "Informazioni generali",
-      "propertyInquiry": "Richiesta informazioni immobile",
-      "visitRequest": "Prenota una visita",
-      "listProperty": "Affida il tuo immobile",
-      "customSearch": "Ricerca su misura"
+      "general": "1 - 2 Milioni €",
+      "propertyInquiry": "2 - 5 Milioni €",
+      "visitRequest": "5 - 10 Milioni €",
+      "listProperty": "10 - 20 Milioni €",
+      "customSearch": "Oltre 20 Million €"
     },
-    "messageLabel": "Messaggio",
+    "messageLabel": "Note",
     "messagePlaceholder": "Note",
     "buttonLabel": "Invia",
     "submittingLabel": "Invio in corso…",
-    "successMessage": "Grazie. Il tuo messaggio è stato inviato correttamente."
+    "successMessage": "Messaggio inviato con successo!",
+    "errorMessage": "Invio del messaggio fallito. Riprova."
   },
   "listYourProperty": {
     "infoEmailSubject": "Info - Affidaci il tuo immobile"

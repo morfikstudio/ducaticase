@@ -113,19 +113,20 @@
     "phoneLabel": "Phone number",
     "phonePlaceholder": "Phone",
     "inquiryTypeLabel": "Reason for contact",
-    "inquiryTypePlaceholder": "Select an option",
+    "inquiryTypePlaceholder": "Budget",
     "inquiryTypeOptions": {
-      "general": "General information",
-      "propertyInquiry": "Property inquiry",
-      "visitRequest": "Book a visit",
-      "listProperty": "List your property",
-      "customSearch": "Custom property search"
+      "general": "1 - 2 Million €",
+      "propertyInquiry": "2 - 5 Million €",
+      "visitRequest": "5 - 10 Million €",
+      "listProperty": "10 - 20 Million €",
+      "customSearch": "Over 20 Million €"
     },
-    "messageLabel": "Message",
-    "messagePlaceholder": "Note",
+    "messageLabel": "Notes",
+    "messagePlaceholder": "Notes",
     "buttonLabel": "Send",
     "submittingLabel": "Sending…",
-    "successMessage": "Thank you. Your message has been sent successfully."
+    "successMessage": "Message sent successfully!",
+    "errorMessage": "Message sending failed. Please try again."
   },
   "listYourProperty": {
     "infoEmailSubject": "Info - List your property with us"
