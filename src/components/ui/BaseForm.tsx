@@ -15,11 +15,11 @@ type ContactFormFields = {
   lastName: string
   email: string
   phone: string
-  inquiryType: string
+  budget: string
   message: string
 }
 
-const INQUIRY_TYPE_OPTIONS = [
+const BUDGET_OPTIONS = [
   "1-2M",
   "2-5M",
   "5-10M",
@@ -27,7 +27,7 @@ const INQUIRY_TYPE_OPTIONS = [
   "over20M",
 ] as const
 
-type InquiryTypeOption = (typeof INQUIRY_TYPE_OPTIONS)[number]
+type BudgetOption = (typeof BUDGET_OPTIONS)[number]
 
 const FORM_FIELD_CLASSNAME = cn(
   "w-full rounded-[4px] border border-dark-gray bg-transparent px-4 py-3",
@@ -62,13 +62,13 @@ export function BaseForm() {
   const formInstanceId = useId()
 
   const [state, handleSubmit] = useForm<ContactFormFields>("mqejwayl")
-  const [inquiryType, setInquiryType] = useState("")
+  const [budget, setBudget] = useState("")
 
   const firstNameErrorId = `${formInstanceId}-firstName-error`
   const lastNameErrorId = `${formInstanceId}-lastName-error`
   const emailErrorId = `${formInstanceId}-email-error`
   const phoneErrorId = `${formInstanceId}-phone-error`
-  const inquiryTypeErrorId = `${formInstanceId}-inquiryType-error`
+  const budgetErrorId = `${formInstanceId}-budget-error`
   const messageErrorId = `${formInstanceId}-message-error`
 
   const hasFirstNameError = Boolean(
@@ -79,8 +79,8 @@ export function BaseForm() {
   )
   const hasEmailError = Boolean(state.errors?.getFieldErrors("email")?.length)
   const hasPhoneError = Boolean(state.errors?.getFieldErrors("phone")?.length)
-  const hasInquiryTypeError = Boolean(
-    state.errors?.getFieldErrors("inquiryType")?.length,
+  const hasBudgetError = Boolean(
+    state.errors?.getFieldErrors("budget")?.length,
   )
   const hasMessageError = Boolean(
     state.errors?.getFieldErrors("message")?.length,
@@ -191,29 +191,27 @@ export function BaseForm() {
       </div>
 
       <FormField
-        id={`${formInstanceId}-inquiryType`}
-        label={t("inquiryTypeLabel")}
+        id={`${formInstanceId}-budget`}
+        label={t("budgetLabel")}
       >
         <Select
-          id={`${formInstanceId}-inquiryType`}
-          name="inquiryType"
+          id={`${formInstanceId}-budget`}
+          name="budget"
           required
-          value={inquiryType}
-          onChange={setInquiryType}
-          placeholder={requiredPlaceholder(t("inquiryTypePlaceholder"))}
-          aria-invalid={hasInquiryTypeError}
-          aria-describedby={
-            hasInquiryTypeError ? inquiryTypeErrorId : undefined
-          }
-          options={INQUIRY_TYPE_OPTIONS.map((option) => ({
+          value={budget}
+          onChange={setBudget}
+          placeholder={requiredPlaceholder(t("budgetPlaceholder"))}
+          aria-invalid={hasBudgetError}
+          aria-describedby={hasBudgetError ? budgetErrorId : undefined}
+          options={BUDGET_OPTIONS.map((option) => ({
             value: option,
-            label: t(`inquiryTypeOptions.${option as InquiryTypeOption}`),
+            label: t(`budgetOptions.${option as BudgetOption}`),
           }))}
         />
         <ValidationError
-          id={inquiryTypeErrorId}
-          prefix={t("inquiryTypeLabel")}
-          field="inquiryType"
+          id={budgetErrorId}
+          prefix={t("budgetLabel")}
+          field="budget"
           errors={state.errors}
           className="type-body-3 text-gray"
         />
