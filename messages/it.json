@@ -126,7 +126,10 @@
     "buttonLabel": "Invia",
     "submittingLabel": "Invio in corso…",
     "successMessage": "Messaggio inviato con successo!",
-    "errorMessage": "Invio del messaggio fallito. Riprova."
+    "errorMessage": "Invio del messaggio fallito. Riprova.",
+    "successModalTitle": "Grazie per averci contattato",
+    "successModalText": "Presto un nostro consulente ti contatterà per prendere un appuntamento.",
+    "successModalCloseButton": "Continua la ricerca"
   },
   "listYourProperty": {
     "infoEmailSubject": "Info - Affidaci il tuo immobile"

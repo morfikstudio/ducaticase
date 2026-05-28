@@ -126,7 +126,10 @@
     "buttonLabel": "Send",
     "submittingLabel": "Sending…",
     "successMessage": "Message sent successfully!",
-    "errorMessage": "Message sending failed. Please try again."
+    "errorMessage": "Message sending failed. Please try again.",
+    "successModalTitle": "Thank you for contacting us",
+    "successModalText": "One of our advisors will be in touch shortly to arrange an appointment.",
+    "successModalCloseButton": "Continue browsing"
   },
   "listYourProperty": {
     "infoEmailSubject": "Info - List your property with us"

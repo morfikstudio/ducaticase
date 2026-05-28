@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useState, type ReactNode } from "react"
+import { useEffect, useId, useState, type ReactNode } from "react"
 import { useForm, ValidationError } from "@formspree/react"
 import { useTranslations } from "next-intl"
 
@@ -8,7 +8,10 @@ import { cn } from "@/utils/classNames"
 
 import { Button } from "@/components/ui/Button"
 import { Callout } from "@/components/ui/Callout"
+import { Modal } from "@/components/ui/Modal"
 import { Select } from "@/components/ui/Select"
+
+const SUCCESS_MODAL_DELAY_MS = 800
 
 type ContactFormFields = {
   firstName: string
@@ -19,13 +22,7 @@ type ContactFormFields = {
   message: string
 }
 
-const BUDGET_OPTIONS = [
-  "1-2M",
-  "2-5M",
-  "5-10M",
-  "10-20M",
-  "over20M",
-] as const
+const BUDGET_OPTIONS = ["1-2M", "2-5M", "5-10M", "10-20M", "over20M"] as const
 
 type BudgetOption = (typeof BUDGET_OPTIONS)[number]
 
@@ -63,6 +60,17 @@ export function BaseForm() {
 
   const [state, handleSubmit] = useForm<ContactFormFields>("mqejwayl")
   const [budget, setBudget] = useState("")
+  const [successModalOpen, setSuccessModalOpen] = useState(false)
+
+  /* OPEN MODAL 1.5s AFTER SUCCESSFUL SUBMISSION (CALLOUT HIDES IN SYNC) */
+  useEffect(() => {
+    if (!state.succeeded) return
+    const timer = setTimeout(
+      () => setSuccessModalOpen(true),
+      SUCCESS_MODAL_DELAY_MS,
+    )
+    return () => clearTimeout(timer)
+  }, [state.succeeded])
 
   const firstNameErrorId = `${formInstanceId}-firstName-error`
   const lastNameErrorId = `${formInstanceId}-lastName-error`
@@ -79,9 +87,7 @@ export function BaseForm() {
   )
   const hasEmailError = Boolean(state.errors?.getFieldErrors("email")?.length)
   const hasPhoneError = Boolean(state.errors?.getFieldErrors("phone")?.length)
-  const hasBudgetError = Boolean(
-    state.errors?.getFieldErrors("budget")?.length,
-  )
+  const hasBudgetError = Boolean(state.errors?.getFieldErrors("budget")?.length)
   const hasMessageError = Boolean(
     state.errors?.getFieldErrors("message")?.length,
   )
@@ -190,10 +196,7 @@ export function BaseForm() {
         </FormField>
       </div>
 
-      <FormField
-        id={`${formInstanceId}-budget`}
-        label={t("budgetLabel")}
-      >
+      <FormField id={`${formInstanceId}-budget`} label={t("budgetLabel")}>
         <Select
           id={`${formInstanceId}-budget`}
           name="budget"
@@ -248,11 +251,26 @@ export function BaseForm() {
         </Button>
       </div>
 
-      {state.succeeded ? (
+      {state.succeeded && !successModalOpen ? (
         <Callout variant="success" message={t("successMessage")} />
       ) : hasFormError ? (
         <Callout variant="error" message={t("errorMessage")} />
       ) : null}
+
+      <Modal
+        open={successModalOpen}
+        onClose={() => setSuccessModalOpen(false)}
+        title={t("successModalTitle")}
+      >
+        <p className="type-body-2 text-white text-center">
+          {t("successModalText")}
+        </p>
+        <div className="mt-8 flex justify-center md:hidden">
+          <Button variant="primary" onClick={() => setSuccessModalOpen(false)}>
+            {t("successModalCloseButton")}
+          </Button>
+        </div>
+      </Modal>
     </form>
   )
 }
