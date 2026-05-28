@@ -115,11 +115,11 @@
     "inquiryTypeLabel": "Reason for contact",
     "inquiryTypePlaceholder": "Budget",
     "inquiryTypeOptions": {
-      "general": "1 - 2 Million €",
-      "propertyInquiry": "2 - 5 Million €",
-      "visitRequest": "5 - 10 Million €",
-      "listProperty": "10 - 20 Million €",
-      "customSearch": "Over 20 Million €"
+      "1-2M": "1 - 2 Million €",
+      "2-5M": "2 - 5 Million €",
+      "5-10M": "5 - 10 Million €",
+      "10-20M": "10 - 20 Million €",
+      "over20M": "Over 20 Million €"
     },
     "messageLabel": "Notes",
     "messagePlaceholder": "Notes",

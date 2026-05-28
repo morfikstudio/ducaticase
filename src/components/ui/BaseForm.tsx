@@ -8,7 +8,7 @@ import { cn } from "@/utils/classNames"
 
 import { Button } from "@/components/ui/Button"
 import { Callout } from "@/components/ui/Callout"
-import { Icon } from "@/components/ui/Icon"
+import { Select } from "@/components/ui/Select"
 
 type ContactFormFields = {
   firstName: string
@@ -20,11 +20,11 @@ type ContactFormFields = {
 }
 
 const INQUIRY_TYPE_OPTIONS = [
-  "general",
-  "propertyInquiry",
-  "visitRequest",
-  "listProperty",
-  "customSearch",
+  "1-2M",
+  "2-5M",
+  "5-10M",
+  "10-20M",
+  "over20M",
 ] as const
 
 type InquiryTypeOption = (typeof INQUIRY_TYPE_OPTIONS)[number]
@@ -194,47 +194,22 @@ export function BaseForm() {
         id={`${formInstanceId}-inquiryType`}
         label={t("inquiryTypeLabel")}
       >
-        <div className="group relative">
-          <select
-            id={`${formInstanceId}-inquiryType`}
-            name="inquiryType"
-            required
-            aria-required="true"
-            aria-invalid={hasInquiryTypeError}
-            aria-describedby={
-              hasInquiryTypeError ? inquiryTypeErrorId : undefined
-            }
-            value={inquiryType}
-            onChange={(event) => setInquiryType(event.target.value)}
-            className={cn(
-              FORM_FIELD_CLASSNAME,
-              "cursor-pointer appearance-none pr-11",
-              inquiryType === "" ? "text-gray" : "text-white",
-            )}
-          >
-            <option value="" disabled>
-              {requiredPlaceholder(t("inquiryTypePlaceholder"))}
-            </option>
-            {INQUIRY_TYPE_OPTIONS.map((option) => (
-              <option
-                key={option}
-                value={option}
-                className="bg-dark text-white"
-              >
-                {t(`inquiryTypeOptions.${option as InquiryTypeOption}`)}
-              </option>
-            ))}
-          </select>
-          <span
-            aria-hidden="true"
-            className={cn(
-              "pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray",
-              "transition-transform duration-200 group-focus-within:-rotate-180 group-focus-within:text-white",
-            )}
-          >
-            <Icon type="chevron" direction="down" size="s" />
-          </span>
-        </div>
+        <Select
+          id={`${formInstanceId}-inquiryType`}
+          name="inquiryType"
+          required
+          value={inquiryType}
+          onChange={setInquiryType}
+          placeholder={requiredPlaceholder(t("inquiryTypePlaceholder"))}
+          aria-invalid={hasInquiryTypeError}
+          aria-describedby={
+            hasInquiryTypeError ? inquiryTypeErrorId : undefined
+          }
+          options={INQUIRY_TYPE_OPTIONS.map((option) => ({
+            value: option,
+            label: t(`inquiryTypeOptions.${option as InquiryTypeOption}`),
+          }))}
+        />
         <ValidationError
           id={inquiryTypeErrorId}
           prefix={t("inquiryTypeLabel")}

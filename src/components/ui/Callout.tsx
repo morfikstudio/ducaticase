@@ -16,8 +16,8 @@ export function Callout({ variant, message, className }: CalloutProps) {
       role={variant === "error" ? "alert" : "status"}
       aria-live="polite"
       className={cn(
-        "flex w-full items-center justify-center gap-3 rounded-[4px] bg-white px-5 py-4",
-        "type-body-2 uppercase text-black",
+        "flex w-full items-center justify-center gap-2 rounded-[4px] bg-white px-5 py-4",
+        "type-button uppercase text-black",
         className,
       )}
     >
