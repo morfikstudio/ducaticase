@@ -60,7 +60,7 @@ export function BaseForm() {
   const t = useTranslations("contactForm")
   const formInstanceId = useId()
 
-  const [state, handleSubmit] = useForm<ContactFormFields>("xblarvpn")
+  const [state, handleSubmit] = useForm<ContactFormFields>("mqejwayl")
   const [inquiryType, setInquiryType] = useState("")
 
   const firstNameErrorId = `${formInstanceId}-firstName-error`
@@ -70,22 +70,24 @@ export function BaseForm() {
   const inquiryTypeErrorId = `${formInstanceId}-inquiryType-error`
   const messageErrorId = `${formInstanceId}-message-error`
 
-  const hasFirstNameError = Boolean(state.errors?.getFieldErrors("firstName")?.length)
-  const hasLastNameError = Boolean(state.errors?.getFieldErrors("lastName")?.length)
+  const hasFirstNameError = Boolean(
+    state.errors?.getFieldErrors("firstName")?.length,
+  )
+  const hasLastNameError = Boolean(
+    state.errors?.getFieldErrors("lastName")?.length,
+  )
   const hasEmailError = Boolean(state.errors?.getFieldErrors("email")?.length)
   const hasPhoneError = Boolean(state.errors?.getFieldErrors("phone")?.length)
   const hasInquiryTypeError = Boolean(
     state.errors?.getFieldErrors("inquiryType")?.length,
   )
-  const hasMessageError = Boolean(state.errors?.getFieldErrors("message")?.length)
+  const hasMessageError = Boolean(
+    state.errors?.getFieldErrors("message")?.length,
+  )
 
   if (state.succeeded) {
     return (
-      <p
-        role="status"
-        aria-live="polite"
-        className="type-body-1 text-white"
-      >
+      <p role="status" aria-live="polite" className="type-body-1 text-white">
         {t("successMessage")}
       </p>
     )
@@ -124,10 +126,7 @@ export function BaseForm() {
           />
         </FormField>
 
-        <FormField
-          id={`${formInstanceId}-lastName`}
-          label={t("lastNameLabel")}
-        >
+        <FormField id={`${formInstanceId}-lastName`} label={t("lastNameLabel")}>
           <input
             id={`${formInstanceId}-lastName`}
             type="text"
@@ -149,10 +148,7 @@ export function BaseForm() {
           />
         </FormField>
 
-        <FormField
-          id={`${formInstanceId}-email`}
-          label={t("emailLabel")}
-        >
+        <FormField id={`${formInstanceId}-email`} label={t("emailLabel")}>
           <input
             id={`${formInstanceId}-email`}
             type="email"
@@ -175,10 +171,7 @@ export function BaseForm() {
           />
         </FormField>
 
-        <FormField
-          id={`${formInstanceId}-phone`}
-          label={t("phoneLabel")}
-        >
+        <FormField id={`${formInstanceId}-phone`} label={t("phoneLabel")}>
           <input
             id={`${formInstanceId}-phone`}
             type="tel"
@@ -256,10 +249,7 @@ export function BaseForm() {
         />
       </FormField>
 
-      <FormField
-        id={`${formInstanceId}-message`}
-        label={t("messageLabel")}
-      >
+      <FormField id={`${formInstanceId}-message`} label={t("messageLabel")}>
         <textarea
           id={`${formInstanceId}-message`}
           name="message"

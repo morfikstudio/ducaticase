@@ -77,7 +77,7 @@ export function ContactForm({
           {hasSideContent ? (
             <div className="flex flex-col gap-[20px]">
               {resolvedSubtitle.trim() !== "" ? (
-                <p className="type-body-1 font-medium text-white md:type-heading-2">
+                <p className="type-body-1 text-white md:type-heading-2">
                   {resolvedSubtitle}
                 </p>
               ) : null}
