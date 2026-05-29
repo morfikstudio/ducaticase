@@ -1,6 +1,13 @@
 "use client"
 
-import { useEffect, useId, useState, type ReactNode } from "react"
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react"
 import { useForm, ValidationError } from "@formspree/react"
 import { useTranslations } from "next-intl"
 
@@ -25,6 +32,14 @@ type ContactFormFields = {
 const BUDGET_OPTIONS = ["1-2M", "2-5M", "5-10M", "10-20M", "over20M"] as const
 
 type BudgetOption = (typeof BUDGET_OPTIONS)[number]
+
+const REQUIRED_FIELDS = [
+  "firstName",
+  "lastName",
+  "email",
+  "phone",
+  "budget",
+] as const
 
 const FORM_FIELD_CLASSNAME = cn(
   "w-full rounded-[4px] border border-dark-gray bg-transparent px-4 py-3",
@@ -61,8 +76,57 @@ export function BaseForm() {
   const [state, handleSubmit] = useForm<ContactFormFields>("mqejwayl")
   const [budget, setBudget] = useState("")
   const [successModalOpen, setSuccessModalOpen] = useState(false)
+  const [emptyFields, setEmptyFields] = useState<Set<string>>(new Set())
 
-  /* OPEN MODAL: you can change the delay here */
+  const formRef = useRef<HTMLFormElement | null>(null)
+
+  /* CLEAR THE "EMPTY" FLAG */
+  const clearEmptyFlag = useCallback((field: string) => {
+    setEmptyFields((prev) => {
+      if (!prev.has(field)) return prev
+      const next = new Set(prev)
+      next.delete(field)
+      return next
+    })
+  }, [])
+
+  /* WHEN USER TYPES IN ANY FIELD, RE-EVALUATE WHICH ONES ARE STILL EMPTY */
+  const handleFormChange = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      const target = event.target as HTMLInputElement | HTMLTextAreaElement
+      if (!target?.name) return
+      if (typeof target.value === "string" && target.value.trim() !== "") {
+        clearEmptyFlag(target.name)
+      }
+    },
+    [clearEmptyFlag],
+  )
+
+  /* BUDGET IS A HIDDEN INPUT UPDATED PROGRAMMATICALLY  */
+  useEffect(() => {
+    if (budget.trim() !== "") clearEmptyFlag("budget")
+  }, [budget, clearEmptyFlag])
+
+  /* GATE SUBMIT: ON EMPTY REQUIRED FIELDS, BLOCK + FLAG */
+  const handleGuardedSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const form = event.currentTarget
+    const formData = new FormData(form)
+    const missing = REQUIRED_FIELDS.filter((field) => {
+      const value = formData.get(field)
+      return typeof value !== "string" || value.trim() === ""
+    })
+
+    if (missing.length > 0) {
+      event.preventDefault()
+      setEmptyFields(new Set(missing))
+      return
+    }
+
+    setEmptyFields(new Set())
+    handleSubmit(event)
+  }
+
+  /* OPEN MODAL */
   useEffect(() => {
     if (!state.succeeded) return
     const timer = setTimeout(
@@ -96,7 +160,9 @@ export function BaseForm() {
 
   return (
     <form
-      onSubmit={handleSubmit}
+      ref={formRef}
+      onSubmit={handleGuardedSubmit}
+      onChange={handleFormChange}
       noValidate
       className="flex w-full flex-col gap-5"
       aria-label={t("formAriaLabel")}
@@ -113,10 +179,13 @@ export function BaseForm() {
             autoComplete="given-name"
             required
             aria-required="true"
-            aria-invalid={hasFirstNameError}
+            aria-invalid={hasFirstNameError || emptyFields.has("firstName")}
             aria-describedby={hasFirstNameError ? firstNameErrorId : undefined}
             placeholder={requiredPlaceholder(t("firstNamePlaceholder"))}
-            className={FORM_FIELD_CLASSNAME}
+            className={cn(
+              FORM_FIELD_CLASSNAME,
+              emptyFields.has("firstName") && "border-red-500",
+            )}
           />
           <ValidationError
             id={firstNameErrorId}
@@ -135,10 +204,13 @@ export function BaseForm() {
             autoComplete="family-name"
             required
             aria-required="true"
-            aria-invalid={hasLastNameError}
+            aria-invalid={hasLastNameError || emptyFields.has("lastName")}
             aria-describedby={hasLastNameError ? lastNameErrorId : undefined}
             placeholder={requiredPlaceholder(t("lastNamePlaceholder"))}
-            className={FORM_FIELD_CLASSNAME}
+            className={cn(
+              FORM_FIELD_CLASSNAME,
+              emptyFields.has("lastName") && "border-red-500",
+            )}
           />
           <ValidationError
             id={lastNameErrorId}
@@ -158,10 +230,13 @@ export function BaseForm() {
             inputMode="email"
             required
             aria-required="true"
-            aria-invalid={hasEmailError}
+            aria-invalid={hasEmailError || emptyFields.has("email")}
             aria-describedby={hasEmailError ? emailErrorId : undefined}
             placeholder={requiredPlaceholder(t("emailPlaceholder"))}
-            className={FORM_FIELD_CLASSNAME}
+            className={cn(
+              FORM_FIELD_CLASSNAME,
+              emptyFields.has("email") && "border-red-500",
+            )}
           />
           <ValidationError
             id={emailErrorId}
@@ -181,10 +256,13 @@ export function BaseForm() {
             inputMode="tel"
             required
             aria-required="true"
-            aria-invalid={hasPhoneError}
+            aria-invalid={hasPhoneError || emptyFields.has("phone")}
             aria-describedby={hasPhoneError ? phoneErrorId : undefined}
             placeholder={requiredPlaceholder(t("phonePlaceholder"))}
-            className={FORM_FIELD_CLASSNAME}
+            className={cn(
+              FORM_FIELD_CLASSNAME,
+              emptyFields.has("phone") && "border-red-500",
+            )}
           />
           <ValidationError
             id={phoneErrorId}
@@ -204,7 +282,8 @@ export function BaseForm() {
           value={budget}
           onChange={setBudget}
           placeholder={requiredPlaceholder(t("budgetPlaceholder"))}
-          aria-invalid={hasBudgetError}
+          invalid={emptyFields.has("budget")}
+          aria-invalid={hasBudgetError || emptyFields.has("budget")}
           aria-describedby={hasBudgetError ? budgetErrorId : undefined}
           options={BUDGET_OPTIONS.map((option) => ({
             value: option,
@@ -225,8 +304,6 @@ export function BaseForm() {
           id={`${formInstanceId}-message`}
           name="message"
           rows={6}
-          required
-          aria-required="true"
           aria-invalid={hasMessageError}
           aria-describedby={hasMessageError ? messageErrorId : undefined}
           placeholder={t("messagePlaceholder")}

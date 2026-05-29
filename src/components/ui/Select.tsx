@@ -2,9 +2,9 @@
 
 import { useEffect, useId, useRef, useState } from "react"
 
-import { cn } from "@/utils/classNames"
-
 import { Icon } from "@/components/ui/Icon"
+
+import { cn } from "@/utils/classNames"
 
 export type SelectOption = {
   value: string
@@ -19,6 +19,8 @@ export type SelectProps = {
   options: ReadonlyArray<SelectOption>
   placeholder: string
   required?: boolean
+  /** When true, renders the trigger with an error (red) border. */
+  invalid?: boolean
   className?: string
   "aria-invalid"?: boolean
   "aria-describedby"?: string
@@ -32,6 +34,7 @@ export function Select({
   options,
   placeholder,
   required,
+  invalid,
   className,
   "aria-invalid": ariaInvalid,
   "aria-describedby": ariaDescribedBy,
@@ -79,7 +82,7 @@ export function Select({
         aria-expanded={open}
         aria-controls={listboxId}
         aria-required={required}
-        aria-invalid={ariaInvalid}
+        aria-invalid={ariaInvalid ?? invalid}
         aria-describedby={ariaDescribedBy}
         onClick={() => setOpen((prev) => !prev)}
         className={cn(
@@ -87,6 +90,7 @@ export function Select({
           "type-body-2 text-left transition-colors duration-200",
           "focus:border-white focus:outline-none",
           open && "border-white",
+          invalid && "border-red-500",
           selectedOption ? "text-white" : "text-gray",
         )}
       >
