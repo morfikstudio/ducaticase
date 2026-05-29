@@ -72,7 +72,7 @@ export function Modal({
         aria-label="Close"
         tabIndex={-1}
         onClick={onClose}
-        className="absolute inset-0 cursor-default bg-black/60 backdrop-blur-md"
+        className="absolute inset-0 cursor-default bg-dark/10 backdrop-blur-md"
       />
       <div
         className={cn(
@@ -82,7 +82,7 @@ export function Modal({
           className,
         )}
       >
-        <h2 className="type-heading-2 mb-4 text-center md:type-display-1">
+        <h2 className="type-heading-2 mb-4 text-center md:type-display-1 md:text-[76px]">
           {title}
         </h2>
         {children}

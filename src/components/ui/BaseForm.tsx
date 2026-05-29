@@ -244,6 +244,8 @@ export function BaseForm() {
       <div>
         <Button
           type="submit"
+          variant="primary"
+          highlight
           disabled={state.submitting || state.succeeded}
           aria-busy={state.submitting}
         >
