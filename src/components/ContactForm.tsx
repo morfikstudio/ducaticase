@@ -59,11 +59,11 @@ export function ContactForm({
       ref={wrapRef}
       style={{ opacity: 0 }}
       id={id}
-      className="flex min-h-screen w-full items-center justify-center pb-24 md:pb-32 lg:pb-48"
+      className="pb-24 md:pb-32 lg:pb-48"
     >
       <Container className="flex flex-col gap-[60px] md:gap-[140px]">
         {resolvedTitle.trim() !== "" ? (
-          <h2 className="type-heading-2 text-gray md:max-w-[70vw]">
+          <h2 className="type-heading-2 text-gray md:max-w-[1000px]">
             {resolvedTitle}
           </h2>
         ) : null}
