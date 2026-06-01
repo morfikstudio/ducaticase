@@ -6,7 +6,7 @@ export const GLOBAL_NAV_ITEMS = [
   },
   {
     path: "/immobili",
-    label: { it: "I nostri immobili", en: "Our listings" },
+    label: { it: "I nostri immobili", en: "Our Properties" },
   },
   {
     path: "/ricerca-su-misura",
@@ -14,7 +14,7 @@ export const GLOBAL_NAV_ITEMS = [
   },
   {
     path: "/ducati-per-le-aziende",
-    label: { it: "Ducati per le aziende", en: "Ducati for companies" },
+    label: { it: "Ducati per le aziende", en: "Ducati Case for Business" },
   },
   { path: "/about", label: { it: "Chi siamo", en: "About us" } },
   { path: "/contact", label: { it: "Contatti", en: "Contact" } },
@@ -30,26 +30,10 @@ export const INTERNAL_SITE_PATH_OPTIONS = GLOBAL_NAV_ITEMS.map(
   }),
 ) as readonly { title: string; value: string }[]
 
-export const SITE_MENU_NAV_ITEMS = [
-  {
-    path: "/affidaci-il-tuo-immobile",
-    label: { it: "Affidaci il tuo immobile", en: "List your property with us" },
-  },
-  {
-    path: "/immobili",
-    label: { it: "I nostri immobili", en: "Our listings" },
-  },
-  {
-    path: "/ricerca-su-misura",
-    label: { it: "Ricerca su misura", en: "Bespoke Property Search" },
-  },
-  {
-    path: "/ducati-per-le-aziende",
-    label: { it: "Ducati per le aziende", en: "Ducati for companies" },
-  },
-  { path: "/about", label: { it: "Chi siamo", en: "About us" } },
-  { path: "/contact", label: { it: "Contatti", en: "Contact" } },
-] as const
+/** Menu/footer links (Home excluded — handled by logo). */
+export const SITE_MENU_NAV_ITEMS = GLOBAL_NAV_ITEMS.filter(
+  (item) => item.path !== "/",
+)
 
 export const SITE_MENU_SOCIAL_LINKS = [
   {
