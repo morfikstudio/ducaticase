@@ -170,7 +170,7 @@ export function BaseForm() {
       <div className="grid grid-cols-1 gap-x-5 gap-y-5 md:grid-cols-2">
         <FormField
           id={`${formInstanceId}-firstName`}
-          label={t("firstNameLabel")}
+          label={t("firstName")}
         >
           <input
             id={`${formInstanceId}-firstName`}
@@ -181,7 +181,7 @@ export function BaseForm() {
             aria-required="true"
             aria-invalid={hasFirstNameError || emptyFields.has("firstName")}
             aria-describedby={hasFirstNameError ? firstNameErrorId : undefined}
-            placeholder={requiredPlaceholder(t("firstNamePlaceholder"))}
+            placeholder={requiredPlaceholder(t("firstName"))}
             className={cn(
               FORM_FIELD_CLASSNAME,
               emptyFields.has("firstName") && "border-red-500",
@@ -189,14 +189,14 @@ export function BaseForm() {
           />
           <ValidationError
             id={firstNameErrorId}
-            prefix={t("firstNameLabel")}
+            prefix={t("firstName")}
             field="firstName"
             errors={state.errors}
             className="type-body-3 text-gray"
           />
         </FormField>
 
-        <FormField id={`${formInstanceId}-lastName`} label={t("lastNameLabel")}>
+        <FormField id={`${formInstanceId}-lastName`} label={t("lastName")}>
           <input
             id={`${formInstanceId}-lastName`}
             type="text"
@@ -206,7 +206,7 @@ export function BaseForm() {
             aria-required="true"
             aria-invalid={hasLastNameError || emptyFields.has("lastName")}
             aria-describedby={hasLastNameError ? lastNameErrorId : undefined}
-            placeholder={requiredPlaceholder(t("lastNamePlaceholder"))}
+            placeholder={requiredPlaceholder(t("lastName"))}
             className={cn(
               FORM_FIELD_CLASSNAME,
               emptyFields.has("lastName") && "border-red-500",
@@ -214,14 +214,14 @@ export function BaseForm() {
           />
           <ValidationError
             id={lastNameErrorId}
-            prefix={t("lastNameLabel")}
+            prefix={t("lastName")}
             field="lastName"
             errors={state.errors}
             className="type-body-3 text-gray"
           />
         </FormField>
 
-        <FormField id={`${formInstanceId}-email`} label={t("emailLabel")}>
+        <FormField id={`${formInstanceId}-email`} label={t("email")}>
           <input
             id={`${formInstanceId}-email`}
             type="email"
@@ -240,14 +240,14 @@ export function BaseForm() {
           />
           <ValidationError
             id={emailErrorId}
-            prefix={t("emailLabel")}
+            prefix={t("email")}
             field="email"
             errors={state.errors}
             className="type-body-3 text-gray"
           />
         </FormField>
 
-        <FormField id={`${formInstanceId}-phone`} label={t("phoneLabel")}>
+        <FormField id={`${formInstanceId}-phone`} label={t("phone")}>
           <input
             id={`${formInstanceId}-phone`}
             type="tel"
@@ -266,7 +266,7 @@ export function BaseForm() {
           />
           <ValidationError
             id={phoneErrorId}
-            prefix={t("phoneLabel")}
+            prefix={t("phone")}
             field="phone"
             errors={state.errors}
             className="type-body-3 text-gray"
@@ -274,14 +274,14 @@ export function BaseForm() {
         </FormField>
       </div>
 
-      <FormField id={`${formInstanceId}-budget`} label={t("budgetLabel")}>
+      <FormField id={`${formInstanceId}-budget`} label={t("budget")}>
         <Select
           id={`${formInstanceId}-budget`}
           name="budget"
           required
           value={budget}
           onChange={setBudget}
-          placeholder={requiredPlaceholder(t("budgetPlaceholder"))}
+          placeholder={requiredPlaceholder(t("budget"))}
           invalid={emptyFields.has("budget")}
           aria-invalid={hasBudgetError || emptyFields.has("budget")}
           aria-describedby={hasBudgetError ? budgetErrorId : undefined}
@@ -292,26 +292,26 @@ export function BaseForm() {
         />
         <ValidationError
           id={budgetErrorId}
-          prefix={t("budgetLabel")}
+          prefix={t("budget")}
           field="budget"
           errors={state.errors}
           className="type-body-3 text-gray"
         />
       </FormField>
 
-      <FormField id={`${formInstanceId}-message`} label={t("messageLabel")}>
+      <FormField id={`${formInstanceId}-message`} label={t("message")}>
         <textarea
           id={`${formInstanceId}-message`}
           name="message"
           rows={6}
           aria-invalid={hasMessageError}
           aria-describedby={hasMessageError ? messageErrorId : undefined}
-          placeholder={t("messagePlaceholder")}
+          placeholder={t("message")}
           className={cn(FORM_FIELD_CLASSNAME, "min-h-[160px] resize-y")}
         />
         <ValidationError
           id={messageErrorId}
-          prefix={t("messageLabel")}
+          prefix={t("message")}
           field="message"
           errors={state.errors}
           className="type-body-3 text-gray"
@@ -326,7 +326,7 @@ export function BaseForm() {
           disabled={state.submitting || state.succeeded}
           aria-busy={state.submitting}
         >
-          {state.submitting ? t("submittingLabel") : t("buttonLabel")}
+          {state.submitting ? t("submitting") : t("submit")}
         </Button>
       </div>
 
