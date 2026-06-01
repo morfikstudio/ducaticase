@@ -59,7 +59,7 @@ export function ContactForm({
       ref={wrapRef}
       style={{ opacity: 0 }}
       id={id}
-      className="pb-24 md:pb-32 lg:pb-48"
+      className="pb-24 md:pb-32 lg:pb-48 pt-18 lg:pt-32"
     >
       <Container className="flex flex-col gap-[60px] md:gap-[140px]">
         {resolvedTitle.trim() !== "" ? (
