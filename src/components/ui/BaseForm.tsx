@@ -16,7 +16,7 @@ import { cn } from "@/utils/classNames"
 import { Button } from "@/components/ui/Button"
 import { Callout } from "@/components/ui/Callout"
 import { Modal } from "@/components/ui/Modal"
-import { Select } from "@/components/ui/Select"
+import { Select } from "@/components/ui/form-controls/Select"
 
 const SUCCESS_MODAL_DELAY_MS = 800
 
