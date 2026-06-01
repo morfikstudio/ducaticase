@@ -10,9 +10,10 @@ import { useGsapReveal } from "@/hooks/useGsapReveal"
 
 import { cn } from "@/utils/classNames"
 
-import { BaseForm } from "@/components/ui/BaseForm"
 import { Container } from "@/components/ui/Container"
 import { PortableTextComponent } from "@/components/ui/PortableText"
+
+import { BaseForm } from "./BaseForm"
 
 export type ContactFormProps = {
   id: string
