@@ -1,3 +1,5 @@
+import type { AppLocale } from "@/i18n/routing"
+
 export const GLOBAL_NAV_ITEMS = [
   { path: "/", label: { it: "Home", en: "Home" } },
   {
@@ -19,6 +21,23 @@ export const GLOBAL_NAV_ITEMS = [
   { path: "/about", label: { it: "Chi siamo", en: "About us" } },
   { path: "/contact", label: { it: "Contatti", en: "Contact" } },
 ] as const
+
+const NAV_LABEL_BY_PATH = Object.fromEntries(
+  GLOBAL_NAV_ITEMS.map(({ path, label }) => [path, label]),
+) as Record<string, { it: string; en: string }>
+
+export function getSiteNavLabel(
+  path: string,
+  locale: AppLocale,
+): string | undefined {
+  return NAV_LABEL_BY_PATH[path]?.[locale]
+}
+
+export function formatSlugAsBreadcrumbLabel(segment: string): string {
+  return segment
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase())
+}
 
 export type SiteNavPath = (typeof GLOBAL_NAV_ITEMS)[number]["path"]
 
