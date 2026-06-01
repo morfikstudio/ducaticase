@@ -1,6 +1,5 @@
 {
   "breadcrumbs": {
-    "listings": "Properties",
     "listingDetail": "Property detail"
   },
   "listingDetail": {
@@ -69,7 +68,7 @@
   },
   "listingsResults": {
     "headerTitle": "Our Properties",
-    "headerDescription": "Explore our real estate proposals and find the solution that best suits your needs",
+    "headerDescription": "Explore our property listings and find the solution that best suits your needs",
     "countryItaly": "Italy",
     "countryInternational": "International",
     "categoriesButton": "Categories",
