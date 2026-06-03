@@ -75,6 +75,7 @@ export const tailoredSearchPageSettings = defineType({
     { name: "cover1", title: "Cover 1" },
     { name: "bannerForm", title: "Banner Form Contatti" },
     { name: "values", title: "Values" },
+    { name: "contact", title: "Contact" },
     { name: "banner2", title: "Banner" },
   ],
   fields: [
@@ -240,6 +241,32 @@ export const tailoredSearchPageSettings = defineType({
       type: "array",
       group: "values",
       of: [defineArrayMember({ type: "listYourPropertyValueItem" })],
+    }),
+    defineField({
+      name: "contactTitle",
+      title: "Titolo",
+      type: "localizedString",
+      group: "contact",
+      validation: (Rule) =>
+        Rule.custom((value: LocalizedStringValue) =>
+          validatePairedLocalizedString(value),
+        ),
+    }),
+    defineField({
+      name: "contactSubtitle",
+      title: "Sottotitolo",
+      type: "localizedString",
+      group: "contact",
+      validation: (Rule) =>
+        Rule.custom((value: LocalizedStringValue) =>
+          validatePairedLocalizedString(value),
+        ),
+    }),
+    defineField({
+      name: "contactText",
+      title: "Testo",
+      type: "localizedPortableText",
+      group: "contact",
     }),
     defineField({
       name: "banner2Title",

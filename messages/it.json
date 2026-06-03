@@ -101,6 +101,31 @@
   "contactPage": {
     "whatsappChat": "Chat Whatsapp"
   },
+  "contactForm": {
+    "formAriaLabel": "Modulo di contatto",
+    "firstName": "Nome",
+    "lastName": "Cognome",
+    "email": "Email",
+    "emailPlaceholder": "Indirizzo email",
+    "phone": "Numero di telefono",
+    "phonePlaceholder": "Telefono",
+    "budget": "Budget",
+    "budgetOptions": {
+      "1-2M": "1 - 2 Milioni €",
+      "2-5M": "2 - 5 Milioni €",
+      "5-10M": "5 - 10 Milioni €",
+      "10-20M": "10 - 20 Milioni €",
+      "over20M": "Oltre 20 Milioni €"
+    },
+    "message": "Note",
+    "submit": "Invia",
+    "submitting": "Invio in corso…",
+    "successMessage": "Messaggio inviato con successo!",
+    "errorMessage": "Invio del messaggio fallito. Riprova.",
+    "successModalTitle": "Grazie per averci contattato",
+    "successModalText": "Presto un nostro consulente ti contatterà per prendere un appuntamento.",
+    "successModalCloseButton": "Continua la ricerca"
+  },
   "listYourProperty": {
     "infoEmailSubject": "Info - Affidaci il tuo immobile"
   },
