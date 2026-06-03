@@ -101,6 +101,31 @@
   "contactPage": {
     "whatsappChat": "Whatsapp Chat"
   },
+  "contactForm": {
+    "formAriaLabel": "Contact form",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "emailPlaceholder": "Email address",
+    "phone": "Phone number",
+    "phonePlaceholder": "Phone",
+    "budget": "Budget",
+    "budgetOptions": {
+      "1-2M": "1 - 2 Million €",
+      "2-5M": "2 - 5 Million €",
+      "5-10M": "5 - 10 Million €",
+      "10-20M": "10 - 20 Million €",
+      "over20M": "Over 20 Million €"
+    },
+    "message": "Notes",
+    "submit": "Send",
+    "submitting": "Sending…",
+    "successMessage": "Message sent successfully!",
+    "errorMessage": "Message sending failed. Please try again.",
+    "successModalTitle": "Thank you for contacting us",
+    "successModalText": "One of our advisors will be in touch shortly to arrange an appointment.",
+    "successModalCloseButton": "Continue browsing"
+  },
   "listYourProperty": {
     "infoEmailSubject": "Info - List your property with us"
   },

@@ -288,13 +288,14 @@ export function Button(props: ButtonProps) {
   }
 
   const buttonProps = rest as ButtonHTMLAttributes<HTMLButtonElement>
+  const { type = "button", ...htmlButtonProps } = buttonProps
 
   return (
     <button
-      type="button"
+      type={type}
       className={classes}
       disabled={disabled}
-      {...buttonProps}
+      {...htmlButtonProps}
     >
       {body}
     </button>
