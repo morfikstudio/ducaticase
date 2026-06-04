@@ -8,6 +8,8 @@ import {
 import { parseListingLocationCountryCode } from "@/sanity/lib/constants"
 import { buildListingLocationText } from "@/lib/buildListingLocationText"
 import { formatListingPrice } from "@/lib/formatListingPrice"
+import { Icon } from "@/components/ui/Icon"
+
 import { BrochureStyles } from "./BrochureStyles"
 import { EnergyBar } from "./EnergyBar"
 
@@ -25,6 +27,8 @@ type Messages = {
   position: string
   squareMeters: string
   rentPriceLabel: string
+  followUsPrefix: string
+  followUsSuffix: string
   countries: Record<string, string>
 }
 
@@ -101,41 +105,55 @@ export function Brochure({
     <article className="brochure">
       <BrochureStyles />
 
-      {/* PAGE 1 — COVER */}
-      <section className="page">
-        <BrochureHeader rightText={messages.tagline} />
-        <div className="cover-body">
-          {heroUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={heroUrl} alt="" className="cover-hero" />
-          ) : null}
-          <div className="title-row">
-            <h1 className="cover-title">{title}</h1>
-            {price ? <p className="cover-price">{price}</p> : null}
-          </div>
-          {locationText ? (
-            <p className="cover-location">{locationText}</p>
-          ) : null}
-          {sqm ? (
-            <p className="cover-sqm">
-              {sqm} {messages.squareMeters}
-            </p>
-          ) : null}
-          {descriptionPlain ? (
-            <div className="cover-description">
-              {descriptionPlain.split(/\n\s*\n/).map((para, i) => (
-                <p key={i}>
-                  {para.split("\n").map((line, j, arr) => (
-                    <span key={j}>
-                      {line}
-                      {j < arr.length - 1 ? <br /> : null}
-                    </span>
-                  ))}
-                </p>
-              ))}
-            </div>
-          ) : null}
-        </div>
+      {/* PAGE 1 — COVER (table layout to repeat header on overflow pages) */}
+      <section className="page page-cover">
+        <table className="cover-table">
+          <thead>
+            <tr>
+              <th>
+                <BrochureHeader rightText={messages.tagline} />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div className="cover-body">
+                  {heroUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={heroUrl} alt="" className="cover-hero" />
+                  ) : null}
+                  <div className="title-row">
+                    <h1 className="cover-title">{title}</h1>
+                    {price ? <p className="cover-price">{price}</p> : null}
+                  </div>
+                  {locationText ? (
+                    <p className="cover-location">{locationText}</p>
+                  ) : null}
+                  {sqm ? (
+                    <p className="cover-sqm">
+                      {sqm} {messages.squareMeters}
+                    </p>
+                  ) : null}
+                  {descriptionPlain ? (
+                    <div className="cover-description">
+                      {descriptionPlain.split(/\n\s*\n/).map((para, i) => (
+                        <p key={i}>
+                          {para.split("\n").map((line, j, arr) => (
+                            <span key={j}>
+                              {line}
+                              {j < arr.length - 1 ? <br /> : null}
+                            </span>
+                          ))}
+                        </p>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </section>
 
       {/* PAGE 2 — SPECS + ENERGY */}
@@ -222,6 +240,31 @@ export function Brochure({
             <p>info@ducaticase.it</p>
             <p>+39 02 6598702</p>
             <p>P. IVA 09854640159</p>
+            <p className="back-follow">
+              {messages.followUsPrefix}
+              <strong>@DucatiCase</strong>
+              {messages.followUsSuffix}
+              <span className="back-socials" aria-label="Social">
+                <a
+                  href="https://www.instagram.com/ducaticase"
+                  aria-label="Instagram"
+                >
+                  <Icon type="instagram" size="s" />
+                </a>
+                <a
+                  href="https://it.linkedin.com/company/ducati-case-srl"
+                  aria-label="LinkedIn"
+                >
+                  <Icon type="linkedin" size="s" />
+                </a>
+                <a
+                  href="https://www.facebook.com/ducaticase"
+                  aria-label="Facebook"
+                >
+                  <Icon type="facebook" size="s" />
+                </a>
+              </span>
+            </p>
           </div>
           <p className="back-website">www.ducaticase.it</p>
         </div>

@@ -23,6 +23,8 @@
     "listingMapBlock": "Open in Google Maps",
     "positionInfoTitle": "Location",
     "relatedListingsTitle": "Related listings",
+    "brochureFollowUsPrefix": "follow us as ",
+    "brochureFollowUsSuffix": " on:",
     "countries": {
       "IT": "Italy",
       "AT": "Austria",

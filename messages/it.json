@@ -23,6 +23,8 @@
     "listingMapBlock": "Apri in Google Maps",
     "positionInfoTitle": "Posizione",
     "relatedListingsTitle": "Immobili correlati",
+    "brochureFollowUsPrefix": "seguici come ",
+    "brochureFollowUsSuffix": " su:",
     "countries": {
       "IT": "Italia",
       "AT": "Austria",
