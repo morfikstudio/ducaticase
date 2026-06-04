@@ -1516,6 +1516,9 @@ export type TailoredSearchPageSettings = {
   banner2Title?: LocalizedString
   banner2Text?: LocalizedPortableText
   banner2Cta?: AboutHighlightCta
+  contactTitle?: LocalizedString
+  contactSubtitle?: LocalizedString
+  contactText?: LocalizedPortableText
 }
 
 export type BusinessPageSettings = {
@@ -4635,6 +4638,9 @@ export type TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY_RESULT = {
         | "/ricerca-su-misura"
         | null
     } | null
+    contactTitle: LocalizedString | null
+    contactSubtitle: LocalizedString | null
+    contactText: LocalizedPortableText | null
   } | null
 } | null
 

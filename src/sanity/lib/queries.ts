@@ -543,6 +543,9 @@ export const TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY = defineQuery(groq`
           _key,
           title
         },
+        contactTitle,
+        contactSubtitle,
+        contactText,
         banner2Title,
         banner2Text,
         banner2Cta {

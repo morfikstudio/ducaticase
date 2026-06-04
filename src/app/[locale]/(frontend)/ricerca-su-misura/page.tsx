@@ -103,6 +103,10 @@ export default async function Page({ params }: PageProps) {
   const banner2CtaLabel = banner2Cta?.label
   const hasBanner2 = Boolean(banner2Title ?? banner2Text ?? banner2Cta)
 
+  const contactTitle = page?.contactTitle
+  const contactSubtitle = page?.contactSubtitle
+  const contactText = page?.contactText
+
   return (
     <main className={cn("w-full", "overflow-x-clip", "pt-32 md:pt-54")}>
       {hasHero ? (
@@ -158,7 +162,13 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       <section>
-        <ContactForm id="dc-contact-form" />
+        <ContactForm
+          id="dc-contact-form"
+          locale={locale}
+          title={contactTitle}
+          subtitle={contactSubtitle}
+          text={contactText}
+        />
       </section>
 
       {hasBanner2 ? (

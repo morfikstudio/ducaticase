@@ -107,7 +107,7 @@ export function ImageFeatureList({
     <Container
       className={cn(
         "relative isolate w-full overflow-hidden",
-        "py-20 lg:py-56",
+        "pt-20 lg:pt-56 pb-16 lg:pb-24",
         className,
       )}
     >
