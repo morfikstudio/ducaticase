@@ -82,7 +82,7 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
               portraitParams={{
                 width: 720,
                 height: 450,
-                sizes: "100vw",
+                sizes: "calc(100vw - 2rem)",
               }}
               fill
               className="object-cover"

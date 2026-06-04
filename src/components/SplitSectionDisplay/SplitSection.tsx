@@ -99,7 +99,7 @@ export function SplitSection({
               portraitParams={{
                 width: 720,
                 height: 360,
-                sizes: "100vw",
+                sizes: "(min-width: 768px) calc(100vw - 4rem), calc(100vw - 2rem)",
               }}
               className="object-cover"
               onLoad={handleImageSettled}
