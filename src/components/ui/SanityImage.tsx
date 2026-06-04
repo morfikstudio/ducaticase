@@ -302,7 +302,9 @@ export function SanityImage(props: SanityImageProps) {
         })
 
     return (
-      <picture>
+      <picture
+        {...(fill ? { style: { position: "absolute", inset: 0 } } : {})}
+      >
         <source
           media={BREAKPOINT_MEDIA[breakpoint]}
           srcSet={landscapeSrcSet}
