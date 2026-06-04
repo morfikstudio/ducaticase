@@ -107,7 +107,7 @@ export function ImageFeatureList({
     <Container
       className={cn(
         "relative isolate w-full overflow-hidden",
-        "py-20 lg:py-56",
+        "pt-20 lg:pt-56 pb-16 lg:pb-24",
         className,
       )}
     >
@@ -172,7 +172,7 @@ export function ImageFeatureList({
                 width: 1280,
                 height: 720,
                 quality: 50,
-                sizes: "(min-width: 1px) 100vw",
+                sizes: "100vw",
               }}
               fill
               className="pointer-events-none -z-20 object-cover object-center"

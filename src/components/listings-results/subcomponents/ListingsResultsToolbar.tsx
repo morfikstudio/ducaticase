@@ -17,7 +17,7 @@ type CategoryOption = {
   title: string
 }
 
-type SortOption = "priceDesc" | "priceAsc" | "recentDesc" | "recentAsc"
+type SortOption = "priceDesc" | "priceAsc"
 
 type ListingsResultsToolbarProps = {
   hasSingleResultOnPage: boolean
@@ -58,7 +58,7 @@ export function ListingsResultsToolbar({
           <div className="hidden lg:inline-flex lg:w-auto">
             <Button
               chevron={isCategoriesOpen ? "up" : "down"}
-              isActive={isCategoriesOpen}
+              isActive={isCategoriesOpen || selectedCategories.length > 0}
               disabled={hasSingleResultOnPage}
               onClick={() => setIsCategoriesOpen((v) => !v)}
               className="lg:w-auto"

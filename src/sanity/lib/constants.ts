@@ -7,6 +7,8 @@ import {
   SunIcon,
 } from "@sanity/icons"
 
+export const COMPANY_EMAIL = "info@ducaticase.it"
+
 export const CATEGORY_OPTIONS = [
   {
     title: { it: "Residenziale", en: "Residential" },
@@ -70,8 +72,12 @@ export const FIELD_LABELS = {
   priceEur: { it: "Prezzo (€)", en: "Price (€)" },
   amount: { it: "Importo", en: "Amount" },
   noPriceReason: {
-    it: "Seleziona opzione senza prezzo",
-    en: "Select no-price option",
+    it: "Tipo di prezzo",
+    en: "Price type",
+  },
+  currency: {
+    it: "Valuta",
+    en: "Currency",
   },
   hasChangingRoom: { it: "Spogliatoio", en: "Changing room" },
   commercialAreaSqm: {
@@ -96,7 +102,10 @@ export const OPTIONAL_FIELD_LABELS: Record<string, LocalizedLabel> = {
   hasAccessibleAccess: { it: "Accesso per disabili", en: "Accessible access" },
   climateControl: { it: "Impianto di climatizzazione", en: "Climate control" },
   outdoorAreaSqm: { it: "Superficie terreno (mq)", en: "Outdoor area (sqm)" },
-  condoFees: { it: "Spese condominiali", en: "Condo fees" },
+  condoFees: {
+    it: "Spese condominiali (al mese)",
+    en: "Condo fees (per month)",
+  },
   hasAccessibleRestroom: {
     it: "Bagno per disabili",
     en: "Accessible restroom",
@@ -267,7 +276,7 @@ export const FLOOR_OPTION_LABELS_EN: Record<string, string> = {
   entireBuilding: "Entire building",
 }
 
-export const CONDO_FEE_CURRENCY_OPTIONS = [
+export const CURRENCY_OPTIONS = [
   { title: "Euro (€)", value: "EUR" },
   { title: "Franco svizzero (CHF)", value: "CHF" },
 ] as const
@@ -336,13 +345,28 @@ export const ENERGY_CLASS_LAW90_OPTIONS = [
 
 export const LOCATION_COUNTRY_OPTIONS = [
   { title: "Italia", value: "IT" },
-  { title: "Svizzera", value: "CH" },
   { title: "Austria", value: "AT" },
   { title: "Francia", value: "FR" },
   { title: "Germania", value: "DE" },
+  { title: "Montecarlo", value: "MC" },
   { title: "Paesi Bassi", value: "NL" },
   { title: "Spagna", value: "ES" },
+  { title: "Svizzera", value: "CH" },
 ] as const
+
+export type ListingLocationCountryCode =
+  (typeof LOCATION_COUNTRY_OPTIONS)[number]["value"]
+
+export function parseListingLocationCountryCode(
+  raw: string | null | undefined,
+): ListingLocationCountryCode | null {
+  const s = typeof raw === "string" ? raw.trim() : ""
+  if (!s) return null
+  for (const o of LOCATION_COUNTRY_OPTIONS) {
+    if (o.value === s) return o.value
+  }
+  return null
+}
 
 export const ITALIAN_PROVINCE_OPTIONS = [
   { title: "Agrigento", value: "AG" },
@@ -454,7 +478,7 @@ export const ITALIAN_PROVINCE_OPTIONS = [
   { title: "Viterbo", value: "VT" },
 ] as const
 
-export const MAX_IMAGES_BYTES = 2 * 1024 * 1024
+export const MAX_IMAGES_BYTES = 5 * 1024 * 1024
 export const MAX_FLOOR_PLAN_FILE_BYTES = 3 * 1024 * 1024
 
 export const OFFICE_LAYOUT_OPTIONS = [

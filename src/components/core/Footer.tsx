@@ -7,16 +7,8 @@ import { Container } from "@/components/ui/Container"
 import { cn } from "@/utils/classNames"
 
 import type { FooterContent } from "@/lib/formatFooterContent"
+import { hrefUsesNativeAnchor } from "@/lib/hrefUsesNativeAnchor"
 import { Logo } from "@/components/ui/Logo"
-
-function hrefUsesNativeAnchor(href: string): boolean {
-  return (
-    href.startsWith("http://") ||
-    href.startsWith("https://") ||
-    href.startsWith("mailto:") ||
-    href.startsWith("tel:")
-  )
-}
 
 function ExternalLinkIcon({ className }: { className?: string }) {
   return (
@@ -75,7 +67,7 @@ function ContactLines({
     return null
   }
   return (
-    <div className={cn("type-body-3 text-primary", className)}>
+    <div className={cn("type-body-3", className)}>
       {showEmail ? (
         <p>
           <a
@@ -128,7 +120,7 @@ export function Footer({ content }: FooterProps) {
     privacyPolicyLabel.trim() !== "" && privacyPolicyUrl !== ""
 
   return (
-    <footer className={cn("mt-auto bg-dark text-primary")} role="contentinfo">
+    <footer className={cn("mt-auto bg-dark")} role="contentinfo">
       <Container className="py-16 md:py-24">
         <div
           className={cn(
@@ -148,10 +140,7 @@ export function Footer({ content }: FooterProps) {
 
             {showPayoff ? (
               <div className="mt-12">
-                <PayoffMultiline
-                  text={payoff}
-                  className="type-body-1 text-primary"
-                />
+                <PayoffMultiline text={payoff} className="type-body-1" />
               </div>
             ) : null}
 
@@ -162,7 +151,7 @@ export function Footer({ content }: FooterProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
-                    "type-body-3 text-primary",
+                    "type-body-3",
                     "hover:underline underline-offset-4",
                   )}
                   aria-label={`${addressLine1}, ${addressLine2} — apri in Google Maps`}
@@ -184,7 +173,7 @@ export function Footer({ content }: FooterProps) {
             <nav className="flex flex-col gap-2.5" aria-label="Website links">
               {navLinks.map(({ label, href }, index) => {
                 const className = cn(
-                  "type-body-3 text-primary",
+                  "type-body-3",
                   "hover:underline underline-offset-4",
                 )
                 const key = `${href}-${index}`
@@ -209,7 +198,7 @@ export function Footer({ content }: FooterProps) {
                   rel="noopener noreferrer"
                   className={cn(
                     "group inline-flex items-center gap-1.5",
-                    "type-body-3 text-primary",
+                    "type-body-3",
                     "hover:underline underline-offset-4",
                   )}
                 >
@@ -234,7 +223,7 @@ export function Footer({ content }: FooterProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  "type-body-3 text-primary",
+                  "type-body-3",
                   "inline-block hover:underline underline-offset-4",
                 )}
                 aria-label={`${addressLine1}, ${addressLine2} — apri in Google Maps`}
@@ -260,13 +249,13 @@ export function Footer({ content }: FooterProps) {
                 : undefined,
           )}
         >
-          {showVat ? <p className="type-body-3 text-primary">{vat}</p> : null}
+          {showVat ? <p className="type-body-3">{vat}</p> : null}
           {showPrivacy ? (
             hrefUsesNativeAnchor(privacyPolicyUrl) ? (
               <a
                 href={privacyPolicyUrl}
                 className={cn(
-                  "type-body-3 text-primary",
+                  "type-body-3",
                   "hover:underline underline-offset-4 md:text-right",
                 )}
               >
@@ -276,7 +265,7 @@ export function Footer({ content }: FooterProps) {
               <Link
                 href={privacyPolicyUrl}
                 className={cn(
-                  "type-body-3 text-primary",
+                  "type-body-3",
                   "hover:underline underline-offset-4 md:text-right",
                 )}
               >

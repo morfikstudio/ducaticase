@@ -29,7 +29,7 @@ export function FeatureGrid({ heading, locale, items }: FeatureGridProps) {
   return (
     <div
       className={cn(
-        "relative w-full text-primary",
+        "relative w-full",
         "pt-20",
         "md:pt-32 md:pb-20",
         "lg:pt-64 md:pb-64",
@@ -108,19 +108,13 @@ function FeatureCard({ title, text, image, locale }: FeatureCardProps) {
             )}
           >
             <SanityImage
-              landscape={image}
-              portrait={image}
+              image={image}
               locale={locale}
               altFallback={title}
-              landscapeParams={{
+              params={{
                 width: 720,
                 height: 375,
-                sizes: "(min-width: 1px) 100vw",
-              }}
-              portraitParams={{
-                width: 720,
-                height: 375,
-                sizes: "(min-width: 1px) 100vw",
+                sizes: "100vw",
               }}
               className="object-cover object-center"
             />

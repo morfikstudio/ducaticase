@@ -4,7 +4,6 @@ import { Link } from "@/i18n/navigation"
 import type { AppLocale } from "@/i18n/routing"
 
 import { CATEGORY_OPTIONS } from "@/sanity/lib/constants"
-import { listingContractTypeLabel } from "@/sanity/lib/listingContractTypeLabel"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import { listingTypologyLabel } from "@/sanity/lib/listingTypologyLabel"
 import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
@@ -38,10 +37,6 @@ export function ListingCard({
   const title = listingTitle || typology || categorySectionTitle
   const contractType = entry.listingContractType
   const price = formatListingPrice(entry.price, locale, contractType)
-  const rentLabel =
-    contractType === "rent"
-      ? listingContractTypeLabel(contractType, locale)
-      : undefined
   const infoMeta = [categorySectionTitle, typology].filter(Boolean).join(" | ")
   const address = (
     entry as {
@@ -78,19 +73,13 @@ export function ListingCard({
         <div className="relative aspect-square overflow-hidden">
           {entry.mainImage ? (
             <SanityImage
-              landscape={entry.mainImage}
-              portrait={entry.mainImage}
+              image={entry.mainImage}
               locale={locale}
-              landscapeParams={{
+              protectFromDownload
+              params={{
                 width: 720,
                 height: 960,
-                sizes: "(min-width: 1px) 50vw",
-                quality: 50,
-              }}
-              portraitParams={{
-                width: 720,
-                height: 960,
-                sizes: "(min-width: 1px) 100vw",
+                sizes: "(min-width: 768px) 50vw, 100vw",
                 quality: 50,
               }}
               fill
@@ -110,19 +99,13 @@ export function ListingCard({
           <div className="absolute inset-0">
             {entry.mainImage ? (
               <SanityImage
-                landscape={entry.mainImage}
-                portrait={entry.mainImage}
+                image={entry.mainImage}
                 locale={locale}
-                landscapeParams={{
+                protectFromDownload
+                params={{
                   width: 720,
                   height: 960,
-                  sizes: "(min-width: 1px) 50vw",
-                  quality: 10,
-                }}
-                portraitParams={{
-                  width: 720,
-                  height: 960,
-                  sizes: "(min-width: 1px) 100vw",
+                  sizes: "(min-width: 768px) 50vw, 100vw",
                   quality: 10,
                 }}
                 fill
@@ -161,10 +144,7 @@ export function ListingCard({
 
             <div className="flex items-end justify-between gap-4">
               <p className="type-body-2 text-balance">{infoMeta}</p>
-              <p className="shrink-0 truncate type-body-2">
-                {price}
-                {rentLabel ? ` (${rentLabel})` : null}
-              </p>
+              <p className="shrink-0 truncate type-body-2">{price}</p>
             </div>
           </div>
         </div>

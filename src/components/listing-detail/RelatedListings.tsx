@@ -32,7 +32,7 @@ export function RelatedListings({ locale, entries }: RelatedListingsProps) {
 
   return (
     <div ref={wrapRef} style={{ opacity: 0 }}>
-      <h2 className="type-heading-2 text-primary mb-8 md:mb-12">
+      <h2 className="type-heading-2 mb-8 md:mb-12">
         {t("relatedListingsTitle")}
       </h2>
 

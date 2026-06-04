@@ -13,7 +13,7 @@ type ListingsEntry = LISTINGS_PREVIEW_QUERY_RESULT[number]
 type ContractType = "sale" | "rent"
 type CountryValue = "it" | "intl"
 type TypologyCategoryValue = "countryHouses" | "commercial" | "industrial"
-type SortOption = "priceDesc" | "priceAsc" | "recentDesc" | "recentAsc"
+type SortOption = "priceDesc" | "priceAsc"
 
 type UseListingsFiltersParams = {
   listings: ListingsEntry[]
@@ -34,15 +34,8 @@ function toCsv(values: string[]): string {
 }
 
 function normalizeSort(value: string | null): SortOption {
-  if (
-    value === "priceDesc" ||
-    value === "priceAsc" ||
-    value === "recentAsc" ||
-    value === "recentDesc"
-  ) {
-    return value
-  }
-  return "recentDesc"
+  if (value === "priceAsc") return "priceAsc"
+  return "priceDesc"
 }
 
 function normalizeCountry(value: string | null): CountryValue {
@@ -261,12 +254,8 @@ export function useListingsFilters({
       case "priceAsc":
         return withOrder.sort((a, b) => byPrice(a, b) || byRecent(a, b))
       case "priceDesc":
-        return withOrder.sort((a, b) => byPrice(b, a) || byRecent(a, b))
-      case "recentAsc":
-        return withOrder.sort((a, b) => byRecent(b, a))
-      case "recentDesc":
       default:
-        return withOrder.sort((a, b) => byRecent(a, b))
+        return withOrder.sort((a, b) => byPrice(b, a) || byRecent(a, b))
     }
   }, [filteredListings, listingOrderMap, selectedSort])
 
@@ -322,7 +311,7 @@ export function useListingsFilters({
 
   const changeSort = (value: SortOption) => {
     updateSearchParams((params) => {
-      if (value === "recentDesc") {
+      if (value === "priceDesc") {
         params.delete("sort")
         return
       }
@@ -424,12 +413,21 @@ export function useListingsFilters({
     })
   }, [isHydrated, selectedCities, cityOptions])
 
+  useEffect(() => {
+    if (!isHydrated) return
+    const raw = searchParams.get("sort")
+    if (!raw || raw === "priceAsc") return
+    updateSearchParams((params) => {
+      params.delete("sort")
+    })
+  }, [isHydrated, searchParams])
+
   const hasActiveListingFilters = useMemo(() => {
     if (searchParams.get("contract")) return true
     if (parseCsv(searchParams.get("category")).length > 0) return true
     if (parseCsv(searchParams.get("city")).length > 0) return true
     if (parseCsv(searchParams.get("typology")).length > 0) return true
-    if (searchParams.get("sort")) return true
+    if (searchParams.get("sort") === "priceAsc") return true
     if (searchParams.get("country") === "intl") return true
     const pageRaw = searchParams.get("page")
     if (pageRaw) {

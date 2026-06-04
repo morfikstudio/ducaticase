@@ -1,5 +1,5 @@
-import type { ReactEventHandler } from "react"
-import Image from "next/image"
+import type { MouseEventHandler, ReactEventHandler } from "react"
+import Image, { getImageProps } from "next/image"
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
 import type { AppLocale } from "@/i18n/routing"
@@ -104,6 +104,9 @@ type CommonSanityImageProps = {
 
   onLoad?: ReactEventHandler<HTMLImageElement>
   onError?: ReactEventHandler<HTMLImageElement>
+
+  /** Block context menu and long-press save (only where explicitly enabled). */
+  protectFromDownload?: boolean
 }
 
 /**
@@ -143,17 +146,30 @@ export type SanityImageProps =
   | SanityImageSingleProps
   | SanityImageResponsiveProps
 
-const BREAKPOINT_CLASSES = {
-  sm: { landscape: "hidden sm:block", portrait: "sm:hidden" },
-  md: { landscape: "hidden md:block", portrait: "md:hidden" },
-  lg: { landscape: "hidden lg:block", portrait: "lg:hidden" },
-  xl: { landscape: "hidden xl:block", portrait: "xl:hidden" },
+const BREAKPOINT_MEDIA = {
+  sm: "(min-width: 640px)",
+  md: "(min-width: 768px)",
+  lg: "(min-width: 1024px)",
+  xl: "(min-width: 1280px)",
 } as const
 
 /** Next.js `Image` needs a positive height for aspect ratio when `fill` is false. */
 function intrinsicImageHeight(width: number, height?: number): number {
   if (height != null && height > 0) return height
   return Math.round((width * 3) / 4)
+}
+
+const blockImageContextMenu: MouseEventHandler<HTMLImageElement> = (e) => {
+  e.preventDefault()
+}
+
+function resolveImageClassName(
+  className: string | undefined,
+  protectFromDownload: boolean,
+) {
+  return protectFromDownload
+    ? cn(className, "select-none [-webkit-touch-callout:none]")
+    : className
 }
 
 /**
@@ -176,6 +192,7 @@ export function SanityImage(props: SanityImageProps) {
     className,
     onLoad,
     onError,
+    protectFromDownload = false,
   } = props
 
   if ("image" in props && "params" in props) {
@@ -200,6 +217,8 @@ export function SanityImage(props: SanityImageProps) {
     const sharedProps = {
       alt: resolvedAlt,
       priority,
+      draggable: false,
+      ...(protectFromDownload ? { onContextMenu: blockImageContextMenu } : {}),
       ...(priority ? {} : loading ? { loading } : {}),
       onLoad,
       onError,
@@ -217,7 +236,7 @@ export function SanityImage(props: SanityImageProps) {
               style: { width: "100%", height: "auto" },
             })}
         sizes={params.sizes}
-        className={className}
+        className={resolveImageClassName(className, protectFromDownload)}
       />
     )
   }
@@ -248,31 +267,46 @@ export function SanityImage(props: SanityImageProps) {
   )
 
   const hasBoth = Boolean(landscapeUrl && portraitUrl)
-  const bpClasses = BREAKPOINT_CLASSES[breakpoint]
 
   const sharedProps = {
     alt: resolvedAlt,
     priority,
+    draggable: false,
+    ...(protectFromDownload ? { onContextMenu: blockImageContextMenu } : {}),
     ...(priority ? {} : loading ? { loading } : {}),
     onLoad,
     onError,
   } as const
 
+  const resolvedClassName = resolveImageClassName(
+    className,
+    protectFromDownload,
+  )
+
   if (hasBoth && landscapeUrl && portraitUrl) {
+    const sharedLandscapeProps = {
+      src: landscapeUrl,
+      alt: resolvedAlt,
+      sizes: lp.sizes,
+      priority,
+      ...(priority ? {} : loading ? { loading } : {}),
+    }
+    const {
+      props: { srcSet: landscapeSrcSet },
+    } = fill
+      ? getImageProps({ ...sharedLandscapeProps, fill: true })
+      : getImageProps({
+          ...sharedLandscapeProps,
+          width: lp.width,
+          height: intrinsicImageHeight(lp.width, lp.height),
+        })
+
     return (
-      <>
-        <Image
-          {...sharedProps}
-          src={landscapeUrl}
-          {...(fill
-            ? { fill: true }
-            : {
-                width: lp.width,
-                height: intrinsicImageHeight(lp.width, lp.height),
-                style: { width: "100%", height: "auto" },
-              })}
+      <picture>
+        <source
+          media={BREAKPOINT_MEDIA[breakpoint]}
+          srcSet={landscapeSrcSet}
           sizes={lp.sizes}
-          className={cn(bpClasses.landscape, className)}
         />
         <Image
           {...sharedProps}
@@ -285,9 +319,9 @@ export function SanityImage(props: SanityImageProps) {
                 style: { width: "100%", height: "auto" },
               })}
           sizes={pp.sizes}
-          className={cn(bpClasses.portrait, className)}
+          className={resolvedClassName}
         />
-      </>
+      </picture>
     )
   }
 
@@ -311,7 +345,7 @@ export function SanityImage(props: SanityImageProps) {
             style: { width: "100%", height: "auto" },
           })}
       sizes={singleParams.sizes}
-      className={className}
+      className={resolvedClassName}
     />
   )
 }

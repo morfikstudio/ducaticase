@@ -103,12 +103,12 @@ export function StatementHero({
               landscapeParams={{
                 width: 1280,
                 height: 1024,
-                sizes: "(min-width: 1px) 75vw",
+                sizes: "(min-width: 1024px) 75vw, 100vw",
               }}
               portraitParams={{
                 width: 720,
                 height: 900,
-                sizes: "(min-width: 1px) 100vw",
+                sizes: "100vw",
               }}
               breakpoint="lg"
               fill
@@ -139,7 +139,7 @@ export function StatementHero({
           <div
             ref={titleRef}
             className={cn(
-              "type-display-1 w-full -translate-y-1/2 text-left whitespace-pre-line text-primary",
+              "type-display-1 w-full -translate-y-1/2 text-left whitespace-pre-line",
               "lg:col-span-10 lg:col-start-3 lg:max-w-none lg:translate-y-0 lg:px-0",
             )}
           >

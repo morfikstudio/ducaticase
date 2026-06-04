@@ -1,12 +1,13 @@
 {
   "breadcrumbs": {
-    "listings": "Properties",
     "listingDetail": "Property detail"
   },
   "listingDetail": {
     "downloadBrochure": "Download brochure",
     "bookVisit": "Book a visit",
+    "visitRequestEmailSubject": "Visit request - {location}",
     "squareMeters": "sqm",
+    "rentPriceLabel": "Monthly rent | plus utilities",
     "moreDetails": "More details",
     "lessDetails": "Less details",
     "floorPlan": "Floor plan",
@@ -18,9 +19,20 @@
     "energyEfficiency": "Energy efficiency",
     "energyClassNotClassifiable": "Not classifiable",
     "energyClassInProgress": "In progress",
+    "energyClassDisclaimer": "All data and information contained herein are provided by the owner and are intended for general guidance purposes only. They do not constitute, in whole or in part, any contractual element or representation. Floor plans are provided for illustrative purposes only and are not drawn to scale.",
     "listingMapBlock": "Open in Google Maps",
     "positionInfoTitle": "Location",
     "relatedListingsTitle": "Related listings",
+    "countries": {
+      "IT": "Italy",
+      "AT": "Austria",
+      "FR": "France",
+      "DE": "Germany",
+      "MC": "Monaco",
+      "NL": "Netherlands",
+      "ES": "Spain",
+      "CH": "Switzerland"
+    },
     "specs": {
       "title": "Features",
       "booleanYes": "Yes",
@@ -57,7 +69,7 @@
   },
   "listingsResults": {
     "headerTitle": "Our Properties",
-    "headerDescription": "Explore our real estate proposals and find the solution that best suits your needs",
+    "headerDescription": "Explore our property listings and find the solution that best suits your needs",
     "countryItaly": "Italy",
     "countryInternational": "International",
     "categoriesButton": "Categories",
@@ -74,8 +86,6 @@
     "sortBy": "Sort by",
     "sortPriceDesc": "Price descending",
     "sortPriceAsc": "Price ascending",
-    "sortRecentDesc": "Most recent",
-    "sortRecentAsc": "Least recent",
     "noListingsFound": "No listings found",
     "showingPages": "Showing {page} of {totalPages}",
     "paginationNavAriaLabel": "Results pagination",
@@ -88,6 +98,37 @@
   "teamGrid": {
     "openMemberDescription": "Open member description",
     "closeMemberDescription": "Close member description"
+  },
+  "contactPage": {
+    "whatsappChat": "Whatsapp Chat"
+  },
+  "contactForm": {
+    "formAriaLabel": "Contact form",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "emailPlaceholder": "Email address",
+    "phone": "Phone number",
+    "phonePlaceholder": "Phone",
+    "budget": "Budget",
+    "budgetOptions": {
+      "1-2M": "1 - 2 Million €",
+      "2-5M": "2 - 5 Million €",
+      "5-10M": "5 - 10 Million €",
+      "10-20M": "10 - 20 Million €",
+      "over20M": "Over 20 Million €"
+    },
+    "message": "Notes",
+    "submit": "Send",
+    "submitting": "Sending…",
+    "successMessage": "Message sent successfully!",
+    "errorMessage": "Message sending failed. Please try again.",
+    "successModalTitle": "Thank you for contacting us",
+    "successModalText": "One of our advisors will be in touch shortly to arrange an appointment.",
+    "successModalCloseButton": "Continue browsing"
+  },
+  "listYourProperty": {
+    "infoEmailSubject": "Info - List your property with us"
   },
   "homePage": {
     "featuredListingsTitle": "Featured listings",

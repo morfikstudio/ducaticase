@@ -10,6 +10,7 @@ import {
   getListingCityLine,
   getListingStreetLine,
 } from "@/lib/buildListingLocationText"
+import { parseListingLocationCountryCode } from "@/sanity/lib/constants"
 
 import { cn } from "@/utils/classNames"
 
@@ -62,13 +63,16 @@ export function LocationMap({
 }: LocationMapProps) {
   const { ref: wrapRef } = useGsapReveal()
   const t = useTranslations("listingDetail")
+  const tCountries = useTranslations("listingDetail.countries")
 
   const mobileSrc = staticMapProxyUrl(lat, lng, MOBILE_W, MOBILE_H)
   const desktopSrc = staticMapProxyUrl(lat, lng, DESKTOP_W, DESKTOP_H)
 
-  const locationText = buildListingLocationText(location)
+  const countryCode = parseListingLocationCountryCode(location?.country)
+  const countryLabel = countryCode ? tCountries(countryCode) : null
+  const locationText = buildListingLocationText(location, countryLabel)
   const externalMapsUrl = googleMapsSearchUrl(lat, lng, locationText)
-  const cityLine = getListingCityLine(location)
+  const cityLine = getListingCityLine(location, countryLabel)
   const streetLine = getListingStreetLine(location)
   const positionInfo =
     typeof positionInfoText === "string" ? positionInfoText.trim() : ""
@@ -85,12 +89,10 @@ export function LocationMap({
         "md:mb-6",
       )}
     >
-      <p className="type-body-2 uppercase font-medium text-primary">
+      <p className="type-body-2 uppercase font-medium">
         {t("positionInfoTitle")}
       </p>
-      <p className="type-body-2 text-primary whitespace-pre-line">
-        {positionInfo}
-      </p>
+      <p className="type-body-2 whitespace-pre-line">{positionInfo}</p>
     </div>
   ) : null
 
@@ -101,10 +103,8 @@ export function LocationMap({
         bothTextBlocks ? "md:col-start-1 md:row-start-2" : "[grid-area:addr]",
       )}
     >
-      {cityLine ? <p className="type-body-1 text-primary">{cityLine}</p> : null}
-      {streetLine ? (
-        <p className="type-body-2 text-primary">{streetLine}</p>
-      ) : null}
+      {cityLine ? <p className="type-body-1">{cityLine}</p> : null}
+      {streetLine ? <p className="type-body-2">{streetLine}</p> : null}
     </div>
   ) : null
 
@@ -131,9 +131,11 @@ export function LocationMap({
           alt=""
           width={MOBILE_W}
           height={MOBILE_H}
-          className="h-full w-full object-cover"
+          className="h-full w-full select-none object-cover [-webkit-touch-callout:none]"
           loading="lazy"
           decoding="async"
+          draggable={false}
+          onContextMenu={(e) => e.preventDefault()}
         />
       </picture>
 

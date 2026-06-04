@@ -47,6 +47,7 @@ export type ListingLand = {
   listingSearchTokens?: string
   price?: {
     amount?: number
+    currency?: "EUR" | "CHF"
     noPriceReason?: "privateNegotiation" | "priceOnRequest"
   }
   commercialAreaSqm?: number
@@ -55,7 +56,7 @@ export type ListingLand = {
     otherSpecification?: string
   }
   hasFencedProperty?: boolean
-  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
+  country?: "IT" | "AT" | "FR" | "DE" | "MC" | "NL" | "ES" | "CH"
   province?:
     | "AG"
     | "AL"
@@ -172,6 +173,7 @@ export type ListingLand = {
   postalCode?: string
   map?: Geopoint
   positionInfo?: LocalizedText
+  internalListingName?: string
   title?: LocalizedString
   mainImage?: {
     asset?: SanityImageAssetReference
@@ -296,6 +298,7 @@ export type ListingHospitality = {
   listingSearchTokens?: string
   price?: {
     amount?: number
+    currency?: "EUR" | "CHF"
     noPriceReason?: "privateNegotiation" | "priceOnRequest"
   }
   commercialAreaSqm?: number
@@ -319,7 +322,7 @@ export type ListingHospitality = {
       | "F"
       | "G"
   }
-  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
+  country?: "IT" | "AT" | "FR" | "DE" | "MC" | "NL" | "ES" | "CH"
   province?:
     | "AG"
     | "AL"
@@ -436,6 +439,7 @@ export type ListingHospitality = {
   postalCode?: string
   map?: Geopoint
   positionInfo?: LocalizedText
+  internalListingName?: string
   title?: LocalizedString
   mainImage?: {
     asset?: SanityImageAssetReference
@@ -506,6 +510,7 @@ export type ListingIndustrial = {
   listingSearchTokens?: string
   price?: {
     amount?: number
+    currency?: "EUR" | "CHF"
     noPriceReason?: "privateNegotiation" | "priceOnRequest"
   }
   industrialTypology?: "warehouses" | "sheds"
@@ -552,7 +557,7 @@ export type ListingIndustrial = {
       | "F"
       | "G"
   }
-  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
+  country?: "IT" | "AT" | "FR" | "DE" | "MC" | "NL" | "ES" | "CH"
   province?:
     | "AG"
     | "AL"
@@ -669,6 +674,7 @@ export type ListingIndustrial = {
   postalCode?: string
   map?: Geopoint
   positionInfo?: LocalizedText
+  internalListingName?: string
   title?: LocalizedString
   mainImage?: {
     asset?: SanityImageAssetReference
@@ -738,6 +744,7 @@ export type ListingShopsAndOffices = {
   listingSearchTokens?: string
   price?: {
     amount?: number
+    currency?: "EUR" | "CHF"
     noPriceReason?: "privateNegotiation" | "priceOnRequest"
   }
   shopsAndOfficesTypology?: "shops" | "offices"
@@ -789,7 +796,7 @@ export type ListingShopsAndOffices = {
       | "F"
       | "G"
   }
-  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
+  country?: "IT" | "AT" | "FR" | "DE" | "MC" | "NL" | "ES" | "CH"
   province?:
     | "AG"
     | "AL"
@@ -906,6 +913,7 @@ export type ListingShopsAndOffices = {
   postalCode?: string
   map?: Geopoint
   positionInfo?: LocalizedText
+  internalListingName?: string
   title?: LocalizedString
   mainImage?: {
     asset?: SanityImageAssetReference
@@ -978,6 +986,7 @@ export type ListingCountryHouses = {
   listingSearchTokens?: string
   price?: {
     amount?: number
+    currency?: "EUR" | "CHF"
     noPriceReason?: "privateNegotiation" | "priceOnRequest"
   }
   countryHouseTypology?: "sea" | "lakesAndCountryside" | "mountain"
@@ -1027,7 +1036,7 @@ export type ListingCountryHouses = {
       | "F"
       | "G"
   }
-  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
+  country?: "IT" | "AT" | "FR" | "DE" | "MC" | "NL" | "ES" | "CH"
   province?:
     | "AG"
     | "AL"
@@ -1144,6 +1153,7 @@ export type ListingCountryHouses = {
   postalCode?: string
   map?: Geopoint
   positionInfo?: LocalizedText
+  internalListingName?: string
   title?: LocalizedString
   mainImage?: {
     asset?: SanityImageAssetReference
@@ -1219,6 +1229,7 @@ export type ListingResidential = {
   listingSearchTokens?: string
   price?: {
     amount?: number
+    currency?: "EUR" | "CHF"
     noPriceReason?: "privateNegotiation" | "priceOnRequest"
   }
   commercialAreaSqm?: number
@@ -1272,7 +1283,7 @@ export type ListingResidential = {
       | "F"
       | "G"
   }
-  country?: "IT" | "CH" | "AT" | "FR" | "DE" | "NL" | "ES"
+  country?: "IT" | "AT" | "FR" | "DE" | "MC" | "NL" | "ES" | "CH"
   province?:
     | "AG"
     | "AL"
@@ -1389,6 +1400,7 @@ export type ListingResidential = {
   postalCode?: string
   map?: Geopoint
   positionInfo?: LocalizedText
+  internalListingName?: string
   title?: LocalizedString
   mainImage?: {
     asset?: SanityImageAssetReference
@@ -1504,6 +1516,9 @@ export type TailoredSearchPageSettings = {
   banner2Title?: LocalizedString
   banner2Text?: LocalizedPortableText
   banner2Cta?: AboutHighlightCta
+  contactTitle?: LocalizedString
+  contactSubtitle?: LocalizedString
+  contactText?: LocalizedPortableText
 }
 
 export type BusinessPageSettings = {
@@ -1557,11 +1572,11 @@ export type ListYourPropertyPageSettings = {
   heroImage?: ListYourPropertyHeroResponsiveImage
   heroPayoff1?: LocalizedPortableText
   heroPayoff2?: LocalizedPortableText
-  heroCta?: AboutHighlightCta
+  heroCta?: LocalizedString
   cover1Image?: ListYourPropertyCoverResponsiveImage
   servicesTitle?: LocalizedText
   servicesSubtitle?: LocalizedPortableText
-  servicesCta?: AboutHighlightCta
+  servicesCta?: LocalizedString
   servicesItems?: Array<
     {
       _key: string
@@ -2011,6 +2026,21 @@ export type GeopointRadius = {
   radius: number
 }
 
+export type MediaTag = {
+  _id: string
+  _type: "media.tag"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: Slug
+}
+
+export type Slug = {
+  _type: "slug"
+  current: string
+  source?: string
+}
+
 export type SanityImagePaletteSwatch = {
   _type: "sanity.imagePaletteSwatch"
   background?: string
@@ -2101,12 +2131,6 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData
 }
 
-export type Slug = {
-  _type: "slug"
-  current: string
-  source?: string
-}
-
 export type AllSanitySchemaTypes =
   | Info
   | SanityImageAssetReference
@@ -2159,6 +2183,8 @@ export type AllSanitySchemaTypes =
   | HomeHighlightItem
   | CustomSpecificationItem
   | GeopointRadius
+  | MediaTag
+  | Slug
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -2166,7 +2192,6 @@ export type AllSanitySchemaTypes =
   | SanityFileAsset
   | SanityAssetSourceData
   | SanityImageAsset
-  | Slug
 
 // Source: src/sanity/lib/queries.ts
 // Variable: MENU_SITE_CONTENT_QUERY
@@ -2750,9 +2775,10 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           listingContractType: "rent" | "sale" | null
           price: {
             amount?: number
+            currency?: "CHF" | "EUR"
             noPriceReason?: "priceOnRequest" | "privateNegotiation"
           } | null
-          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
           city: string | null
           province:
             | "AG"
@@ -2906,9 +2932,10 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           listingContractType: "rent" | "sale" | null
           price: {
             amount?: number
+            currency?: "CHF" | "EUR"
             noPriceReason?: "priceOnRequest" | "privateNegotiation"
           } | null
-          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
           city: string | null
           province:
             | "AG"
@@ -3062,9 +3089,10 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           listingContractType: "rent" | "sale" | null
           price: {
             amount?: number
+            currency?: "CHF" | "EUR"
             noPriceReason?: "priceOnRequest" | "privateNegotiation"
           } | null
-          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
           city: string | null
           province:
             | "AG"
@@ -3218,9 +3246,10 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           listingContractType: "rent" | "sale" | null
           price: {
             amount?: number
+            currency?: "CHF" | "EUR"
             noPriceReason?: "priceOnRequest" | "privateNegotiation"
           } | null
-          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
           city: string | null
           province:
             | "AG"
@@ -3374,9 +3403,10 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           listingContractType: "rent" | "sale" | null
           price: {
             amount?: number
+            currency?: "CHF" | "EUR"
             noPriceReason?: "priceOnRequest" | "privateNegotiation"
           } | null
-          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
           city: string | null
           province:
             | "AG"
@@ -3530,9 +3560,10 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           listingContractType: "rent" | "sale" | null
           price: {
             amount?: number
+            currency?: "CHF" | "EUR"
             noPriceReason?: "priceOnRequest" | "privateNegotiation"
           } | null
-          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+          country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
           city: string | null
           province:
             | "AG"
@@ -3726,7 +3757,7 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY
-// Query: *[_type == "siteContent" && sectionType == "listYourPropertyPage"]    | order(_updatedAt desc)    [0] {      _id,      listYourPropertyPage {        heroTitle,        heroSubtitle,        heroPayoff1,        heroPayoff2,        heroCta {          label,          path        },        heroImage {          "recommendedCrop": {            "landscape": {              "aspectRatio": "20:9",              "width": 1920,              "height": 810            },            "portrait": {              "aspectRatio": "4:5",              "width": 720,              "height": 960            }          },          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        cover1Image {          "recommendedCrop": {            "landscape": {              "aspectRatio": "16:9",              "width": 1920,              "height": 1080            },            "portrait": {              "aspectRatio": "4:5",              "width": 720,              "height": 960            }          },          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        cover2Image {          "recommendedCrop": {            "landscape": {              "aspectRatio": "16:9",              "width": 1920,              "height": 1080            },            "portrait": {              "aspectRatio": "4:5",              "width": 720,              "height": 960            }          },          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        bannerTitle,        bannerText,        bannerCta {          label,          path        },        valuesTitle,        valuesSubtitle,        valuesCta {          label,          path        },        valuesImage {          ...,          asset->        },        valuesItems[] {          _key,          title        },        servicesTitle,        servicesSubtitle,        servicesCta {          label,          path        },        servicesItems[] {          _key,          title,          text        }      }    }
+// Query: *[_type == "siteContent" && sectionType == "listYourPropertyPage"]    | order(_updatedAt desc)    [0] {      _id,      listYourPropertyPage {        heroTitle,        heroSubtitle,        heroPayoff1,        heroPayoff2,        heroCta,        heroImage {          "recommendedCrop": {            "landscape": {              "aspectRatio": "20:9",              "width": 1920,              "height": 810            },            "portrait": {              "aspectRatio": "4:5",              "width": 720,              "height": 960            }          },          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        cover1Image {          "recommendedCrop": {            "landscape": {              "aspectRatio": "16:9",              "width": 1920,              "height": 1080            },            "portrait": {              "aspectRatio": "4:5",              "width": 720,              "height": 960            }          },          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        cover2Image {          "recommendedCrop": {            "landscape": {              "aspectRatio": "16:9",              "width": 1920,              "height": 1080            },            "portrait": {              "aspectRatio": "4:5",              "width": 720,              "height": 960            }          },          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        bannerTitle,        bannerText,        bannerCta {          label,          path        },        valuesTitle,        valuesSubtitle,        valuesCta {          label,          path        },        valuesImage {          ...,          asset->        },        valuesItems[] {          _key,          title        },        servicesTitle,        servicesSubtitle,        servicesCta,        servicesItems[] {          _key,          title,          text        }      }    }
 export type LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT = {
   _id: string
   listYourPropertyPage: {
@@ -3734,18 +3765,7 @@ export type LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT = {
     heroSubtitle: LocalizedString | null
     heroPayoff1: LocalizedPortableText | null
     heroPayoff2: LocalizedPortableText | null
-    heroCta: {
-      label: LocalizedString | null
-      path:
-        | "/"
-        | "/about"
-        | "/affidaci-il-tuo-immobile"
-        | "/contact"
-        | "/ducati-per-le-aziende"
-        | "/immobili"
-        | "/ricerca-su-misura"
-        | null
-    } | null
+    heroCta: LocalizedString | null
     heroImage: {
       recommendedCrop: {
         landscape: {
@@ -4025,18 +4045,7 @@ export type LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT = {
     }> | null
     servicesTitle: LocalizedText | null
     servicesSubtitle: LocalizedPortableText | null
-    servicesCta: {
-      label: LocalizedString | null
-      path:
-        | "/"
-        | "/about"
-        | "/affidaci-il-tuo-immobile"
-        | "/contact"
-        | "/ducati-per-le-aziende"
-        | "/immobili"
-        | "/ricerca-su-misura"
-        | null
-    } | null
+    servicesCta: LocalizedString | null
     servicesItems: Array<{
       _key: string
       title: LocalizedString | null
@@ -4629,6 +4638,9 @@ export type TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY_RESULT = {
         | "/ricerca-su-misura"
         | null
     } | null
+    contactTitle: LocalizedString | null
+    contactSubtitle: LocalizedString | null
+    contactText: LocalizedPortableText | null
   } | null
 } | null
 
@@ -4643,9 +4655,10 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
+        currency?: "CHF" | "EUR"
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -4799,9 +4812,10 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
+        currency?: "CHF" | "EUR"
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -4955,9 +4969,10 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
+        currency?: "CHF" | "EUR"
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -5111,9 +5126,10 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
+        currency?: "CHF" | "EUR"
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -5267,9 +5283,10 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
+        currency?: "CHF" | "EUR"
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -5423,9 +5440,10 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
       listingContractType: "rent" | "sale" | null
       price: {
         amount?: number
+        currency?: "CHF" | "EUR"
         noPriceReason?: "priceOnRequest" | "privateNegotiation"
       } | null
-      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+      country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
       city: string | null
       province:
         | "AG"
@@ -5591,6 +5609,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
       propertySheet: {
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         commercialAreaSqm: number | null
@@ -5650,7 +5669,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         } | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -5906,6 +5925,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         listingContractType: "rent" | "sale" | null
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         city: string | null
@@ -6068,6 +6088,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
       propertySheet: {
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         commercialAreaSqm: number | null
@@ -6132,7 +6153,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         } | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -6383,6 +6404,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         listingContractType: "rent" | "sale" | null
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         city: string | null
@@ -6545,6 +6567,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
       propertySheet: {
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         commercialAreaSqm: number | null
@@ -6601,7 +6624,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         } | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -6850,6 +6873,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         listingContractType: "rent" | "sale" | null
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         city: string | null
@@ -7012,6 +7036,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
       propertySheet: {
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         commercialAreaSqm: number | null
@@ -7073,7 +7098,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         } | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -7326,6 +7351,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         listingContractType: "rent" | "sale" | null
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         city: string | null
@@ -7488,6 +7514,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
       propertySheet: {
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         commercialAreaSqm: number | null
@@ -7521,7 +7548,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         } | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -7771,6 +7798,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         listingContractType: "rent" | "sale" | null
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         city: string | null
@@ -7933,6 +7961,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
       propertySheet: {
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         commercialAreaSqm: number | null
@@ -7943,7 +7972,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         hasFencedProperty: boolean | null
       }
       location: {
-        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "NL" | null
+        country: "AT" | "CH" | "DE" | "ES" | "FR" | "IT" | "MC" | "NL" | null
         province:
           | "AG"
           | "AL"
@@ -8146,6 +8175,7 @@ export type LISTING_BY_ID_QUERY_RESULT =
         listingContractType: "rent" | "sale" | null
         price: {
           amount?: number
+          currency?: "CHF" | "EUR"
           noPriceReason?: "priceOnRequest" | "privateNegotiation"
         } | null
         city: string | null
@@ -8314,7 +8344,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "siteContent" && sectionType == "aboutPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      aboutPage {\n        heroImages {\n          "imageDesktop": imageDesktop {\n            ...,\n            asset->\n          },\n          "imageMobile": imageMobile {\n            ...,\n            asset->\n          }\n        },\n        heroText,\n        historySection[] {\n          _key,\n          title,\n          subtitle,\n          body,\n          reverse,\n          images {\n            "imageDesktop": imageDesktop {\n              ...,\n              asset->\n            },\n            "imageMobile": imageMobile {\n              ...,\n              asset->\n            }\n          }\n        },\n        todaySection {\n          title,\n          subtitle,\n          text\n        },\n        highlightsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        sectorsHeading,\n        sectorsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          }\n        },\n        teamSection {\n          title,\n          subtitle,\n          text,\n          cta {\n            label,\n            path\n          },\n          teamMember[] {\n            _key,\n            title,\n            text,\n            image {\n              ...,\n              asset->\n            },\n            roles[]\n          }\n        }\n      }\n    }\n': ABOUT_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "contactPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      contactPage {\n        title,\n        subtitle,\n        text,\n        heroImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        info {\n          email,\n          phone,\n          whatsapp,\n          address\n        },\n        map\n      }\n    }\n': CONTACT_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "homePage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      homePage {\n        heroTitle,\n        heroImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        whoWeAreText1,\n        whoWeAreText2,\n        whoWeAreCta {\n          label,\n          path\n        },\n        payoffTitle,\n        payoffImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        highlights[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        "featuredListings": featuredListings[\n          coalesce(@->isArchived, false) != true\n        ]->{\n          _id,\n          _type,\n          title,\n          listingContractType,\n          price,\n          country,\n          city,\n          province,\n          address,\n          postalCode,\n          "typology": select(\n            _type == "listingCountryHouses" => countryHouseTypology,\n            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n            _type == "listingIndustrial" => industrialTypology,\n            true => null\n          ),\n          "mainImage": mainImage {\n            ...,\n            asset->\n          }\n        },\n        testimonialsTitle,\n        testimonialsSubtitle,\n        testimonials[] {\n          _key,\n          text,\n          name,\n          provider\n        },\n        partners[] {\n          _key,\n          name,\n          image {\n            ...,\n            asset->\n          }\n        }\n      }\n    }\n': HOME_SITE_CONTENT_QUERY_RESULT
-    '\n  *[_type == "siteContent" && sectionType == "listYourPropertyPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      listYourPropertyPage {\n        heroTitle,\n        heroSubtitle,\n        heroPayoff1,\n        heroPayoff2,\n        heroCta {\n          label,\n          path\n        },\n        heroImage {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "20:9",\n              "width": 1920,\n              "height": 810\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover1Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover2Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        bannerTitle,\n        bannerText,\n        bannerCta {\n          label,\n          path\n        },\n        valuesTitle,\n        valuesSubtitle,\n        valuesCta {\n          label,\n          path\n        },\n        valuesImage {\n          ...,\n          asset->\n        },\n        valuesItems[] {\n          _key,\n          title\n        },\n        servicesTitle,\n        servicesSubtitle,\n        servicesCta {\n          label,\n          path\n        },\n        servicesItems[] {\n          _key,\n          title,\n          text\n        }\n      }\n    }\n': LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT
+    '\n  *[_type == "siteContent" && sectionType == "listYourPropertyPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      listYourPropertyPage {\n        heroTitle,\n        heroSubtitle,\n        heroPayoff1,\n        heroPayoff2,\n        heroCta,\n        heroImage {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "20:9",\n              "width": 1920,\n              "height": 810\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover1Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover2Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        bannerTitle,\n        bannerText,\n        bannerCta {\n          label,\n          path\n        },\n        valuesTitle,\n        valuesSubtitle,\n        valuesCta {\n          label,\n          path\n        },\n        valuesImage {\n          ...,\n          asset->\n        },\n        valuesItems[] {\n          _key,\n          title\n        },\n        servicesTitle,\n        servicesSubtitle,\n        servicesCta,\n        servicesItems[] {\n          _key,\n          title,\n          text\n        }\n      }\n    }\n': LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "businessPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      businessPage {\n        heroTitle,\n        heroSubtitle,\n        heroPayoff1,\n        heroPayoff2,\n        heroCta {\n          label,\n          path\n        },\n        heroImage {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "20:9",\n              "width": 1920,\n              "height": 810\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover1Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover2Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        valuesTitle,\n        valuesSubtitle,\n        valuesCta {\n          label,\n          path\n        },\n        valuesImage {\n          ...,\n          asset->\n        },\n        valuesItems[] {\n          _key,\n          title\n        },\n        servicesTitle,\n        servicesSubtitle,\n        servicesCta {\n          label,\n          path\n        },\n        servicesItems[] {\n          _key,\n          title,\n          text\n        },\n        bannerPartnersTitle,\n        bannerPartnersText,\n        bannerPartnersCta {\n          label,\n          path\n        },\n        bannerPartnersItems[] {\n          _key,\n          name,\n          image {\n            ...,\n            asset->\n          }\n        }\n      }\n    }\n': BUSINESS_PAGE_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "tailoredSearchPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      tailoredSearchPage {\n        heroTitle,\n        heroSubtitle,\n        heroPayoff1,\n        heroPayoff2,\n        heroCta {\n          label,\n          path\n        },\n        heroImage {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "20:9",\n              "width": 1920,\n              "height": 810\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover1Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        bannerFormTitle,\n        bannerFormText,\n        bannerFormCtaLabel,\n        valuesTitle,\n        valuesSubtitle,\n        valuesCta {\n          label,\n          path\n        },\n        valuesImage {\n          ...,\n          asset->\n        },\n        valuesItems[] {\n          _key,\n          title\n        },\n        banner2Title,\n        banner2Text,\n        banner2Cta {\n          label,\n          path\n        }\n      }\n    }\n': TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type in [\n    "listingResidential",\n    "listingCountryHouses",\n    "listingShopsAndOffices",\n    "listingIndustrial",\n    "listingHospitality",\n    "listingLand"\n  ] && coalesce(isArchived, false) != true] | order(_createdAt desc) { // ... order(_createdAt desc) [0...10]{\n    _id,\n    _type,\n    title,\n    listingContractType,\n    price,\n    country,\n    city,\n    province,\n    address,\n    postalCode,\n    "typology": select(\n      _type == "listingCountryHouses" => countryHouseTypology,\n      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n      _type == "listingIndustrial" => industrialTypology,\n      true => null\n    ),\n    "mainImage": mainImage {\n      ...,\n      asset->\n    }\n  }\n': LISTINGS_PREVIEW_QUERY_RESULT

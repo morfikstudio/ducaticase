@@ -1,8 +1,13 @@
 "use client"
 
 import { useLayoutEffect, useMemo, useRef } from "react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { usePathname, Link } from "@/i18n/navigation"
+import type { AppLocale } from "@/i18n/routing"
+import {
+  formatSlugAsBreadcrumbLabel,
+  getSiteNavLabel,
+} from "@/sanity/lib/internalSitePaths"
 import gsap from "gsap"
 
 import { cn } from "@/utils/classNames"
@@ -18,6 +23,7 @@ type BreadcrumbItem = {
 
 export function Breadcrumbs() {
   const pathname = usePathname()
+  const locale = useLocale() as AppLocale
   const t = useTranslations("breadcrumbs")
 
   const olRef = useRef<HTMLOListElement>(null)
@@ -28,41 +34,32 @@ export function Breadcrumbs() {
 
     if (segments.length === 0) return []
 
-    if (segments[0] === "immobili") {
-      return [
-        { id: "home", label: "Home", href: "/" },
-        {
-          id: "immobili",
-          label: t("listings"),
-          href: segments.length > 1 ? "/immobili" : undefined,
-        },
-        ...(segments.length > 1
-          ? [{ id: "immobili-detail", label: t("listingDetail") }]
-          : []),
-      ]
-    }
-
     return [
-      { id: "home", label: "Home", href: "/" },
-      ...segments.map(
-        (segment, index): BreadcrumbItem => ({
-          id:
-            "/" +
-            segments
-              .slice(0, index + 1)
-              .join("/")
-              .toLowerCase(),
-          label: segment
-            .replace(/-/g, " ")
-            .replace(/\b\w/g, (char) => char.toUpperCase()),
+      {
+        id: "home",
+        label: getSiteNavLabel("/", locale) ?? "Home",
+        href: "/",
+      },
+      ...segments.map((segment, index): BreadcrumbItem => {
+        const segmentPath = "/" + segments.slice(0, index + 1).join("/")
+        const navLabel = getSiteNavLabel(segmentPath, locale)
+        const label =
+          navLabel ??
+          (segments[0] === "immobili" && index > 0
+            ? t("listingDetail")
+            : formatSlugAsBreadcrumbLabel(segment))
+
+        return {
+          id: segmentPath.toLowerCase(),
+          label,
           href:
             index < segments.length - 1
               ? "/" + segments.slice(0, index + 1).join("/")
               : undefined,
-        }),
-      ),
+        }
+      }),
     ]
-  }, [pathname, t])
+  }, [pathname, locale, t])
 
   /* Entry animation */
   useLayoutEffect(() => {

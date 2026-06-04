@@ -96,7 +96,7 @@ export function EnergyClassDisplay({ energyClass }: EnergyClassDisplayProps) {
 
   return (
     <div ref={wrapRef} className="w-full" style={{ opacity: 0 }}>
-      <h2 className="type-heading-2 text-primary">
+      <h2 className="type-heading-2">
         {t("energyEfficiency")}
         {valueLabel && `: ${valueLabel}`}
       </h2>
@@ -124,6 +124,11 @@ export function EnergyClassDisplay({ energyClass }: EnergyClassDisplayProps) {
           )
         })}
       </div>
+
+      <p
+        className="type-body-3 text-gray mt-10 lg:mt-24 max-w-[1280px]"
+        dangerouslySetInnerHTML={{ __html: t("energyClassDisclaimer") }}
+      />
     </div>
   )
 }

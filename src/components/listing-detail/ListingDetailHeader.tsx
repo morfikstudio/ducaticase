@@ -1,16 +1,18 @@
 "use client"
 
+import { useMemo } from "react"
 import { useTranslations } from "next-intl"
 
 import type { AppLocale } from "@/i18n/routing"
-import { listingContractTypeLabel } from "@/sanity/lib/listingContractTypeLabel"
 import { listingTypologyLabel } from "@/sanity/lib/listingTypologyLabel"
 import { pickLocalizedString } from "@/sanity/lib/locale"
+import { parseListingLocationCountryCode } from "@/sanity/lib/constants"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
 
 import { useGsapReveal } from "@/hooks/useGsapReveal"
 
 import { buildListingLocationText } from "@/lib/buildListingLocationText"
+import { buildListingVisitMailtoHref } from "@/lib/buildListingVisitMailtoHref"
 import { formatListingPrice } from "@/lib/formatListingPrice"
 import { cn } from "@/utils/classNames"
 
@@ -37,9 +39,12 @@ export function ListingDetailHeader({
 }: ListingDetailHeaderProps) {
   const { ref: wrapRef } = useGsapReveal({ delay: 0.2 })
   const t = useTranslations("listingDetail")
+  const tCountries = useTranslations("listingDetail.countries")
 
   const title = pickLocalizedString(content.title, locale)
-  const locationText = buildListingLocationText(location)
+  const countryCode = parseListingLocationCountryCode(location?.country)
+  const countryLabel = countryCode ? tCountries(countryCode) : null
+  const locationText = buildListingLocationText(location, countryLabel)
   const price = formatListingPrice(
     propertySheet?.price,
     locale,
@@ -47,17 +52,20 @@ export function ListingDetailHeader({
   )
 
   const sqm = propertySheet?.commercialAreaSqm
-  const contractLabel = listingContractTypeLabel(
-    metadata.listingContractType,
-    locale,
-  )
-  const showContractLabel =
-    contractLabel && metadata.listingContractType === "rent"
+  const showRentPriceLabel = metadata.listingContractType === "rent"
   const typologyLabel = listingTypologyLabel(metadata._type, typology, locale)
   const specParts = [
     typologyLabel,
     sqm ? `${sqm} ${t("squareMeters")}` : null,
   ].filter(Boolean)
+
+  const visitMailtoHref = useMemo(
+    () =>
+      buildListingVisitMailtoHref(location, (values) =>
+        t("visitRequestEmailSubject", values),
+      ),
+    [location, t],
+  )
 
   return (
     <section ref={wrapRef} className="w-full" style={{ opacity: 0 }}>
@@ -83,15 +91,15 @@ export function ListingDetailHeader({
           <div
             className={cn(
               "w-full md:w-1/2 md:text-right",
-              "flex gap-2 md:justify-end",
+              "flex gap-2 items-baseline md:justify-end",
             )}
           >
             {price ? (
               <p className={cn("type-body-1 md:type-heading-2")}>{price}</p>
             ) : null}
 
-            {showContractLabel ? (
-              <p className="type-body-1 md:type-heading-2">({contractLabel})</p>
+            {showRentPriceLabel ? (
+              <p className="type-body-2">{t("rentPriceLabel")}</p>
             ) : null}
           </div>
         </div>
@@ -132,7 +140,7 @@ export function ListingDetailHeader({
             </Button>
 
             <Button
-              href="/contact"
+              href={visitMailtoHref}
               variant="primary"
               className="w-full md:w-auto"
             >

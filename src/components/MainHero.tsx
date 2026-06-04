@@ -60,12 +60,12 @@ export function MainHero({
             landscapeParams={{
               width: 1920,
               height: 1080,
-              sizes: "(min-width: 1px) 100vw",
+              sizes: "100vw",
             }}
             portraitParams={{
               width: 720,
               height: 1280,
-              sizes: "(min-width: 1px) 100vw",
+              sizes: "100vw",
             }}
             fill
             priority
@@ -99,7 +99,7 @@ export function MainHero({
               title={title}
               tag="h1"
               show={show && (!hasMedia || imageReady)}
-              className="max-w-[min(100%,42rem)]"
+              className="max-w-[min(100%,52rem)]"
             />
           </Container>
         </div>

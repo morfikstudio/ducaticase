@@ -275,9 +275,10 @@ export function GalleryLightbox({
                   <SanityImage
                     image={image}
                     locale={locale}
+                    protectFromDownload
                     params={{
                       width: 720,
-                      sizes: "(min-width: 1px) 100vw",
+                      sizes: "100vw",
                     }}
                     priority={i === initialIndex}
                     loading={eagerLoading}
@@ -288,9 +289,10 @@ export function GalleryLightbox({
                     <SanityImage
                       image={image}
                       locale={locale}
+                      protectFromDownload
                       params={{
                         width: 1280,
-                        sizes: "(min-width: 1px) 100vw",
+                        sizes: "100vw",
                       }}
                       fill
                       priority={i === initialIndex}
@@ -320,7 +322,7 @@ export function GalleryLightbox({
           className={cn(
             "flex items-center justify-center shrink-0",
             "size-[75px] md:size-[100px]",
-            "type-body-3 text-primary tabular-nums select-none text-center leading-none",
+            "type-body-3 tabular-nums select-none text-center leading-none",
             "min-w-0 px-1",
             "col-start-1 row-start-1 justify-self-start self-center",
             "md:col-auto md:row-auto md:justify-self-auto md:self-auto",
@@ -364,7 +366,7 @@ export function GalleryLightbox({
             className={cn(
               "flex items-center justify-center",
               "size-[75px] md:size-[100px] shrink-0 border-0 p-0",
-              "text-primary bg-transparent",
+              "bg-transparent",
               "transition-colors duration-200",
               "cursor-pointer",
               "hover:bg-dark focus-visible:bg-dark",
@@ -382,7 +384,7 @@ export function GalleryLightbox({
             className={cn(
               "flex items-center justify-center",
               "size-[75px] md:size-[100px] shrink-0 border-0 p-0",
-              "text-primary bg-transparent",
+              "bg-transparent",
               "transition-colors duration-200",
               "cursor-pointer",
               "hover:bg-dark focus-visible:bg-dark",

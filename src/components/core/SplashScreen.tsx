@@ -7,11 +7,13 @@ import gsap from "gsap"
 import { cn } from "@/utils/classNames"
 import { prefersReducedMotion } from "@/utils/reducedMotion"
 import { useSplashContext } from "@/components/providers/SplashProvider"
+import { useLenis } from "@/components/providers/LenisProvider"
 
 import animationData from "@/lottie/splash.json"
 
 export function SplashScreen() {
   const { onSplashDone } = useSplashContext()
+  const lenis = useLenis()
 
   const [loaded, setLoaded] = useState(false)
   const [lottieStarted, setLottieStarted] = useState(false)
@@ -33,6 +35,20 @@ export function SplashScreen() {
       setLottieStarted(true)
     }
   }, [lottieStarted])
+
+  useEffect(() => {
+    if (!lenis) return
+
+    if (dismissed) {
+      lenis.start()
+    } else {
+      lenis.stop()
+    }
+
+    return () => {
+      lenis.start()
+    }
+  }, [lenis, dismissed])
 
   useEffect(() => {
     if (prefersReducedMotion()) {

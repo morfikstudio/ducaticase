@@ -3,6 +3,7 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react"
 import { Link } from "@/i18n/navigation"
 
+import { hrefUsesNativeAnchor } from "@/lib/hrefUsesNativeAnchor"
 import { cn } from "@/utils/classNames"
 
 type ButtonIcon = "externalLink" | "filters" | "detailsArrow" | "download"
@@ -140,7 +141,7 @@ function getButtonClasses({
   if (variant === "secondary") {
     return cn(
       "type-button inline-flex w-fit items-center gap-3",
-      "group border-0 bg-transparent p-0 text-left uppercase tracking-[0.08em] text-primary",
+      "group border-0 bg-transparent p-0 text-left uppercase tracking-[0.08em]",
       disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
       className,
     )
@@ -155,7 +156,7 @@ function getButtonClasses({
       disabled
         ? "cursor-not-allowed bg-transparent text-black opacity-50"
         : isActive || highlight
-          ? "bg-black text-primary hover:bg-black hover:text-primary"
+          ? "bg-black hover:bg-black hover:text-primary"
           : "bg-transparent text-black hover:bg-black hover:text-primary",
       className,
     )
@@ -272,6 +273,13 @@ export function Button(props: ButtonProps) {
 
   if ("href" in rest && rest.href !== undefined) {
     const { href, ...anchorProps } = rest
+    if (hrefUsesNativeAnchor(href)) {
+      return (
+        <a href={href} className={classes} {...anchorProps}>
+          {body}
+        </a>
+      )
+    }
     return (
       <Link href={href} className={classes} {...anchorProps}>
         {body}
@@ -280,13 +288,14 @@ export function Button(props: ButtonProps) {
   }
 
   const buttonProps = rest as ButtonHTMLAttributes<HTMLButtonElement>
+  const { type = "button", ...htmlButtonProps } = buttonProps
 
   return (
     <button
-      type="button"
+      type={type}
       className={classes}
       disabled={disabled}
-      {...buttonProps}
+      {...htmlButtonProps}
     >
       {body}
     </button>

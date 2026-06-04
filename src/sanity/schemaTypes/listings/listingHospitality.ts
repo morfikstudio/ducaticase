@@ -28,6 +28,7 @@ import {
   listingHighlightsField,
   listingPublicPageLinkField,
   listingSearchTokensField,
+  listingInternalNameField,
   listingTitleField,
   mapField,
   mainImageField,
@@ -73,6 +74,7 @@ export const listingHospitality = defineType({
     mapField({ group: "mapPosition" }),
     positionInfoField({ group: "mapPosition" }),
     /* Contenuto */
+    listingInternalNameField({ group: "content" }),
     listingTitleField({ group: "content" }),
     mainImageField({ required: true, group: "content" }),
     galleryImagesField({ group: "content" }),

@@ -177,12 +177,12 @@ export function HeroText({
               landscapeParams={{
                 width: 1920,
                 height: 1080,
-                sizes: "(min-width: 1px) 100vw",
+                sizes: "100vw",
               }}
               portraitParams={{
                 width: 720,
                 height: 1280,
-                sizes: "(min-width: 1px) 100vw",
+                sizes: "100vw",
               }}
               fill
               priority
@@ -208,7 +208,7 @@ export function HeroText({
             <h1
               ref={titleRef}
               className={cn(
-                "type-heading-2 max-md:text-[30px] md:text-center text-primary",
+                "type-heading-2 max-md:text-[30px] md:text-center",
                 "mx-auto md:max-w-[900px]",
                 hide && "opacity-0",
               )}

@@ -261,7 +261,6 @@ export function QuoteCarousel({
                   "flex items-center justify-center",
                   "size-[75px] shrink-0 p-0",
                   "border border-dark rounded-md",
-                  "text-primary",
                   "transition-colors duration-200",
                   "cursor-pointer",
                   "bg-black hover:bg-dark focus-visible:bg-dark",
@@ -280,7 +279,6 @@ export function QuoteCarousel({
                   "flex items-center justify-center",
                   "size-[75px] shrink-0 p-0",
                   "border border-dark rounded-md",
-                  "text-primary",
                   "transition-colors duration-200",
                   "cursor-pointer",
                   "bg-black hover:bg-dark focus-visible:bg-dark",
@@ -397,9 +395,11 @@ export function QuoteCarousel({
                             "mt-16",
                           )}
                         >
-                          <div className="shrink-0">
-                            {providerLogo(item.provider)}
-                          </div>
+                          {item.provider ? (
+                            <div className="shrink-0">
+                              {providerLogo(item.provider)}
+                            </div>
+                          ) : null}
 
                           {author ? (
                             <p className="type-body-3 max-w-[min(100%,16rem)] text-right text-white">

@@ -33,7 +33,8 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
 
   const { current: breakpoint } = useBreakpoint()
   const isMobileLayout = breakpoint?.startsWith("mobile")
-  const viewAllIndex = isMobileLayout ? 1 : 3
+  const maxThumbIndex = isMobileLayout ? 1 : 3
+  const viewAllIndex = Math.min(thumbs.length - 1, maxThumbIndex)
 
   // Wait for mainImage + first 2 thumbs before revealing the gallery.
   const imagesAreReady = useMemo(() => {
@@ -72,18 +73,20 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
               landscape={mainImage}
               portrait={mainImage}
               locale={locale}
+              protectFromDownload
               landscapeParams={{
                 width: 900,
                 height: 560,
-                sizes: "(min-width: 1px) 80vw",
+                sizes: "(min-width: 768px) 80vw, 100vw",
               }}
               portraitParams={{
                 width: 720,
                 height: 450,
-                sizes: "(min-width: 1px) 100vw",
+                sizes: "100vw",
               }}
               fill
               className="object-cover"
+              loading="eager"
               onLoad={bumpGateProgress}
               onError={bumpGateProgress}
             />
@@ -111,14 +114,16 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                   <SanityImage
                     image={thumb}
                     locale={locale}
+                    protectFromDownload
                     params={{
                       width: 500,
                       height: 500,
-                      sizes: "(min-width: 1px) 50vw",
+                      sizes: "(min-width: 768px) 25vw, 50vw",
                       quality: 50,
                     }}
                     fill
                     className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    loading="eager"
                     onLoad={bumpGateProgress}
                     onError={bumpGateProgress}
                   />
@@ -126,7 +131,7 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                     className="pointer-events-none absolute inset-0 flex items-center justify-center backdrop-blur-sm bg-black/30"
                     aria-hidden
                   >
-                    <span className="type-button text-primary group-hover:underline">
+                    <span className="type-button group-hover:underline">
                       {t("viewAll")}
                     </span>
                   </span>
@@ -145,10 +150,11 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                 <SanityImage
                   image={thumb}
                   locale={locale}
+                  protectFromDownload
                   params={{
                     width: 500,
                     height: 500,
-                    sizes: "(min-width: 1px) 50vw",
+                    sizes: "(min-width: 768px) 25vw, 50vw",
                     quality: 50,
                   }}
                   fill

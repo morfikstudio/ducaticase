@@ -34,7 +34,7 @@ export function ListingsCategoriesBar({
               "cursor-pointer transition-all duration-200",
               isSelected
                 ? "border-primary bg-primary text-accent"
-                : "border-dark bg-dark text-primary hover:border-primary hover:bg-primary hover:text-accent",
+                : "border-dark bg-dark hover:border-primary hover:bg-primary hover:text-accent",
             )}
           >
             <span className="min-w-0 truncate">{option.title}</span>

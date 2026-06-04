@@ -96,6 +96,7 @@ export function listingPreview(options?: ListingPreviewOptions) {
 
   return {
     select: {
+      internalListingName: "internalListingName",
       titleIt: "title.it",
       titleEn: "title.en",
       media: "mainImage",
@@ -109,6 +110,7 @@ export function listingPreview(options?: ListingPreviewOptions) {
       country: "country",
     },
     prepare({
+      internalListingName,
       titleIt,
       titleEn,
       media,
@@ -121,6 +123,7 @@ export function listingPreview(options?: ListingPreviewOptions) {
       province,
       country,
     }: {
+      internalListingName?: string | null
       titleIt?: string | null
       titleEn?: string | null
       media?: unknown
@@ -147,19 +150,24 @@ export function listingPreview(options?: ListingPreviewOptions) {
       const categoryTitle = listingCategoryTitle(_type)
       const contractLabel = listingContractTypeLabel(listingContractType)
 
+      const internalTrim =
+        typeof internalListingName === "string"
+          ? internalListingName.trim()
+          : ""
       const labelIt = typeof titleIt === "string" ? titleIt.trim() : ""
       const labelEn = typeof titleEn === "string" ? titleEn.trim() : ""
-      const label = labelIt || labelEn || undefined
+      const titleFallback = labelIt || labelEn || undefined
+      const primaryTitle = internalTrim || titleFallback || undefined
 
       const mediaMaybe = isPreviewImageMedia(media) ? { media } : {}
 
-      if (label) {
+      if (primaryTitle) {
         const subtitle = [contractLabel, typologyTitle]
           .filter((s): s is string => typeof s === "string" && s !== "")
           .join(" · ")
 
         return {
-          title: label,
+          title: primaryTitle,
           ...(subtitle ? { subtitle } : {}),
           ...mediaMaybe,
         } as PreviewValue

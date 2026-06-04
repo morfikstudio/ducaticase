@@ -1,5 +1,6 @@
 import { defineField } from "sanity"
 
+import { ListingPublicPageLinkField } from "../../../components/ListingPublicPageLinkField"
 import { ListingPublicPageLinkInput } from "../../../components/ListingPublicPageLinkInput"
 
 export type ListingPublicPageLinkFieldOptions = {
@@ -17,6 +18,7 @@ export function listingPublicPageLinkField(
     readOnly: true,
     components: {
       input: ListingPublicPageLinkInput,
+      field: ListingPublicPageLinkField,
     },
   })
 }
