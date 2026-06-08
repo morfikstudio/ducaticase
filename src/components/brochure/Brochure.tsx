@@ -73,6 +73,10 @@ export function Brochure({
     .slice(0, 6)
     .map((img) => getPrintImageUrl(img, 700, 700, 75))
     .filter((u): u is string => Boolean(u))
+  const excerptPlain = pickLocalizedPortableTextPlain(
+    content?.excerpt,
+    locale,
+  )
   const descriptionPlain = pickLocalizedPortableTextPlain(
     content?.description,
     locale,
@@ -138,6 +142,20 @@ export function Brochure({
                     <p className="cover-sqm">
                       {sqm} {messages.squareMeters}
                     </p>
+                  ) : null}
+                  {excerptPlain ? (
+                    <div className="cover-excerpt">
+                      {excerptPlain.split(/\n\s*\n/).map((para, i) => (
+                        <p key={i}>
+                          {para.split("\n").map((line, j, arr) => (
+                            <span key={j}>
+                              {line}
+                              {j < arr.length - 1 ? <br /> : null}
+                            </span>
+                          ))}
+                        </p>
+                      ))}
+                    </div>
                   ) : null}
                   {descriptionPlain ? (
                     <div className="cover-description">

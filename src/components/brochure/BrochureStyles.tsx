@@ -53,7 +53,9 @@ body { font-family: var(--font-inter), Inter, system-ui, sans-serif; color: #111
 .cover-price { font-size: 22pt; line-height: 1.15; font-weight: 400; margin: 0; white-space: nowrap; }
 .cover-location { margin: 4mm 0 0 0; font-size: 10.5pt; color: #222; }
 .cover-sqm { margin: 1mm 0 0 0; font-size: 9pt; color: #666; }
-.cover-description { margin-top: 8mm; font-size: 10pt; line-height: 1.55; color: #1a1a1a; }
+.cover-excerpt { margin-top: 8mm; font-size: 22px; line-height: 1.4; color: #111; }
+.cover-excerpt p { margin: 0 0 4mm 0; }
+.cover-description { margin-top: 6mm; font-size: 16px; line-height: 1.55; color: #111; }
 .cover-description p { margin: 0 0 3mm 0; }
 
 /* SPECS */
