@@ -5,7 +5,11 @@ import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
 import type { AppLocale } from "@/i18n/routing"
 
+import { aboutSplitSectionRecommendedCrop } from "@/lib/aboutSplitSectionImage"
 import { cn } from "@/utils/classNames"
+
+const { desktop: splitDesktopCrop, mobile: splitMobileCrop } =
+  aboutSplitSectionRecommendedCrop
 
 import { Container } from "@/components/ui/Container"
 import { SanityImage } from "@/components/ui/SanityImage"
@@ -92,14 +96,14 @@ export function SplitSection({
               breakpoint="lg"
               fill
               landscapeParams={{
-                width: 900,
-                height: 900,
+                width: splitDesktopCrop.width,
+                height: splitDesktopCrop.height,
                 sizes: "(min-width: 1024px) 50vw, 100vw",
               }}
               portraitParams={{
-                width: 720,
-                height: 360,
-                sizes: "100vw",
+                width: splitMobileCrop.width,
+                height: splitMobileCrop.height,
+                sizes: "(min-width: 768px) calc(100vw - 4rem), calc(100vw - 2rem)",
               }}
               className="object-cover"
               onLoad={handleImageSettled}

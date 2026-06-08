@@ -124,6 +124,11 @@ export function EnergyClassDisplay({ energyClass }: EnergyClassDisplayProps) {
           )
         })}
       </div>
+
+      <p
+        className="type-body-3 text-gray mt-10 lg:mt-24 max-w-[1280px]"
+        dangerouslySetInnerHTML={{ __html: t("energyClassDisclaimer") }}
+      />
     </div>
   )
 }

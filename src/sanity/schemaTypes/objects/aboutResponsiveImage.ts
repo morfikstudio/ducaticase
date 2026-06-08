@@ -1,19 +1,28 @@
 import { defineField, defineType } from "sanity"
 
+import {
+  aboutSplitSectionRecommendedCrop,
+  aboutSplitSectionStudioPreviewAspect,
+} from "../../../lib/aboutSplitSectionImage"
 import { apiVersion } from "../../env"
 import { MAX_IMAGES_BYTES } from "../../lib/constants"
 
 const maxMb = MAX_IMAGES_BYTES / (1024 * 1024)
 
-function aboutImageField(name: string, title: string) {
+function aboutImageField(
+  name: string,
+  title: string,
+  previewAspect: number,
+  previewTitle: string,
+) {
   return defineField({
     name,
     title,
-    description: `Massimo ${maxMb} MB.`,
+    description: `Massimo ${maxMb} MB. Ritaglio consigliato ${previewTitle}.`,
     type: "image",
     options: {
       hotspot: {
-        previews: [{ title: "Anteprima", aspectRatio: 4 / 3 }],
+        previews: [{ title: previewTitle, aspectRatio: previewAspect }],
       },
     },
     initialValue: {
@@ -57,12 +66,23 @@ function aboutImageField(name: string, title: string) {
   })
 }
 
+/** Blocchi storia Chi siamo: desktop 1:1 (lg+), mobile 2:1 (sotto lg). */
 export const aboutResponsiveImage = defineType({
   name: "aboutResponsiveImage",
   title: "Immagini desktop e mobile",
   type: "object",
   fields: [
-    aboutImageField("imageDesktop", "Immagine desktop"),
-    aboutImageField("imageMobile", "Immagine mobile"),
+    aboutImageField(
+      "imageDesktop",
+      "Immagine desktop",
+      aboutSplitSectionStudioPreviewAspect.desktop,
+      aboutSplitSectionRecommendedCrop.desktop.aspectRatio,
+    ),
+    aboutImageField(
+      "imageMobile",
+      "Immagine mobile",
+      aboutSplitSectionStudioPreviewAspect.mobile,
+      aboutSplitSectionRecommendedCrop.mobile.aspectRatio,
+    ),
   ],
 })

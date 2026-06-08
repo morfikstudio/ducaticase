@@ -123,12 +123,12 @@ export function HeroContent({
               landscapeParams={{
                 width: heroLandscapeCrop.width,
                 height: heroLandscapeCrop.height,
-                sizes: "100vw",
+                sizes: "(min-width: 1024px) calc(100vw - 3rem), (min-width: 768px) calc(100vw - 2rem), calc(100vw - 1rem)",
               }}
               portraitParams={{
                 width: heroPortraitCrop.width,
                 height: heroPortraitCrop.height,
-                sizes: "100vw",
+                sizes: "(min-width: 1024px) calc(100vw - 3rem), (min-width: 768px) calc(100vw - 2rem), calc(100vw - 1rem)",
               }}
               fill
               priority
