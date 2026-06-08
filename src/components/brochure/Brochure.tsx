@@ -1,6 +1,6 @@
 import type { AppLocale } from "@/i18n/routing"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
-import { getSanityImageUrl } from "@/lib/sanity"
+import { getPrintImageUrl } from "@/lib/brochure/printImage"
 import {
   pickLocalizedPortableTextPlain,
   pickLocalizedString,
@@ -63,11 +63,14 @@ export function Brochure({
   )
   const sqm = propertySheet?.commercialAreaSqm
 
-  const heroUrl = getSanityImageUrl(content?.mainImage, 1600, 1000, 82)
-  // Fixed gallery layout: 2 cols x 3 rows = up to 6 images on a single page.
+  // Print-sized image URLs (no Retina dpr, lower quality, dimensions matched
+  // to the physical A4 placement at ~200 DPI to keep the PDF light).
+  const heroUrl = getPrintImageUrl(content?.mainImage, 1400, 750, 75)
+  // Fixed gallery layout: 2 cols x 3 rows = up to 6 images on a single page,
+  // each rendered at ~80mm square -> ~700px is plenty.
   const galleryUrls = (content?.gallery ?? [])
     .slice(0, 6)
-    .map((img) => getSanityImageUrl(img, 1200, 0, 80))
+    .map((img) => getPrintImageUrl(img, 700, 700, 75))
     .filter((u): u is string => Boolean(u))
   const descriptionPlain = pickLocalizedPortableTextPlain(
     content?.description,
