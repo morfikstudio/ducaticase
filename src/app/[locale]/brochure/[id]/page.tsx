@@ -119,6 +119,7 @@ export default async function BrochurePage({ params }: Props) {
     rentPriceLabel: t("rentPriceLabel"),
     followUsPrefix: t("brochureFollowUsPrefix"),
     followUsSuffix: t("brochureFollowUsSuffix"),
+    energyDisclaimer: t("energyClassDisclaimer"),
     countries,
   }
 

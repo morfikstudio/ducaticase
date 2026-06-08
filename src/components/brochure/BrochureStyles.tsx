@@ -84,9 +84,19 @@ body { font-family: var(--font-inter), Inter, system-ui, sans-serif; color: #111
 .energy-block { margin-top: 6mm; }
 .energy-bar { display: flex; align-items: center; gap: 2mm; margin-top: 4mm; }
 
-.position-block { margin-top: auto; }
+.position-block { margin-top: 10mm; }
 .position-label { font-size: 8.5pt; letter-spacing: 0.12em; color: #888; margin: 0 0 2mm 0; }
-.position-text { font-size: 9.5pt; line-height: 1.55; color: #222; margin: 0; max-width: 130mm; }
+.position-text { font-size: 9.5pt; line-height: 1.55; color: #111; margin: 0; max-width: 130mm; }
+
+.energy-disclaimer {
+  margin: auto 0 0 0;
+  padding-top: 4mm;
+  border-top: 1px solid #d8d8d8;
+  font-size: 8pt;
+  line-height: 1.45;
+  color: #111;
+  text-align: center;
+}
 
 /* GALLERY — fixed 2x3 grid of 80mm squares, centered horizontally */
 .gallery-body { display: block; }

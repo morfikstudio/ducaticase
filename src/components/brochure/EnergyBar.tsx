@@ -42,7 +42,7 @@ export function EnergyBar({ energyClass }: { energyClass: EnergyClass }) {
         const isActive = active === i
         const style: React.CSSProperties = {
           backgroundColor: COLORS[letter],
-          height: "4mm",
+          height: "6px",
           opacity: indeterminate ? 0.4 : isActive ? 1 : 0.4,
           flex: isActive ? 1 : "0 0 12mm",
         }

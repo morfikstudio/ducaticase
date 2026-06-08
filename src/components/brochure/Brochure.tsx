@@ -29,6 +29,7 @@ type Messages = {
   rentPriceLabel: string
   followUsPrefix: string
   followUsSuffix: string
+  energyDisclaimer: string
   countries: Record<string, string>
 }
 
@@ -210,6 +211,8 @@ export function Brochure({
               <p className="position-text">{positionPlain}</p>
             </div>
           ) : null}
+
+          <p className="energy-disclaimer">{messages.energyDisclaimer}</p>
         </div>
       </section>
 
