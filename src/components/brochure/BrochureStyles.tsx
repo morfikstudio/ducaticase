@@ -55,7 +55,14 @@ body { font-family: var(--font-inter), Inter, system-ui, sans-serif; color: #111
 .cover-sqm { margin: 1mm 0 0 0; font-size: 9pt; color: #666; }
 .cover-excerpt { margin-top: 8mm; font-size: 22px; line-height: 1.4; color: #111; }
 .cover-excerpt p { margin: 0 0 4mm 0; }
-.cover-description { margin-top: 6mm; font-size: 16px; line-height: 1.55; color: #111; }
+.cover-description {
+  margin-top: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #111;
+  page-break-before: always;
+  break-before: page;
+}
 .cover-description p { margin: 0 0 3mm 0; }
 
 /* SPECS */
