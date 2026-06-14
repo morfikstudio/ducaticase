@@ -2,13 +2,11 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { AppLocale } from "@/i18n/routing"
 
-import { sanityFetch } from "@/sanity/lib/client"
+import { getListingById } from "@/sanity/lib/getListingById"
 import {
   pickLocalizedPortableTextPlain,
   pickLocalizedString,
 } from "@/sanity/lib/locale"
-import { LISTING_BY_ID_QUERY } from "@/sanity/lib/queries"
-import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
 
 import { JsonLd } from "@/components/seo/JsonLd"
 import { buildListingJsonLdGraph } from "@/seo/json-ld/listing-graph"
@@ -39,11 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: localeParam, id } = await params
   const locale = localeParam as AppLocale
 
-  const listing = (await sanityFetch({
-    query: LISTING_BY_ID_QUERY,
-    params: { id },
-    revalidate: 60,
-  })) as LISTING_BY_ID_QUERY_RESULT
+  const listing = await getListingById(id)
 
   if (!listing?.content) {
     return buildPageMetadataByKey("listings", locale)
@@ -69,11 +63,7 @@ export default async function ListingDetailPage({ params }: Props) {
   const { locale: localeParam, id } = await params
   const locale = localeParam as AppLocale
 
-  const listing = (await sanityFetch({
-    query: LISTING_BY_ID_QUERY,
-    params: { id },
-    revalidate: 60,
-  })) as LISTING_BY_ID_QUERY_RESULT
+  const listing = await getListingById(id)
 
   if (!listing) {
     notFound()

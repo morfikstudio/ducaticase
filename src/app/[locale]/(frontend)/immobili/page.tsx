@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import type { AppLocale } from "@/i18n/routing"
 
 import { sanityFetch } from "@/sanity/lib/client"
+import { CACHE_TAGS } from "@/sanity/lib/cache-tags"
 import { LISTINGS_PREVIEW_QUERY } from "@/sanity/lib/queries"
 import type { LISTINGS_PREVIEW_QUERY_RESULT } from "@/sanity/types"
 
@@ -34,6 +35,7 @@ export default async function ListingsPage({ params }: ListingsPageProps) {
   const listings = (await sanityFetch({
     query: LISTINGS_PREVIEW_QUERY,
     revalidate: 60,
+    tags: [CACHE_TAGS.listing],
   })) as LISTINGS_PREVIEW_QUERY_RESULT
 
   return (

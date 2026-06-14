@@ -1,5 +1,6 @@
 import type { AppLocale } from "@/i18n/routing"
 import { sanityFetch } from "@/sanity/lib/client"
+import { CACHE_TAGS } from "@/sanity/lib/cache-tags"
 import { FOOTER_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
 import type { FOOTER_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
 import { buildSiteJsonLdGraph } from "@/seo/json-ld/site-graph"
@@ -16,6 +17,7 @@ export async function SiteJsonLd({ locale }: Props) {
     footer = (await sanityFetch({
       query: FOOTER_SITE_CONTENT_QUERY,
       revalidate: 3600,
+      tags: [CACHE_TAGS.siteContent],
     })) as FOOTER_SITE_CONTENT_QUERY_RESULT
   } catch {
     footer = null

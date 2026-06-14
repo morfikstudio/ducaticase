@@ -146,4 +146,72 @@ Warning: this overwrites production with development. Use only when intentional.
 
 ## Revalidation
 
-Pages that read from Sanity use `revalidate: 60` (seconds). Webhooks and on-demand revalidation are not configured.
+Pages that read from Sanity use `revalidate: 60` (seconds) as a fallback in production. On publish, a Sanity webhook calls `/api/revalidate` to invalidate the cache immediately.
+
+### Local development
+
+During `npm run dev`, Sanity/Next.js caching is disabled automatically (`revalidate: 0`, `useCdn: false` in `src/sanity/lib/client.ts`). After publishing in Studio, refresh the page to see changes right away. The webhook and `SANITY_REVALIDATE_SECRET` are only needed on Vercel (production).
+
+### Environment variable
+
+Add to `.env.local` and to your hosting provider (e.g. Vercel):
+
+```sh
+SANITY_REVALIDATE_SECRET=<random-string-at-least-32-chars>
+```
+
+Generate one with: `openssl rand -base64 32`
+
+### Sanity webhook
+
+In [sanity.io/manage](https://www.sanity.io/manage) → your project → **API** → **Webhooks** → **Create webhook**:
+
+| Field | Value |
+| --- | --- |
+| **Name** | Next.js revalidate |
+| **URL** | `https://<your-production-domain>/api/revalidate` |
+| **Dataset** | `production` (same as `NEXT_PUBLIC_SANITY_DATASET`) |
+| **Trigger on** | Create, Update, Delete |
+| **Filter** | `_type in ["listingResidential","listingCountryHouses","listingShopsAndOffices","listingIndustrial","listingHospitality","listingLand","siteContent"]` |
+| **Projection** | see below |
+| **HTTP method** | POST |
+| **Secret** | same value as `SANITY_REVALIDATE_SECRET` |
+
+**Projection** (paste as-is in the webhook form):
+
+```json
+{
+  "tags": array::compact([
+    _type,
+    select(_type match "listing*" => "listing"),
+    select(_type == "siteContent" => "siteContent")
+  ]),
+  "paths": select(
+    _type match "listing*" => [
+      "/it/immobili/" + _id,
+      "/en/immobili/" + _id,
+      "/it/immobili",
+      "/en/immobili"
+    ],
+    _type == "siteContent" => [
+      "/it",
+      "/en",
+      "/it/about",
+      "/en/about",
+      "/it/contact",
+      "/en/contact",
+      "/it/affidaci-il-tuo-immobile",
+      "/en/affidaci-il-tuo-immobile",
+      "/it/ricerca-su-misura",
+      "/en/ricerca-su-misura",
+      "/it/ducati-per-le-aziende",
+      "/en/ducati-per-le-aziende",
+      "/it/immobili",
+      "/en/immobili"
+    ],
+    []
+  )
+}
+```
+
+After deploying with `SANITY_REVALIDATE_SECRET` set, publish a listing in Studio — the page should be live within a few seconds.
