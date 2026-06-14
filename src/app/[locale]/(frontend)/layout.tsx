@@ -1,5 +1,6 @@
 import type { AppLocale } from "@/i18n/routing"
 import { sanityFetch } from "@/sanity/lib/client"
+import { CACHE_TAGS } from "@/sanity/lib/cache-tags"
 import {
   MENU_SITE_CONTENT_QUERY,
   FOOTER_SITE_CONTENT_QUERY,
@@ -38,10 +39,12 @@ export default async function FrontendLayout({
     sanityFetch({
       query: MENU_SITE_CONTENT_QUERY,
       revalidate: 60,
+      tags: [CACHE_TAGS.siteContent],
     }) as Promise<MENU_SITE_CONTENT_QUERY_RESULT>,
     sanityFetch({
       query: FOOTER_SITE_CONTENT_QUERY,
       revalidate: 60,
+      tags: [CACHE_TAGS.siteContent],
     }) as Promise<FOOTER_SITE_CONTENT_QUERY_RESULT>,
   ])
 

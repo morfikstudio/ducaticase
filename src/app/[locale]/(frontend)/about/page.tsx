@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import type { AppLocale } from "@/i18n/routing"
 
 import { sanityFetch } from "@/sanity/lib/client"
+import { CACHE_TAGS } from "@/sanity/lib/cache-tags"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import { ABOUT_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
 import type { ABOUT_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
@@ -35,6 +36,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
   const data = (await sanityFetch({
     query: ABOUT_SITE_CONTENT_QUERY,
     revalidate: 60,
+    tags: [CACHE_TAGS.siteContent],
   })) as ABOUT_SITE_CONTENT_QUERY_RESULT
 
   // HERO SECTION

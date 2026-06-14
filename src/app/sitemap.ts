@@ -3,6 +3,7 @@ import type { MetadataRoute } from "next"
 import { routing } from "@/i18n/routing"
 import type { AppLocale } from "@/i18n/routing"
 import { sanityFetch } from "@/sanity/lib/client"
+import { CACHE_TAGS } from "@/sanity/lib/cache-tags"
 import { LISTING_SITEMAP_IDS_QUERY } from "@/sanity/lib/queries"
 import siteSeo from "@/seo/main.json"
 import { absoluteUrl, buildLocalizedPathname } from "@/seo/page-metadata"
@@ -32,6 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     listingRows = (await sanityFetch({
       query: LISTING_SITEMAP_IDS_QUERY,
       revalidate: 300,
+      tags: [CACHE_TAGS.listing],
     })) as ListingSitemapRow[]
   } catch {
     listingRows = []

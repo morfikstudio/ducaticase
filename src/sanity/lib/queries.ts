@@ -827,6 +827,246 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
   }
 `)
 
+/** Same as LISTING_BY_ID_QUERY but includes archived listings (preview route only). */
+export const LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY = defineQuery(groq`
+  *[_type in [
+    "listingResidential",
+    "listingCountryHouses",
+    "listingShopsAndOffices",
+    "listingIndustrial",
+    "listingHospitality",
+    "listingLand"
+  ] && _id == $id][0]{
+    "metadata": {
+      _id,
+      _type,
+      listingContractType,
+      _createdAt,
+      _updatedAt,
+      _rev
+    },
+    "typology": select(
+      _type == "listingCountryHouses" => countryHouseTypology,
+      _type == "listingShopsAndOffices" => shopsAndOfficesTypology,
+      _type == "listingIndustrial" => industrialTypology,
+      true => null
+    ),
+    "propertySheet": select(
+      _type == "listingResidential" => {
+        price,
+        commercialAreaSqm,
+        condoFees,
+        floor,
+        conciergeService,
+        buildingYear,
+        heating,
+        energyClass
+      },
+      _type == "listingCountryHouses" => {
+        price,
+        commercialAreaSqm,
+        floor,
+        buildingYear,
+        heating,
+        energyClass
+      },
+      _type == "listingShopsAndOffices" => {
+        price,
+        commercialAreaSqm,
+        floor,
+        displayWindows,
+        conciergeService,
+        buildingYear,
+        heating,
+        energyClass
+      },
+      _type == "listingIndustrial" => {
+        price,
+        commercialAreaSqm,
+        floor,
+        heightMeters,
+        buildingYear,
+        energyClass
+      },
+      _type == "listingHospitality" => {
+        price,
+        commercialAreaSqm,
+        roomCount,
+        energyClass
+      },
+      _type == "listingLand" => {
+        price,
+        commercialAreaSqm,
+        landAccess,
+        hasFencedProperty
+      }
+    ),
+    "location": {
+      country,
+      province,
+      city,
+      address,
+      postalCode,
+      map,
+      positionInfo
+    },
+    "content": {
+      title,
+      "mainImage": mainImage {
+        ...,
+        asset->
+      },
+      "gallery": gallery[] {
+        ...,
+        asset->
+      },
+      description,
+      excerpt
+    },
+    "floorPlans": select(
+      _type == "listingLand" => {
+        "items": null
+      },
+      {
+        "items": floorPlans[] {
+          ...,
+          asset->
+        }
+      }
+    ),
+    "additionalFields": select(
+      _type == "listingResidential" => {
+        furnishing,
+        garden,
+        carBox,
+        parkingSpaces,
+        hasBalcony,
+        hasTerrace,
+        hasCellar,
+        hasAtticRoom,
+        hasTavern,
+        hasAlarmSystem,
+        pool,
+        hasTennisCourt,
+        hasAccessibleAccess,
+        climateControl,
+        highlights
+      },
+      _type == "listingCountryHouses" => {
+        outdoorAreaSqm,
+        furnishing,
+        garden,
+        carBox,
+        parkingSpaces,
+        hasBalcony,
+        hasTerrace,
+        hasCellar,
+        hasAtticRoom,
+        hasTavern,
+        hasAlarmSystem,
+        pool,
+        hasTennisCourt,
+        hasAccessibleAccess,
+        climateControl,
+        condoFees,
+        highlights
+      },
+      _type == "listingShopsAndOffices" => {
+        furnishing,
+        hasAccessibleRestroom,
+        hasFlue,
+        hasFireProtectionSystem,
+        hasLoadingUnloading,
+        hasDrivewayAccess,
+        parkingSpaces,
+        hasAlarmSystem,
+        hasAccessibleAccess,
+        climateControl,
+        conciergeServiceShops,
+        officeLayout,
+        condoFees,
+        highlights
+      },
+      _type == "listingIndustrial" => {
+        hasLoadingDocks,
+        hasOverheadCranes,
+        shedAreaSqm,
+        officeAreaSqm,
+        landAreaSqm,
+        hasChangingRoom,
+        hasFencedProperty,
+        conciergeService,
+        hasAccessibleRestroom,
+        hasLoadingUnloading,
+        hasDrivewayAccess,
+        hasDrivableAccess,
+        parkingSpaces,
+        hasAlarmSystem,
+        hasAccessibleAccess,
+        climateControl,
+        heating,
+        highlights
+      },
+      _type == "listingHospitality" => {
+        hasAccessibleRestroom,
+        hasFlue,
+        hasFireProtectionSystem,
+        hasLoadingUnloading,
+        hasDrivewayAccess,
+        parkingSpaces,
+        hasAlarmSystem,
+        hasAccessibleAccess,
+        climateControl,
+        outdoorAreaSqm,
+        heating,
+        pool,
+        hasTennisCourt,
+        customSpecifications,
+        highlights
+      },
+      _type == "listingLand" => {
+        isBuildable,
+        isAgricultural,
+        highlights
+      }
+    ),
+    "relatedListings": *[
+      _type in [
+        "listingResidential",
+        "listingCountryHouses",
+        "listingShopsAndOffices",
+        "listingIndustrial",
+        "listingHospitality",
+        "listingLand"
+      ] &&
+      coalesce(isArchived, false) != true &&
+      _id != ^._id &&
+      _type == ^._type &&
+      city == ^.city
+    ] | order(_createdAt desc)[0...2] {
+      _id,
+      _type,
+      title,
+      listingContractType,
+      price,
+      city,
+      province,
+      address,
+      postalCode,
+      "typology": select(
+        _type == "listingCountryHouses" => countryHouseTypology,
+        _type == "listingShopsAndOffices" => shopsAndOfficesTypology,
+        _type == "listingIndustrial" => industrialTypology,
+        true => null
+      ),
+      "mainImage": mainImage {
+        ...,
+        asset->
+      }
+    }
+  }
+`)
+
 /** Public IDs of listings (sitemap / SEO). */
 export const LISTING_SITEMAP_IDS_QUERY = defineQuery(groq`
   *[_type in [

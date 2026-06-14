@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { type AppLocale } from "@/i18n/routing"
 
 import { sanityFetch } from "@/sanity/lib/client"
+import { CACHE_TAGS } from "@/sanity/lib/cache-tags"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import { BUSINESS_PAGE_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
 import type { BUSINESS_PAGE_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
@@ -37,6 +38,7 @@ export default async function Page({ params }: PageProps) {
   const data = (await sanityFetch({
     query: BUSINESS_PAGE_SITE_CONTENT_QUERY,
     revalidate: 60,
+    tags: [CACHE_TAGS.siteContent],
   })) as BUSINESS_PAGE_SITE_CONTENT_QUERY_RESULT
 
   const page = data?.businessPage

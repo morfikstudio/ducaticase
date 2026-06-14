@@ -3,6 +3,7 @@ import { type AppLocale } from "@/i18n/routing"
 import { getTranslations } from "next-intl/server"
 
 import { sanityFetch } from "@/sanity/lib/client"
+import { CACHE_TAGS } from "@/sanity/lib/cache-tags"
 import {
   pickLocalizedPortableText,
   pickLocalizedPortableTextPlain,
@@ -68,6 +69,7 @@ export default async function Page({ params }: PageProps) {
   const data = (await sanityFetch({
     query: HOME_SITE_CONTENT_QUERY,
     revalidate: 60,
+    tags: [CACHE_TAGS.siteContent, CACHE_TAGS.listing],
   })) as HOME_SITE_CONTENT_QUERY_RESULT
 
   const homePage = data?.homePage

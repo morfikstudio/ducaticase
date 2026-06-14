@@ -6,10 +6,13 @@ import { getPublishedId, useFormValue, type StringInputProps } from "sanity"
 import { routing } from "@/i18n/routing"
 import { getSiteOrigin } from "@/seo/site-url"
 
+const previewSecret = process.env.SANITY_STUDIO_LISTING_PREVIEW_SECRET
+
 export function ListingPublicPageLinkInput(_props: StringInputProps) {
   const rawId = useFormValue(["_id"])
+  const isArchived = useFormValue(["isArchived"]) === true
 
-  const href = useMemo(() => {
+  const link = useMemo(() => {
     if (typeof rawId !== "string" || rawId.trim() === "") {
       return null
     }
@@ -18,10 +21,29 @@ export function ListingPublicPageLinkInput(_props: StringInputProps) {
     const origin = getSiteOrigin()
     const locale = routing.defaultLocale
 
-    return `${origin}/${locale}/immobili/${encodeURIComponent(publishedId)}`
-  }, [rawId])
+    if (isArchived) {
+      if (!previewSecret?.trim()) {
+        return null
+      }
 
-  if (!href) {
+      const token = encodeURIComponent(previewSecret.trim())
+      return {
+        href: `${origin}/${locale}/preview/immobili/${encodeURIComponent(publishedId)}?token=${token}`,
+        label: "Apri anteprima",
+      }
+    }
+
+    return {
+      href: `${origin}/${locale}/immobili/${encodeURIComponent(publishedId)}`,
+      label: "Apri annuncio",
+    }
+  }, [rawId, isArchived])
+
+  if (!link) {
+    const message = isArchived
+      ? "Configura SANITY_STUDIO_LISTING_PREVIEW_SECRET per aprire l'anteprima degli annunci archiviati."
+      : "Il link sarà disponibile dopo il primo salvataggio del documento."
+
     return (
       <div
         style={{
@@ -29,7 +51,7 @@ export function ListingPublicPageLinkInput(_props: StringInputProps) {
           color: "var(--card-muted-fg-color, rgba(55,55,55,0.65))",
         }}
       >
-        Il link sarà disponibile dopo il primo salvataggio del documento.
+        {message}
       </div>
     )
   }
@@ -37,7 +59,7 @@ export function ListingPublicPageLinkInput(_props: StringInputProps) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
       <a
-        href={href}
+        href={link.href}
         target="_blank"
         rel="noopener noreferrer"
         style={{
@@ -47,7 +69,7 @@ export function ListingPublicPageLinkInput(_props: StringInputProps) {
           textDecoration: "underline",
         }}
       >
-        Apri annuncio
+        {link.label}
       </a>
     </div>
   )
