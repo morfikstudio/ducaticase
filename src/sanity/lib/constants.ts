@@ -478,9 +478,6 @@ export const ITALIAN_PROVINCE_OPTIONS = [
   { title: "Viterbo", value: "VT" },
 ] as const
 
-export const MAX_IMAGES_BYTES = 5 * 1024 * 1024
-export const MAX_FLOOR_PLAN_FILE_BYTES = 3 * 1024 * 1024
-
 export const OFFICE_LAYOUT_OPTIONS = [
   { title: "Open space", value: "openSpace" },
   { title: "Uffici singoli", value: "individualOffices" },
