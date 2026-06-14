@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server"
 
 import type { AppLocale } from "@/i18n/routing"
 import { sanityFetch } from "@/sanity/lib/client"
+import { LOCATION_COUNTRY_OPTIONS } from "@/sanity/lib/constants"
 import { LISTING_BY_ID_QUERY } from "@/sanity/lib/queries"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
@@ -100,8 +101,8 @@ export default async function BrochurePage({ params }: Props) {
     : []
 
   const countries: Record<string, string> = {}
-  for (const code of ["IT", "AT", "FR", "DE", "MC", "NL", "ES", "CH"]) {
-    countries[code] = tCountries(code)
+  for (const { value } of LOCATION_COUNTRY_OPTIONS) {
+    countries[value] = tCountries(value)
   }
 
   const messages = {

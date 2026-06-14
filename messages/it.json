@@ -33,7 +33,8 @@
       "MC": "Montecarlo",
       "NL": "Paesi Bassi",
       "ES": "Spagna",
-      "CH": "Svizzera"
+      "CH": "Svizzera",
+      "US": "Stati Uniti"
     },
     "specs": {
       "title": "Caratteristiche",

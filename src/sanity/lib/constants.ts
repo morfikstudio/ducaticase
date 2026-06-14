@@ -352,6 +352,7 @@ export const LOCATION_COUNTRY_OPTIONS = [
   { title: "Paesi Bassi", value: "NL" },
   { title: "Spagna", value: "ES" },
   { title: "Svizzera", value: "CH" },
+  { title: "Stati Uniti", value: "US" },
 ] as const
 
 export type ListingLocationCountryCode =
