@@ -12,6 +12,7 @@ import {
 } from "@sanity/icons"
 import type { StructureResolver } from "sanity/structure"
 
+import { apiVersion } from "./env"
 import { LISTING_DOCUMENT_SPECS } from "./schemaTypes/listingTypes"
 
 export const structure: StructureResolver = (S) =>
@@ -34,6 +35,7 @@ export const structure: StructureResolver = (S) =>
                   S.documentList()
                     .title("Menu")
                     .schemaType("siteContent")
+                    .apiVersion(apiVersion)
                     .filter('_type == "siteContent" && sectionType == "menu"')
                     .defaultOrdering([
                       { field: "_updatedAt", direction: "desc" },
@@ -47,6 +49,7 @@ export const structure: StructureResolver = (S) =>
                   S.documentList()
                     .title("Footer")
                     .schemaType("siteContent")
+                    .apiVersion(apiVersion)
                     .filter('_type == "siteContent" && sectionType == "footer"')
                     .defaultOrdering([
                       { field: "_updatedAt", direction: "desc" },
@@ -60,6 +63,7 @@ export const structure: StructureResolver = (S) =>
                   S.documentList()
                     .title("Home")
                     .schemaType("siteContent")
+                    .apiVersion(apiVersion)
                     .filter(
                       '_type == "siteContent" && sectionType == "homePage"',
                     )
@@ -78,6 +82,7 @@ export const structure: StructureResolver = (S) =>
                   S.documentList()
                     .title("Affidaci il tuo immobile")
                     .schemaType("siteContent")
+                    .apiVersion(apiVersion)
                     .filter(
                       '_type == "siteContent" && sectionType == "listYourPropertyPage"',
                     )
@@ -98,6 +103,7 @@ export const structure: StructureResolver = (S) =>
                   S.documentList()
                     .title("Ricerca su misura")
                     .schemaType("siteContent")
+                    .apiVersion(apiVersion)
                     .filter(
                       '_type == "siteContent" && sectionType == "tailoredSearchPage"',
                     )
@@ -118,6 +124,7 @@ export const structure: StructureResolver = (S) =>
                   S.documentList()
                     .title("Ducati per le aziende")
                     .schemaType("siteContent")
+                    .apiVersion(apiVersion)
                     .filter(
                       '_type == "siteContent" && sectionType == "businessPage"',
                     )
@@ -136,6 +143,7 @@ export const structure: StructureResolver = (S) =>
                   S.documentList()
                     .title("Chi siamo")
                     .schemaType("siteContent")
+                    .apiVersion(apiVersion)
                     .filter(
                       '_type == "siteContent" && sectionType == "aboutPage"',
                     )
@@ -154,6 +162,7 @@ export const structure: StructureResolver = (S) =>
                   S.documentList()
                     .title("Contatti")
                     .schemaType("siteContent")
+                    .apiVersion(apiVersion)
                     .filter(
                       '_type == "siteContent" && sectionType == "contactPage"',
                     )
@@ -184,6 +193,7 @@ export const structure: StructureResolver = (S) =>
                     S.documentList()
                       .title(spec.title)
                       .schemaType(spec.name)
+                      .apiVersion(apiVersion)
                       .filter(
                         "_type == $schemaType && coalesce(isArchived, false) != true",
                       )
@@ -201,6 +211,7 @@ export const structure: StructureResolver = (S) =>
         .child(
           S.documentList()
             .title("Archivio annunci")
+            .apiVersion(apiVersion)
             .filter(
               "_type in $listingTypes && coalesce(isArchived, false) == true",
             )
