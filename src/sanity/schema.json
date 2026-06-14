@@ -8682,6 +8682,30 @@
           },
           "optional": true
         },
+        "contactTitle": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedString"
+          },
+          "optional": true
+        },
+        "contactSubtitle": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedString"
+          },
+          "optional": true
+        },
+        "contactText": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedPortableText"
+          },
+          "optional": true
+        },
         "banner2Title": {
           "type": "objectAttribute",
           "value": {
