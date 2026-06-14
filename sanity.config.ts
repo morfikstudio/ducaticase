@@ -12,6 +12,8 @@ import { apiVersion, dataset, projectId } from "./src/sanity/env"
 import { schema } from "./src/sanity/schemaTypes"
 import { structure } from "./src/sanity/structure"
 
+import { CompressedUploadInput } from "./src/sanity/components/compressedUploadInput"
+
 const googleMapsApiKey =
   process.env.SANITY_STUDIO_GOOGLE_MAPS_API_KEY ??
   process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
@@ -59,6 +61,12 @@ export default defineConfig({
       }),
     },
   ],
+  form: {
+    // Compresses images client-side before upload
+    components: {
+      input: CompressedUploadInput,
+    },
+  },
   document: {
     newDocumentOptions: (prev) =>
       prev.map((item) => ({

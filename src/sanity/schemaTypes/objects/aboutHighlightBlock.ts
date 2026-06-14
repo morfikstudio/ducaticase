@@ -1,10 +1,6 @@
 import { defineField, defineType } from "sanity"
 
-import { apiVersion } from "../../env"
-import { MAX_IMAGES_BYTES } from "../../lib/constants"
 import { FIELD_REQUIRED_IT } from "../../lib/validationMessages"
-
-const maxMb = MAX_IMAGES_BYTES / (1024 * 1024)
 
 type LocalizedStringValue = { it?: string; en?: string } | undefined
 type LocalizedTextValue = { it?: string; en?: string } | undefined
@@ -41,7 +37,7 @@ export const aboutHighlightBlock = defineType({
     defineField({
       name: "image",
       title: "Immagine",
-      description: `Massimo ${maxMb} MB.`,
+      description: "Ritaglio consigliato 4:3.",
       type: "image",
       options: {
         hotspot: {
@@ -67,24 +63,10 @@ export const aboutHighlightBlock = defineType({
         }),
       ],
       validation: (Rule) =>
-        Rule.custom(async (value, context) => {
+        Rule.custom((value) => {
           const ref = (value as { asset?: { _ref?: string } } | undefined)
             ?.asset?._ref
-          if (!ref) {
-            return FIELD_REQUIRED_IT
-          }
-          const client = context.getClient({ apiVersion })
-          const size = await client.fetch<number | null>(
-            `*[_id == $id][0].size`,
-            { id: ref },
-          )
-          if (typeof size !== "number") {
-            return true
-          }
-          if (size > MAX_IMAGES_BYTES) {
-            return `L'immagine supera il limite di ${maxMb} MB. Carica un file più piccolo.`
-          }
-          return true
+          return ref ? true : FIELD_REQUIRED_IT
         }),
     }),
     defineField({

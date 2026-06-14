@@ -4,10 +4,6 @@ import {
   aboutSplitSectionRecommendedCrop,
   aboutSplitSectionStudioPreviewAspect,
 } from "../../../lib/aboutSplitSectionImage"
-import { apiVersion } from "../../env"
-import { MAX_IMAGES_BYTES } from "../../lib/constants"
-
-const maxMb = MAX_IMAGES_BYTES / (1024 * 1024)
 
 function aboutImageField(
   name: string,
@@ -18,7 +14,7 @@ function aboutImageField(
   return defineField({
     name,
     title,
-    description: `Massimo ${maxMb} MB. Ritaglio consigliato ${previewTitle}.`,
+    description: `Ritaglio consigliato ${previewTitle}.`,
     type: "image",
     options: {
       hotspot: {
@@ -43,26 +39,6 @@ function aboutImageField(
         type: "localizedString",
       }),
     ],
-    validation: (Rule) =>
-      Rule.custom(async (value, context) => {
-        const ref = (value as { asset?: { _ref?: string } } | undefined)?.asset
-          ?._ref
-        if (!ref) {
-          return true
-        }
-        const client = context.getClient({ apiVersion })
-        const size = await client.fetch<number | null>(
-          `*[_id == $id][0].size`,
-          { id: ref },
-        )
-        if (typeof size !== "number") {
-          return true
-        }
-        if (size > MAX_IMAGES_BYTES) {
-          return `L'immagine supera il limite di ${maxMb} MB. Carica un file più piccolo.`
-        }
-        return true
-      }),
   })
 }
 
