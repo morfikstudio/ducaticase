@@ -4,13 +4,15 @@ import { itITLocale } from "@sanity/locale-it-it"
 import { AddIcon } from "@sanity/icons"
 import { googleMapsInput } from "@sanity/google-maps-input"
 import { visionTool } from "@sanity/vision"
-import { defineConfig } from "sanity"
+import { defineConfig, isDev } from "sanity"
 import { structureTool } from "sanity/structure"
 import { media } from "sanity-plugin-media"
 
 import { apiVersion, dataset, projectId } from "./src/sanity/env"
 import { schema } from "./src/sanity/schemaTypes"
 import { structure } from "./src/sanity/structure"
+
+import { CompressedUploadInput } from "./src/sanity/components/compressedUploadInput"
 
 const googleMapsApiKey =
   process.env.SANITY_STUDIO_GOOGLE_MAPS_API_KEY ??
@@ -21,6 +23,9 @@ export default defineConfig({
   projectId,
   dataset,
   schema,
+  releases: {
+    enabled: isDev,
+  },
   initialValueTemplates: [
     {
       id: "siteContent-homePage",
@@ -59,6 +64,12 @@ export default defineConfig({
       }),
     },
   ],
+  form: {
+    // Compresses images client-side before upload
+    components: {
+      input: CompressedUploadInput,
+    },
+  },
   document: {
     newDocumentOptions: (prev) =>
       prev.map((item) => ({
@@ -83,6 +94,6 @@ export default defineConfig({
         ]
       : []),
     // https://www.sanity.io/docs/the-vision-plugin
-    visionTool({ defaultApiVersion: apiVersion }),
+    ...(isDev ? [visionTool({ defaultApiVersion: apiVersion })] : []),
   ],
 })

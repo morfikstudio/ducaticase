@@ -3,6 +3,8 @@ import createNextIntlPlugin from "next-intl/plugin"
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts")
 
+const enableFetchLogging = process.env.NEXT_FETCH_LOGGING === "true"
+
 const nextConfig: NextConfig = {
   reactCompiler: true,
   images: {
@@ -17,11 +19,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  logging: {
-    fetches: {
-      fullUrl: true,
-    },
-  },
+  logging: enableFetchLogging
+    ? {
+        fetches: {
+          fullUrl: true,
+        },
+      }
+    : false,
 }
 
 export default withNextIntl(nextConfig)

@@ -276,6 +276,10 @@
             {
               "type": "string",
               "value": "CH"
+            },
+            {
+              "type": "string",
+              "value": "US"
             }
           ]
         },
@@ -1810,6 +1814,10 @@
             {
               "type": "string",
               "value": "CH"
+            },
+            {
+              "type": "string",
+              "value": "US"
             }
           ]
         },
@@ -3144,6 +3152,10 @@
             {
               "type": "string",
               "value": "CH"
+            },
+            {
+              "type": "string",
+              "value": "US"
             }
           ]
         },
@@ -4546,6 +4558,10 @@
             {
               "type": "string",
               "value": "CH"
+            },
+            {
+              "type": "string",
+              "value": "US"
             }
           ]
         },
@@ -5940,6 +5956,10 @@
             {
               "type": "string",
               "value": "CH"
+            },
+            {
+              "type": "string",
+              "value": "US"
             }
           ]
         },
@@ -7398,6 +7418,10 @@
             {
               "type": "string",
               "value": "CH"
+            },
+            {
+              "type": "string",
+              "value": "US"
             }
           ]
         },

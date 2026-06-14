@@ -42,7 +42,7 @@ Schemas live in `src/sanity/schemaTypes/`. After schema changes, run `npm run ty
 ## Internationalization (Next.js)
 
 - Config: `src/i18n/` (`routing.ts`, `request.ts`, `navigation.ts` for typed `Link` / redirects).
-- Middleware: `src/middleware.ts` (excludes `/studio` and static assets).
+- Proxy: `src/proxy.ts` (excludes `/studio` and static assets).
 - Root layout: `src/app/layout.tsx` (shared `<html>` / `<body>` with Studio); localized layout: `src/app/[locale]/`.
 - Optional in production: `NEXT_PUBLIC_SITE_URL` for metadata/canonical URLs.
 

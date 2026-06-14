@@ -33,7 +33,8 @@
       "MC": "Monaco",
       "NL": "Netherlands",
       "ES": "Spain",
-      "CH": "Switzerland"
+      "CH": "Switzerland",
+      "US": "United States"
     },
     "specs": {
       "title": "Features",

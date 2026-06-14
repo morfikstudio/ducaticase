@@ -5,11 +5,6 @@ import {
   defineType,
 } from "sanity"
 
-import { apiVersion } from "../../env"
-import { MAX_IMAGES_BYTES } from "../../lib/constants"
-
-const maxMb = MAX_IMAGES_BYTES / (1024 * 1024)
-
 type LocalizedStringValue = { it?: string; en?: string } | undefined
 type LocalizedTextValue = { it?: string; en?: string } | undefined
 type LocalizedPortableTextValue = { it?: unknown[]; en?: unknown[] } | undefined
@@ -215,7 +210,7 @@ export const businessPageSettings = defineType({
     defineField({
       name: "valuesImage",
       title: "Immagine",
-      description: `Massimo ${maxMb} MB.`,
+      description: "Ritaglio consigliato 4:3.",
       type: "image",
       group: "values",
       options: {
@@ -241,26 +236,6 @@ export const businessPageSettings = defineType({
           type: "localizedString",
         }),
       ],
-      validation: (Rule) =>
-        Rule.custom(async (value, context) => {
-          const ref = (value as { asset?: { _ref?: string } } | undefined)
-            ?.asset?._ref
-          if (!ref) {
-            return true
-          }
-          const client = context.getClient({ apiVersion })
-          const size = await client.fetch<number | null>(
-            `*[_id == $id][0].size`,
-            { id: ref },
-          )
-          if (typeof size !== "number") {
-            return true
-          }
-          if (size > MAX_IMAGES_BYTES) {
-            return `L'immagine supera il limite di ${maxMb} MB. Carica un file più piccolo.`
-          }
-          return true
-        }),
     }),
     defineField({
       name: "valuesItems",

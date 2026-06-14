@@ -103,27 +103,31 @@ export function TeamGrid({
             )}
           </div>
 
-          {/* TEAM CARDS */}
+          {/* TEAM CARDS — mobile */}
+          <div className="mt-16 space-y-12 md:hidden">
+            {members.map((member, index) => (
+              <MemberCardMobile
+                key={member._key ?? `${index}`}
+                member={member}
+                locale={locale}
+              />
+            ))}
+          </div>
+
+          {/* TEAM CARDS — desktop (subgrid aligns images across pairs) */}
           <div
             className={cn(
-              "mt-16 md:mt-32 space-y-12 md:space-y-0",
+              "mt-32 hidden md:grid",
               "md:mx-auto md:max-w-[1024px]",
-              "md:flex md:flex-wrap md:justify-between md:gap-y-12",
+              "md:grid-cols-[400px_400px] md:justify-between md:gap-y-12",
             )}
           >
             {members.map((member, index) => (
-              <div
+              <MemberCardDesktop
                 key={member._key ?? `${index}`}
-                className="w-full md:w-[400px]"
-              >
-                <div className="md:hidden">
-                  <MemberCardMobile member={member} locale={locale} />
-                </div>
-
-                <div className="hidden md:block">
-                  <MemberCardDesktop member={member} locale={locale} />
-                </div>
-              </div>
+                member={member}
+                locale={locale}
+              />
             ))}
           </div>
 
@@ -156,12 +160,19 @@ function MemberCardDesktop({ member, locale }: MemberCardProps) {
   )
 
   return (
-    <article className="w-full max-w-[400px]">
-      {description.trim() !== "" ? (
-        <p className="type-body-2 mb-8 whitespace-pre-line text-accent">
-          {description}
-        </p>
-      ) : null}
+    <article
+      className={cn(
+        "w-full max-w-[400px]",
+        "grid grid-rows-subgrid row-span-3 gap-y-8",
+      )}
+    >
+      <div>
+        {description.trim() !== "" ? (
+          <p className="type-body-2 whitespace-pre-line text-accent">
+            {description}
+          </p>
+        ) : null}
+      </div>
 
       <div className="relative aspect-5/7 w-full overflow-hidden bg-gray/15">
         {member.image ? (
@@ -180,7 +191,7 @@ function MemberCardDesktop({ member, locale }: MemberCardProps) {
         ) : null}
       </div>
 
-      <div className="mt-5">
+      <div>
         {title.trim() !== "" ? <h3 className="type-body-1">{title}</h3> : null}
 
         {roles !== "" ? (
