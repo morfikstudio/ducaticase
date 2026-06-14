@@ -4,7 +4,7 @@ import { itITLocale } from "@sanity/locale-it-it"
 import { AddIcon } from "@sanity/icons"
 import { googleMapsInput } from "@sanity/google-maps-input"
 import { visionTool } from "@sanity/vision"
-import { defineConfig } from "sanity"
+import { defineConfig, isDev } from "sanity"
 import { structureTool } from "sanity/structure"
 import { media } from "sanity-plugin-media"
 
@@ -23,6 +23,9 @@ export default defineConfig({
   projectId,
   dataset,
   schema,
+  releases: {
+    enabled: isDev,
+  },
   initialValueTemplates: [
     {
       id: "siteContent-homePage",
@@ -91,6 +94,6 @@ export default defineConfig({
         ]
       : []),
     // https://www.sanity.io/docs/the-vision-plugin
-    visionTool({ defaultApiVersion: apiVersion }),
+    ...(isDev ? [visionTool({ defaultApiVersion: apiVersion })] : []),
   ],
 })
