@@ -13,7 +13,7 @@ export function listingPublicPageLinkField(
   return defineField({
     ...(options?.group ? { group: options.group } : {}),
     name: "sanityStudioListingUrl",
-    title: "Pagina live",
+    title: "Pagina live / anteprima",
     type: "string",
     readOnly: true,
     components: {

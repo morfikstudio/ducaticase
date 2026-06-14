@@ -106,6 +106,15 @@ Warning: this overwrites production with development. Use only when intentional.
 
    Optional: `NEXT_PUBLIC_SANITY_API_VERSION` (default: `2026-02-23`), `NEXT_PUBLIC_ALLOW_INDEXING`, `NEXT_PUBLIC_SITE_URL` (public site URL, SEO), `SANITY_API_TOKEN` (if needed for scripts or integrations), `SANITY_STUDIO_GOOGLE_MAPS_API_KEY` (for the Studio map field).
 
+   For archived listing preview from Studio, set the same random string in both:
+
+   ```env
+   SANITY_LISTING_PREVIEW_SECRET=<random-string>
+   SANITY_STUDIO_LISTING_PREVIEW_SECRET=<same-value>
+   ```
+
+   Archived listings return 404 on the public URL (`/it/immobili/{id}`). The **Pagina live** link in Studio opens `/it/preview/immobili/{id}?token=…` instead.
+
    For Google Maps integration in Studio, enable these APIs on the same Google Cloud project key:
    - Maps JavaScript API
    - Places API
