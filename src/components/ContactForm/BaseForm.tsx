@@ -168,10 +168,7 @@ export function BaseForm() {
       aria-label={t("formAriaLabel")}
     >
       <div className="grid grid-cols-1 gap-x-5 gap-y-5 md:grid-cols-2">
-        <FormField
-          id={`${formInstanceId}-firstName`}
-          label={t("firstName")}
-        >
+        <FormField id={`${formInstanceId}-firstName`} label={t("firstName")}>
           <input
             id={`${formInstanceId}-firstName`}
             type="text"

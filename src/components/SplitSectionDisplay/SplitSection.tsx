@@ -103,7 +103,8 @@ export function SplitSection({
               portraitParams={{
                 width: splitMobileCrop.width,
                 height: splitMobileCrop.height,
-                sizes: "(min-width: 768px) calc(100vw - 4rem), calc(100vw - 2rem)",
+                sizes:
+                  "(min-width: 768px) calc(100vw - 4rem), calc(100vw - 2rem)",
               }}
               className="object-cover"
               onLoad={handleImageSettled}

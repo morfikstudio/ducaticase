@@ -73,10 +73,7 @@ export function Brochure({
     .slice(0, 6)
     .map((img) => getPrintImageUrl(img, 700, 700, 75))
     .filter((u): u is string => Boolean(u))
-  const excerptPlain = pickLocalizedPortableTextPlain(
-    content?.excerpt,
-    locale,
-  )
+  const excerptPlain = pickLocalizedPortableTextPlain(content?.excerpt, locale)
   const descriptionPlain = pickLocalizedPortableTextPlain(
     content?.description,
     locale,

@@ -12,10 +12,7 @@ import {
   buildPropertySheetSpecRows,
   type SpecValue,
 } from "@/lib/listingOptionalSpecs"
-import {
-  Brochure,
-  type FormattedSpecRow,
-} from "@/components/brochure/Brochure"
+import { Brochure, type FormattedSpecRow } from "@/components/brochure/Brochure"
 
 export const dynamic = "force-dynamic"
 
