@@ -33,7 +33,7 @@ export function buildingYearField(options?: BuildingYearFieldOptions) {
         }
 
         const currentYear = new Date().getFullYear()
-        if (value < 1800 || value > currentYear + 2) {
+        if (value > currentYear + 2) {
           return INVALID_VALUE_MESSAGE_IT
         }
 
