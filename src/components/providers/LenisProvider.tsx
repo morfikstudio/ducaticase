@@ -82,20 +82,39 @@ export function LenisProvider({ children }: { children: ReactNode }) {
   }, [])
 
   /* On route change:
-   * scroll to top,
+   * scroll to top (unless URL has a hash anchor),
    * then refresh ScrollTrigger once fonts settle.
    */
   useEffect(() => {
     if (!lenis) return
 
+    const hash = window.location.hash
+    const hasAnchor = hash.length > 1
+
     const resetToTop = () => lenis.scrollTo(0, { immediate: true, force: true })
-    resetToTop()
+
+    if (!hasAnchor) {
+      resetToTop()
+    }
 
     // A second reset on next frames avoids occasional stale scroll position
     // during client-side transitions before sticky sections mount.
+    // When there's a hash anchor, skip resets and scroll to the target instead.
     const raf1 = requestAnimationFrame(() => {
-      resetToTop()
-      requestAnimationFrame(resetToTop)
+      if (!hasAnchor) {
+        resetToTop()
+        requestAnimationFrame(resetToTop)
+      } else {
+        const scrollToAnchor = () => {
+          const targetId = hash.replace(/^#/, "")
+          const el = document.getElementById(targetId)
+          if (el) {
+            lenis.scrollTo(el, { immediate: false, offset: 0 })
+          }
+        }
+        // Wait for layout to settle before scrolling to anchor
+        requestAnimationFrame(scrollToAnchor)
+      }
     })
 
     let cancelled = false

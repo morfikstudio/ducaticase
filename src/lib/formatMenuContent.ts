@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server"
+
 import type { AppLocale } from "@/i18n/routing"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import {
@@ -25,16 +27,23 @@ export type MenuContent = {
   headerTagline: string
 }
 
-export function menuContentFromSanity(
+export async function menuContentFromSanity(
   doc: MENU_SITE_CONTENT_QUERY_RESULT,
   locale: AppLocale,
-): MenuContent {
+): Promise<MenuContent> {
   const m = doc?.menu
+  const t = await getTranslations({ locale, namespace: "footer" })
 
-  const navLinks: MenuNavLink[] = SITE_MENU_NAV_ITEMS.map((row) => ({
-    label: row.label[locale],
-    href: row.path,
-  }))
+  const navLinks: MenuNavLink[] = [
+    ...SITE_MENU_NAV_ITEMS.map((row) => ({
+      label: row.label[locale],
+      href: row.path,
+    })),
+    {
+      label: t("joinOurTeam"),
+      href: "/contact#dc-lavora-con-noi",
+    },
+  ]
 
   const socialLinks: MenuSocialLink[] = SITE_MENU_SOCIAL_LINKS.map((item) => ({
     label: item.label[locale],

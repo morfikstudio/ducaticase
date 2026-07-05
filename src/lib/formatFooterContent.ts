@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server"
+
 import type { AppLocale } from "@/i18n/routing"
 import { pickLocalizedString } from "@/sanity/lib/locale"
 import {
@@ -20,10 +22,11 @@ export type FooterContent = {
   navLinks: Array<{ label: string; href: string }>
 }
 
-export function footerContentFromSanity(
+export async function footerContentFromSanity(
   doc: FOOTER_SITE_CONTENT_QUERY_RESULT,
   locale: AppLocale,
-): FooterContent {
+): Promise<FooterContent> {
+  const t = await getTranslations({ locale, namespace: "footer" })
   const f = doc?.footer
   const addressLine1 = f?.addressLine1?.trim() ?? ""
   const addressLine2 = f?.addressLine2?.trim() ?? ""
@@ -34,10 +37,16 @@ export function footerContentFromSanity(
         )}`
       : "#"
 
-  const navLinks = SITE_MENU_NAV_ITEMS.map((row) => ({
-    label: row.label[locale],
-    href: row.path,
-  }))
+  const navLinks = [
+    ...SITE_MENU_NAV_ITEMS.map((row) => ({
+      label: row.label[locale],
+      href: row.path,
+    })),
+    {
+      label: t("joinOurTeam"),
+      href: "/contact#dc-lavora-con-noi",
+    },
+  ]
 
   const socialLinks = SITE_MENU_SOCIAL_LINKS.map((item) => ({
     label: item.label[locale],

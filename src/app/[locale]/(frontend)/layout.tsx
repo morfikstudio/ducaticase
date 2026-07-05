@@ -48,8 +48,10 @@ export default async function FrontendLayout({
     }) as Promise<FOOTER_SITE_CONTENT_QUERY_RESULT>,
   ])
 
-  const footerContent = footerContentFromSanity(footerDoc, locale)
-  const menuContent = menuContentFromSanity(menuDoc, locale)
+  const [footerContent, menuContent] = await Promise.all([
+    footerContentFromSanity(footerDoc, locale),
+    menuContentFromSanity(menuDoc, locale),
+  ])
 
   return (
     <LenisProvider>

@@ -14,6 +14,7 @@ import { Container } from "@/components/ui/Container"
 import { PortableTextComponent } from "@/components/ui/PortableText"
 
 export type BannerTextProps = {
+  id?: string
   locale: AppLocale
   title?: LocalizedString | null
   text?: LocalizedPortableText | null
@@ -23,6 +24,7 @@ export type BannerTextProps = {
 }
 
 export function BannerText({
+  id,
   locale,
   title,
   text,
@@ -45,6 +47,7 @@ export function BannerText({
 
   return (
     <div
+      id={id}
       className={cn(
         "w-full py-24 md:py-32 lg:py-48",
         "bg-primary text-accent",

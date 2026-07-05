@@ -133,6 +133,9 @@
   "listYourProperty": {
     "infoEmailSubject": "Info - List your property with us"
   },
+  "footer": {
+    "joinOurTeam": "Join our team"
+  },
   "homePage": {
     "featuredListingsTitle": "Featured listings",
     "featuredListingsFooter": "A selection of currently available properties, representing our residential, corporate, and lifestyle portfolio.",

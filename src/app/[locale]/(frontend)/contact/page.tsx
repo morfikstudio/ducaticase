@@ -76,6 +76,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
       {hasBanner ? (
         <section>
           <BannerText
+            id="dc-lavora-con-noi"
             locale={locale}
             title={bannerTitle}
             text={bannerText}
