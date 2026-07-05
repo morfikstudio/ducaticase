@@ -296,7 +296,7 @@ export function ContactHero({
 
   return (
     <div ref={wrapRef} style={{ opacity: 0 }}>
-      <Container>
+      <Container className="pb-16 lg:pb-24">
         {/* HEADER */}
         <section className="grid grid-cols-12 gap-x-4">
           {title ? (
