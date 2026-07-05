@@ -83,6 +83,7 @@ export function ListingsCarousel({
                   "bg-black hover:bg-dark focus-visible:bg-dark",
                   "[&.swiper-button-disabled]:opacity-40",
                   "[&.swiper-button-disabled]:pointer-events-none",
+                  "[&.swiper-button-lock]:hidden",
                 )}
               >
                 <Icon type="chevron" direction="left" size="s" />
@@ -100,6 +101,7 @@ export function ListingsCarousel({
                   "bg-black hover:bg-dark focus-visible:bg-dark",
                   "[&.swiper-button-disabled]:opacity-40",
                   "[&.swiper-button-disabled]:pointer-events-none",
+                  "[&.swiper-button-lock]:hidden",
                 )}
               >
                 <Icon type="chevron" direction="right" size="s" />

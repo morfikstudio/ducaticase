@@ -215,7 +215,7 @@ export default async function Page({ params }: PageProps) {
 
       {/* FEATURED LISTINGS */}
       {hasFeaturedListings ? (
-        <section className="py-32 md:py-48 lg:py-56">
+        <section className="pt-32 md:pt-48 lg:pt-56">
           <ListingsCarousel
             locale={locale}
             entries={featuredEntries}
@@ -226,7 +226,7 @@ export default async function Page({ params }: PageProps) {
 
       {/* TESTIMONIALS */}
       {hasTestimonials ? (
-        <section>
+        <section className="pt-32 md:pt-48 lg:pt-56">
           <QuoteCarousel
             locale={locale}
             subtitle={testimonialsSubtitle}
