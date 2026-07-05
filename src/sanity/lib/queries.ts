@@ -140,7 +140,10 @@ export const CONTACT_SITE_CONTENT_QUERY = defineQuery(groq`
           whatsapp,
           address
         },
-        map
+        map,
+        bannerTitle,
+        bannerText,
+        bannerCtaLabel
       }
     }
 `)

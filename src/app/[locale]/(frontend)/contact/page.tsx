@@ -8,7 +8,9 @@ import { CONTACT_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
 import type { CONTACT_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
 
 import { buildPageMetadataByKey } from "@/seo/page-metadata"
+import { buildCompanyMailtoHref } from "@/lib/buildCompanyMailtoHref"
 
+import { BannerText } from "@/components/BannerText"
 import { ContactHero } from "@/components/ContactHero"
 
 export async function generateMetadata({
@@ -44,8 +46,19 @@ export default async function ContactPage({ params }: ContactPageProps) {
       ? { lat: map.lat, lng: map.lng }
       : null
 
+  /* BANNER */
+  const bannerTitle = page?.bannerTitle
+  const bannerText = page?.bannerText
+  const bannerCtaLabel = page?.bannerCtaLabel
+  const bannerMailSubject =
+    locale === "it"
+      ? "Nuova Candidatura Ducati Case"
+      : "New Application Ducati Case"
+  const bannerCtaHref = buildCompanyMailtoHref(bannerMailSubject)
+  const hasBanner = Boolean(bannerTitle ?? bannerText ?? bannerCtaLabel)
+
   return (
-    <main className="w-full overflow-x-clip pt-32 md:pt-54 pb-24 lg:pb-32">
+    <main className="w-full overflow-x-clip pt-32 md:pt-54">
       <ContactHero
         title={title}
         heroLandscape={page?.heroImage?.imageLandscape}
@@ -59,6 +72,18 @@ export default async function ContactPage({ params }: ContactPageProps) {
         mapCoords={mapCoords}
         locale={locale}
       />
+
+      {hasBanner ? (
+        <section>
+          <BannerText
+            locale={locale}
+            title={bannerTitle}
+            text={bannerText}
+            ctaLabel={bannerCtaLabel ?? undefined}
+            ctaHref={bannerCtaHref}
+          />
+        </section>
+      ) : null}
     </main>
   )
 }
