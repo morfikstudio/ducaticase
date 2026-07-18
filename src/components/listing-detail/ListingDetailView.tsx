@@ -35,8 +35,7 @@ export function ListingDetailView({
   listingId,
   isPreview = false,
 }: ListingDetailViewProps) {
-  const hasValidGallery =
-    listing.content?.mainImage && listing.content?.gallery
+  const hasValidGallery = listing.content?.mainImage && listing.content?.gallery
 
   const hasValidHeader =
     listing.content &&

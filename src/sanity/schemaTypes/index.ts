@@ -17,6 +17,7 @@ import { listYourPropertyHeroResponsiveImage } from "./objects/listYourPropertyH
 import { homeHighlightItem } from "./objects/homeHighlightItem"
 import { homePageSettings } from "./objects/homePageSettings"
 import { homePartnerItem } from "./objects/homePartnerItem"
+import { homePartnerGroup } from "./objects/homePartnerGroup"
 import { homePayoffResponsiveImage } from "./objects/homePayoffResponsiveImage"
 import { homeTestimonialItem } from "./objects/homeTestimonialItem"
 import { businessPageSettings } from "./objects/businessPageSettings"
@@ -48,6 +49,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     homeHighlightItem,
     homeTestimonialItem,
     homePartnerItem,
+    homePartnerGroup,
     homePageSettings,
     aboutHighlightCta,
     aboutHighlightBlock,

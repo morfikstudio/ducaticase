@@ -22,16 +22,22 @@ export async function POST(req: NextRequest) {
   try {
     const secret = process.env.SANITY_REVALIDATE_SECRET
     if (!secret) {
-      return new Response("Missing environment variable SANITY_REVALIDATE_SECRET", {
-        status: 500,
-      })
+      return new Response(
+        "Missing environment variable SANITY_REVALIDATE_SECRET",
+        {
+          status: 500,
+        },
+      )
     }
 
     const { isValidSignature, body } =
       await parseBody<RevalidateWebhookPayload>(req, secret, true)
 
     if (!isValidSignature) {
-      return NextResponse.json({ message: "Invalid signature" }, { status: 401 })
+      return NextResponse.json(
+        { message: "Invalid signature" },
+        { status: 401 },
+      )
     }
 
     const paths = body?.paths ?? []
@@ -52,7 +58,10 @@ export async function POST(req: NextRequest) {
       revalidatePath(path)
     }
 
-    if (tags.includes(CACHE_TAGS.listing) || tags.some((t) => t.startsWith("listing:"))) {
+    if (
+      tags.includes(CACHE_TAGS.listing) ||
+      tags.some((t) => t.startsWith("listing:"))
+    ) {
       revalidateListingExtras()
     }
 

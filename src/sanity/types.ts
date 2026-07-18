@@ -252,18 +252,18 @@ export type LocalizedString = {
 
 export type SanityImageCrop = {
   _type: "sanity.imageCrop"
-  top?: number
-  bottom?: number
-  left?: number
-  right?: number
+  top: number
+  bottom: number
+  left: number
+  right: number
 }
 
 export type SanityImageHotspot = {
   _type: "sanity.imageHotspot"
-  x?: number
-  y?: number
-  height?: number
-  width?: number
+  x: number
+  y: number
+  height: number
+  width: number
 }
 
 export type LocalizedText = {
@@ -1712,10 +1712,10 @@ export type HomePageSettings = {
       _key: string
     } & HomeTestimonialItem
   >
-  partners?: Array<
+  partnerGroups?: Array<
     {
       _key: string
-    } & HomePartnerItem
+    } & HomePartnerGroup
   >
 }
 
@@ -1978,6 +1978,16 @@ export type HomeHeroResponsiveImage = {
   }
 }
 
+export type HomePartnerGroup = {
+  _type: "homePartnerGroup"
+  title?: LocalizedString
+  partners?: Array<
+    {
+      _key: string
+    } & HomePartnerItem
+  >
+}
+
 export type HomePartnerItem = {
   _type: "homePartnerItem"
   name?: string
@@ -1995,7 +2005,7 @@ export type HomeTestimonialItem = {
   _type: "homeTestimonialItem"
   text?: LocalizedPortableText
   name?: string
-  provider?: "google"
+  provider: "google"
 }
 
 export type HomeHighlightItem = {
@@ -2015,18 +2025,18 @@ export type HomeHighlightItem = {
 
 export type CustomSpecificationItem = {
   _type: "customSpecificationItem"
-  label?: string
-  valueKind?: "text" | "number"
+  label: string
+  valueKind: "text" | "number"
   textValue?: string
   numberValue?: number
 }
 
 export type GeopointRadius = {
   _type: "geopointRadius"
-  lat?: number
-  lng?: number
+  lat: number
+  lng: number
   alt?: number
-  radius?: number
+  radius: number
 }
 
 export type MediaTag = {
@@ -2040,7 +2050,7 @@ export type MediaTag = {
 
 export type Slug = {
   _type: "slug"
-  current?: string
+  current: string
   source?: string
 }
 
@@ -2065,9 +2075,9 @@ export type SanityImagePalette = {
 
 export type SanityImageDimensions = {
   _type: "sanity.imageDimensions"
-  height?: number
-  width?: number
-  aspectRatio?: number
+  height: number
+  width: number
+  aspectRatio: number
 }
 
 export type SanityImageMetadata = {
@@ -2093,14 +2103,14 @@ export type SanityFileAsset = {
   title?: string
   description?: string
   altText?: string
-  sha1hash?: string
-  extension?: string
-  mimeType?: string
-  size?: number
-  assetId?: string
+  sha1hash: string
+  extension: string
+  mimeType: string
+  size: number
+  assetId: string
   uploadId?: string
-  path?: string
-  url?: string
+  path: string
+  url: string
   source?: SanityAssetSourceData
 }
 
@@ -2122,14 +2132,14 @@ export type SanityImageAsset = {
   title?: string
   description?: string
   altText?: string
-  sha1hash?: string
-  extension?: string
-  mimeType?: string
-  size?: number
-  assetId?: string
+  sha1hash: string
+  extension: string
+  mimeType: string
+  size: number
+  assetId: string
   uploadId?: string
-  path?: string
-  url?: string
+  path: string
+  url: string
   metadata?: SanityImageMetadata
   source?: SanityAssetSourceData
 }
@@ -2181,6 +2191,7 @@ export type AllSanitySchemaTypes =
   | AboutHighlightBlock
   | HomePayoffResponsiveImage
   | HomeHeroResponsiveImage
+  | HomePartnerGroup
   | HomePartnerItem
   | HomeTestimonialItem
   | HomeHighlightItem
@@ -2243,14 +2254,14 @@ export type ABOUT_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -2272,14 +2283,14 @@ export type ABOUT_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -2310,14 +2321,14 @@ export type ABOUT_SITE_CONTENT_QUERY_RESULT = {
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -2339,14 +2350,14 @@ export type ABOUT_SITE_CONTENT_QUERY_RESULT = {
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -2379,14 +2390,14 @@ export type ABOUT_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -2426,14 +2437,14 @@ export type ABOUT_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -2476,14 +2487,14 @@ export type ABOUT_SITE_CONTENT_QUERY_RESULT = {
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -2525,14 +2536,14 @@ export type CONTACT_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -2554,14 +2565,14 @@ export type CONTACT_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -2587,7 +2598,7 @@ export type CONTACT_SITE_CONTENT_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: HOME_SITE_CONTENT_QUERY
-// Query: *[_type == "siteContent" && sectionType == "homePage"]    | order(_updatedAt desc)    [0] {      _id,      homePage {        heroTitle,        heroImage {          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        whoWeAreText1,        whoWeAreText2,        whoWeAreCta {          label,          path        },        payoffTitle,        payoffImage {          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        highlights[] {          _key,          title,          text,          image {            ...,            asset->          },          cta {            label,            path          }        },        "featuredListings": featuredListings[          coalesce(@->isArchived, false) != true        ]->{          _id,          _type,          title,          listingContractType,          price,          country,          city,          province,          address,          postalCode,          "typology": select(            _type == "listingCountryHouses" => countryHouseTypology,            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,            _type == "listingIndustrial" => industrialTypology,            true => null          ),          "mainImage": mainImage {            ...,            asset->          }        },        testimonialsTitle,        testimonialsSubtitle,        testimonials[] {          _key,          text,          name,          provider        },        partners[] {          _key,          name,          image {            ...,            asset->          }        }      }    }
+// Query: *[_type == "siteContent" && sectionType == "homePage"]    | order(_updatedAt desc)    [0] {      _id,      homePage {        heroTitle,        heroImage {          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        whoWeAreText1,        whoWeAreText2,        whoWeAreCta {          label,          path        },        payoffTitle,        payoffImage {          "imageLandscape": imageLandscape {            ...,            asset->          },          "imagePortrait": imagePortrait {            ...,            asset->          }        },        highlights[] {          _key,          title,          text,          image {            ...,            asset->          },          cta {            label,            path          }        },        "featuredListings": featuredListings[          coalesce(@->isArchived, false) != true        ]->{          _id,          _type,          title,          listingContractType,          price,          country,          city,          province,          address,          postalCode,          "typology": select(            _type == "listingCountryHouses" => countryHouseTypology,            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,            _type == "listingIndustrial" => industrialTypology,            true => null          ),          "mainImage": mainImage {            ...,            asset->          }        },        testimonialsTitle,        testimonialsSubtitle,        testimonials[] {          _key,          text,          name,          provider        },        partnerGroups[] {          _key,          title,          partners[] {            _key,            name,            image {              ...,              asset->            }          }        }      }    }
 export type HOME_SITE_CONTENT_QUERY_RESULT = {
   _id: string
   homePage: {
@@ -2605,14 +2616,14 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -2634,14 +2645,14 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -2680,14 +2691,14 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -2709,14 +2720,14 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -2743,14 +2754,14 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -2923,14 +2934,14 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
               title?: string
               description?: string
               altText?: string
-              sha1hash?: string
-              extension?: string
-              mimeType?: string
-              size?: number
-              assetId?: string
+              sha1hash: string
+              extension: string
+              mimeType: string
+              size: number
+              assetId: string
               uploadId?: string
-              path?: string
-              url?: string
+              path: string
+              url: string
               metadata?: SanityImageMetadata
               source?: SanityAssetSourceData
             } | null
@@ -3090,14 +3101,14 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
               title?: string
               description?: string
               altText?: string
-              sha1hash?: string
-              extension?: string
-              mimeType?: string
-              size?: number
-              assetId?: string
+              sha1hash: string
+              extension: string
+              mimeType: string
+              size: number
+              assetId: string
               uploadId?: string
-              path?: string
-              url?: string
+              path: string
+              url: string
               metadata?: SanityImageMetadata
               source?: SanityAssetSourceData
             } | null
@@ -3257,14 +3268,14 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
               title?: string
               description?: string
               altText?: string
-              sha1hash?: string
-              extension?: string
-              mimeType?: string
-              size?: number
-              assetId?: string
+              sha1hash: string
+              extension: string
+              mimeType: string
+              size: number
+              assetId: string
               uploadId?: string
-              path?: string
-              url?: string
+              path: string
+              url: string
               metadata?: SanityImageMetadata
               source?: SanityAssetSourceData
             } | null
@@ -3424,14 +3435,14 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
               title?: string
               description?: string
               altText?: string
-              sha1hash?: string
-              extension?: string
-              mimeType?: string
-              size?: number
-              assetId?: string
+              sha1hash: string
+              extension: string
+              mimeType: string
+              size: number
+              assetId: string
               uploadId?: string
-              path?: string
-              url?: string
+              path: string
+              url: string
               metadata?: SanityImageMetadata
               source?: SanityAssetSourceData
             } | null
@@ -3591,14 +3602,14 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
               title?: string
               description?: string
               altText?: string
-              sha1hash?: string
-              extension?: string
-              mimeType?: string
-              size?: number
-              assetId?: string
+              sha1hash: string
+              extension: string
+              mimeType: string
+              size: number
+              assetId: string
               uploadId?: string
-              path?: string
-              url?: string
+              path: string
+              url: string
               metadata?: SanityImageMetadata
               source?: SanityAssetSourceData
             } | null
@@ -3758,14 +3769,14 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
               title?: string
               description?: string
               altText?: string
-              sha1hash?: string
-              extension?: string
-              mimeType?: string
-              size?: number
-              assetId?: string
+              sha1hash: string
+              extension: string
+              mimeType: string
+              size: number
+              assetId: string
               uploadId?: string
-              path?: string
-              url?: string
+              path: string
+              url: string
               metadata?: SanityImageMetadata
               source?: SanityAssetSourceData
             } | null
@@ -3783,40 +3794,44 @@ export type HOME_SITE_CONTENT_QUERY_RESULT = {
       _key: string
       text: LocalizedPortableText | null
       name: string | null
-      provider: "google" | null
+      provider: "google"
     }> | null
-    partners: Array<{
+    partnerGroups: Array<{
       _key: string
-      name: string | null
-      image: {
-        asset: {
-          _id: string
-          _type: "sanity.imageAsset"
-          _createdAt: string
-          _updatedAt: string
-          _rev: string
-          originalFilename?: string
-          label?: string
-          title?: string
-          description?: string
-          altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
-          uploadId?: string
-          path?: string
-          url?: string
-          metadata?: SanityImageMetadata
-          source?: SanityAssetSourceData
+      title: LocalizedString | null
+      partners: Array<{
+        _key: string
+        name: string | null
+        image: {
+          asset: {
+            _id: string
+            _type: "sanity.imageAsset"
+            _createdAt: string
+            _updatedAt: string
+            _rev: string
+            originalFilename?: string
+            label?: string
+            title?: string
+            description?: string
+            altText?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
+            uploadId?: string
+            path: string
+            url: string
+            metadata?: SanityImageMetadata
+            source?: SanityAssetSourceData
+          } | null
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: LocalizedString
+          _type: "image"
         } | null
-        media?: unknown
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        alt?: LocalizedString
-        _type: "image"
-      } | null
+      }> | null
     }> | null
   } | null
 } | null
@@ -3857,14 +3872,14 @@ export type LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -3886,14 +3901,14 @@ export type LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -3929,14 +3944,14 @@ export type LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -3958,14 +3973,14 @@ export type LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -4001,14 +4016,14 @@ export type LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -4030,14 +4045,14 @@ export type LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -4088,14 +4103,14 @@ export type LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT = {
         title?: string
         description?: string
         altText?: string
-        sha1hash?: string
-        extension?: string
-        mimeType?: string
-        size?: number
-        assetId?: string
+        sha1hash: string
+        extension: string
+        mimeType: string
+        size: number
+        assetId: string
         uploadId?: string
-        path?: string
-        url?: string
+        path: string
+        url: string
         metadata?: SanityImageMetadata
         source?: SanityAssetSourceData
       } | null
@@ -4167,14 +4182,14 @@ export type BUSINESS_PAGE_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -4196,14 +4211,14 @@ export type BUSINESS_PAGE_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -4239,14 +4254,14 @@ export type BUSINESS_PAGE_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -4268,14 +4283,14 @@ export type BUSINESS_PAGE_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -4311,14 +4326,14 @@ export type BUSINESS_PAGE_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -4340,14 +4355,14 @@ export type BUSINESS_PAGE_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -4384,14 +4399,14 @@ export type BUSINESS_PAGE_SITE_CONTENT_QUERY_RESULT = {
         title?: string
         description?: string
         altText?: string
-        sha1hash?: string
-        extension?: string
-        mimeType?: string
-        size?: number
-        assetId?: string
+        sha1hash: string
+        extension: string
+        mimeType: string
+        size: number
+        assetId: string
         uploadId?: string
-        path?: string
-        url?: string
+        path: string
+        url: string
         metadata?: SanityImageMetadata
         source?: SanityAssetSourceData
       } | null
@@ -4453,14 +4468,14 @@ export type BUSINESS_PAGE_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -4521,14 +4536,14 @@ export type TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -4550,14 +4565,14 @@ export type TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -4593,14 +4608,14 @@ export type TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -4622,14 +4637,14 @@ export type TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY_RESULT = {
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -4669,14 +4684,14 @@ export type TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY_RESULT = {
         title?: string
         description?: string
         altText?: string
-        sha1hash?: string
-        extension?: string
-        mimeType?: string
-        size?: number
-        assetId?: string
+        sha1hash: string
+        extension: string
+        mimeType: string
+        size: number
+        assetId: string
         uploadId?: string
-        path?: string
-        url?: string
+        path: string
+        url: string
         metadata?: SanityImageMetadata
         source?: SanityAssetSourceData
       } | null
@@ -4863,14 +4878,14 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -5030,14 +5045,14 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -5197,14 +5212,14 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -5364,14 +5379,14 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -5531,14 +5546,14 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -5698,14 +5713,14 @@ export type LISTINGS_PREVIEW_QUERY_RESULT = Array<
           title?: string
           description?: string
           altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
+          sha1hash: string
+          extension: string
+          mimeType: string
+          size: number
+          assetId: string
           uploadId?: string
-          path?: string
-          url?: string
+          path: string
+          url: string
           metadata?: SanityImageMetadata
           source?: SanityAssetSourceData
         } | null
@@ -5938,14 +5953,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -5967,14 +5982,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -6002,14 +6017,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             source?: SanityAssetSourceData
           } | null
           media?: unknown
@@ -6192,14 +6207,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -6432,14 +6447,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -6461,14 +6476,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -6496,14 +6511,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             source?: SanityAssetSourceData
           } | null
           media?: unknown
@@ -6681,14 +6696,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -6913,14 +6928,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -6942,14 +6957,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -6977,14 +6992,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             source?: SanityAssetSourceData
           } | null
           media?: unknown
@@ -7160,14 +7175,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -7397,14 +7412,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -7426,14 +7441,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -7461,14 +7476,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             source?: SanityAssetSourceData
           } | null
           media?: unknown
@@ -7648,14 +7663,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -7857,14 +7872,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -7886,14 +7901,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -7921,14 +7936,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             source?: SanityAssetSourceData
           } | null
           media?: unknown
@@ -8105,14 +8120,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -8291,14 +8306,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -8320,14 +8335,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -8492,14 +8507,14 @@ export type LISTING_BY_ID_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -8733,14 +8748,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -8762,14 +8777,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -8797,14 +8812,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             source?: SanityAssetSourceData
           } | null
           media?: unknown
@@ -8987,14 +9002,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -9227,14 +9242,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -9256,14 +9271,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -9291,14 +9306,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             source?: SanityAssetSourceData
           } | null
           media?: unknown
@@ -9476,14 +9491,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -9708,14 +9723,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -9737,14 +9752,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -9772,14 +9787,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             source?: SanityAssetSourceData
           } | null
           media?: unknown
@@ -9955,14 +9970,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -10192,14 +10207,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -10221,14 +10236,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -10256,14 +10271,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             source?: SanityAssetSourceData
           } | null
           media?: unknown
@@ -10443,14 +10458,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -10652,14 +10667,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -10681,14 +10696,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -10716,14 +10731,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             source?: SanityAssetSourceData
           } | null
           media?: unknown
@@ -10900,14 +10915,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -11086,14 +11101,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -11115,14 +11130,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -11287,14 +11302,14 @@ export type LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY_RESULT =
             title?: string
             description?: string
             altText?: string
-            sha1hash?: string
-            extension?: string
-            mimeType?: string
-            size?: number
-            assetId?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
             uploadId?: string
-            path?: string
-            url?: string
+            path: string
+            url: string
             metadata?: SanityImageMetadata
             source?: SanityAssetSourceData
           } | null
@@ -11324,7 +11339,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "siteContent" && sectionType == "footer"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      footer {\n        payoff,\n        email,\n        phone,\n        addressLine1,\n        addressLine2,\n        vat,\n        privacyPolicyLabel,\n        privacyPolicyPath\n      }\n    }\n': FOOTER_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "aboutPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      aboutPage {\n        heroImages {\n          "imageDesktop": imageDesktop {\n            ...,\n            asset->\n          },\n          "imageMobile": imageMobile {\n            ...,\n            asset->\n          }\n        },\n        heroText,\n        historySection[] {\n          _key,\n          title,\n          subtitle,\n          body,\n          reverse,\n          images {\n            "imageDesktop": imageDesktop {\n              ...,\n              asset->\n            },\n            "imageMobile": imageMobile {\n              ...,\n              asset->\n            }\n          }\n        },\n        todaySection {\n          title,\n          subtitle,\n          text\n        },\n        highlightsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        sectorsHeading,\n        sectorsSection[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          }\n        },\n        teamSection {\n          title,\n          subtitle,\n          text,\n          cta {\n            label,\n            path\n          },\n          teamMember[] {\n            _key,\n            title,\n            text,\n            image {\n              ...,\n              asset->\n            },\n            roles[]\n          }\n        }\n      }\n    }\n': ABOUT_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "contactPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      contactPage {\n        title,\n        subtitle,\n        text,\n        heroImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        info {\n          email,\n          phone,\n          whatsapp,\n          address\n        },\n        map,\n        bannerTitle,\n        bannerText,\n        bannerCtaLabel\n      }\n    }\n': CONTACT_SITE_CONTENT_QUERY_RESULT
-    '\n  *[_type == "siteContent" && sectionType == "homePage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      homePage {\n        heroTitle,\n        heroImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        whoWeAreText1,\n        whoWeAreText2,\n        whoWeAreCta {\n          label,\n          path\n        },\n        payoffTitle,\n        payoffImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        highlights[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        "featuredListings": featuredListings[\n          coalesce(@->isArchived, false) != true\n        ]->{\n          _id,\n          _type,\n          title,\n          listingContractType,\n          price,\n          country,\n          city,\n          province,\n          address,\n          postalCode,\n          "typology": select(\n            _type == "listingCountryHouses" => countryHouseTypology,\n            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n            _type == "listingIndustrial" => industrialTypology,\n            true => null\n          ),\n          "mainImage": mainImage {\n            ...,\n            asset->\n          }\n        },\n        testimonialsTitle,\n        testimonialsSubtitle,\n        testimonials[] {\n          _key,\n          text,\n          name,\n          provider\n        },\n        partners[] {\n          _key,\n          name,\n          image {\n            ...,\n            asset->\n          }\n        }\n      }\n    }\n': HOME_SITE_CONTENT_QUERY_RESULT
+    '\n  *[_type == "siteContent" && sectionType == "homePage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      homePage {\n        heroTitle,\n        heroImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        whoWeAreText1,\n        whoWeAreText2,\n        whoWeAreCta {\n          label,\n          path\n        },\n        payoffTitle,\n        payoffImage {\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        highlights[] {\n          _key,\n          title,\n          text,\n          image {\n            ...,\n            asset->\n          },\n          cta {\n            label,\n            path\n          }\n        },\n        "featuredListings": featuredListings[\n          coalesce(@->isArchived, false) != true\n        ]->{\n          _id,\n          _type,\n          title,\n          listingContractType,\n          price,\n          country,\n          city,\n          province,\n          address,\n          postalCode,\n          "typology": select(\n            _type == "listingCountryHouses" => countryHouseTypology,\n            _type == "listingShopsAndOffices" => shopsAndOfficesTypology,\n            _type == "listingIndustrial" => industrialTypology,\n            true => null\n          ),\n          "mainImage": mainImage {\n            ...,\n            asset->\n          }\n        },\n        testimonialsTitle,\n        testimonialsSubtitle,\n        testimonials[] {\n          _key,\n          text,\n          name,\n          provider\n        },\n        partnerGroups[] {\n          _key,\n          title,\n          partners[] {\n            _key,\n            name,\n            image {\n              ...,\n              asset->\n            }\n          }\n        }\n      }\n    }\n': HOME_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "listYourPropertyPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      listYourPropertyPage {\n        heroTitle,\n        heroSubtitle,\n        heroPayoff1,\n        heroPayoff2,\n        heroCta,\n        heroImage {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "20:9",\n              "width": 1920,\n              "height": 810\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover1Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover2Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        bannerTitle,\n        bannerText,\n        bannerCta {\n          label,\n          path\n        },\n        valuesTitle,\n        valuesSubtitle,\n        valuesCta {\n          label,\n          path\n        },\n        valuesImage {\n          ...,\n          asset->\n        },\n        valuesItems[] {\n          _key,\n          title\n        },\n        servicesTitle,\n        servicesSubtitle,\n        servicesCta,\n        servicesItems[] {\n          _key,\n          title,\n          text\n        }\n      }\n    }\n': LIST_YOUR_PROPERTY_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "businessPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      businessPage {\n        heroTitle,\n        heroSubtitle,\n        heroPayoff1,\n        heroPayoff2,\n        heroCta {\n          label,\n          path\n        },\n        heroImage {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "20:9",\n              "width": 1920,\n              "height": 810\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover1Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover2Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        valuesTitle,\n        valuesSubtitle,\n        valuesCta {\n          label,\n          path\n        },\n        valuesImage {\n          ...,\n          asset->\n        },\n        valuesItems[] {\n          _key,\n          title\n        },\n        servicesTitle,\n        servicesSubtitle,\n        servicesCta {\n          label,\n          path\n        },\n        servicesItems[] {\n          _key,\n          title,\n          text\n        },\n        bannerPartnersTitle,\n        bannerPartnersText,\n        bannerPartnersCta {\n          label,\n          path\n        },\n        bannerPartnersItems[] {\n          _key,\n          name,\n          image {\n            ...,\n            asset->\n          }\n        }\n      }\n    }\n': BUSINESS_PAGE_SITE_CONTENT_QUERY_RESULT
     '\n  *[_type == "siteContent" && sectionType == "tailoredSearchPage"]\n    | order(_updatedAt desc)\n    [0] {\n      _id,\n      tailoredSearchPage {\n        heroTitle,\n        heroSubtitle,\n        heroPayoff1,\n        heroPayoff2,\n        heroCta {\n          label,\n          path\n        },\n        heroImage {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "20:9",\n              "width": 1920,\n              "height": 810\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        cover1Image {\n          "recommendedCrop": {\n            "landscape": {\n              "aspectRatio": "16:9",\n              "width": 1920,\n              "height": 1080\n            },\n            "portrait": {\n              "aspectRatio": "4:5",\n              "width": 720,\n              "height": 960\n            }\n          },\n          "imageLandscape": imageLandscape {\n            ...,\n            asset->\n          },\n          "imagePortrait": imagePortrait {\n            ...,\n            asset->\n          }\n        },\n        bannerFormTitle,\n        bannerFormText,\n        bannerFormCtaLabel,\n        valuesTitle,\n        valuesSubtitle,\n        valuesCta {\n          label,\n          path\n        },\n        valuesImage {\n          ...,\n          asset->\n        },\n        valuesItems[] {\n          _key,\n          title\n        },\n        contactTitle,\n        contactSubtitle,\n        contactText,\n        banner2Title,\n        banner2Text,\n        banner2Cta {\n          label,\n          path\n        }\n      }\n    }\n': TAILORED_SEARCH_PAGE_SITE_CONTENT_QUERY_RESULT

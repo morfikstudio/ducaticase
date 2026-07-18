@@ -227,12 +227,16 @@ export const HOME_SITE_CONTENT_QUERY = defineQuery(groq`
           name,
           provider
         },
-        partners[] {
+        partnerGroups[] {
           _key,
-          name,
-          image {
-            ...,
-            asset->
+          title,
+          partners[] {
+            _key,
+            name,
+            image {
+              ...,
+              asset->
+            }
           }
         }
       }

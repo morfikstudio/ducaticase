@@ -133,9 +133,13 @@ export default async function Page({ params }: PageProps) {
     ""
 
   // PARTNERS
-  const partnersRaw = homePage?.partners ?? []
-  const partnersWithImage = partnersRaw.filter((p) => Boolean(p.image?.asset))
-  const hasPartners = partnersWithImage.length > 0
+  const partnerGroups = (homePage?.partnerGroups ?? [])
+    .map((group) => ({
+      title: pickLocalizedString(group.title ?? undefined, locale) ?? "",
+      partners: (group.partners ?? []).filter((p) => Boolean(p.image?.asset)),
+    }))
+    .filter((group) => group.partners.length > 0)
+  const hasPartners = partnerGroups.length > 0
 
   return (
     <main className="w-full overflow-x-clip">
@@ -250,10 +254,7 @@ export default async function Page({ params }: PageProps) {
         <section
           className={cn("py-32 md:py-40 lg:py-52", "bg-white text-accent")}
         >
-          <PartnersSection
-            title={tHome("partnersSectionTitle")}
-            partners={partnersWithImage}
-          />
+          <PartnersSection groups={partnerGroups} />
         </section>
       ) : null}
     </main>

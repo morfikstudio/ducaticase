@@ -55,7 +55,5 @@ export default async function ListingDetailPage({ params }: Props) {
     notFound()
   }
 
-  return (
-    <ListingDetailView listing={listing} locale={locale} listingId={id} />
-  )
+  return <ListingDetailView listing={listing} locale={locale} listingId={id} />
 }

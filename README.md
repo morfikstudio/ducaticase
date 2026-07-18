@@ -175,16 +175,16 @@ Generate one with: `openssl rand -base64 32`
 
 In [sanity.io/manage](https://www.sanity.io/manage) → your project → **API** → **Webhooks** → **Create webhook**:
 
-| Field | Value |
-| --- | --- |
-| **Name** | Next.js revalidate |
-| **URL** | `https://<your-production-domain>/api/revalidate` |
-| **Dataset** | `production` (same as `NEXT_PUBLIC_SANITY_DATASET`) |
-| **Trigger on** | Create, Update, Delete |
-| **Filter** | `_type in ["listingResidential","listingCountryHouses","listingShopsAndOffices","listingIndustrial","listingHospitality","listingLand","siteContent"]` |
-| **Projection** | see below |
-| **HTTP method** | POST |
-| **Secret** | same value as `SANITY_REVALIDATE_SECRET` |
+| Field           | Value                                                                                                                                                  |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Name**        | Next.js revalidate                                                                                                                                     |
+| **URL**         | `https://<your-production-domain>/api/revalidate`                                                                                                      |
+| **Dataset**     | `production` (same as `NEXT_PUBLIC_SANITY_DATASET`)                                                                                                    |
+| **Trigger on**  | Create, Update, Delete                                                                                                                                 |
+| **Filter**      | `_type in ["listingResidential","listingCountryHouses","listingShopsAndOffices","listingIndustrial","listingHospitality","listingLand","siteContent"]` |
+| **Projection**  | see below                                                                                                                                              |
+| **HTTP method** | POST                                                                                                                                                   |
+| **Secret**      | same value as `SANITY_REVALIDATE_SECRET`                                                                                                               |
 
 **Projection** (paste as-is in the webhook form):
 
