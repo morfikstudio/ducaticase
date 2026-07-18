@@ -12,6 +12,13 @@ const nextConfig: NextConfig = {
   },
   reactCompiler: true,
   images: {
+    // Delegate all image transforms to the Sanity CDN via a custom loader, so
+    // images are encoded exactly once (no second re-encode by the Next.js
+    // optimizer). See src/lib/sanityImageLoader.ts.
+    loader: "custom",
+    loaderFile: "./src/lib/sanityImageLoader.ts",
+    // Allowlist for the `quality` prop values used across the app (Next 16 defaults to [75] and ignores others).
+    qualities: [10, 70, 75, 80, 82],
     remotePatterns: [
       {
         protocol: "https",

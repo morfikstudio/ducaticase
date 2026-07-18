@@ -119,7 +119,7 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                       width: 500,
                       height: 500,
                       sizes: "(min-width: 768px) 25vw, 50vw",
-                      quality: 50,
+                      quality: 75,
                     }}
                     fill
                     className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
@@ -155,7 +155,7 @@ export function Gallery({ mainImage, gallery, locale }: GalleryProps) {
                     width: 500,
                     height: 500,
                     sizes: "(min-width: 768px) 25vw, 50vw",
-                    quality: 50,
+                    quality: 75,
                   }}
                   fill
                   className="object-cover"

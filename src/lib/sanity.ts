@@ -8,7 +8,12 @@ const builder = imageUrlBuilder(client)
 /**
  * Builds a Sanity image URL with width and optional height.
  * When height is omitted or 0, only width is set so the image keeps its aspect ratio.
- * Uses dpr(2) for sharpness on Retina displays.
+ *
+ * Note: no `dpr()` is applied. For images rendered through next/image the
+ * responsive `srcset` (see src/lib/sanityImageLoader.ts) already covers
+ * high-DPI displays; for direct-`<img>` consumers `width` is chosen large
+ * enough that CSS downscaling keeps them crisp. Baking dpr(2) here previously
+ * caused requests beyond the source resolution (upscaling → soft images).
  *
  * @param image - Sanity image object (e.g. property.contents?.mainImage)
  * @param width - Width in pixels
@@ -33,13 +38,13 @@ export function getSanityImageUrl(
     .quality(safeQuality) // quality compression
 
   if (height != null && height > 0) {
-    return img.height(height).fit("crop").dpr(2).url()
+    return img.height(height).fit("crop").url()
   }
 
-  return img.dpr(2).url()
+  return img.url()
 }
 
-const HERO_DESKTOP_16_9 = { width: 2400, height: 1350 } as const
+const HERO_DESKTOP_16_9 = { width: 1920, height: 1080 } as const
 const HERO_MOBILE_9_16 = { width: 1080, height: 1920 } as const
 
 /**

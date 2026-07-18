@@ -218,6 +218,7 @@ export function SanityImage(props: SanityImageProps) {
       alt: resolvedAlt,
       priority,
       draggable: false,
+      quality: params.quality ?? 80,
       ...(protectFromDownload ? { onContextMenu: blockImageContextMenu } : {}),
       ...(priority ? {} : loading ? { loading } : {}),
       onLoad,
@@ -289,6 +290,7 @@ export function SanityImage(props: SanityImageProps) {
       alt: resolvedAlt,
       sizes: lp.sizes,
       priority,
+      quality: lp.quality ?? 80,
       ...(priority ? {} : loading ? { loading } : {}),
     }
     const {
@@ -311,6 +313,7 @@ export function SanityImage(props: SanityImageProps) {
         <Image
           {...sharedProps}
           src={portraitUrl}
+          quality={pp.quality ?? 80}
           {...(fill
             ? { fill: true }
             : {
@@ -334,6 +337,7 @@ export function SanityImage(props: SanityImageProps) {
     <Image
       {...sharedProps}
       src={singleUrl}
+      quality={singleParams.quality ?? 80}
       {...(fill
         ? { fill: true }
         : {

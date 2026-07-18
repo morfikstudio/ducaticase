@@ -175,7 +175,7 @@ export function ImageFeatureList({
               params={{
                 width: 1280,
                 height: 720,
-                quality: 50,
+                quality: 75,
                 sizes: "100vw",
               }}
               fill

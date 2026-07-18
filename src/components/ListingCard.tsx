@@ -80,7 +80,7 @@ export function ListingCard({
                 width: 720,
                 height: 960,
                 sizes: "(min-width: 768px) 50vw, 100vw",
-                quality: 50,
+                quality: 75,
               }}
               fill
               loading={priority ? "eager" : undefined}
