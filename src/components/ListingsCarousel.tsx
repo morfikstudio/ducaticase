@@ -65,7 +65,11 @@ export function ListingsCarousel({
 
   return (
     <Container>
-      <div ref={wrapRef} style={{ opacity: 0 }}>
+      <div
+        data-component="ListingsCarousel"
+        ref={wrapRef}
+        style={{ opacity: 0 }}
+      >
         {title ? (
           <div className="flex items-center justify-between">
             <h2 className="type-heading-1">{title}</h2>

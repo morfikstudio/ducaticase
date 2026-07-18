@@ -136,6 +136,7 @@ export function BannerPartners({
 
   return (
     <div
+      data-component="BannerPartners"
       className={cn(
         "w-full py-24 md:py-32 lg:py-48",
         "bg-primary text-accent",

@@ -57,6 +57,7 @@ export function ContactForm({
 
   return (
     <div
+      data-component="ContactForm"
       ref={wrapRef}
       style={{ opacity: 0 }}
       id={id}

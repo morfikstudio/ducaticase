@@ -105,7 +105,10 @@ export function ListingDetailView({
       : null
 
   return (
-    <main className="w-full overflow-x-clip md:pt-32">
+    <main
+      data-component="ListingDetailView"
+      className="w-full overflow-x-clip md:pt-32"
+    >
       {listingJsonLd ? <JsonLd data={listingJsonLd} /> : null}
       <Container className="pt-20 md:pt-10">
         {isPreview ? (

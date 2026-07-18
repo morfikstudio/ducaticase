@@ -101,7 +101,11 @@ export function SplitSectionDisplay({ items, lastSection }: Props) {
   }
 
   return (
-    <div ref={containerRef} className="relative h-lvh overflow-hidden">
+    <div
+      data-component="SplitSectionDisplay"
+      ref={containerRef}
+      className="relative h-lvh overflow-hidden"
+    >
       {items.map((item, i) => (
         <div
           key={item.key}

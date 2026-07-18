@@ -44,6 +44,7 @@ export function MainHero({
 
   return (
     <div
+      data-component="MainHero"
       ref={wrapRef}
       style={{ opacity: 0 }}
       className={cn(

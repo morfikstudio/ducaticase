@@ -17,6 +17,7 @@ export function AboutSection({ title, subtitle, text }: AboutSectionProps) {
 
   return (
     <div
+      data-component="AboutSection"
       className={cn(
         "relative isolate w-full h-full",
         "bg-light-gray text-accent",

@@ -77,6 +77,7 @@ export function IntroSection({
   return (
     <Container>
       <div
+        data-component="IntroSection"
         ref={wrapRef}
         className={cn(
           "grid w-full grid-cols-1 gap-12",

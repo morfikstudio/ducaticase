@@ -47,6 +47,7 @@ export function BannerText({
 
   return (
     <div
+      data-component="BannerText"
       id={id}
       className={cn(
         "w-full py-24 md:py-32 lg:py-48",

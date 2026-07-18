@@ -156,6 +156,7 @@ export function HeroText({
 
   return (
     <div
+      data-component="HeroText"
       ref={wrapRef}
       className={cn(
         "relative isolate h-screen min-h-svh w-full overflow-hidden opacity-0",

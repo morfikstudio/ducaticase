@@ -43,6 +43,7 @@ export function Cover({
 
   return (
     <div
+      data-component="Cover"
       ref={wrapRef}
       style={{ opacity: 0 }}
       className={cn("relative isolate w-full", className)}

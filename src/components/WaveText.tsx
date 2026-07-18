@@ -196,7 +196,7 @@ export function WaveText({ word1, word2, href }: WaveTextProps) {
 
   if (isTouch) {
     return (
-      <div ref={wrapRef} style={{ opacity: 0 }}>
+      <div data-component="WaveText" ref={wrapRef} style={{ opacity: 0 }}>
         <Container className="relative w-full inline-flex flex-col items-center justify-center text-center">
           <Link href={href} className={cn("relative")}>
             <span className={cn("type-heading-1 inline-block text-dark-gray")}>
@@ -217,6 +217,7 @@ export function WaveText({ word1, word2, href }: WaveTextProps) {
 
   return (
     <div
+      data-component="WaveText"
       role="presentation"
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}

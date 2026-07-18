@@ -89,6 +89,7 @@ export function StatementHero({
 
   return (
     <div
+      data-component="StatementHero"
       ref={wrapRef}
       style={{ opacity: 0, marginBottom: -titleOverflow }}
       className={cn("relative", className)}

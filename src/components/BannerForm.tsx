@@ -59,6 +59,7 @@ export function BannerForm({
 
   return (
     <div
+      data-component="BannerForm"
       className={cn(
         "w-full py-24 md:py-32 lg:py-48",
         "bg-primary text-accent",

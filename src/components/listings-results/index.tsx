@@ -334,7 +334,7 @@ export function ListingsResults({ locale }: ListingsResultsProps) {
   }, [isFiltersPanelOpen])
 
   return (
-    <div>
+    <div data-component="ListingsResults">
       <Container>
         <div ref={headerEntranceRef}>
           <ListingsHeader

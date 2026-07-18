@@ -222,7 +222,10 @@ export function PartnersSection({ groups }: PartnersSectionProps) {
 
   return (
     <Container>
-      <div className="flex w-full flex-col gap-24 md:gap-32">
+      <div
+        data-component="PartnersSection"
+        className="flex w-full flex-col gap-24 md:gap-32"
+      >
         {groupsWithImage.map((group, index) => (
           <PartnersGroup
             key={index}

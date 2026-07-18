@@ -82,6 +82,7 @@ export function HeroContent({
 
   return (
     <div
+      data-component="HeroContent"
       ref={wrapRef}
       style={{ opacity: 0 }}
       className="relative isolate w-full"

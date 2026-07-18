@@ -52,7 +52,7 @@ export function SplitBanner({
   const { ref: wrapRef } = useGsapReveal({ ready: imageReady, fromY: 0 })
 
   return (
-    <div className={cn("bg-bg", className)}>
+    <div data-component="SplitBanner" className={cn("bg-bg", className)}>
       <div ref={wrapRef} className="w-full" style={{ opacity: 0 }}>
         <div className="grid grid-cols-1 md:grid-cols-2 md:min-h-[min(100vh,686px)]">
           <div

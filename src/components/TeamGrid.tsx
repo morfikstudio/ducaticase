@@ -71,6 +71,7 @@ export function TeamGrid({
 
   return (
     <div
+      data-component="TeamGrid"
       className={cn(
         "w-full",
         "bg-light-gray text-accent",

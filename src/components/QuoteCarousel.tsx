@@ -234,7 +234,7 @@ export function QuoteCarousel({
 
   return (
     <Container>
-      <div ref={wrapRef} style={{ opacity: 0 }}>
+      <div data-component="QuoteCarousel" ref={wrapRef} style={{ opacity: 0 }}>
         <div className={cn("flex flex-col gap-8 lg:gap-16")}>
           <div className="flex items-end justify-between">
             <div

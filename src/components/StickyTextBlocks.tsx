@@ -361,6 +361,7 @@ export function StickyTextBlocks({
 
   return (
     <div
+      data-component="StickyTextBlocks"
       ref={wrapRef}
       style={{ opacity: 0 }}
       className={cn(

@@ -295,7 +295,7 @@ export function ContactHero({
   }, [show])
 
   return (
-    <div ref={wrapRef} style={{ opacity: 0 }}>
+    <div data-component="ContactHero" ref={wrapRef} style={{ opacity: 0 }}>
       <Container className="pb-16 lg:pb-24">
         {/* HEADER */}
         <section className="grid grid-cols-12 gap-x-4">

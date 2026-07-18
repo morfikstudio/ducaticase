@@ -111,7 +111,11 @@ export function ImageFeatureList({
         className,
       )}
     >
-      <div ref={wrapRef} style={{ opacity: 0 }}>
+      <div
+        data-component="ImageFeatureList"
+        ref={wrapRef}
+        style={{ opacity: 0 }}
+      >
         {/* HEADER */}
         <div
           className={cn(

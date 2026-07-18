@@ -28,6 +28,7 @@ export function FeatureGrid({ heading, locale, items }: FeatureGridProps) {
 
   return (
     <div
+      data-component="FeatureGrid"
       className={cn(
         "relative w-full",
         "pt-20",
