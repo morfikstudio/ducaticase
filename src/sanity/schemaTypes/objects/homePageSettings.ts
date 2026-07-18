@@ -190,11 +190,13 @@ export const homePageSettings = defineType({
       of: [defineArrayMember({ type: "homeTestimonialItem" })],
     }),
     defineField({
-      name: "partners",
-      title: "Partners",
+      name: "partnerGroups",
+      title: "Gruppi partner",
+      description:
+        "Ogni gruppo mostra un titolo e il relativo carosello di loghi.",
       type: "array",
       group: "partners",
-      of: [defineArrayMember({ type: "homePartnerItem" })],
+      of: [defineArrayMember({ type: "homePartnerGroup" })],
     }),
   ],
 })
