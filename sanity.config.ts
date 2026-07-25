@@ -72,10 +72,20 @@ export default defineConfig({
   },
   document: {
     newDocumentOptions: (prev) =>
-      prev.map((item) => ({
-        ...item,
-        icon: AddIcon,
-      })),
+      prev
+        .filter((item) => !item.templateId.startsWith("siteContent"))
+        .map((item) => ({
+          ...item,
+          icon: AddIcon,
+        })),
+    actions: (prev, context) =>
+      context.schemaType === "siteContent"
+        ? prev.filter(
+            (action) =>
+              action.action == null ||
+              !["delete", "duplicate", "unpublish"].includes(action.action),
+          )
+        : prev,
   },
   plugins: [
     itITLocale(),
