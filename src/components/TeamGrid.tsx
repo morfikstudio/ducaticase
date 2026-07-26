@@ -75,7 +75,7 @@ export function TeamGrid({
       className={cn(
         "w-full",
         "bg-light-gray text-accent",
-        "py-24 md:py-[192px]",
+        "py-24 lg:py-[192px]",
       )}
     >
       <div ref={wrapRef} style={{ opacity: 0 }}>
@@ -85,13 +85,13 @@ export function TeamGrid({
             className={cn(
               "flex flex-col gap-8 items-center",
               "text-center",
-              "md:max-w-[700px] mx-auto",
+              "lg:max-w-[700px] mx-auto",
             )}
           >
             {title && (
               <div
                 className={cn(
-                  "type-heading-3 md:type-body-2 md:font-medium",
+                  "type-heading-3 lg:type-body-2 lg:font-medium",
                   "text-dark-gray",
                 )}
               >
@@ -100,12 +100,12 @@ export function TeamGrid({
             )}
 
             {subtitle && (
-              <div className="type-body-1 md:type-heading-2">{subtitle}</div>
+              <div className="type-body-1 lg:type-heading-2">{subtitle}</div>
             )}
           </div>
 
           {/* TEAM CARDS — mobile */}
-          <div className="mt-16 space-y-12 md:hidden">
+          <div className="mt-16 space-y-12 lg:hidden">
             {members.map((member, index) => (
               <MemberCardMobile
                 key={member._key ?? `${index}`}
@@ -118,9 +118,9 @@ export function TeamGrid({
           {/* TEAM CARDS — desktop (subgrid aligns images across pairs) */}
           <div
             className={cn(
-              "mt-32 hidden md:grid",
-              "md:mx-auto md:max-w-[1024px]",
-              "md:grid-cols-[400px_400px] md:justify-between md:gap-y-12",
+              "mt-32 hidden lg:grid",
+              "lg:mx-auto lg:max-w-[1024px]",
+              "lg:grid-cols-[400px_400px] lg:justify-between lg:gap-y-12",
             )}
           >
             {members.map((member, index) => (
@@ -137,8 +137,8 @@ export function TeamGrid({
             className={cn(
               "flex flex-col gap-8 items-center",
               "text-center",
-              "md:max-w-[500px] mx-auto",
-              "mt-16 md:mt-32",
+              "lg:max-w-[500px] mx-auto",
+              "mt-16 lg:mt-32",
             )}
           >
             {text && <div className="type-body-1">{text}</div>}
@@ -184,7 +184,7 @@ function MemberCardDesktop({ member, locale }: MemberCardProps) {
             params={{
               width: 400,
               height: 560,
-              sizes: "(min-width: 768px) 30vw, 100vw",
+              sizes: "(min-width: 1024px) 30vw, 100vw",
             }}
             fill
             className="object-cover object-center"

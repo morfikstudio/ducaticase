@@ -54,17 +54,17 @@ export function SplitBanner({
   return (
     <div data-component="SplitBanner" className={cn("bg-bg", className)}>
       <div ref={wrapRef} className="w-full" style={{ opacity: 0 }}>
-        <div className="grid grid-cols-1 md:grid-cols-2 md:min-h-[min(100vh,686px)]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 lg:min-h-[min(100vh,686px)]">
           <div
             className={cn(
-              "flex flex-col justify-center py-16 md:py-20",
-              reverse ? "md:order-2" : "md:order-1",
+              "flex flex-col justify-center py-16 lg:py-20",
+              reverse ? "lg:order-2" : "lg:order-1",
             )}
           >
             <div
               className={cn(
                 CONTAINER_LAYOUT_CLASSNAME,
-                "flex w-full flex-col gap-11 md:mx-0 md:max-w-none",
+                "flex w-full flex-col gap-11 lg:mx-0 lg:max-w-none",
               )}
             >
               <div
@@ -91,8 +91,8 @@ export function SplitBanner({
           {hasImage ? (
             <ImageParallax
               className={cn(
-                "aspect-720/686 w-full min-h-0 md:aspect-auto md:h-full",
-                reverse ? "md:order-1" : "md:order-2",
+                "aspect-720/686 w-full min-h-0 lg:aspect-auto lg:h-full",
+                reverse ? "lg:order-1" : "lg:order-2",
               )}
             >
               <SanityImage

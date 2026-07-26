@@ -70,8 +70,7 @@ export function BannerForm({
         <Container
           className={cn(
             "flex flex-col gap-8",
-            "md:gap-12 md:flex-row md:justify-center md:items-start",
-            "lg:gap-32",
+            "lg:flex-row lg:justify-center lg:items-start lg:gap-32",
           )}
         >
           <div>
@@ -79,7 +78,7 @@ export function BannerForm({
               <h2
                 className={cn(
                   "type-heading-2",
-                  "md:flex-1",
+                  "lg:flex-1",
                   "lg:max-w-[470px]",
                 )}
               >
@@ -98,7 +97,7 @@ export function BannerForm({
             ) : null}
           </div>
 
-          <div className={cn("md:flex-1", "lg:max-w-[600px]")}>
+          <div className={cn("lg:flex-1", "lg:max-w-[600px]")}>
             <PortableTextComponent
               text={text}
               locale={locale}
