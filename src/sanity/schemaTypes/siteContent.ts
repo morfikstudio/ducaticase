@@ -159,6 +159,7 @@ export const siteContent = defineType({
       title: "Sezione",
       type: "string",
       readOnly: true,
+      hidden: true,
       options: {
         list: [...SECTION_OPTIONS],
         layout: "radio",
