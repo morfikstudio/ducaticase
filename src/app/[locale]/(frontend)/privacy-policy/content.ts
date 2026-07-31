@@ -67,11 +67,11 @@ const it: LegalDoc = {
       text: "Il trattamento dei dati da Lei liberamente conferiti sarà effettuato nel rispetto delle norme in vigore. In particolare, il trattamento sarà improntato ai principi di correttezza, liceità e trasparenza, pertinenza, completezza e non eccedenza. I dati saranno raccolti e registrati per le finalità di cui al punto seguente e conservati per un periodo strettamente necessario agli scopi.",
     },
     {
-      type: "p",
+      type: "h3",
       text: "Tipi di dati trattati, modalità del trattamento, finalità del trattamento, facoltatività o meno.",
     },
 
-    { type: "h3", text: "Dati di navigazione" },
+    { type: "h3", text: " Dati di navigazione" },
     {
       type: "p",
       text: "I sistemi informatici e le procedure software preposte al funzionamento di questo sito web acquisiscono, nel corso del loro normale esercizio, alcuni dati personali la cui trasmissione è implicita nell'uso dei protocolli di comunicazione di Internet.",
@@ -243,7 +243,7 @@ const it: LegalDoc = {
     },
     { type: "address", lines: ["Ducati Case Srl", "info@ducaticase.it"] },
 
-    { type: "h2", text: "Modifiche" },
+    { type: "h3", text: "Modifiche" },
     {
       type: "p",
       text: "La presente informativa potrebbe essere soggetta a modifiche. Qualora vengano apportate sostanziali modifiche all'utilizzo dei dati relativi all'Utente da parte di Ducati Case srl questa avviserà l'Utente pubblicandole con la massima evidenza sulle proprie pagine.",
@@ -303,7 +303,7 @@ const en: LegalDoc = {
       text: "The processing of the data freely provided by you will be carried out in compliance with the regulations in force. In particular, the processing will be based on the principles of fairness, lawfulness and transparency, relevance, completeness and non-excessiveness. The data will be collected and recorded for the purposes referred to in the following point and kept for a period strictly necessary for the purposes.",
     },
     {
-      type: "p",
+      type: "h3",
       text: "Types of data processed, methods of processing, purposes of processing, whether optional or not.",
     },
 
@@ -470,7 +470,7 @@ const en: LegalDoc = {
     { type: "h3", text: "The Data Protection Officer (so-called DPO)" },
     { type: "address", lines: ["Ducati Case Srl", "info@ducaticase.it"] },
 
-    { type: "h2", text: "Amendments" },
+    { type: "h3", text: "Amendments" },
     {
       type: "p",
       text: "This notice may be subject to amendments. Should substantial changes be made to the use of the User's data by Ducati Case srl, the latter will notify the User by publishing them with the utmost prominence on its own pages.",
