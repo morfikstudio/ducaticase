@@ -92,6 +92,45 @@ function ContactLines({
   )
 }
 
+function SocialNav({
+  socialLinks,
+}: {
+  socialLinks: FooterContent["socialLinks"]
+}) {
+  if (socialLinks.length === 0) {
+    return null
+  }
+  return (
+    <nav className="flex flex-col gap-2.5" aria-label="Social media">
+      {socialLinks.map(({ label, href }, index) => (
+        <a
+          key={`${href}-${index}`}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(
+            "group inline-flex items-center gap-1.5",
+            "type-body-3",
+            "hover:underline underline-offset-4",
+          )}
+        >
+          <span>{label}</span>
+          <span
+            className={cn(
+              "inline-block origin-center translate-y-px",
+              "transition-transform duration-300 ease-out",
+              "group-hover:rotate-45",
+            )}
+            aria-hidden
+          >
+            <ExternalLinkIcon />
+          </span>
+        </a>
+      ))}
+    </nav>
+  )
+}
+
 export type { FooterContent }
 
 type FooterProps = {
@@ -160,6 +199,7 @@ export function Footer({ content }: FooterProps) {
                 </a>
               ) : null}
               <ContactLines email={email} phone={phone} />
+              <SocialNav socialLinks={socialLinks} />
             </div>
           </div>
 
@@ -189,33 +229,7 @@ export function Footer({ content }: FooterProps) {
               })}
             </nav>
 
-            <nav className="flex flex-col gap-2.5" aria-label="Social media">
-              {socialLinks.map(({ label, href }, index) => (
-                <a
-                  key={`${href}-${index}`}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    "group inline-flex items-center gap-1.5",
-                    "type-body-3",
-                    "hover:underline underline-offset-4",
-                  )}
-                >
-                  <span>{label}</span>
-                  <span
-                    className={cn(
-                      "inline-block origin-center translate-y-px",
-                      "transition-transform duration-300 ease-out",
-                      "group-hover:rotate-45",
-                    )}
-                    aria-hidden
-                  >
-                    <ExternalLinkIcon />
-                  </span>
-                </a>
-              ))}
-            </nav>
+            <SocialNav socialLinks={socialLinks} />
 
             {hasAddress ? (
               <a
