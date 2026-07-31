@@ -264,6 +264,7 @@ export function Footer({ content }: FooterProps) {
             ) : (
               <Link
                 href={privacyPolicyUrl}
+                target="blank"
                 className={cn(
                   "type-body-3",
                   "hover:underline underline-offset-4 md:text-right",
