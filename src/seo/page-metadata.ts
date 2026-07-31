@@ -4,7 +4,7 @@ import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 import type { AppLocale } from "@/i18n/routing"
 import { routing } from "@/i18n/routing"
 
-import { getSanityImageUrl } from "@/lib/sanity"
+import { getSanityOgImageUrl } from "@/lib/sanity"
 
 import type {
   SiteSeoConfig,
@@ -39,6 +39,11 @@ export function buildLocalizedPathname(
   return `/${locale}${suffix}`
 }
 
+/** Collapses line breaks and multiple spaces: a meta description stays on a single line. */
+function singleLine(text: string): string {
+  return text.replace(/\s+/g, " ").trim()
+}
+
 function hreflangLanguages(
   origin: string,
   fullConfig: SiteSeoConfig,
@@ -50,7 +55,18 @@ function hreflangLanguages(
     const pathname = buildLocalizedPathname(loc, page.canonicalPath)
     languages[loc] = absoluteUrl(origin, pathname)
   }
+  languages["x-default"] = languages[routing.defaultLocale]
   return languages
+}
+
+/** Other site languages, for `og:locale:alternate`. */
+function alternateOgLocales(
+  fullConfig: SiteSeoConfig,
+  locale: AppLocale,
+): string[] {
+  return routing.locales
+    .filter((loc) => loc !== locale)
+    .map((loc) => fullConfig.site[loc].locale)
 }
 
 export function buildPageMetadata(
@@ -66,7 +82,9 @@ export function buildPageMetadata(
   const fullTitle =
     titleSegment === brand ? titleSegment : `${titleSegment} | ${brand}`
   const description =
-    page.description.trim() || site.defaultDescription.trim() || undefined
+    singleLine(page.description) ||
+    singleLine(site.defaultDescription) ||
+    undefined
 
   const ogImage = page.openGraph.image
   const ogImageUrl = absoluteUrl(origin, ogImage.url)
@@ -85,7 +103,7 @@ export function buildPageMetadata(
   }
 
   const metadata: Metadata = {
-    title: titleSegment,
+    title: { absolute: fullTitle },
     description,
     ...(page.keywords.length > 0 ? { keywords: page.keywords } : {}),
     alternates,
@@ -94,6 +112,9 @@ export function buildPageMetadata(
       url: canonical,
       siteName: site.name,
       locale: site.locale,
+      ...(options
+        ? { alternateLocale: alternateOgLocales(options.config, locale) }
+        : {}),
       title: fullTitle,
       description,
       images: [
@@ -162,18 +183,16 @@ export function buildListingDetailMetadata(args: {
     titleSegment === brand ? titleSegment : `${titleSegment} | ${brand}`
 
   const description =
-    args.descriptionPlain?.trim() || site.defaultDescription.trim() || undefined
+    singleLine(args.descriptionPlain ?? "") ||
+    singleLine(site.defaultDescription) ||
+    undefined
 
   const listingPath = `/immobili/${args.listingId}`
   const pathname = buildLocalizedPathname(args.locale, listingPath)
   const canonical = absoluteUrl(origin, pathname)
 
   const fallbackOg = fullConfig.listings[args.locale].openGraph.image
-  const ogFromListing = getSanityImageUrl(
-    args.mainImage ?? undefined,
-    1200,
-    630,
-  )
+  const ogFromListing = getSanityOgImageUrl(args.mainImage ?? undefined)
   const ogImageUrl = ogFromListing ?? absoluteUrl(origin, fallbackOg.url.trim())
   const ogImageWidth = ogFromListing ? 1200 : fallbackOg.width
   const ogImageHeight = ogFromListing ? 630 : fallbackOg.height
@@ -186,9 +205,10 @@ export function buildListingDetailMetadata(args: {
       buildLocalizedPathname(loc, listingPath),
     )
   }
+  languages["x-default"] = languages[routing.defaultLocale]
 
   return {
-    title: titleSegment,
+    title: { absolute: fullTitle },
     description,
     alternates: { canonical, languages },
     openGraph: {
@@ -196,6 +216,7 @@ export function buildListingDetailMetadata(args: {
       url: canonical,
       siteName: site.name,
       locale: site.locale,
+      alternateLocale: alternateOgLocales(fullConfig, args.locale),
       title: fullTitle,
       description,
       images: [

@@ -8,6 +8,7 @@ import { routing } from "@/i18n/routing"
 
 import siteSeo from "@/seo/main.json"
 import type { SiteSeoConfig } from "@/seo/types"
+import { isSeoEnabled } from "@/seo/seo-flag"
 import { getSiteOrigin } from "@/seo/site-url"
 
 import "./globals.css"
@@ -34,8 +35,7 @@ const things = localFont({
 })
 
 /* METADATA */
-const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true"
-const shouldIndex = process.env.NODE_ENV === "production" && allowIndexing
+const shouldIndex = isSeoEnabled()
 const siteCfg = siteSeo as SiteSeoConfig
 const defaultLocale = routing.defaultLocale
 const defaultSite = siteCfg.site[defaultLocale]
@@ -52,10 +52,14 @@ export const metadata: Metadata = {
     index: shouldIndex,
     follow: shouldIndex,
     nocache: !shouldIndex,
+    noarchive: !shouldIndex,
+    nosnippet: !shouldIndex,
     googleBot: {
       index: shouldIndex,
       follow: shouldIndex,
       nocache: !shouldIndex,
+      noarchive: !shouldIndex,
+      nosnippet: !shouldIndex,
     },
   },
 }

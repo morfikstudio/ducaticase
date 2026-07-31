@@ -4,6 +4,12 @@ import createNextIntlPlugin from "next-intl/plugin"
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts")
 
 const enableFetchLogging = process.env.NEXT_FETCH_LOGGING === "true"
+const seoEnabled = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true"
+
+const NO_INDEX_HEADER = {
+  key: "X-Robots-Tag",
+  value: "noindex, nofollow",
+}
 
 const nextConfig: NextConfig = {
   env: {
@@ -29,6 +35,20 @@ const nextConfig: NextConfig = {
         hostname: "placehold.co",
       },
     ],
+  },
+  async headers() {
+    return [
+      ...(seoEnabled
+        ? []
+        : [{ source: "/:path*", headers: [NO_INDEX_HEADER] }]),
+      /* The *.vercel.app domains should not be indexed even after launch:
+         the public site lives on the NEXT_PUBLIC_SITE_URL domain. */
+      {
+        source: "/:path*",
+        has: [{ type: "host" as const, value: ".*\\.vercel\\.app" }],
+        headers: [NO_INDEX_HEADER],
+      },
+    ]
   },
   logging: enableFetchLogging
     ? {

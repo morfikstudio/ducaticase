@@ -44,6 +44,32 @@ export function getSanityImageUrl(
   return img.url()
 }
 
+const OG_IMAGE = { width: 1200, height: 630 } as const
+
+/**
+ * Image URL for Open Graph / Twitter Card, cropped 1200x630 on the hotspot.
+ *
+ * Format forced to JPEG: WhatsApp and various social scrapers do not render the
+ * WebP/AVIF previews that `auto("format")` would return.
+ */
+export function getSanityOgImageUrl(
+  image: SanityImageSource | null | undefined,
+  quality = 75,
+): string | undefined {
+  if (!image) return undefined
+
+  const safeQuality = Math.min(100, Math.max(1, Math.round(quality)))
+
+  return builder
+    .image(image)
+    .width(OG_IMAGE.width)
+    .height(OG_IMAGE.height)
+    .fit("crop")
+    .format("jpg")
+    .quality(safeQuality)
+    .url()
+}
+
 const HERO_DESKTOP_16_9 = { width: 1920, height: 1080 } as const
 const HERO_MOBILE_9_16 = { width: 1080, height: 1920 } as const
 

@@ -1,5 +1,5 @@
 import type { AppLocale } from "@/i18n/routing"
-import { getSanityImageUrl } from "@/lib/sanity"
+import { getSanityOgImageUrl } from "@/lib/sanity"
 import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
 import siteSeo from "@/seo/main.json"
 import { absoluteUrl, buildLocalizedPathname } from "@/seo/page-metadata"
@@ -19,12 +19,12 @@ function collectImageUrls(
   if (!content) return []
 
   const urls: string[] = []
-  const main = getSanityImageUrl(content.mainImage ?? undefined, 1200, 630)
+  const main = getSanityOgImageUrl(content.mainImage ?? undefined)
   if (main) urls.push(main)
 
   for (const img of content.gallery ?? []) {
     if (urls.length >= 8) break
-    const u = getSanityImageUrl(img, 1200, 630)
+    const u = getSanityOgImageUrl(img)
     if (u && !urls.includes(u)) urls.push(u)
   }
   return urls

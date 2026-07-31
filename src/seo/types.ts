@@ -39,6 +39,7 @@ export type SiteSeoConfig = {
   business: SiteSeoPageByLocale
   about: SiteSeoPageByLocale
   contact: SiteSeoPageByLocale
+  privacyPolicy: SiteSeoPageByLocale
 }
 
 export type SiteSeoPageKey = keyof Omit<SiteSeoConfig, "site">

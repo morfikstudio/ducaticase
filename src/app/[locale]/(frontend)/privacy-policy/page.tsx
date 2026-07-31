@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
 import type { AppLocale } from "@/i18n/routing"
+import { buildPageMetadataByKey } from "@/seo/page-metadata"
 import { cn } from "@/utils/classNames"
 import { Container } from "@/components/ui/Container"
 
@@ -10,39 +11,13 @@ import {
   type LegalListItem,
 } from "./content"
 
-const META: Record<AppLocale, { title: string; description: string }> = {
-  it: {
-    title: "Informativa sulla Privacy",
-    description:
-      "Informativa sulla privacy e sulla protezione dei dati personali di Ducati Case ai sensi degli artt. 13 e 14 del Regolamento UE 679/2016.",
-  },
-  en: {
-    title: "Privacy Policy",
-    description:
-      "Ducati Case privacy and personal data protection policy pursuant to articles 13 and 14 of EU Regulation 679/2016.",
-  },
-}
-
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale: localeParam } = await params
-  const locale = localeParam as AppLocale
-  const meta = META[locale] ?? META.it
-
-  return {
-    title: meta.title,
-    description: meta.description,
-    alternates: {
-      canonical: `/${locale}/privacy-policy`,
-      languages: {
-        it: "/it/privacy-policy",
-        en: "/en/privacy-policy",
-      },
-    },
-  }
+  return buildPageMetadataByKey("privacyPolicy", localeParam as AppLocale)
 }
 
 function renderListItem(item: LegalListItem, key: number) {

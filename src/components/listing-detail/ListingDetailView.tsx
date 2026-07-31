@@ -7,6 +7,7 @@ import type { LISTING_BY_ID_QUERY_RESULT } from "@/sanity/types"
 
 import { JsonLd } from "@/components/seo/JsonLd"
 import { buildListingJsonLdGraph } from "@/seo/json-ld/listing-graph"
+import { isSeoEnabled } from "@/seo/seo-flag"
 
 import { Container } from "@/components/ui/Container"
 import { Gallery } from "@/components/listing-detail/Gallery"
@@ -94,7 +95,7 @@ export function ListingDetailView({
     ? pickLocalizedPortableTextPlain(listing.content.excerpt, locale)
     : ""
   const listingJsonLd =
-    !isPreview && listing.content && listingTitle
+    isSeoEnabled() && !isPreview && listing.content && listingTitle
       ? buildListingJsonLdGraph({
           listing,
           locale,

@@ -4,6 +4,7 @@ import { CACHE_TAGS } from "@/sanity/lib/cache-tags"
 import { FOOTER_SITE_CONTENT_QUERY } from "@/sanity/lib/queries"
 import type { FOOTER_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
 import { buildSiteJsonLdGraph } from "@/seo/json-ld/site-graph"
+import { isSeoEnabled } from "@/seo/seo-flag"
 
 import { JsonLd } from "./JsonLd"
 
@@ -12,6 +13,10 @@ type Props = {
 }
 
 export async function SiteJsonLd({ locale }: Props) {
+  if (!isSeoEnabled()) {
+    return null
+  }
+
   let footer: FOOTER_SITE_CONTENT_QUERY_RESULT = null
   try {
     footer = (await sanityFetch({

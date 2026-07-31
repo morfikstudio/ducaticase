@@ -1,12 +1,10 @@
 import type { MetadataRoute } from "next"
 
+import { isSeoEnabled } from "@/seo/seo-flag"
 import { getSiteOrigin } from "@/seo/site-url"
 
 export default function robots(): MetadataRoute.Robots {
-  const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true"
-  const shouldIndex = process.env.NODE_ENV === "production" && allowIndexing
-
-  if (!shouldIndex) {
+  if (!isSeoEnabled()) {
     return {
       rules: [{ userAgent: "*", disallow: "/" }],
     }
@@ -15,7 +13,13 @@ export default function robots(): MetadataRoute.Robots {
   const origin = getSiteOrigin()
 
   return {
-    rules: [{ userAgent: "*", allow: "/", disallow: "/studio" }],
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/studio", "/api/", "/*/preview/", "/*/brochure/"],
+      },
+    ],
     sitemap: `${origin}/sitemap.xml`,
   }
 }

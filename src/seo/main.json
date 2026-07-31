@@ -238,5 +238,37 @@
         }
       }
     }
+  },
+  "privacyPolicy": {
+    "it": {
+      "title": "Informativa sulla Privacy",
+      "description": "Informativa sulla privacy e sulla protezione dei dati personali di Ducati Case ai sensi degli artt. 13 e 14 del Regolamento UE 679/2016.",
+      "keywords": [],
+      "canonicalPath": "/privacy-policy",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    },
+    "en": {
+      "title": "Privacy Policy",
+      "description": "Ducati Case privacy and personal data protection policy pursuant to articles 13 and 14 of EU Regulation 679/2016.",
+      "keywords": [],
+      "canonicalPath": "/privacy-policy",
+      "openGraph": {
+        "type": "website",
+        "image": {
+          "url": "/images/og-default.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": ""
+        }
+      }
+    }
   }
 }

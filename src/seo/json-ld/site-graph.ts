@@ -1,4 +1,5 @@
 import type { AppLocale } from "@/i18n/routing"
+import { SITE_MENU_SOCIAL_LINKS } from "@/sanity/lib/internalSitePaths"
 import type { FOOTER_SITE_CONTENT_QUERY_RESULT } from "@/sanity/types"
 import siteSeo from "@/seo/main.json"
 import { absoluteUrl, buildLocalizedPathname } from "@/seo/page-metadata"
@@ -16,7 +17,8 @@ export function buildSiteJsonLdGraph(args: {
   const siteUrl = absoluteUrl(origin, homePath)
   const orgId = `${siteUrl}#organization`
   const websiteId = `${siteUrl}#website`
-  const logoUrl = absoluteUrl(origin, "/images/og-default.jpg")
+  const logoUrl = absoluteUrl(origin, "/images/Logo-Ducati.svg")
+  const imageUrl = absoluteUrl(origin, "/images/og-default.jpg")
 
   const footerBlock = args.footer?.footer
   const streetAddress = [footerBlock?.addressLine1, footerBlock?.addressLine2]
@@ -31,6 +33,8 @@ export function buildSiteJsonLdGraph(args: {
     description: site.defaultDescription,
     url: siteUrl,
     logo: logoUrl,
+    image: imageUrl,
+    sameAs: SITE_MENU_SOCIAL_LINKS.map((link) => link.href),
   }
 
   if (streetAddress) {
