@@ -36,6 +36,10 @@ export type ContactHeroProps = {
   locale: AppLocale
 }
 
+/** Scheda Google Maps di Ducati Case s.r.l. (`ftid` = id della scheda del luogo). */
+const CONTACT_GOOGLE_MAPS_URL =
+  "https://www.google.com/maps?q=Ducati+Case+s.r.l.,+Viale+Vittorio+Veneto,+24,+20124+Milano+MI&ftid=0x4786c6c7e0ba64fb:0xb2a407a3e7dbb8c2"
+
 const CONTACT_INFO_KEYS = ["email", "phone", "whatsapp", "address"] as const
 type ContactInfoRowKind = (typeof CONTACT_INFO_KEYS)[number]
 
@@ -382,6 +386,7 @@ export function ContactHero({
               lat={mapCoords.lat}
               lng={mapCoords.lng}
               location={null}
+              externalUrl={CONTACT_GOOGLE_MAPS_URL}
             />
           </section>
         ) : null}

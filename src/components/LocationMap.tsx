@@ -1,6 +1,6 @@
 "use client"
 
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
 import { useGsapReveal } from "@/hooks/useGsapReveal"
 
@@ -25,6 +25,7 @@ function staticMapProxyUrl(
   lng: number,
   width: number,
   height: number,
+  lang: string,
 ): string {
   const params = new URLSearchParams({
     lat: String(lat),
@@ -32,6 +33,7 @@ function staticMapProxyUrl(
     w: String(width),
     h: String(height),
     z: String(LISTING_STATIC_MAP_ZOOM),
+    lang,
   })
   return `/api/maps/static?${params.toString()}`
 }
@@ -53,6 +55,8 @@ export type LocationMapProps = {
   lng: number
   location: Parameters<typeof buildListingLocationText>[0]
   positionInfoText?: string | null
+  /** Sovrascrive il link Google Maps calcolato da coordinate/indirizzo. */
+  externalUrl?: string | null
 }
 
 export function LocationMap({
@@ -60,18 +64,21 @@ export function LocationMap({
   lng,
   location,
   positionInfoText,
+  externalUrl,
 }: LocationMapProps) {
   const { ref: wrapRef } = useGsapReveal()
+  const locale = useLocale()
   const t = useTranslations("listingDetail")
   const tCountries = useTranslations("listingDetail.countries")
 
-  const mobileSrc = staticMapProxyUrl(lat, lng, MOBILE_W, MOBILE_H)
-  const desktopSrc = staticMapProxyUrl(lat, lng, DESKTOP_W, DESKTOP_H)
+  const mobileSrc = staticMapProxyUrl(lat, lng, MOBILE_W, MOBILE_H, locale)
+  const desktopSrc = staticMapProxyUrl(lat, lng, DESKTOP_W, DESKTOP_H, locale)
 
   const countryCode = parseListingLocationCountryCode(location?.country)
   const countryLabel = countryCode ? tCountries(countryCode) : null
   const locationText = buildListingLocationText(location, countryLabel)
-  const externalMapsUrl = googleMapsSearchUrl(lat, lng, locationText)
+  const externalMapsUrl =
+    externalUrl?.trim() || googleMapsSearchUrl(lat, lng, locationText)
   const cityLine = getListingCityLine(location, countryLabel)
   const streetLine = getListingStreetLine(location)
   const positionInfo =

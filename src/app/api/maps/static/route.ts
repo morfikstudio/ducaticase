@@ -37,6 +37,10 @@ function parseDimension(value: string | null): number | null {
   return n
 }
 
+function parseLanguage(value: string | null): "it" | "en" {
+  return value === "en" ? "en" : "it"
+}
+
 function parseZoom(value: string | null): number | null {
   if (value == null || value === "") {
     return null
@@ -54,9 +58,10 @@ function buildGoogleStaticMapUrl(params: {
   width: number
   height: number
   zoom: number
+  language: "it" | "en"
   apiKey: string
 }): string {
-  const { lat, lng, width, height, zoom, apiKey } = params
+  const { lat, lng, width, height, zoom, language, apiKey } = params
 
   const search = new URLSearchParams()
 
@@ -65,6 +70,8 @@ function buildGoogleStaticMapUrl(params: {
   search.set("size", `${width}x${height}`)
   search.set("scale", "2")
   search.set("maptype", "roadmap")
+  search.set("language", language)
+  search.set("region", "IT")
 
   for (const style of STATIC_MAP_STYLE_PARAMS) {
     search.append("style", style)
@@ -83,6 +90,7 @@ export async function GET(request: Request) {
   const width = parseDimension(searchParams.get("w"))
   const height = parseDimension(searchParams.get("h"))
   const zoom = parseZoom(searchParams.get("z")) ?? LISTING_STATIC_MAP_ZOOM
+  const language = parseLanguage(searchParams.get("lang"))
 
   if (lat == null || lng == null || width == null || height == null) {
     return NextResponse.json(
@@ -113,6 +121,7 @@ export async function GET(request: Request) {
     width,
     height,
     zoom,
+    language,
     apiKey,
   })
 
