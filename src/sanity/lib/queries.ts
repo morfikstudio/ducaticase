@@ -683,7 +683,8 @@ export const LISTING_BY_ID_QUERY = defineQuery(groq`
         ...,
         asset->
       },
-      "gallery": gallery[] {
+      // drop image slots saved without a file
+      "gallery": gallery[defined(asset)] {
         ...,
         asset->
       },
@@ -923,7 +924,8 @@ export const LISTING_BY_ID_INCLUDE_ARCHIVED_QUERY = defineQuery(groq`
         ...,
         asset->
       },
-      "gallery": gallery[] {
+      // drop image slots saved without a file
+      "gallery": gallery[defined(asset)] {
         ...,
         asset->
       },

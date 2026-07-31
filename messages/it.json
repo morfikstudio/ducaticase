@@ -142,5 +142,19 @@
     "featuredListingsViewAll": "Scopri tutti gli immobili",
     "contactSectionWord1": "Un confronto diretto",
     "contactSectionWord2": "Contattaci"
+  },
+  "notFoundPage": {
+    "code": "404",
+    "title": "Pagina non trovata",
+    "text": "La pagina che stai cercando non esiste o è stata rimossa. Può succedere se un immobile non è più disponibile.",
+    "ctaListings": "Vedi tutti gli immobili",
+    "ctaHome": "Torna alla home"
+  },
+  "errorPage": {
+    "code": "500",
+    "title": "Qualcosa è andato storto",
+    "text": "Si è verificato un errore imprevisto durante il caricamento della pagina. Riprova tra qualche istante.",
+    "retry": "Riprova",
+    "ctaHome": "Torna alla home"
   }
 }

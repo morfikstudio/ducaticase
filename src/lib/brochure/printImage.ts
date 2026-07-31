@@ -2,6 +2,7 @@ import imageUrlBuilder from "@sanity/image-url"
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
 import { client } from "@/sanity/lib/client"
+import { hasResolvableSanityImageAsset } from "@/lib/sanityImageSource"
 
 const builder = imageUrlBuilder(client)
 
@@ -21,19 +22,23 @@ export function getPrintImageUrl(
   height?: number,
   quality = 75,
 ): string | undefined {
-  if (!image) return undefined
+  if (!hasResolvableSanityImageAsset(image)) return undefined
 
   const safeQuality = Math.min(100, Math.max(1, Math.round(quality)))
 
-  const img = builder
-    .image(image)
-    .width(width)
-    .auto("format")
-    .quality(safeQuality)
+  try {
+    const img = builder
+      .image(image as SanityImageSource)
+      .width(width)
+      .auto("format")
+      .quality(safeQuality)
 
-  if (height != null && height > 0) {
-    return img.height(height).fit("crop").url()
+    if (height != null && height > 0) {
+      return img.height(height).fit("crop").url()
+    }
+
+    return img.url()
+  } catch {
+    return undefined
   }
-
-  return img.url()
 }
