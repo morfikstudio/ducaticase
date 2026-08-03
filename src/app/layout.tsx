@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(getSiteOrigin()),
   title: {
     default: defaultHome.title,
-    template: `%s | ${defaultSite.name}`,
+    template: `${defaultSite.name} | %s`,
   },
   description: defaultHome.description,
   robots: {

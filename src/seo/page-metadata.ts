@@ -44,6 +44,11 @@ function singleLine(text: string): string {
   return text.replace(/\s+/g, " ").trim()
 }
 
+/** Composes the document title as "Brand | Page title"; returns the brand alone when they coincide. */
+function composeTitle(brand: string, segment: string): string {
+  return segment === brand ? brand : `${brand} | ${segment}`
+}
+
 function hreflangLanguages(
   origin: string,
   fullConfig: SiteSeoConfig,
@@ -79,8 +84,7 @@ export function buildPageMetadata(
 
   const brand = site.name.trim()
   const titleSegment = page.title.trim() || brand
-  const fullTitle =
-    titleSegment === brand ? titleSegment : `${titleSegment} | ${brand}`
+  const fullTitle = composeTitle(brand, titleSegment)
   const description =
     singleLine(page.description) ||
     singleLine(site.defaultDescription) ||
@@ -177,10 +181,8 @@ export function buildListingDetailMetadata(args: {
   const site = fullConfig.site[args.locale]
   const origin = getSiteOrigin()
   const brand = site.name.trim()
-  const titleFromListing = args.title?.trim()
-  const titleSegment = titleFromListing || brand
-  const fullTitle =
-    titleSegment === brand ? titleSegment : `${titleSegment} | ${brand}`
+  const titleSegment = args.title?.trim() || brand
+  const fullTitle = composeTitle(brand, titleSegment)
 
   const description =
     singleLine(args.descriptionPlain ?? "") ||

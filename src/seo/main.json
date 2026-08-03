@@ -2,14 +2,14 @@
   "site": {
     "it": {
       "name": "Ducati Case",
-      "defaultDescription": "Agenzia immobiliare specializzata in immobili di lusso e di eccellenza.",
+      "defaultDescription": "Agenzia immobiliare indipendente con sede a Milano. Vendita, locazione e consulenza immobiliare per privati e aziende in Italia e all'estero.",
       "locale": "it_IT",
       "twitterSite": "",
       "twitterCreator": ""
     },
     "en": {
       "name": "Ducati Case",
-      "defaultDescription": "Real estate agency specialized in luxury and premium properties.",
+      "defaultDescription": "Independent real estate agency with headquarters in Milan. Sale, rental and real estate consultancy for private individuals and companies in Italy and abroad.",
       "locale": "en_US",
       "twitterSite": "",
       "twitterCreator": ""
@@ -17,8 +17,8 @@
   },
   "home": {
     "it": {
-      "title": "Home",
-      "description": "Agenzia immobiliare specializzata in immobili di lusso e di eccellenza.",
+      "title": "Agenzia immobiliare a Milano dal 1989",
+      "description": "Agenzia immobiliare indipendente con sede a Milano. Vendita, locazione e consulenza immobiliare per privati e aziende in Italia e all'estero.",
       "keywords": [],
       "canonicalPath": "/",
       "openGraph": {
@@ -32,8 +32,8 @@
       }
     },
     "en": {
-      "title": "Home",
-      "description": "Real estate agency specialized in luxury and premium properties.",
+      "title": "Real estate agency in Milan since 1989",
+      "description": "Independent real estate agency with headquarters in Milan. Sale, rental and real estate consultancy for private individuals and companies in Italy and abroad.",
       "keywords": [],
       "canonicalPath": "/",
       "openGraph": {
@@ -49,8 +49,8 @@
   },
   "listYourProperty": {
     "it": {
-      "title": "Affidaci il tuo immobile",
-      "description": "Affidaci il tuo immobile e vendilo con la nostra agenzia immobiliare.",
+      "title": "Vendere casa con consulenza immobiliare",
+      "description": "Vendere un immobile richiede strategia ed esperienza. Ducati Case offre consulenza immobiliare completa, dalla valutazione al rogito.",
       "keywords": [],
       "canonicalPath": "/affidaci-il-tuo-immobile",
       "openGraph": {
@@ -64,8 +64,8 @@
       }
     },
     "en": {
-      "title": "List your property",
-      "description": "List your property and sell it with our real estate agency.",
+      "title": "Sell your home with real estate consultancy",
+      "description": "Selling a property requires strategy and experience. Ducati Case offers complete real estate consultancy, from valuation to closing.",
       "keywords": [],
       "canonicalPath": "/affidaci-il-tuo-immobile",
       "openGraph": {
@@ -113,8 +113,8 @@
   },
   "tayloredSearch": {
     "it": {
-      "title": "Ricerca su misura",
-      "description": "Scopri la nostra soluzione di ricerca su misura per trovare la proprietà che fa per te.",
+      "title": "Immobili off-market e proprietà esclusive",
+      "description": "Ricerca, acquisizione e vendita di proprietà esclusive e off-market: residenze storiche, masserie, isole private e asset di alto profilo gestiti con discrezione.",
       "keywords": [],
       "canonicalPath": "/ricerca-su-misura",
       "openGraph": {
@@ -128,8 +128,8 @@
       }
     },
     "en": {
-      "title": "Bespoke search",
-      "description": "Discover our bespoke property search to find the right home for you.",
+      "title": "Off-market properties and exclusive listings",
+      "description": "Research, acquisition and sale of exclusive and off-market properties: historic residences, estates, private islands and high-profile assets managed with discretion.",
       "keywords": [],
       "canonicalPath": "/ricerca-su-misura",
       "openGraph": {
@@ -145,8 +145,8 @@
   },
   "business": {
     "it": {
-      "title": "Ducati Case per le aziende",
-      "description": "Ducati Case per le aziende: vendi il tuo immobile con la nostra agenzia immobiliare.",
+      "title": "Commercial & Corporate Real Estate",
+      "description": "Strategie immobiliari su misura per imprese, brand e investitori. Vendita, locazione e advisory nel real estate commerciale e corporate.",
       "keywords": [],
       "canonicalPath": "/ducati-per-le-aziende",
       "openGraph": {
@@ -160,8 +160,8 @@
       }
     },
     "en": {
-      "title": "Ducati Case for Business",
-      "description": "Ducati Case for Business: sell your property with our real estate agency.",
+      "title": "Commercial & Corporate Real Estate",
+      "description": "Custom real estate strategies for companies, brands, and investors. Sale, rental, and advisory in commercial and corporate real estate.",
       "keywords": [],
       "canonicalPath": "/ducati-per-le-aziende",
       "openGraph": {
@@ -177,8 +177,8 @@
   },
   "about": {
     "it": {
-      "title": "Chi siamo",
-      "description": "Scopri la nostra storia e la nostra missione.",
+      "title": "Chi siamo - Consulenza immobiliare a Milano e nel mondo",
+      "description": "Ducati Case è una boutique immobiliare indipendente con sede a Milano. Da oltre 40 anni offriamo consulenza immobiliare personalizzata per privati e aziende.",
       "keywords": [],
       "canonicalPath": "/about",
       "openGraph": {
@@ -192,8 +192,8 @@
       }
     },
     "en": {
-      "title": "About us",
-      "description": "Discover our story and mission.",
+      "title": "About us - Real estate consultancy in Milan and around the world",
+      "description": "Ducati Case is an independent real estate boutique with headquarters in Milan. For over 40 years, we have offered personalized real estate consultancy for private individuals and companies.",
       "keywords": [],
       "canonicalPath": "/about",
       "openGraph": {
@@ -210,7 +210,7 @@
   "contact": {
     "it": {
       "title": "Contatti",
-      "description": "Contattaci per ottenere maggiori informazioni sulla nostra agenzia immobiliare.",
+      "description": "Contattaci per realizzare il tuo progetto immobiliare",
       "keywords": [],
       "canonicalPath": "/contact",
       "openGraph": {
@@ -225,7 +225,7 @@
     },
     "en": {
       "title": "Contact",
-      "description": "Contact us for more information about our real estate agency.",
+      "description": "Contact us to realize your real estate project",
       "keywords": [],
       "canonicalPath": "/contact",
       "openGraph": {
