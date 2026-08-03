@@ -74,7 +74,7 @@ function validateHighlightCta(value: HighlightCtaValue): true | string {
 
 export const businessPageSettings = defineType({
   name: "businessPageSettings",
-  title: "Ducati per le aziende",
+  title: "Ducati Case per le aziende",
   type: "object",
   groups: [
     { ...ALL_FIELDS_GROUP, hidden: true },

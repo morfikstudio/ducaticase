@@ -9,7 +9,7 @@ const SECTION_OPTIONS = [
   { title: "Home", value: "homePage" },
   { title: "Affidaci il tuo immobile", value: "listYourPropertyPage" },
   { title: "Ricerca su misura", value: "tailoredSearchPage" },
-  { title: "Ducati per le aziende", value: "businessPage" },
+  { title: "Ducati Case per le aziende", value: "businessPage" },
   { title: "Chi siamo", value: "aboutPage" },
   { title: "Contatti", value: "contactPage" },
 ] as const
@@ -33,7 +33,7 @@ const SITE_CONTENT_LIST_PREVIEW_TITLE: Record<
   aboutPage: "Chi siamo",
   contactPage: "Contatti",
   listYourPropertyPage: "Affidaci il tuo immobile",
-  businessPage: "Ducati per le aziende",
+  businessPage: "Ducati Case per le aziende",
   tailoredSearchPage: "Ricerca su misura",
 }
 
@@ -64,7 +64,7 @@ function titleAndSectionForNewDocument(document: SiteContentDoc | undefined): {
     }
   }
   if (document?.sectionType === "businessPage") {
-    return { title: "Ducati per le aziende", sectionType: "businessPage" }
+    return { title: "Ducati Case per le aziende", sectionType: "businessPage" }
   }
   if (document?.sectionType === "tailoredSearchPage") {
     return { title: "Ricerca su misura", sectionType: "tailoredSearchPage" }
@@ -132,7 +132,7 @@ export const siteContent = defineType({
                     : section === "listYourPropertyPage"
                       ? "Affidaci il tuo immobile"
                       : section === "businessPage"
-                        ? "Ducati per le aziende"
+                        ? "Ducati Case per le aziende"
                         : section === "tailoredSearchPage"
                           ? "Ricerca su misura"
                           : section

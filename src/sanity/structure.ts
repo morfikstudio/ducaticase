@@ -117,12 +117,12 @@ export const structure: StructureResolver = (S) =>
                     ]),
                 ),
               S.listItem()
-                .title("Ducati per le aziende")
+                .title("Ducati Case per le aziende")
                 .icon(CaseIcon)
                 .id("siteContentBusinessPage")
                 .child(
                   S.documentList()
-                    .title("Ducati per le aziende")
+                    .title("Ducati Case per le aziende")
                     .schemaType("siteContent")
                     .apiVersion(apiVersion)
                     .filter(

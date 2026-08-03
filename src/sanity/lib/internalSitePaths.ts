@@ -16,7 +16,7 @@ export const GLOBAL_NAV_ITEMS = [
   },
   {
     path: "/ducati-per-le-aziende",
-    label: { it: "Ducati per le aziende", en: "Ducati Case for Business" },
+    label: { it: "Ducati Case per le aziende", en: "Ducati Case for Business" },
   },
   { path: "/about", label: { it: "Chi siamo", en: "About us" } },
   { path: "/contact", label: { it: "Contatti", en: "Contact" } },
